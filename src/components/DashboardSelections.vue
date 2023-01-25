@@ -37,9 +37,9 @@
             <CustomSelectYear />
         </div>
 
-        <button class="request" type="button" @click="storeUserSelections.findData" >REQUEST</button>
+        <button class="request" type="button" @click="$emit('fetchData')">REQUEST</button>
 
-        <!-- <button type="button">Upload Shapefile</button> -->
+        <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
         
 
     </div>

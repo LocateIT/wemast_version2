@@ -104,7 +104,7 @@ export const useCounterStore = defineStore({
       current_geoserver_geojson:{},
       crs:"",
       
-      indicator_list: [], //wemast_v2_lists "Limpopo","Cuvelai","Zambezi", "Okavango",'South Africa', 'Kiambu'
+      indicator_list: [], //wemast_v2_lists "Limpopo","Cuvelai","Zambezi", "Okavango",'South Africa', 'Kiambu' 'South Africa', 'Kiambu','Laikipia'
       sub_indicator_list:[],
       year_list:[],
       region_placeholder:'Cuvelai',
@@ -116,7 +116,10 @@ export const useCounterStore = defineStore({
       selected_sub_indicator:'',
 
       year_placeholder:'2019',
-      selected_year:''
+      selected_year:'',
+
+      language_placeholder: 'English',
+      language_list:[]
   }),
  
   actions: {
@@ -125,7 +128,7 @@ export const useCounterStore = defineStore({
     },
 
     fetchCountriesList() {
-      this.countries =  ["Limpopo","Cuvelai","Zambezi", "Okavango",'South Africa', 'Kiambu','Laikipia']
+      this.countries =  ["Limpopo","Cuvelai","Zambezi", "Okavango"]
       return this.countries
 
     },
@@ -512,12 +515,13 @@ export const useCounterStore = defineStore({
 
 
     //trial fetchData
-    fetchData(){
-      if(this.selected_basin === 'Kiambu' && this.selected_indicator === 'Exposure' && this.selected_sub_indicator === 'Land Cover' && this.selected_year === '2020'){
-        console.log('kiambu data  fetched')
+    async fetchData(){
+      if(this.selected_basin === 'Cuvelai' && this.selected_indicator === 'Exposure' && this.selected_sub_indicator === 'Land Cover' && this.selected_year === '2020'){
+        console.log('cuvelai data  fetched')
       }else{
         console.log('no data')
       }
+      
     },
 
 
@@ -576,7 +580,12 @@ export const useCounterStore = defineStore({
 
     getRegionList:(state)=>state.countries,
    
-    getIndicatorList:(state)=>state.indicator_list
+    getIndicatorList:(state)=>state.indicator_list,
+
+    getSelectedBasin:(state) => state.selected_basin,
+    getSelectedIndcator: (state) => state.selected_indicator,
+    getSelectedSubIndcator: (state) => state.selected_sub_indicator,
+    getSelectedYear: (state) => state.selected_year
   
     
   },

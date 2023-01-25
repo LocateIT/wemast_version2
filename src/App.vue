@@ -5,7 +5,8 @@
        <Navbar />
     </div>
     <div class="selections">
-      <DashboardSelections />
+      <DashboardSelections
+      @fetchData="fetchWmsData" />
     </div>
     <div class="advanced_filter" @click="show_advanced_filter" >
       <img class="filter_icon" src=" /mapIcons/filter.svg" alt="">
@@ -318,6 +319,8 @@ import { useCounterStore } from '@/stores/counter';
 import AdvancedFilter from './components/AdvancedFilter.vue';
 import Compare from './components/Compare.vue';
 
+import axios from 'axios'
+
 //refs go here
 let advanced_filter = ref(false)
 let compare = ref(false)
@@ -346,6 +349,11 @@ window.type = true;
 var current_geojson = ref(null)
 let loading = ref(false)
 let wmsLayer= ref(null);
+let basin = ref(null)
+let indicator = ref(null)
+let sub_indicator = ref(null)
+let year = ref(null)
+let styles = ref(null)
 
 
 
@@ -593,28 +601,14 @@ const toggle_nav = (e)  => {
       const right_ctrls = document.querySelector(".map_controls");
       right_ctrls.addEventListener("click", (event) => {
         const id = event.target.id;
+        event.stopPropagation();
          console.log("target id ", id);
-        if (
-          ![
-            "zoom_in",
-            "zoom_out",
-            "download_map",
-            'download_tiff',
-            "wemast_base_layers",
-          ].includes(id)
-        ) {
-          try {
-            document.getElementById(`${id}`).style.backgroundColor =
-              "steelblue";
-          } catch (err) {}
-        }
 
-        if (id === "measure") {
+         if (id === "measure") {
           document
             .getElementsByClassName("leaflet-control-measure")[0]
             .dispatchEvent(new Event("click"));
         }
-
         if ([`${id}`]) {
           [id];
         }
@@ -630,10 +624,31 @@ const toggle_nav = (e)  => {
             previous_wemast_ctrl_id.value
           ).style.backgroundColor = "white";
         }
+        if (
+          ![
+            "zoom_in",
+            "zoom_out",
+            "download_map",
+            'download_tiff',
+            "wemast_base_layers",
+          ].includes(id)
+        ) {
+          try {
+            document.getElementById(`${id}`).style.backgroundColor =
+              "white";
+          } catch (err) {}
+        }
+
+        
+
+       
+        
 
         previous_wemast_ctrl_id.value = id;
       });
     }
+
+    
 //hooks
 onMounted( () => {
 
@@ -651,7 +666,7 @@ onMounted( () => {
         zoom: 7,
         // measureControl: true,
         // defaultExtentControl: true,
-        layers: [mapboxSatellite]
+        layers: [mapbox]
       }); // add the basemaps to the controls
 
       L.control.layers(baseMaps.value).addTo(map);
@@ -750,6 +765,7 @@ document
 		console.log(e.layer);
 	});
 
+
 })
 
 
@@ -824,7 +840,7 @@ const getRegion2 = () => {
 //watch for changes
 
 const setSelectedRegion = computed( () => {
-  console.log(storeUserSelections.selected_basin, 'selected_basin homeviiew')
+  console.log(storeUserSelections.selected_basin, 'selected_basin app')
   // if(storeUserSelections.selected_region === 'Nyeri'){
   //     $("#select2").show();
   //   }else{
@@ -836,6 +852,132 @@ watch( setSelectedRegion , () => {
   getRegion()
   
 })
+
+
+
+
+const getBasinName = () => {
+  var selected_basin = storeUserSelections.getSelectedBasin
+  console.log(selected_basin, 'selected basin app')
+  basin.value = selected_basin
+
+}
+
+const setSelectedBasin = computed ( () => {
+  console.log(storeUserSelections.selected_basin, 'selected basin app')
+  return storeUserSelections.getSelectedBasin
+
+})
+watch( setSelectedBasin , () => {
+  getBasinName()
+  
+})
+
+
+
+//indicator 
+const getIndicator = () => {
+  var selectedIndicator= storeUserSelections.getSelectedIndcator
+ console.log(selectedIndicator, 'selected indicator app')
+ indicator.value = selectedIndicator
+
+}
+
+
+const setSelectedIndicator = computed ( () => {
+  console.log(storeUserSelections.selected_indicator, 'selected_indicator app')
+  return storeUserSelections.getSelectedIndcator
+
+})
+watch( setSelectedIndicator , () => {
+  getIndicator()
+  
+})
+
+//access subindicator
+
+const getSubIndicator = () => {
+  var selectedSubIndicator= storeUserSelections.getSelectedSubIndcator
+ console.log(selectedSubIndicator, 'selected sub indicator app')
+ sub_indicator.value = selectedSubIndicator
+
+}
+
+
+const setSelectedSubIndicator = computed ( () => {
+  console.log(storeUserSelections.selected_sub_indicator, 'selected sub_indicator app')
+  return storeUserSelections.getSelectedSubIndcator
+
+})
+watch( setSelectedSubIndicator , () => {
+  getSubIndicator()
+  
+})
+
+
+//access year
+
+const getYear = () => {
+  var selectedYear= storeUserSelections.getSelectedYear
+ console.log(selectedYear, 'selected year app')
+ year.value = selectedYear
+
+}
+
+
+const setSelectedYear = computed ( () => {
+  console.log(storeUserSelections.selected_year, 'selected year app')
+  return storeUserSelections.getSelectedYear
+
+})
+watch( setSelectedYear , () => {
+  getYear()
+  
+})
+
+
+//function to request wms
+
+const fetchWmsData = () => {
+  if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+
+
+  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover'){
+    styles.value = 'cuvelai_lulc'
+  }
+
+  if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover'){
+    styles.value = 'limpopo_lulc'
+  }
+  if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover'){
+    styles.value = 'zambezi_lulc'
+  }
+  if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover'){
+    styles.value = 'okavango_lulc'
+  }
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 2500;
+
+wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/WEMAST/wms?", {
+      pane: 'pane800',
+      layers: 'LULC',
+      crs:L.CRS.EPSG4326,
+      styles: styles.value,
+      format: 'image/png',
+      transparent: true,
+      opacity:1.0,
+      
+     
+});
+
+wmsLayer.value.addTo(map);
+
+
+
+}
+
+
 
 
 //watch state for loading
@@ -859,14 +1001,15 @@ const getKwaleRaster = () => {
 // console.log(selectedLayer, 'selected geoserver layer home')
               
 // var kwaleRaster = storeUserSelections.getSelectRaster
-wmsLayer.value = L.tileLayer.wms("http://localhost:8005/geoserver/rasters/wms", {
-      // pane: 'left',
+map.createPane("pane800").style.zIndex = 500;
+var layer = L.tileLayer.wms("http://localhost:8005/geoserver/rasters/wms", {
+       pane: 'pane800',
       layers: 'rasters:kiambu_clip1',
       format: 'image/png',
       transparent: true,  
       opacity:1
 });
-wmsLayer.value.addTo(map);
+layer.addTo(map);
 
 
 

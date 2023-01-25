@@ -2,11 +2,17 @@
   "name": "wemast_v2",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 4173",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "dev": "vite",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\"",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "preview": "vite preview --port 4173"
   },
+  "main": "background.js",
   "dependencies": {
     "axios": "^0.27.2",
     "leaflet": "^1.8.0",
@@ -15,15 +21,21 @@
     "leaflet.wms": "^0.2.0",
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
+    "vue-i18n": "^9.1.0",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {
+    "@intlify/vue-i18n-loader": "^3.0.0",
     "@rushstack/eslint-patch": "^1.1.4",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/eslint-config-prettier": "^7.0.0",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
     "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
     "prettier": "^2.7.1",
-    "vite": "^3.0.9"
+    "vite": "^3.0.9",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
+    "vue-cli-plugin-i18n": "~2.3.1"
   }
 }

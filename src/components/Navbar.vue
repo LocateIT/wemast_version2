@@ -10,43 +10,25 @@
           <br>
           <span class="wemast_span" style="color:steelblue;font-weight:bold">(WeMAST)</span>
         </div>
-        <!-- <div class="partners_logos">
-            <img class="gmes" src="../assets/logos/Gmes.png" alt="">
-            <img class="au" src="../assets/logos/AU.png" alt="">
-            <img class="eu" src="../assets/logos/EU.png" alt="">
-        </div> -->
+     
         <div class="patners">
             <img src="../assets/logos/SASSCAL.png" alt="" class="WeMast_Dashboard_logos">
             <img src="../assets/logos/Gmes.png" alt="" class="WeMast_Dashboard_logos">
             <img src="../assets/logos/Au.png" alt="" class="WeMast_Dashboard_logos">
             <img src="../assets/logos/EU.png" alt="" class="WeMast_Dashboard_logos">
         </div>
-        <!-- <div class="wemast_logo">
-            <img class="wemast_logo" src="../assets/logos/WeMAST.png" alt="">
-        </div> -->
-        <!-- <div class="nav_icons">
-            <img class="home" src=" /uiIcons/home-landing.svg" alt="">
-            
-            <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
-           
-            <img class="person" src=" /uiIcons/person.svg" alt="">
-            
-            <img class="search" src=" /uiIcons/search.svg" alt="">
-           
 
-        </div> -->
-        <!-- <div class="icon_titles">
-            <span id="home">Home</span>
-            <span id="dashboard">Dashboard</span>
-            <span id="admin">Admin</span>
-            <span id="search">Search</span>
-        </div> -->
+        <div class="languages">
+          <!-- <HelloI18n /> -->
+        </div>
+        
 
     </div>
   
 </template>
 
 <script setup>
+// import HelloI18n from './HelloI18n.vue';
 
 </script>
 
@@ -67,7 +49,7 @@
   margin-top: -6vh !important;
   position: relative;
   left: 15vw;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
  
   
 }
@@ -135,6 +117,13 @@
     gap: 2em;
     margin: 20px;
     width: 36px;
+}
+
+.languages{
+  position: absolute;
+    top: 4vh;
+    left:90vw;
+
 }
 
 

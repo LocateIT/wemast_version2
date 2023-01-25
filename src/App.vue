@@ -660,13 +660,13 @@ onMounted( () => {
   map = L.map("map", {
         zoomControl: false,
         layersControl: false,
-        center: [-29.004029959874842, 23.989915476106987],
+        center: [-19.004029959874842, 23.989915476106987],
         // minZoom: 6.5,
         // maxZoom: 20,
-        zoom: 7,
+        zoom: 5,
         // measureControl: true,
         // defaultExtentControl: true,
-        layers: [mapbox]
+        layers: [mapboxSatellite]
       }); // add the basemaps to the controls
 
       L.control.layers(baseMaps.value).addTo(map);
@@ -972,8 +972,6 @@ wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/WEMAST/wms?
 });
 
 wmsLayer.value.addTo(map);
-
-
 
 }
 

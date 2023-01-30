@@ -38,7 +38,15 @@
             <CustomSelectYear />
         </div>
 
-        <button class="request" type="button" @click="$emit('fetchData')">REQUEST</button>
+        <p class="select_season" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index'">Select Season</p>
+        <div id="season_selection" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index'">
+          <CustomSelectSeason />
+        </div>
+
+
+
+        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
+         'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
         <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
         
@@ -55,6 +63,8 @@ import CustomSelect2 from './CustomSelect2.vue';
 import CustomSelectIndicator from './CustomSelectIndicator.vue';
 import CustomSelectSubIndicator from './CustomSelectSubIndicator.vue'
 import CustomSelectYear from './CustomSelectYear.vue'
+import CustomSelectSeason from './CustomSelectSeason.vue';
+
 
 // let counties = ref(['Limpopo', 'Cuvelai', 'Okavango', 'Zambezi'])
 
@@ -152,8 +162,40 @@ const fetchRegion = () => {
   cursor: pointer;
   z-index: 1200;
 }
+.select_season{
+  position: absolute;
+  top: 0.1vh;
+  left: 40vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+#season_selection{
+  position: absolute;
+  top: 4vh;
+  left: 40vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
 .request{
     position: absolute;
+  top: 4vh;
+  left: 48vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+.request1{
+  position: absolute;
   top: 4vh;
   left: 40vw;
   width: 140px;
@@ -165,6 +207,7 @@ const fetchRegion = () => {
   color: #fff;
   background-color: steelblue;
   cursor: pointer;
+
 }
 
 

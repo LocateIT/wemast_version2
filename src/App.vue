@@ -362,6 +362,7 @@ let basin = ref(null)
 let indicator = ref(null)
 let sub_indicator = ref(null)
 let year = ref(null)
+let season = ref(null)
 let styles = ref(null)
 let band_1 = ref(null)
 
@@ -887,18 +888,13 @@ L.tileLayer.betterWms = function (url, options) {
 
     const getRegion = () => {  
  
-      // loading.value = true
- // console.log(loading.value, 'loading')
-//  if(kiambu)map.removeLayer(kiambu)
-//  if(kiambu_points.value)map.removeLayer(kiambu_points.value)
  if(current_geojson.value)map.removeLayer(current_geojson.value)
+ if(wmsLayer.value)map.removeLayer(wmsLayer.value)
 //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
 
  var selecteRegion = storeUserSelections.getSelectedRegion
  console.log(selecteRegion, 'selected region app')
-//  loading = storeUserSelections.getLoadingState
 
- // console.log(region)
  map.createPane("pane1000").style.zIndex = 1000;
  current_geojson.value = L.geoJSON(selecteRegion, {
          style: {
@@ -912,7 +908,7 @@ L.tileLayer.betterWms = function (url, options) {
  
 
  current_geojson.value.addTo(map)
-// loading.value = false
+
 
            map.fitBounds(current_geojson.value.getBounds(), {
                            padding: [50, 50],
@@ -1058,6 +1054,21 @@ watch( setSelectedYear , () => {
   getYear()
   
 })
+const getSeason = () => {
+  var selectedSeason = storeUserSelections.getSelectedSeason
+  season.value = selectedSeason
+  console.log(season.value, 'selected season app')
+
+}
+const setSelectedSeason = computed ( () => {
+  console.log(storeUserSelections.selected_season, 'selected season app')
+  return storeUserSelections.getSelectedSeason
+
+})
+watch( setSelectedSeason , () => {
+  getSeason()
+  
+})
 
 
 
@@ -1083,12 +1094,29 @@ const fetchWmsData = () => {
   }
 
 
+ 
 
+
+  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Prec Index' ){
+    styles.value = 'cuvelai_spi'
+  }
+
+  if(basin.value === 'Limpopo' && sub_indicator.value === 'Prec Index' ){
+    styles.value = 'limpopo_spi'
+  }
+  if(basin.value === 'Zambezi' && sub_indicator.value === 'Prec Index' ){
+    styles.value = 'zambezi_spi'
+  }
+  if(basin.value === 'Okavango' && sub_indicator.value === 'Prec Index' ){
+    styles.value = 'okavango_spi'
+  }
 
  
-  
-  // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 500;
+
+if(sub_indicator.value === 'Land Cover') {
+
+   // console.log('just to see if request is accessed') //accessed
+   map.createPane("pane800").style.zIndex = 500;
 
 wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
       pane: 'pane800',
@@ -1105,11 +1133,43 @@ wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/
 
 
 wmsLayer.value.addTo(map);
-console.log(wmsLayer.value, 'wms')
+// console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
      loading.value = false
 });
+}
+
+if(sub_indicator.value === 'Prec Index') {
+
+// console.log('just to see if request is accessed') //accessed
+map.createPane("pane800").style.zIndex = 500;
+
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
+   pane: 'pane800',
+   layers: `SPI_WET:${year.value}`,
+   crs:L.CRS.EPSG4326,
+   styles: styles.value,
+   format: 'image/png',
+   transparent: true,
+   opacity:1.0
+   // CQL_FILTER: "Band1='1.0'"
+   
+  
+});
+
+
+wmsLayer.value.addTo(map);
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+  loading.value = false
+});
+}
+
+ 
+  
+ 
 
 
 }

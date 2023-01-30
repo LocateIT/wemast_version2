@@ -119,7 +119,10 @@ export const useCounterStore = defineStore({
       selected_year:'',
 
       language_placeholder: 'English',
-      language_list:[]
+      language_list:[],
+      season_list:[],
+      season_placeholder: 'Wet',
+      selected_season: ''
   }),
  
   actions: {
@@ -136,39 +139,28 @@ export const useCounterStore = defineStore({
       this.indicator_list = ['Exposure', 'Sensitivity','Resiliance']
     },
     fetchSubIndicatorList(){
-      this.sub_indicator_list = ['Land Cover', 'Vegetation Cover', "Wetland Inventory"]
+      
+      if(this.selected_indicator === 'Exposure'){
+        this.sub_indicator_list = ['Land Cover', 'Vegetation Cover', "Wetland Inventory"]
+      }
+      if(this.selected_indicator === 'Sensitivity'){
+        this.sub_indicator_list = ['Water Quality', 'Soil Moisure Index']
+      }
+      if(this.selected_indicator === 'Resiliance' ){
+        this.sub_indicator_list = ['Burnt Area', 'Prec Index', 'Undulation']
+      }
     },
     fetchYearList(){
       this.year_list = ["1992","1993","1994","1995","1996","1992","1998","1999","2000","2001","2002","2003","2004","2005","2006",
       "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
         '2018','2019','2020', '2021', "2022"]
     },
-
-
-    fetchKiambuCounty() {
-      const sendGetRequest = async () => {
-        try {
-          // this.loading = true 
-            const resp = await  axios.get(baseurl+'/AdminData/get_adm1_shapefile?Get_county=Kiambu'
-            );
-            
-
-            this.current_geojson = resp.data
-            console.log(resp.data, 'await response data');
-           
-        } catch (err) {
-            // Handle Error Here
-            console.error('an error occured'+err);
-        }
-        // finally  { if (this.current_geojson)this.loading = false
-      
-        // }
-        return resp.data
-    };
-
-    sendGetRequest();
-
+    fetchSeasonsList(){
+      this.season_list = ['Wet', 'Dry']
     },
+
+
+   
     showSelectedCountry(option){
      this.region_placeholder = option;
 				console.log(option, 'selected basin ')
@@ -242,6 +234,13 @@ export const useCounterStore = defineStore({
 
       this.selected_year=  option
       console.log(this.selected_year , 'changed selected year')
+    },
+    showSelectedSeason(option) {
+      this.season_placeholder = option;
+      console.log(option, 'selected season ')
+
+      this.selected_season=  option
+      console.log(this.selected_season , 'changed selected season')
     },
 
     
@@ -596,7 +595,8 @@ export const useCounterStore = defineStore({
     getSelectedBasin:(state) => state.selected_basin,
     getSelectedIndcator: (state) => state.selected_indicator,
     getSelectedSubIndcator: (state) => state.selected_sub_indicator,
-    getSelectedYear: (state) => state.selected_year
+    getSelectedYear: (state) => state.selected_year,
+    getSelectedSeason: (state) => state.selected_season
   
     
   },

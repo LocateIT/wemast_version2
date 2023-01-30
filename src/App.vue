@@ -1140,7 +1140,7 @@ wmsLayer.value.on('load', function (event) {
 });
 }
 
-if(sub_indicator.value === 'Prec Index') {
+if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
 
 // console.log('just to see if request is accessed') //accessed
 map.createPane("pane800").style.zIndex = 500;
@@ -1148,6 +1148,33 @@ map.createPane("pane800").style.zIndex = 500;
 wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
    pane: 'pane800',
    layers: `SPI_WET:${year.value}`,
+   crs:L.CRS.EPSG4326,
+   styles: styles.value,
+   format: 'image/png',
+   transparent: true,
+   opacity:1.0
+   // CQL_FILTER: "Band1='1.0'"
+   
+  
+});
+
+
+wmsLayer.value.addTo(map);
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+  loading.value = false
+});
+}
+
+if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
+
+// console.log('just to see if request is accessed') //accessed
+map.createPane("pane800").style.zIndex = 500;
+
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
+   pane: 'pane800',
+   layers: `SPI_DRY:${year.value}`,
    crs:L.CRS.EPSG4326,
    styles: styles.value,
    format: 'image/png',

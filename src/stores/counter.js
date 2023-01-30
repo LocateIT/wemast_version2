@@ -156,7 +156,7 @@ export const useCounterStore = defineStore({
         '2018','2019','2020', '2021', "2022"]
     },
     fetchSeasonsList(){
-      this.season_list = ['Wet', 'Dry']
+      this.season_list = ['Wet', 'DRY']
     },
 
 

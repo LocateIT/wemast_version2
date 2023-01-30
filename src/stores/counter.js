@@ -187,7 +187,7 @@ export const useCounterStore = defineStore({
       if(data) {
         const sendGetRequest = async () => {
           try {
-            // this.loading = true;
+            this.loading = true;
               const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/aoi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aoi%3A${data}&maxFeatures=50&outputFormat=application%2Fjson`
               );
               
@@ -200,9 +200,8 @@ export const useCounterStore = defineStore({
                 return item
               })
               
-              // this.loading = false;
-              // this.crs = resp.data.crs.properties.name
-              // console.log(this.crs, 'crs')
+              this.loading = false;
+             
               return resp.data
           } catch (err) {
               // Handle Error Here

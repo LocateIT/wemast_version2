@@ -887,7 +887,7 @@ L.tileLayer.betterWms = function (url, options) {
 
     const getRegion = () => {  
  
-//  loading = true
+      // loading.value = true
  // console.log(loading.value, 'loading')
 //  if(kiambu)map.removeLayer(kiambu)
 //  if(kiambu_points.value)map.removeLayer(kiambu_points.value)
@@ -912,7 +912,7 @@ L.tileLayer.betterWms = function (url, options) {
  
 
  current_geojson.value.addTo(map)
-// loading = false
+// loading.value = false
 
            map.fitBounds(current_geojson.value.getBounds(), {
                            padding: [50, 50],
@@ -920,37 +920,37 @@ L.tileLayer.betterWms = function (url, options) {
  
 }
 
-const getRegion2 = () => {  
+// const getRegion2 = () => {  
  
- //  loading = true
-  // console.log(loading.value, 'loading')
- //  if(kiambu)map.removeLayer(kiambu)
- //  if(kiambu_points.value)map.removeLayer(kiambu_points.value)
-  if(current_geojson.value)map.removeLayer(current_geojson.value)
- //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
+//  //  loading = true
+//   // console.log(loading.value, 'loading')
+//  //  if(kiambu)map.removeLayer(kiambu)
+//  //  if(kiambu_points.value)map.removeLayer(kiambu_points.value)
+//   if(current_geojson.value)map.removeLayer(current_geojson.value)
+//  //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
  
-  var selecteRegion = storeUserSelections.getSelectedRegion
-  console.log(selecteRegion, 'selected region app')
- //  loading = storeUserSelections.getLoadingState
+//   var selecteRegion = storeUserSelections.getSelectedRegion
+//   console.log(selecteRegion, 'selected region app')
+//  //  loading = storeUserSelections.getLoadingState
  
-  // console.log(region)
-  current_geojson.value = L.geoJSON(selecteRegion, {
-          style: {
-            color: "magenta",
-            opacity: 0.8
-          }
-         //  pane: 'right'
-           })
+//   // console.log(region)
+//   current_geojson.value = L.geoJSON(selecteRegion, {
+//           style: {
+//             color: "magenta",
+//             opacity: 0.8
+//           }
+//          //  pane: 'right'
+//            })
   
  
-  current_geojson.value.addTo(map)
- // loading = false
+//   current_geojson.value.addTo(map)
+//  // loading = false
  
-            map.fitBounds(current_geojson.value.getBounds(), {
-                            padding: [50, 50],
-                          }); 
+//             map.fitBounds(current_geojson.value.getBounds(), {
+//                             padding: [50, 50],
+//                           }); 
   
- }
+//  }
  
 
  

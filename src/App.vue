@@ -283,7 +283,7 @@
 
 
         <div  class="spinner"  v-if="loading">
-            <img src="../assets/loader_white.svg" alt="">
+            <img src="/uiIcons/loader_white.svg" alt="">
         </div>
              
 
@@ -362,6 +362,7 @@ let indicator = ref(null)
 let sub_indicator = ref(null)
 let year = ref(null)
 let styles = ref(null)
+let band_1 = ref(null)
 
 
 
@@ -775,8 +776,111 @@ document
 	});
 
 
-})
+})//OnMounted end
 
+
+
+
+L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
+  
+  onAdd: function (map) {
+    // Triggered when the layer is added to a map.
+    //   Register a click listener, then do all the upstream WMS things
+    L.TileLayer.WMS.prototype.onAdd.call(this, map);
+    map.on('click' , this.getFeatureInfo, this);
+  },
+  
+  onRemove: function (map) {
+    // Triggered when the layer is removed from a map.
+    //   Unregister a click listener, then do all the upstream WMS things
+    L.TileLayer.WMS.prototype.onRemove.call(this, map);
+    map.off('click', this.getFeatureInfo, this);
+  },
+  
+  getFeatureInfo: function (evt) {
+    // Make an AJAX request to the server and hope for the best
+    var url = this.getFeatureInfoUrl(evt.latlng),
+        showResults = L.Util.bind(this.showGetFeatureInfo, this);
+    $.ajax({
+      url: url,
+      success: function (data, status, xhr) {
+        var err = typeof data === 'string' ? null : data;
+        showResults(err, evt.latlng, data);
+      },
+      error: function (xhr, status, error) {
+        showResults(error);  
+      }
+    });
+  },
+  
+  getFeatureInfoUrl: function (latlng) {
+    // Construct a GetFeatureInfo request URL given a point
+    var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
+    
+        size = this._map.getSize(),
+        
+        params = {
+          request: 'GetFeatureInfo',
+          service: 'WMS',
+          srs: 'EPSG:4326',
+          styles: this.wmsParams.styles,
+          transparent: this.wmsParams.transparent,
+          version: this.wmsParams.version,      
+          format: this.wmsParams.format,
+          bbox: this._map.getBounds().toBBoxString(),
+          height: size.y,
+          width: size.x,
+          layers: this.wmsParams.layers,
+          query_layers: this.wmsParams.layers,
+          // X: point.x,
+          // Y: point.y,
+          info_format: 'application/json'
+        };
+    
+    params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
+    params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+    console.log(point, 'point')
+  
+    console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+    
+    return this._url + L.Util.getParamString(params, this._url, true);
+  },
+  
+  showGetFeatureInfo: function (err, latlng, content) {
+    if (err) {
+      // console.log(latlng, 'lat long')
+
+    
+      ;
+      console.log(latlng, 'wms latlng')
+      console.log(content, "wms content")
+      var band1 = content.features[0].properties.Band1
+    
+    band_1.value = band1
+    console.log(typeof(band1), 'type wms band 1')
+    band1.addTo(map)
+        return  
+        // console.log(latlng, 'lat long');
+      
+      } // do nothing if there's an error
+   
+      
+    // Otherwise show the content in a popup, or something.
+ 
+    // L.popup({ maxWidth: 800})
+    //   .setLatLng(latlng)
+    //   .setContent( content)
+    //   .openOn(this._map);
+
+  
+  }
+}); //end of L.extend
+
+
+
+L.tileLayer.betterWms = function (url, options) {
+  return new L.TileLayer.BetterWMS(url, options);  
+};
 
     //function to get regions 
 
@@ -928,8 +1032,9 @@ watch( setSelectedSubIndicator , () => {
 
 const getYear = () => {
   var selectedYear= storeUserSelections.getSelectedYear
- console.log(selectedYear, 'selected year app')
+
  year.value = selectedYear
+ console.log(year.value, 'selected year app')
 
 }
 
@@ -946,97 +1051,6 @@ watch( setSelectedYear , () => {
 
 
 
-L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
-  
-  onAdd: function (map) {
-    // Triggered when the layer is added to a map.
-    //   Register a click listener, then do all the upstream WMS things
-    L.TileLayer.WMS.prototype.onAdd.call(this, map);
-    map.on('click', console.log('better wms function click') , this.getFeatureInfo, this);
-  },
-  
-  onRemove: function (map) {
-    // Triggered when the layer is removed from a map.
-    //   Unregister a click listener, then do all the upstream WMS things
-    L.TileLayer.WMS.prototype.onRemove.call(this, map);
-    map.off('click', this.getFeatureInfo, this);
-  },
-  
-  getFeatureInfo: function (evt) {
-    // Make an AJAX request to the server and hope for the best
-    var url = this.getFeatureInfoUrl(evt.latlng),
-        showResults = L.Util.bind(this.showGetFeatureInfo, this);
-    $.ajax({
-      url: url,
-      success: function (data, status, xhr) {
-        var err = typeof data === 'string' ? null : data;
-        showResults(err, evt.latlng, data);
-      },
-      error: function (xhr, status, error) {
-        showResults(error);  
-      }
-    });
-  },
-  
-  getFeatureInfoUrl: function (latlng) {
-    // Construct a GetFeatureInfo request URL given a point
-    var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
-        size = this._map.getSize(),
-        
-        params = {
-          request: 'GetFeatureInfo',
-          service: 'WMS',
-          srs: 'EPSG:4326',
-          styles: this.wmsParams.styles,
-          transparent: this.wmsParams.transparent,
-          version: this.wmsParams.version,      
-          format: this.wmsParams.format,
-          bbox: this._map.getBounds().toBBoxString(),
-          height: size.y,
-          width: size.x,
-          layers: this.wmsParams.layers,
-          query_layers: this.wmsParams.layers,
-          info_format: 'application/json'
-        };
-    
-    params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
-    params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-    
-    return this._url + L.Util.getParamString(params, this._url, true);
-  },
-  
-  showGetFeatureInfo: function (err, latlng, content) {
-    if (err) {
-      // console.log(latlng, 'lat long')
-      
-      
-
-      console.log(content, 'wms content')
-    
-
-
-        return  
-        // console.log(latlng, 'lat long');
-      
-      } // do nothing if there's an error
-   
-  
-    // Otherwise show the content in a popup, or something.
-    // L.popup({ maxWidth: 800})
-    //   .setLatLng(latlng)
-    //   .setContent(content)
-    //   .openOn(this._map);
-  }
-}); //end of L.extend
-
-
-
-L.tileLayer.betterWms = function (url, options) {
-  return new L.TileLayer.BetterWMS(url, options);  
-};
-
-
-
 //function to request wms
 
 const fetchWmsData = () => {
@@ -1044,17 +1058,17 @@ const fetchWmsData = () => {
   if(wmsLayer.value)map.removeLayer(wmsLayer.value)
 
 
-  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover'){
+  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
     styles.value = 'cuvelai_lulc'
   }
 
-  if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover'){
+  if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover' ){
     styles.value = 'limpopo_lulc'
   }
-  if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover'){
+  if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover' ){
     styles.value = 'zambezi_lulc'
   }
-  if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover'){
+  if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
     styles.value = 'okavango_lulc'
   }
 
@@ -1064,21 +1078,25 @@ const fetchWmsData = () => {
  
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 2500;
+  map.createPane("pane800").style.zIndex = 500;
 
-wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/WEMAST/wms?", {
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
       pane: 'pane800',
-      layers: 'LULC',
+      layers: `LULC:${year.value}`,
+      // srs: EPSG4326,
       crs:L.CRS.EPSG4326,
       styles: styles.value,
       format: 'image/png',
       transparent: true,
-      opacity:1.0,
+      opacity:1.0
+      // CQL_FILTER: "Band1='1.0'"
       
      
 });
 
+
 wmsLayer.value.addTo(map);
+console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
      loading.value = false

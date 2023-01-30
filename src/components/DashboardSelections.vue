@@ -6,6 +6,7 @@
         </select> -->
         <div id="region_selection">
           <CustomSelect2
+          @input="fetchRegion"
        
         
        />
@@ -63,6 +64,9 @@ const storeUserSelections = useCounterStore()
 //   console.log('fetch!')
 
 // }
+const fetchRegion = () => {
+  console.log('fetched region')
+}
 
 </script>
 

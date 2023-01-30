@@ -6,7 +6,8 @@
     </div>
     <div class="selections">
       <DashboardSelections
-      @fetchData="fetchWmsData" />
+      @fetchData="fetchWmsData" 
+      @fetchRegion="getWemastRegion"/>
     </div>
     <div class="advanced_filter" @click="show_advanced_filter" >
       <img class="filter_icon" src=" /mapIcons/filter.svg" alt="">
@@ -898,12 +899,15 @@ L.tileLayer.betterWms = function (url, options) {
 //  loading = storeUserSelections.getLoadingState
 
  // console.log(region)
+ map.createPane("pane1000").style.zIndex = 1000;
  current_geojson.value = L.geoJSON(selecteRegion, {
          style: {
            color: "black",
-           opacity: 0.8
-         }
-        //  pane: 'right'
+           opacity: 1,
+           fillOpacity:0,
+           weight: 4
+         },
+         pane: 'pane1000'
           })
  
 
@@ -949,7 +953,10 @@ const getRegion2 = () => {
  }
  
 
+ 
 
+
+ 
 //watch for changes
 
 const setSelectedRegion = computed( () => {
@@ -971,13 +978,15 @@ watch( setSelectedRegion , () => {
 
 const getBasinName = () => {
   var selected_basin = storeUserSelections.getSelectedBasin
-  console.log(selected_basin, 'selected basin app')
+  
   basin.value = selected_basin
+  console.log(selected_basin, 'selected basin app')
 
 }
 
 const setSelectedBasin = computed ( () => {
   console.log(storeUserSelections.selected_basin, 'selected basin app')
+
   return storeUserSelections.getSelectedBasin
 
 })
@@ -985,6 +994,7 @@ watch( setSelectedBasin , () => {
   getBasinName()
   
 })
+
 
 
 
@@ -1083,7 +1093,6 @@ const fetchWmsData = () => {
 wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
       pane: 'pane800',
       layers: `LULC:${year.value}`,
-      // srs: EPSG4326,
       crs:L.CRS.EPSG4326,
       styles: styles.value,
       format: 'image/png',

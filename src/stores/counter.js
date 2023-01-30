@@ -179,6 +179,8 @@ export const useCounterStore = defineStore({
       console.log(this.selected_basin , 'changed selected basin')
       // // return selected_country
       var data = this.selected_basin
+
+      
      
 //using async await
 
@@ -186,12 +188,18 @@ export const useCounterStore = defineStore({
         const sendGetRequest = async () => {
           try {
             // this.loading = true;
-              const resp = await  axios.get(baseurl+'/AdminData/get_adm1_shapefile?Get_county='+data
+              const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/aoi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aoi%3A${data}&maxFeatures=50&outputFormat=application%2Fjson`
               );
               
 
               this.current_geojson = resp.data
-              console.log(resp.data, 'await response data');
+              
+              console.log(resp.data.features, 'geoserver geojson');
+              var object = resp.data.features.map( (item) => {
+                console.log(item, 'object items')
+                return item
+              })
+              
               // this.loading = false;
               // this.crs = resp.data.crs.properties.name
               // console.log(this.crs, 'crs')
@@ -208,6 +216,8 @@ export const useCounterStore = defineStore({
       sendGetRequest();
 
       }
+
+      
 
       
 

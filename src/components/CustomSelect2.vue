@@ -11,7 +11,9 @@
     
 	                <li :class="{ current : item === storeUserSelections.region_placeholder }" 
 					v-for="item in storeUserSelections.countries" :key="item"
-					 @click="storeUserSelections.showSelectedCountry(item)"   >{{ item }}</li>
+					 @click="storeUserSelections.showSelectedCountry(item)"   
+					
+					>{{ item }}</li>
                     
 	            </ul>
 	        </div>
@@ -54,7 +56,7 @@
 
 
 			}
-
+			
 		
 
 				

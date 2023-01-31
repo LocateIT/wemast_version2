@@ -369,8 +369,8 @@ let styles = ref(null)
 let band_1 = ref(null)
 let lulc_legend = ref(false)
 let prec_legend = ref(false)
-let legend_url = 'http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=30&HEIGHT=30&LAYER=LULC:1992&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
-let prec_legend_url = 'http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=30&HEIGHT=30&LAYER=SPI_WET:2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+let legend_url = 'http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=30&HEIGHT=30&LAYER=LULC:1992&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:6;bgColor:0xFFFFEE;dpi:180'
+let prec_legend_url ='http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=SPI_WET:2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:6;bgColor:0xFFFFEE;dpi:180'
 
 
 
@@ -1147,7 +1147,8 @@ wmsLayer.value.on('load', function (event) {
      loading.value = false
 });
 
-addLulcLegend()
+// addLulcLegend()
+lulclegendContent()
 
 
 
@@ -1178,7 +1179,9 @@ wmsLayer.value.addTo(map);
 wmsLayer.value.on('load', function (event) {
   loading.value = false
 });
-addPrecLegend()
+preclegendContent()
+
+
 }
 
 if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
@@ -1206,53 +1209,13 @@ wmsLayer.value.addTo(map);
 wmsLayer.value.on('load', function (event) {
   loading.value = false
 });
-addPrecLegend()
+preclegendContent()
 
 
 }
 
- 
-  
- 
-
 
 }
-const addLulcLegend = () => {
-  if(prec_legend.value)map.removeControl(prec_legend.value)
-if(lulc_legend.value)map.removeControl(lulc_legend.value)
-
-var legend = L.control({ position: "bottomright" });
-lulc_legend.value = legend
-
-lulc_legend.value.onAdd = function(map) {
-  var div = L.DomUtil.create("div", "legend");
-  div.innerHTML += " <img src="+ legend_url +" height='200' width='120'>"
-  
-  return div;
-};
-
-lulc_legend.value.addTo(map);
-
-}
-
-
-const addPrecLegend = () => {
-  if(lulc_legend.value)map.removeControl(lulc_legend.value)
-  if(prec_legend.value)map.removeControl(prec_legend.value)
-
-var legend = L.control({ position: "bottomright" });
-prec_legend.value = legend
-
-prec_legend.value.onAdd = function(map) {
-  var div = L.DomUtil.create("div", "legend");
-  div.innerHTML += " <img src="+ prec_legend_url +" height='200' width='150'>"
-  
-  return div;
-};
-
-prec_legend.value.addTo(map);
-}
-
 
 
 
@@ -1269,28 +1232,107 @@ const setLoadingState= computed( () => {
 })
 
 
-const getKwaleRaster = () => {
+const lulclegendContent = () => {
+  const getLegendContent = async () => {
+    try {
+      const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+      )
+      console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+      var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+     var label_array =  object_array.map( (item) => {
+       console.log(item.label, 'labels items array') 
+       return item.label
+      })
+      console.log(label_array, 'label array')
 
-// if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-
-// var selectedLayer= storeUserSelections.getSelectedLayerName
-// console.log(selectedLayer, 'selected geoserver layer home')
-              
-// var kwaleRaster = storeUserSelections.getSelectRaster
-map.createPane("pane800").style.zIndex = 500;
-var layer = L.tileLayer.wms("http://localhost:8005/geoserver/rasters/wms", {
-       pane: 'pane800',
-      layers: 'rasters:kiambu_clip1',
-      format: 'image/png',
-      transparent: true,  
-      opacity:1
-});
-layer.addTo(map);
+      var colors_array = object_array.map( (item)=> {
+       return item.color
+      })
+      console.log(colors_array, 'colors array')
 
 
+      if(prec_legend.value)map.removeControl(prec_legend.value)
+      if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
+      var legend = L.control({ position: "bottomright" });
+      lulc_legend.value = legend
+      var colors = colors_array
+      var labels = label_array
+
+      lulc_legend.value.onAdd = function(map) {
+          var div = L.DomUtil.create("div", "legend");
+          div.innerHTML += `<h4>${sub_indicator.value} ${year.value}</h4>`;
+          for (var i = 0; i < colors.length; i++) {
+                div.innerHTML +=
+                    ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+            }
+  
+  
+
+  return div;
+};
+
+lulc_legend.value.addTo(map);
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+  getLegendContent()
 }
 
+
+
+const preclegendContent = () => {
+  const getLegendContent = async () => {
+    try {
+      const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SPI_WET:2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150'
+      )
+      console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+      var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+     var label_array =  object_array.map( (item) => {
+       console.log(item.label, 'labels items array') 
+       return item.label
+      })
+      console.log(label_array, 'label array')
+
+      var colors_array = object_array.map( (item)=> {
+       return item.color
+      })
+      console.log(colors_array, 'colors array')
+
+
+      if(prec_legend.value)map.removeControl(prec_legend.value)
+      if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+      var legend = L.control({ position: "bottomright" });
+      prec_legend.value = legend
+      var colors = colors_array
+      var labels = label_array
+
+      prec_legend.value.onAdd = function(map) {
+          var div = L.DomUtil.create("div", "legend");
+          div.innerHTML += `<p>${sub_indicator.value} ${year.value} ${season.value} Season</p>`;
+          for (var i = 0; i < colors.length; i++) {
+                div.innerHTML +=
+                    ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+            }
+  
+  
+
+  return div;
+};
+
+prec_legend.value.addTo(map);
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+  getLegendContent()
+}
 </script>
 
 <style scoped>

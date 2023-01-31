@@ -286,7 +286,9 @@
         <div  class="spinner"  v-if="loading">
             <img src="/uiIcons/loader_white.svg" alt="">
         </div>
-             
+
+
+     
 
   </div>
   
@@ -365,6 +367,10 @@ let year = ref(null)
 let season = ref(null)
 let styles = ref(null)
 let band_1 = ref(null)
+let lulc_legend = ref(false)
+let prec_legend = ref(false)
+let legend_url = 'http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=30&HEIGHT=30&LAYER=LULC:1992&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+let prec_legend_url = 'http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=30&HEIGHT=30&LAYER=SPI_WET:2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
 
 
 
@@ -1133,11 +1139,26 @@ wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/
 
 
 wmsLayer.value.addTo(map);
+
+
 // console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
      loading.value = false
 });
+
+if(prec_legend.value)map.removeControl(prec_legend.value)
+var legend = L.control({ position: "bottomright" });
+lulc_legend.value = legend
+
+lulc_legend.value.onAdd = function(map) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += " <img src="+ legend_url +" height='200' width='120'>"
+  
+  return div;
+};
+
+lulc_legend.value.addTo(map);
 }
 
 if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
@@ -1192,6 +1213,20 @@ wmsLayer.value.addTo(map);
 wmsLayer.value.on('load', function (event) {
   loading.value = false
 });
+
+if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+var legend = L.control({ position: "bottomright" });
+prec_legend.value = legend
+
+prec_legend.value.onAdd = function(map) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += " <img src="+ prec_legend_url +" height='200' width='150'>"
+  
+  return div;
+};
+
+prec_legend.value.addTo(map);
 }
 
  

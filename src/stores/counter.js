@@ -122,7 +122,12 @@ export const useCounterStore = defineStore({
       language_list:[],
       season_list:[],
       season_placeholder: 'Wet',
-      selected_season: ''
+      selected_season: '',
+      //visibility for custom selects
+      visible_region: null,
+      visible_indicator: null,
+      visible_sub_indicator: null,
+      visible_year: null,
   }),
  
   actions: {

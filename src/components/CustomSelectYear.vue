@@ -25,6 +25,8 @@
   import {useCounterStore } from '../stores/counter';
   const storeUserSelections = useCounterStore()
 
+ 
+
 
           let placeholder = ref('2019')
         //   let list = ['2019', '2020', '2021', '2022']
@@ -34,6 +36,10 @@
       
           const toggle = () => {
               visible.value = !visible.value;
+              storeUserSelections.visible_year = visible.value
+              if(storeUserSelections.visible_sub_indicator = true){
+                storeUserSelections.visible_sub_indicator = false
+              }
               storeUserSelections.fetchYearList()
           }
           const select = (option) =>{

@@ -34,6 +34,7 @@
       
           const toggle = () => {
               visible.value = !visible.value;
+              storeUserSelections.visible_sub_indicator = visible.value
               storeUserSelections.fetchSubIndicatorList()
           }
           const select = (option) =>{

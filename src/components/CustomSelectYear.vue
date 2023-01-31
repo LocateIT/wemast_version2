@@ -60,6 +60,7 @@ left:-0.52vw;
 width: 140px;
 border-radius: 30px;
 cursor: pointer;
+
       }
           .arrow {
               position: absolute;
@@ -87,6 +88,7 @@ cursor: pointer;
       
       ul {
           width: 100%;
+          height: 145px;
           list-style-type: none;
           padding: 8px;
           margin: 0;
@@ -98,11 +100,14 @@ cursor: pointer;
     background: STEELBLUE;
     border-radius: 7px;
     z-index: 5000;
+    overflow-y:scroll;
       }
+      
       li {
           padding: 12px;
           color: white;
     border-top: white 1px solid;
+
   
 }
 .border_bottom{
@@ -113,6 +118,7 @@ cursor: pointer;
           li:hover {
               color: white;
               background: rgb(62, 114, 156);
+
           }
       
       
@@ -122,5 +128,7 @@ cursor: pointer;
       .visible {
           visibility: visible;
       }
+
+      
   
 </style>

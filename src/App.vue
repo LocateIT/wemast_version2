@@ -1147,18 +1147,10 @@ wmsLayer.value.on('load', function (event) {
      loading.value = false
 });
 
-if(prec_legend.value)map.removeControl(prec_legend.value)
-var legend = L.control({ position: "bottomright" });
-lulc_legend.value = legend
+addLulcLegend()
 
-lulc_legend.value.onAdd = function(map) {
-  var div = L.DomUtil.create("div", "legend");
-  div.innerHTML += " <img src="+ legend_url +" height='200' width='120'>"
-  
-  return div;
-};
 
-lulc_legend.value.addTo(map);
+
 }
 
 if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
@@ -1186,6 +1178,7 @@ wmsLayer.value.addTo(map);
 wmsLayer.value.on('load', function (event) {
   loading.value = false
 });
+addPrecLegend()
 }
 
 if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
@@ -1213,8 +1206,39 @@ wmsLayer.value.addTo(map);
 wmsLayer.value.on('load', function (event) {
   loading.value = false
 });
+addPrecLegend()
 
+
+}
+
+ 
+  
+ 
+
+
+}
+const addLulcLegend = () => {
+  if(prec_legend.value)map.removeControl(prec_legend.value)
 if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+var legend = L.control({ position: "bottomright" });
+lulc_legend.value = legend
+
+lulc_legend.value.onAdd = function(map) {
+  var div = L.DomUtil.create("div", "legend");
+  div.innerHTML += " <img src="+ legend_url +" height='200' width='120'>"
+  
+  return div;
+};
+
+lulc_legend.value.addTo(map);
+
+}
+
+
+const addPrecLegend = () => {
+  if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  if(prec_legend.value)map.removeControl(prec_legend.value)
 
 var legend = L.control({ position: "bottomright" });
 prec_legend.value = legend
@@ -1227,13 +1251,6 @@ prec_legend.value.onAdd = function(map) {
 };
 
 prec_legend.value.addTo(map);
-}
-
- 
-  
- 
-
-
 }
 
 

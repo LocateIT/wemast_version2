@@ -1322,6 +1322,7 @@ const lulclegendContent = () => {
 
 
       if(prec_legend.value)map.removeControl(prec_legend.value)
+      if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
       if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
       var legend = L.control({ position: "bottomright" });
@@ -1331,7 +1332,7 @@ const lulclegendContent = () => {
 
       lulc_legend.value.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += `<h4>${sub_indicator.value} ${year.value}</h4>`;
+          div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${year.value}</p>`;
           for (var i = 0; i < colors.length; i++) {
                 div.innerHTML +=
                     ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -1375,6 +1376,7 @@ const preclegendContent = () => {
 
       if(prec_legend.value)map.removeControl(prec_legend.value)
       if(lulc_legend.value)map.removeControl(lulc_legend.value)
+      if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
 
       var legend = L.control({ position: "bottomright" });
       prec_legend.value = legend
@@ -1383,7 +1385,7 @@ const preclegendContent = () => {
 
       prec_legend.value.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += `<p>${sub_indicator.value} ${year.value} ${season.value} Season</p>`;
+          div.innerHTML += `<p>${basin.value} ${sub_indicator.value} ${year.value} ${season.value} Season</p>`;
           for (var i = 0; i < colors.length; i++) {
                 div.innerHTML +=
                     ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -1433,7 +1435,7 @@ const NDWIlegendContent = () => {
 
       ndwi_legend.value.onAdd = function(map) {
           var div = L.DomUtil.create("div", "legend");
-          div.innerHTML += `<p>${parameter.value} ${year.value}</p>`;
+          div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
           for (var i = 0; i < colors.length; i++) {
                 div.innerHTML +=
                     ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';

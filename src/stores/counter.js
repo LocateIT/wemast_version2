@@ -170,7 +170,14 @@ export const useCounterStore = defineStore({
       this.season_list = ['Wet', 'DRY']
     },
     fetchParameterList(){
-      this.parameter_list = ['Nitrogen Content', 'Turbidity', 'Sus Sediments']
+    
+      if(this.selected_sub_indicator === 'Wetland Inventory'){
+        this.parameter_list = ['Wetland Extent', 'Wetland Status']
+
+      }
+      if(this.selected_sub_indicator === 'Water Quality'){
+        this.parameter_list = ['Nitrogen Content', 'Turbidity', 'Sus Sediments']
+      }
 
     },
     fetchSatelliteList(){

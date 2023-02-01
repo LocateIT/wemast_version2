@@ -63,8 +63,12 @@
 
 
 
-        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality'),
-         'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area' || storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
+        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 
+        'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || 
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
+         'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' ||
+         storeUserSelections.selected_sub_indicator === 'Burnt Area' || 
+         storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
         <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
         

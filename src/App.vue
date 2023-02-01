@@ -365,6 +365,7 @@ let indicator = ref(null)
 let sub_indicator = ref(null)
 let year = ref(null)
 let season = ref(null)
+let parameter = ref(null)
 let styles = ref(null)
 let band_1 = ref(null)
 let lulc_legend = ref(false)
@@ -1133,6 +1134,22 @@ const fetchWmsData = () => {
     styles.value = 'okavango_spi'
   }
 
+
+  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory'){
+    styles.value = 'cuvelai_water'
+  }
+  if(basin.value === 'Limpopo' && sub_indicator.value === 'Wetland Inventory'){
+    styles.value = 'limpopo_water'
+  }
+  if(basin.value === 'Zambezi' && sub_indicator.value === 'Wetland Inventory'){
+    styles.value = 'zambezi_water'
+  }
+  if(basin.value === 'Okavango' && sub_indicator.value === 'Wetland Inventory'){
+    styles.value = 'okavango_water'
+  }
+
+ 
+
  
 
 if(sub_indicator.value === 'Land Cover') {
@@ -1230,6 +1247,40 @@ preclegendContent()
 
 }
 
+
+if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
+
+// console.log('just to see if request is accessed') //accessed
+map.createPane("pane800").style.zIndex = 500;
+
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+   pane: 'pane800',
+   layers: `NDWI:${year.value}`,
+   crs:L.CRS.EPSG4326,
+   styles: styles.value,
+   format: 'image/png',
+   transparent: true,
+   opacity:1.0
+   // CQL_FILTER: "Band1='1.0'"
+   
+  
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+  loading.value = false
+});
+
+
+
+
+
+}
 
 }
 

@@ -33,8 +33,10 @@
             <CustomSelectSubIndicator />
         </div>
 
-        <p class="select_year">Select Year</p>
-        <div id="year_selection">
+        <p  :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality'),
+         'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">Select Year</p>
+        <div  :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality'),
+         'year_selection':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">
             <CustomSelectYear />
         </div>
 
@@ -44,9 +46,15 @@
         </div>
 
 
+        <p class="select_parameter" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality'">Select Parameter</p>
+        <div id="parameter_selection" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality'">
+          <CustomSelectParameter />
+        </div>
 
-        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
-         'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index')} " type="button" @click="$emit('fetchData')">REQUEST</button>
+
+
+        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality'),
+         'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area' || storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
         <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
         
@@ -64,6 +72,8 @@ import CustomSelectIndicator from './CustomSelectIndicator.vue';
 import CustomSelectSubIndicator from './CustomSelectSubIndicator.vue'
 import CustomSelectYear from './CustomSelectYear.vue'
 import CustomSelectSeason from './CustomSelectSeason.vue';
+import CustomSelectParameter from './CustomSelectParameter.vue';
+
 
 
 // let counties = ref(['Limpopo', 'Cuvelai', 'Okavango', 'Zambezi'])
@@ -127,7 +137,7 @@ const fetchRegion = () => {
 .select_sub-indicator{ 
   position: absolute;
   top: 0.1vh;
-  left: 20vw;
+  left: 18vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 500;
 }
@@ -135,7 +145,7 @@ const fetchRegion = () => {
 #sub_indicator_selection{
   position: absolute;
   top: 4vh;
-  left: 20vw;
+  left: 18vw;
   height: 35px;
   width: 140px;
   border-radius: 30px;
@@ -147,15 +157,15 @@ const fetchRegion = () => {
 .select_year{ 
   position: absolute;
   top: 0.1vh;
-  left: 32vw;
+  left: 29vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 500;
 }
 
-#year_selection{
+.year_selection{
   position: absolute;
   top: 4vh;
-  left: 32vw;
+  left: 29vw;
   height: 35px;
   width: 140px;
   border-radius: 30px;
@@ -165,7 +175,7 @@ const fetchRegion = () => {
 .select_season{
   position: absolute;
   top: 0.1vh;
-  left: 40vw;
+  left: 38vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 500;
 
@@ -173,13 +183,33 @@ const fetchRegion = () => {
 #season_selection{
   position: absolute;
   top: 4vh;
-  left: 40vw;
+  left: 38vw;
   height: 35px;
   width: 140px;
   border-radius: 30px;
   cursor: pointer;
   z-index: 1200;
 }
+
+.select_parameter{
+  position: absolute;
+  top: 0.1vh;
+  left: 28vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+#parameter_selection{
+  position: absolute;
+  top: 4vh;
+  left: 28vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
 .request{
     position: absolute;
   top: 4vh;
@@ -209,6 +239,41 @@ const fetchRegion = () => {
   cursor: pointer;
 
 }
+
+.select_year2{ 
+  position: absolute;
+  top: 0.1vh;
+  left: 38vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+.year_selection2{
+  position: absolute;
+  top: 4vh;
+  left: 38vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.request2{
+    position: absolute;
+  top: 4vh;
+  left: 48vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+
+
 
 
 

@@ -123,6 +123,9 @@ export const useCounterStore = defineStore({
       season_list:[],
       season_placeholder: 'Wet',
       selected_season: '',
+      parameter_list:[],
+      parameter_placeholder: '',
+      selected_parameter:'',
       //visibility for custom selects
       visible_region: null,
       visible_indicator: null,
@@ -163,7 +166,10 @@ export const useCounterStore = defineStore({
     fetchSeasonsList(){
       this.season_list = ['Wet', 'DRY']
     },
+    fetchParameterList(){
+      this.parameter_list = ['Nitrogen Content', 'Turbidity', 'Sus Sediments']
 
+    },
 
    
     showSelectedCountry(option){
@@ -246,6 +252,11 @@ export const useCounterStore = defineStore({
 
       this.selected_season=  option
       console.log(this.selected_season , 'changed selected season')
+    },
+    showSelectedParameter(option) {
+      this.parameter_placeholder = option;
+      this.selected_parameter=  option
+      console.log(this.selected_parameter , 'changed selected parameter')
     },
 
     
@@ -601,7 +612,8 @@ export const useCounterStore = defineStore({
     getSelectedIndcator: (state) => state.selected_indicator,
     getSelectedSubIndcator: (state) => state.selected_sub_indicator,
     getSelectedYear: (state) => state.selected_year,
-    getSelectedSeason: (state) => state.selected_season
+    getSelectedSeason: (state) => state.selected_season,
+    getSelectedParameter: (state) => state.selected_parameter,
   
     
   },

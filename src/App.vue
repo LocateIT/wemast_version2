@@ -1077,6 +1077,22 @@ watch( setSelectedSeason , () => {
 })
 
 
+const getParameter = () => {
+  var selectedParameter = storeUserSelections.getSelectedParameter
+  parameter.value = selectedParameter
+  console.log(parameter.value, 'selected parameter app')
+
+}
+const setSelectedParameter = computed ( () => {
+  console.log(storeUserSelections.selected_parameter, 'selected parameter app')
+  return storeUserSelections.getSelectedParameter
+
+})
+watch( setSelectedParameter , () => {
+  getParameter()
+  
+})
+
 
 //function to request wms
 

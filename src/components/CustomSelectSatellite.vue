@@ -1,17 +1,17 @@
 <template>
-    <div class="aselect" :data-value="placeholder" :data-list="indicator_list">
+    <div class="aselect" :data-value="placeholder" :data-list="list">
       <div class="selector" @click="toggle()">
           <div class="label">
-                  <span>{{ storeUserSelections.indicator_placeholder }}</span>
+                  <span>{{ storeUserSelections.satellite_placeholder }}</span>
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
           <div :class="{ hidden : !visible, visible }">
               <ul>
   
-                  <li :class="{ current : item === storeUserSelections.indicator_placeholder }" 
-                  v-for="item in storeUserSelections.indicator_list" :key="item" 
-                  @click="storeUserSelections.showSelectedIndicator(item)">{{ item }}</li>
+                  <li :class="{ current : item === storeUserSelections.satellite_placeholder }" 
+                  v-for="item in storeUserSelections.satellite_list" :key="item"
+                  @click="storeUserSelections.showSelectedSatellite(item)">{{ item }}</li>
                   
               </ul>
           </div>
@@ -26,22 +26,19 @@
   const storeUserSelections = useCounterStore()
 
 
-          let placeholder = ref('Exposure')
-        //   let list = ''
+          let placeholder = ref('')
+        //   let list = ['2019', '2020', '2021', '2022']
         //   console.log(list, 'regions list')
           let visible = ref(false)
   
-        var indicator_list = storeUserSelections.getIndicatorList
-        console.log(indicator_list, 'indicator list from store')
-
+      
           const toggle = () => {
               visible.value = !visible.value;
-              storeUserSelections.fetchIndicatorList()
+              storeUserSelections.fetchSatelliteList()
           }
           const select = (option) =>{
               placeholder.value = option;
           }
-          
       
 
 </script>
@@ -60,7 +57,7 @@ left:-0.52vw;
           position: relative;
           z-index: 1;
           height: 35px;
-width: 125px;
+width: 140px;
 border-radius: 30px;
 cursor: pointer;
       }
@@ -91,8 +88,8 @@ cursor: pointer;
       ul {
           width: 100%;
           list-style-type: none;
-            padding: 8px;
-            margin: 0;
+          padding: 8px;
+          margin: 0;
           font-size: 14px;
           border: 1px solid gainsboro;
           position: absolute;

@@ -126,6 +126,9 @@ export const useCounterStore = defineStore({
       parameter_list:[],
       parameter_placeholder: '',
       selected_parameter:'',
+      satellite_list:[],
+      satellite_placeholder:'',
+      selected_satellite:'',
       //visibility for custom selects
       visible_region: null,
       visible_indicator: null,
@@ -168,6 +171,10 @@ export const useCounterStore = defineStore({
     },
     fetchParameterList(){
       this.parameter_list = ['Nitrogen Content', 'Turbidity', 'Sus Sediments']
+
+    },
+    fetchSatelliteList(){
+      this.satellite_list = ['Sentinel', 'Landsat']
 
     },
 
@@ -256,8 +263,14 @@ export const useCounterStore = defineStore({
     showSelectedParameter(option) {
       this.parameter_placeholder = option;
       this.selected_parameter=  option
-      console.log(this.selected_parameter , 'changed selected parameter')
+      console.log(this.selected_parameter , 'changed selected satellite')
     },
+    showSelectedSatellite(option) {
+      this.satellite_placeholder = option;
+      this.selected_satellite=  option
+      console.log(this.selected_satellite , 'changed selected satellite')
+    },
+
 
     
 

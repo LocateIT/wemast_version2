@@ -33,9 +33,11 @@
             <CustomSelectSubIndicator />
         </div>
 
-        <p  :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality'),
+        <p  :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
          'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">Select Year</p>
-        <div  :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality'),
+        <div  :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
          'year_selection':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">
             <CustomSelectYear />
         </div>
@@ -46,10 +48,18 @@
         </div>
 
 
-        <p class="select_parameter" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality'">Select Parameter</p>
-        <div id="parameter_selection" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality'">
+        <p class="select_parameter" 
+        v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' ||
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">Select Parameter</p>
+        <div id="parameter_selection" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">
           <CustomSelectParameter />
         </div>
+
+        <!-- <p class="select_satellite">Select Satellite</p>
+        <div class="satellite_selection">
+            <CustomSelectSatellite />
+        </div> -->
+        
 
 
 
@@ -73,6 +83,8 @@ import CustomSelectSubIndicator from './CustomSelectSubIndicator.vue'
 import CustomSelectYear from './CustomSelectYear.vue'
 import CustomSelectSeason from './CustomSelectSeason.vue';
 import CustomSelectParameter from './CustomSelectParameter.vue';
+import CustomSelectSatellite from './CustomSelectSatellite.vue';
+
 
 
 
@@ -213,7 +225,7 @@ const fetchRegion = () => {
 .request{
     position: absolute;
   top: 4vh;
-  left: 48vw;
+  left: 46vw;
   width: 140px;
   height: 35px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -227,7 +239,7 @@ const fetchRegion = () => {
 .request1{
   position: absolute;
   top: 4vh;
-  left: 40vw;
+  left: 38vw;
   width: 140px;
   height: 35px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

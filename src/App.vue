@@ -370,6 +370,7 @@ let styles = ref(null)
 let band_1 = ref(null)
 let lulc_legend = ref(false)
 let prec_legend = ref(false)
+let ndwi_legend = ref(false)
 let legend_url = 'http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=30&HEIGHT=30&LAYER=LULC:1992&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:6;bgColor:0xFFFFEE;dpi:180'
 let prec_legend_url ='http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image/png&WIDTH=20&HEIGHT=20&LAYER=SPI_WET:2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:6;bgColor:0xFFFFEE;dpi:180'
 
@@ -1276,6 +1277,8 @@ wmsLayer.value.on('load', function (event) {
   loading.value = false
 });
 
+NDWIlegendContent()
+
 
 
 
@@ -1400,6 +1403,57 @@ prec_legend.value.addTo(map);
   }
   getLegendContent()
 }
+const NDWIlegendContent = () => {
+  const getLegendContent = async () => {
+    try {
+      const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+      )
+      console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+      var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+     var label_array =  object_array.map( (item) => {
+       console.log(item.label, 'labels items array') 
+       return item.label
+      })
+      console.log(label_array, 'label array')
+
+      var colors_array = object_array.map( (item)=> {
+       return item.color
+      })
+      console.log(colors_array, 'colors array')
+
+
+      if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+      if(prec_legend.value)map.removeControl(prec_legend.value)
+      if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+      var legend = L.control({ position: "bottomright" });
+      ndwi_legend.value = legend
+      var colors = colors_array
+      var labels = label_array
+
+      ndwi_legend.value.onAdd = function(map) {
+          var div = L.DomUtil.create("div", "legend");
+          div.innerHTML += `<p>${parameter.value} ${year.value}</p>`;
+          for (var i = 0; i < colors.length; i++) {
+                div.innerHTML +=
+                    ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+            }
+  
+  
+
+  return div;
+};
+
+ndwi_legend.value.addTo(map);
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
+  getLegendContent()
+}
+
 </script>
 
 <style scoped>

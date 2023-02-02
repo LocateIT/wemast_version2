@@ -89,6 +89,7 @@ border-radius: 50%;
 width: 45px;
 height: 45px;
 cursor: pointer;
+
 }
 
 .toggle_icon{
@@ -253,7 +254,7 @@ help */
   position: absolute;
   top: 0.5vh;
   left:0.25vw;
-  z-index: 500;
+  z-index: 2500;
   font-size: 14px;
 color: #000;
 
@@ -269,7 +270,7 @@ color: #000;
 
 }
 #sldOpacity{
-  z-index: 1500;
+  z-index: 2500;
   position: absolute;
   top: 1vh;
   left:3vw;
@@ -280,7 +281,7 @@ color: #000;
   
 }
 #sldOpacity::-webkit-slider-thumb {
-  z-index: 1500;
+  z-index: 2500;
   -webkit-appearance: none;
   width: 15px;
   height: 15px;
@@ -589,3 +590,6 @@ top: 33vh;
   background-color: rgba(255, 255, 255, 1);
 }
 
+.side-bar-view{
+  background-color: rgb(202, 124, 124);
+}

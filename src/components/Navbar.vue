@@ -20,6 +20,7 @@
 
         <div class="languages">
           <!-- <HelloI18n /> -->
+          <!-- <Misc /> -->
         </div>
         
 
@@ -28,7 +29,10 @@
 </template>
 
 <script setup>
+import Misc from '../misc.vue';
+
 // import HelloI18n from './HelloI18n.vue';
+
 
 </script>
 

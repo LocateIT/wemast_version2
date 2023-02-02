@@ -42,8 +42,8 @@
             <CustomSelectYear />
         </div>
 
-        <p class="select_season" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index'">Select Season</p>
-        <div id="season_selection" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index'">
+        <p class="select_season" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ">Select Season</p>
+        <div id="season_selection" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
           <CustomSelectSeason />
         </div>
 
@@ -64,7 +64,7 @@
 
 
         <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 
-        'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || 
+        'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
          'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' ||
          storeUserSelections.selected_sub_indicator === 'Burnt Area' || 

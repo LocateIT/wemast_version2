@@ -30,7 +30,7 @@
       <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
   
       <div id="map">
-        <div class="opacity">
+        <div class="opacity" v-if="wmsLayer != null">
           <span id="opacity">Opacity:</span>
           <span id="image-opacity"> </span>
           <input type="range" id="sldOpacity" min="0" max="1" step="0.1" value="1" />
@@ -71,190 +71,17 @@
       </div>
   
       <!-- leaflet side bar -->
-      <div class="side-bar-view">
-        <SideBarView />
+      <div class="sideview" v-if="sidenavigationbar">
+        <sideNavigationbar />
+        
+        <!-- <SideBarView /> -->
       </div>
   
       <!-- sidenav goes here -->
-      <div id="sidenav" class="sidenav">
-        <div id="mySidenav" style="height: 100%">
-          <div id="protrusion" class="bg-white protrusion">
-            <div @click.stop="toggle_nav" class="toggle_icon">
-              <img id="close" src=" /uiIcons/drawer.svg" v-if="!show_sidenav" />
-              <img id="open" src=" /uiIcons/drawer.svg" v-if="show_sidenav" />
-            </div>
-          </div>
-          <div class="sidenav_body" v-if="!show_sidenav" style="  ">
-            <div class="row">
-              <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-                <div class="row" v-if="show_search">
-                  <div class="col-xs-6 offset-3">
-                    <input dense outlined v-model="search" label="Search" />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="q-pa-xs">
-                      <div class="data_analysis_text"
-                       
-                        @click="handleAnalysisMetaSwap2()"
-                        style="cursor: pointer"
-                      >
-                        <span
-                          :class="
-                            analysis_swap_toggle === 'data_analysis'
-                              ? 'side_nav_swap'
-                              : ''
-                          "
-                          >Data Analysis</span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="q-pa-xs">
-                      <div
-                        class="metadata_text"
-                        @click="handleAnalysisMetaSwap()"
-                        style=""
-                      >
-                        <span
-                          :class="
-                            analysis_swap_toggle === 'metadata'
-                              ? 'side_nav_swap'
-                              : ''
-                          "
-                          >Metadata </span
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div  v-if="analysis_swap_toggle === 'data_analysis'" >
-              <!-- <q-btn flat label="get WMS" @click="getWMS_Layer" />    -->
-  
-              <p style="margin-top:40px">
-                <label style="margin-top:40px; font-weight: 700;">Summary</label>
-                <br>
-                {{ summary_text }}
-              </p>
-              <br />
-              <label class="text-bold" style="font-family: Montserrat; font-weight: 800;">
-                <div class="chart_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">{{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}  </div>
-              </label>
-              
-              <div class="charts_sidebar"  >
-              <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-              <!-- <div class="chart_title">No. of blackspots in {{storeUserSelections.selected_region}} that are {{storeUserSelections.selected_cause}}</div> -->
-              <!-- <CausesChart 
-              :height="200"
-              :width="300"
-              :chartData="chartData"
-              :options="options"
-  
-              /> -->
-            </div>
-  
-           
-              <br />
-              <label class="text-bold" style="font-family: Montserrat; font-weight: 800;">
-                <div class="chart2_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">  {{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}</div>
-              </label>
-              
-              <div class="charts2_sidebar"  >
-              <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
-              <!-- <div class="chart_title">No. of blackspots in {{storeUserSelections.selected_region}} that are {{storeUserSelections.selected_cause}}</div> -->
-              <!-- <CausesBar 
-              :height="200"
-              :width="300"
-              :chartData="chartData"
-              :options="barchart_options"
-  
-              /> -->
-            </div>
-             
-            </div>
-            <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
-            
-  
-  
-                <table style="width:100%">
-                    <tr>
-                      <th>Region</th>
-                      <td> {{storeUserSelections.selected_region}}</td>
-                      
-                    </tr>
-                    <tr>
-                      <th>Cause</th>
-        
-                      <td>{{storeUserSelections.selected_cause}}</td>
-                    </tr>
-                    <tr>
-                      <th>CRS</th>
-                      <td>{{storeUserSelections.crs}}</td>
-                      
-                    </tr>
-                    <tr>
-                      <th>Region</th>
-                      <td> {{storeUserSelections.selected_region}}</td>
-                      
-                    </tr>
-                    <tr>
-                      <th>Cause</th>
-        
-                      <td>{{storeUserSelections.selected_cause}}</td>
-                    </tr>
-                    <tr>
-                      <th>CRS</th>
-                      <td>{{storeUserSelections.crs}}</td>
-                      
-                    </tr>
-                    <tr>
-                      <th>Region</th>
-                      <td> {{storeUserSelections.selected_region}}</td>
-                      
-                    </tr>
-                    <tr>
-                      <th>Cause</th>
-        
-                      <td>{{storeUserSelections.selected_cause}}</td>
-                    </tr>
-                    <tr>
-                      <th>CRS
-                        
-                      </th>
-                      
-                      <td>
-                        <table>
-                          <tr>
-                            <th>Region</th>
-                            <td>{{storeUserSelections.selected_region}}</td>
-                          </tr>
-                          <tr>
-                            <th>Cause</th>
-                            <td>{{storeUserSelections.selected_cause}}</td>
-                          </tr>
-                          <tr>
-                            <th>CRS</th>
-                            <td>{{storeUserSelections.crs}}</td>
-                          </tr>
-                        </table>
-                      </td>
-                      
-                      
-                    </tr>
-                  </table>
-            </div>
-            <!-- <LineChart :height="250" :width="250" /> -->
-            <p class="partners" style="font-weight:bold;font-size:16px;position: relative;top:53vh;left: 8vw;" >Technical Partners</p>
-            <div class="logos_container row">
-              <!-- <SideNavLogos /> -->
-            </div>
-          </div>
-        </div>
+      <div class="" @click="opensidenavigationbar">
+        <img class="open_sidebar" src="/uiIcons/drawer.svg" alt="">
       </div>
+      
   
       <!-- advanced filter -->
       <div v-if="advanced_filter" class="advanced_filter_container">
@@ -327,7 +154,7 @@
   import { useCounterStore } from '@/stores/counter';
   import AdvancedFilter from '../components/AdvancedFilter.vue';
   import Compare from '../components/Compare.vue';
-  
+  import sideNavigationbar from '../components/sidenavigationbar.vue'
   import axios from 'axios'
   
   //refs go here
@@ -369,6 +196,7 @@
   let lulc_legend = ref(false)
   let prec_legend = ref(false)
   let ndwi_legend = ref(false)
+  let sidenavigationbar = ref(false)
   
   
   
@@ -633,7 +461,11 @@
           previous_wemast_ctrl_id.value = id;
         });
       }
-  
+const opensidenavigationbar = () => {
+    sidenavigationbar.value = true
+    
+}
+        
       const setLeafletMap = () => {
 
         let osm = L.tileLayer(
@@ -928,44 +760,7 @@
                            }); 
    
   }
-  
-  // const getRegion2 = () => {  
-   
-  //  //  loading = true
-  //   // console.log(loading.value, 'loading')
-  //  //  if(kiambu)map.removeLayer(kiambu)
-  //  //  if(kiambu_points.value)map.removeLayer(kiambu_points.value)
-  //   if(current_geojson.value)map.removeLayer(current_geojson.value)
-  //  //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
-   
-  //   var selecteRegion = storeUserSelections.getSelectedRegion
-  //   console.log(selecteRegion, 'selected region app')
-  //  //  loading = storeUserSelections.getLoadingState
-   
-  //   // console.log(region)
-  //   current_geojson.value = L.geoJSON(selecteRegion, {
-  //           style: {
-  //             color: "magenta",
-  //             opacity: 0.8
-  //           }
-  //          //  pane: 'right'
-  //            })
-    
-   
-  //   current_geojson.value.addTo(map)
-  //  // loading = false
-   
-  //             map.fitBounds(current_geojson.value.getBounds(), {
-  //                             padding: [50, 50],
-  //                           }); 
-    
-  //  }
-   
-  
-   
-  
-  
-   
+ 
   //watch for changes
   
   const setSelectedRegion = computed( () => {
@@ -1154,6 +949,20 @@
       styles.value = 'okavango_water'
     }
   
+
+    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
+      styles.value = 'cuvelai_ndvi'
+    }
+    if(basin.value === 'Limpopo' && sub_indicator.value === 'Vegetation Cover' ){
+      styles.value = 'limpopo_ndvi'
+    }
+    if(basin.value === 'Zambezi' && sub_indicator.value === 'Vegetation Cover'){
+      styles.value = 'zambezi_ndvi'
+    }
+    if(basin.value === 'Okavango' && sub_indicator.value === 'Vegetation Cover' ){
+      styles.value = 'okavango_ndvi'
+    }
+  
    
   
    
@@ -1189,16 +998,8 @@
   // addLulcLegend()
   lulclegendContent()
 
-
-  $('#sldOpacity').on('change', function(){
-                                    //   $('#image-opacity').html(this.value); //i might revesit
-                                      console.log(this.value, 'opacity value')
-                                      wmsLayer.value.setOpacity(this.value)
-                                    //   layer.setStyle({fillColor: "black", color: "black", opacity: this.value, fillOpacity: this.value}) //cant use setstyle directly on geojson
-                                    //   return this.value
-                                     
-                    
-                                  });
+  changeOpacity()
+  
   
   
   
@@ -1230,6 +1031,7 @@
     loading.value = false
   });
   preclegendContent()
+  changeOpacity()
   
   
   }
@@ -1260,7 +1062,7 @@
     loading.value = false
   });
   preclegendContent()
-  
+  changeOpacity()
   
   }
   
@@ -1294,12 +1096,50 @@
   });
   
   NDWIlegendContent()
+  changeOpacity()
   
   
   
   
   
   }
+
+  if(sub_indicator.value === 'Vegetation Cover' && season.value === 'DRY') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
+
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SENTINEL_NDVI_DRY/wms?", {
+     pane: 'pane800',
+     layers: `SENTINEL_NDVI_DRY:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+
+
+changeOpacity()
+
+
+
+
+}
   
   }
   
@@ -1470,6 +1310,17 @@
       }
     }
     getLegendContent()
+  }
+
+  //change opacity
+  const changeOpacity = () => {
+    $('#sldOpacity').on('change', function(){
+                                    //   $('#image-opacity').html(this.value); //i might revesit
+                                      console.log(this.value, 'opacity value')
+                                      wmsLayer.value.setOpacity(this.value)
+                                    
+                    
+                                  });
   }
   
   </script>

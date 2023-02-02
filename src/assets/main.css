@@ -120,6 +120,22 @@ cursor: pointer;
   padding: 5px;
 
 }
+.open_sidebar{
+  position: absolute;
+  top: 26vh;
+  right: 7vw;
+  background-color: #4891e0;
+  z-index: 2500;
+}
+.sideview{
+  position: absolute;
+  top: 26vh;
+  right: 7vw;
+  z-index: 2500;
+  transform: translateX(-100%);
+  transition: all 150ms ease-in 0s
+
+}
 @media screen and (max-height: 800px) {
 .logos_container {
   margin-bottom: 25px;

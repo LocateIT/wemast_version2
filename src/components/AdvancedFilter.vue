@@ -106,7 +106,7 @@ img#disabled:hover {
     .filter{
         height: 450px;
         width: 300px;
-        background-color: #fff;
+        background-color: rgb(255, 255, 255);
         
     }
     .filter_selections{

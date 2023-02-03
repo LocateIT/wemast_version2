@@ -34,16 +34,17 @@
         </div>
 
         <p  :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
-        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
          'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">Select Year</p>
         <div  :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
-        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
          'year_selection':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">
             <CustomSelectYear />
         </div>
 
-        <p class="select_season" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ">Select Season</p>
-        <div id="season_selection" v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
+        <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover'}" 
+        v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ">Select Season</p>
+        <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover'}"   v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
           <CustomSelectSeason />
         </div>
 
@@ -55,15 +56,17 @@
           <CustomSelectParameter />
         </div>
 
-        <!-- <p class="select_satellite">Select Satellite</p>
-        <div class="satellite_selection">
+        <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}"
+         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">Select Satellite</p>
+        <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
             <CustomSelectSatellite />
-        </div> -->
+        </div> 
         
 
 
 
-        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 
+        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
+         'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
          'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' ||
@@ -274,6 +277,8 @@ const fetchRegion = () => {
   cursor: pointer;
   z-index: 1200;
 }
+
+
 .request2{
     position: absolute;
   top: 4vh;
@@ -288,7 +293,37 @@ const fetchRegion = () => {
   background-color: steelblue;
   cursor: pointer;
 }
-
+.select_season_satellite{
+  position: absolute;
+  top: 0.1vh;
+  left: 47vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.season_satellite_selection{
+  position: absolute;
+  top: 4vh;
+  left: 47vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.request_satellite{
+    position: absolute;
+  top: 4vh;
+  left: 58vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
 
 
 

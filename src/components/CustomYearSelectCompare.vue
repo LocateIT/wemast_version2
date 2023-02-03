@@ -25,6 +25,8 @@
   import {useCounterStore } from '../stores/counter';
   const storeUserSelections = useCounterStore()
 
+ 
+
 
           let placeholder = ref('2019')
         //   let list = ['2019', '2020', '2021', '2022']
@@ -34,6 +36,10 @@
       
           const toggle = () => {
               visible.value = !visible.value;
+              storeUserSelections.visible_year = visible.value
+              if(storeUserSelections.visible_sub_indicator = true){
+                storeUserSelections.visible_sub_indicator = false
+              }
               storeUserSelections.fetchYearList()
           }
           const select = (option) =>{
@@ -52,14 +58,15 @@ left:-0.52vw;
   margin: 20px auto;
 }
       .selector {
-          border: 1px solid rgb(114, 113, 113);
+        border: 1px  #ccc solid;
           background: #F8F8F8;
           position: relative;
           z-index: 1;
           height: 35px;
-width: 203px;
+width: 140px;
 border-radius: 30px;
 cursor: pointer;
+
       }
           .arrow {
               position: absolute;
@@ -87,6 +94,7 @@ cursor: pointer;
       
       ul {
           width: 100%;
+          height: 145px;
           list-style-type: none;
           padding: 8px;
           margin: 0;
@@ -98,11 +106,14 @@ cursor: pointer;
     background: STEELBLUE;
     border-radius: 7px;
     z-index: 5000;
+    overflow-y:scroll;
       }
+      
       li {
           padding: 12px;
           color: white;
     border-top: white 1px solid;
+
   
 }
 .border_bottom{
@@ -113,6 +124,7 @@ cursor: pointer;
           li:hover {
               color: white;
               background: rgb(62, 114, 156);
+
           }
       
       
@@ -122,5 +134,7 @@ cursor: pointer;
       .visible {
           visibility: visible;
       }
+
+      
   
 </style>

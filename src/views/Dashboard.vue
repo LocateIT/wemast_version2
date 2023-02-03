@@ -35,6 +35,11 @@
           <span id="image-opacity"> </span>
           <input type="range" id="sldOpacity" min="0" max="1" step="0.1" value="1" />
          </div>
+
+
+         <div class="swap" v-if="wmsLayer != null" @click="compareLayers">
+          <img src="/uiIcons/swap.svg" alt="">
+         </div>
          <!-- map controls to be returned if need be -->
         <!-- <div class="map_controls"> 
       
@@ -78,9 +83,9 @@
       </div>
   
       <!-- sidenav goes here -->
-      <div class="" @click="opensidenavigationbar">
+      <!-- <div class="" @click="opensidenavigationbar">
         <img class="open_sidebar" src="/uiIcons/drawer.svg" alt="">
-      </div>
+      </div> -->
       
   
       <!-- advanced filter -->
@@ -135,6 +140,10 @@
   import "leaflet-draw";
   import "leaflet.wms"
   import $ from "jquery";
+  import sideByside from "leaflet-side-by-side";
+  import "leaflet-side-by-side/layout.css"
+  import "leaflet-side-by-side/range.css"
+
   // import "leaflet-draw/dist/leaflet.draw";
   
   //trial custom shapefile upload
@@ -191,6 +200,7 @@
   let year = ref(null)
   let season = ref(null)
   let parameter = ref(null)
+  let satellite = ref(null)
   let styles = ref(null)
   let band_1 = ref(null)
   let lulc_legend = ref(false)
@@ -198,6 +208,7 @@
   let ndwi_legend = ref(false)
   let ndvi_legend = ref(false)
   let sidenavigationbar = ref(false)
+  let swipe_control = ref(null)
   
   
   
@@ -223,13 +234,6 @@
     compare.value = false
   }
   
-  
-      
-      //  baseMaps.value = {
-      //     OpenStreetMap: osm,
-      //     MapBox: mapbox,
-      //     MapBoxSatellite: mapboxSatellite,
-      //   };
   //sidebar functionality
   const toggle_nav = (e)  => {
         console.log(" toggle_nav ", e.target.id);
@@ -895,6 +899,22 @@ const opensidenavigationbar = () => {
     getParameter()
     
   })
+
+  const getSatellite = () => {
+    var selectedSatellite = storeUserSelections.getSelectedSatellite
+    satellite.value = selectedSatellite
+    console.log(satellite.value, 'selected satellite app')
+
+  }
+  const setSelectedSatellite = computed ( () => {
+    console.log(storeUserSelections.selected_satellite, 'selected satellite app')
+    return storeUserSelections.getSelectedSatellite
+  
+  })
+  watch( setSelectedSatellite , () => {
+    getSatellite()
+    
+  })
   
   
   //function to request wms
@@ -1105,14 +1125,14 @@ const opensidenavigationbar = () => {
   
   }
 
-  if(sub_indicator.value === 'Vegetation Cover' && season.value === 'DRY') {
+  if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 500;
 
-wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SENTINEL_NDVI_DRY/wms?", {
+wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `SENTINEL_NDVI_DRY:${year.value}`,
+     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
      format: 'image/png',
@@ -1180,6 +1200,7 @@ changeOpacity()
   
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
         var legend = L.control({ position: "bottomright" });
@@ -1210,8 +1231,6 @@ changeOpacity()
     getLegendContent()
   }
   
-  
-  
   const preclegendContent = () => {
     const getLegendContent = async () => {
       try {
@@ -1232,6 +1251,7 @@ changeOpacity()
   
   
         if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
   
@@ -1284,6 +1304,7 @@ changeOpacity()
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
   
         var legend = L.control({ position: "bottomright" });
         ndwi_legend.value = legend
@@ -1373,6 +1394,13 @@ changeOpacity()
                                     
                     
                                   });
+  }
+
+  const compareLayers = () => {
+    console.log('compare!')
+    if(swipe_control.value)map.removeControl(swipe_control.value)
+    swipe_control.value = L.control.sideBySide().addTo(map)
+
   }
   
   </script>

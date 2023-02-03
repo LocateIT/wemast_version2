@@ -254,6 +254,18 @@ draw_polygon
 zoom_in
 zoom_out
 help */
+.swap{
+  z-index: 500;
+  position: absolute;
+  top: 2vh;
+  left:84vw;
+  cursor: pointer;
+  height: 20px;
+  width:20px;
+background-color: #fff;
+padding: 3px;
+
+}
 .opacity{
   z-index: 500;
   position: absolute;
@@ -510,9 +522,9 @@ position: absolute;
 
 .advanced_filter_container{
   position: absolute;
-  left:1.7vw;
+  left:4.1vw;
   z-index: 2500;
-top: 33vh;
+top: 36.4vh;
 /* background-color: aqua; */
 }
 .close_advanced_filter{
@@ -526,9 +538,9 @@ top: 33vh;
 }
 .compare_container{
   position: absolute;
-  left:1.7vw;
+  left:4.1vw;
   z-index: 2500;
-  top: 56vh;
+  top: 70vh;
 /* background-color: aqua; */
 }
 .close_compare{

@@ -167,7 +167,12 @@ export const useCounterStore = defineStore({
         '2018','2019','2020', '2021', "2022"]
     },
     fetchSeasonsList(){
-      this.season_list = ['Wet', 'DRY']
+      
+      if(this.selected_satellite === 'SENTINEL'){
+        this.season_list = ['DRY']
+      }else{
+        this.season_list = ['Wet', 'DRY']
+      }
     },
     fetchParameterList(){
     
@@ -181,7 +186,7 @@ export const useCounterStore = defineStore({
 
     },
     fetchSatelliteList(){
-      this.satellite_list = ['Sentinel', 'Landsat']
+      this.satellite_list = ['SENTINEL', 'LANDSAT']
 
     },
 
@@ -634,6 +639,7 @@ export const useCounterStore = defineStore({
     getSelectedYear: (state) => state.selected_year,
     getSelectedSeason: (state) => state.selected_season,
     getSelectedParameter: (state) => state.selected_parameter,
+    getSelectedSatellite: (state) => state.selected_satellite
   
     
   },

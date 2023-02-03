@@ -46,7 +46,7 @@
 
         <!-- <p class="select_sub_indicator">Select Time</p> -->
         <div class="sub_indicator_selection">
-                <button class="compare_button" type="button">Compare</button>
+                <button class="compare_button" type="button" @click="$emit('fetchCompareData')">Compare</button>
         </div>
     </div>
   </div>

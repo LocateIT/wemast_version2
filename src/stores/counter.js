@@ -104,7 +104,7 @@ export const useCounterStore = defineStore({
       current_geoserver_geojson:{},
       crs:"",
       
-      indicator_list: [], //wemast_v2_lists "Limpopo","Cuvelai","Zambezi", "Okavango",'South Africa', 'Kiambu' 'South Africa', 'Kiambu','Laikipia'
+      indicator_list: [], 
       sub_indicator_list:[],
       year_list:[],
       region_placeholder:'Cuvelai',

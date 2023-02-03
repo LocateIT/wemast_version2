@@ -37,7 +37,7 @@
          </div>
 
 
-         <div class="swap" v-if="wmsLayer != null" @click="compareLayers">
+         <div class="swap"  >
           <img src="/uiIcons/swap.svg" alt="">
          </div>
          <!-- map controls to be returned if need be -->
@@ -97,7 +97,8 @@
       <!-- compare -->
       <div v-if="compare" class="compare_container">
         <img class="close_compare" src=" /uiIcons/close.png" alt="" @click="close_compare">
-        <Compare />
+        <Compare
+        @fetchCompareData="compareLayers" />
       </div>
   
       <!-- login icons -->
@@ -161,6 +162,7 @@
   import { leaflet_custom_controls } from "../CustomMapControls/LeafletCustomControls"
   import { onMounted, ref, watch, computed } from '@vue/runtime-core';
   import { useCounterStore } from '@/stores/counter';
+  import { useCompareStore } from '../stores/compareSelections/compare';
   import AdvancedFilter from '../components/AdvancedFilter.vue';
   import Compare from '../components/Compare.vue';
   import sideNavigationbar from '../components/sidenavigationbar.vue'
@@ -216,6 +218,7 @@
   
   //variables
   const storeUserSelections = useCounterStore()
+  const compareUserSelections = useCompareStore()
   
   console.log(storeUserSelections.fetchCountriesList)
   
@@ -1396,10 +1399,160 @@ changeOpacity()
                                   });
   }
 
+  //get compare selections
+  const getCompareIndicator = () => {
+    var selectedIndicator= compareUserSelections.getSelectedIndcator
+   console.log(selectedIndicator, 'compare indicator app')
+   indicator.value = selectedIndicator
+  
+  }
+  
+  
+  const setCompareIndicator = computed ( () => {
+    console.log(compareUserSelections.selected_indicator, 'compare indicator app')
+    return compareUserSelections.getSelectedIndcator
+  
+  })
+  watch( setCompareIndicator , () => {
+    getCompareIndicator()
+    
+  })
+  
+  //access subindicator
+  
+  const getCompareSubIndicator = () => {
+    var selectedSubIndicator = compareUserSelections.getSelectedSubIndcator
+   console.log(selectedSubIndicator, 'compare sub indicator app')
+   sub_indicator.value = selectedSubIndicator
+  
+  }
+  
+  
+  const setCompareSubIndicator = computed ( () => {
+    console.log(compareUserSelections.selected_sub_indicator, 'selected sub_indicator app')
+    return compareUserSelections.getSelectedSubIndcator
+  
+  })
+  watch( setCompareSubIndicator , () => {
+    getCompareSubIndicator()
+    
+  })
+  
+  
+  //access year
+  
+  const getCompareYear = () => {
+    var selectedYear= storeUserSelections.getSelectedYear
+  
+   year.value = selectedYear
+   console.log(year.value, 'compare year app')
+  
+  }
+  
+  
+  const setCompareYear = computed ( () => {
+    console.log(compareUserSelections.selected_year, 'compare year app')
+    return compareUserSelections.getSelectedYear
+  
+  })
+  watch( setCompareYear , () => {
+    getCompareYear()
+    
+  })
+  const getCompareSeason = () => {
+    var selectedSeason = compareUserSelections.getSelectedSeason
+    season.value = selectedSeason
+    console.log(season.value, 'selected season app')
+  
+  }
+  const setCompareSeason = computed ( () => {
+    console.log(compareUserSelections.selected_season, 'selected season app')
+    return compareUserSelections.getSelectedSeason
+  
+  })
+  watch( setCompareSeason , () => {
+    getCompareSeason()
+    
+  })
+  
+  
+  const getCompareParameter = () => {
+    var selectedParameter = compareUserSelections.getSelectedParameter
+    parameter.value = selectedParameter
+    console.log(parameter.value, 'compare parameter app')
+  
+  }
+  const setCompareParameter = computed ( () => {
+    console.log(compareUserSelections.selected_parameter, 'selected parameter app')
+    return compareUserSelections.getSelectedParameter
+  
+  })
+  watch( setCompareParameter , () => {
+    getCompareParameter()
+    
+  })
+
+  const getCompareSatellite = () => {
+    var selectedSatellite = compareUserSelections.getSelectedSatellite
+    satellite.value = selectedSatellite
+    console.log(satellite.value, 'compare satellite app')
+
+  }
+  const setCompareSatellite = computed ( () => {
+    console.log(compareUserSelections.selected_satellite, 'selected satellite app')
+    return compareUserSelections.getSelectedSatellite
+  
+  })
+  watch( setCompareSatellite , () => {
+    getCompareSatellite()
+    
+  })
+  
+
+
   const compareLayers = () => {
-    console.log('compare!')
+    // console.log('compare!')
     if(swipe_control.value)map.removeControl(swipe_control.value)
     swipe_control.value = L.control.sideBySide().addTo(map)
+
+    if(sub_indicator.value === 'Land Cover') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
+
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+     pane: 'pane800',
+     layers: `LULC:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+// addLulcLegend()
+lulclegendContent()
+
+changeOpacity()
+
+
+
+
+}
+    
 
   }
   

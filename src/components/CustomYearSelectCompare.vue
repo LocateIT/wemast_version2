@@ -2,16 +2,16 @@
     <div class="aselect" :data-value="placeholder" :data-list="list">
       <div class="selector" @click="toggle()">
           <div class="label">
-                  <span>{{ storeUserSelections.year_placeholder }}</span>
+                  <span>{{ compareSelections.year_placeholder }}</span>
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
           <div :class="{ hidden : !visible, visible }">
               <ul>
   
-                  <li :class="{ current : item === storeUserSelections.year_placeholder }" 
-                  v-for="item in storeUserSelections.year_list" :key="item"
-                  @click="storeUserSelections.showSelectedYear(item)">{{ item }}</li>
+                  <li :class="{ current : item === compareSelections.year_placeholder }" 
+                  v-for="item in compareSelections.year_list" :key="item"
+                  @click="compareSelections.showSelectedYear(item)">{{ item }}</li>
                   
               </ul>
           </div>
@@ -22,9 +22,8 @@
 
 <script setup>
   import { ref} from 'vue'
-  import {useCounterStore } from '../stores/counter';
-  const storeUserSelections = useCounterStore()
-
+  import { useCompareStore } from '../stores/compareSelections/compare';
+const compareSelections = useCompareStore()
  
 
 
@@ -36,11 +35,11 @@
       
           const toggle = () => {
               visible.value = !visible.value;
-              storeUserSelections.visible_year = visible.value
-              if(storeUserSelections.visible_sub_indicator = true){
-                storeUserSelections.visible_sub_indicator = false
+              compareSelections.visible_year = visible.value
+              if(compareSelections.visible_sub_indicator = true){
+                compareSelections.visible_sub_indicator = false
               }
-              storeUserSelections.fetchYearList()
+              compareSelections.fetchYearList()
           }
           const select = (option) =>{
               placeholder.value = option;

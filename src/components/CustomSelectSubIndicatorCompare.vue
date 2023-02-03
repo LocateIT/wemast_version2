@@ -2,7 +2,7 @@
   <div class="aselect" :data-value="placeholder" :data-list="list">
     <div class="selector" @click="toggle()">
         <div class="label">
-                <span>{{storeUserSelections.sub_indicator_placeholder}}</span>
+                <span>{{compareSelections.sub_indicator_placeholder}}</span>
         </div>
         <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
         <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
@@ -10,8 +10,8 @@
             <ul>
 
                 <li :class="{ current : item === sub_indicator_placeholder }"
-                 v-for="item in storeUserSelections.sub_indicator_list" :key="item" 
-                 @click="storeUserSelections.showSelectedSubIndicator(item)">{{ item }}</li>
+                 v-for="item in compareSelections.sub_indicator_list" :key="item" 
+                 @click="compareSelections.showSelectedSubIndicator(item)">{{ item }}</li>
                 
             </ul>
         </div>
@@ -22,8 +22,8 @@
 
 <script setup>
 import { ref} from 'vue'
-import {useCounterStore } from '../stores/counter';
-const storeUserSelections = useCounterStore()
+import { useCompareStore } from '../stores/compareSelections/compare';
+const compareSelections = useCompareStore()
 
 
         let placeholder = ref('Land Cover')
@@ -34,7 +34,7 @@ const storeUserSelections = useCounterStore()
     
         const toggle = () => {
             visible.value = !visible.value;
-            storeUserSelections.fetchSubIndicatorList()
+            compareSelections.fetchSubIndicatorList()
         }
         const select = (option) =>{
             placeholder.value = option;

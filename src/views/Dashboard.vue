@@ -211,6 +211,7 @@
   let ndvi_legend = ref(false)
   let sidenavigationbar = ref(false)
   let swipe_control = ref(null)
+  let wmsCompareLayer = ref(null)
   
   
   
@@ -1442,7 +1443,7 @@ changeOpacity()
   //access year
   
   const getCompareYear = () => {
-    var selectedYear= storeUserSelections.getSelectedYear
+    var selectedYear= compareUserSelections.getSelectedYear
   
    year.value = selectedYear
    console.log(year.value, 'compare year app')
@@ -1512,41 +1513,54 @@ changeOpacity()
 
   const compareLayers = () => {
     // console.log('compare!')
-    if(swipe_control.value)map.removeControl(swipe_control.value)
-    swipe_control.value = L.control.sideBySide().addTo(map)
+    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    // if(swipe_control.value)map.removeControl(swipe_control.value)
+    // swipe_control.value = L.control.sideBySide().addTo(map)
+
+    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
+      styles.value = 'cuvelai_lulc'
+    }
+  
+    if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover' ){
+      styles.value = 'limpopo_lulc'
+    }
+    if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover' ){
+      styles.value = 'zambezi_lulc'
+    }
+    if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
+      styles.value = 'okavango_lulc'
+    }
+  
 
     if(sub_indicator.value === 'Land Cover') {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 500;
 
-wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
      pane: 'pane800',
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:1.0
+     opacity:0.3
      // CQL_FILTER: "Band1='1.0'"
      
     
 });
 
 
-wmsLayer.value.addTo(map);
+wmsCompareLayer.value.addTo(map);
 
 
 // console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
-wmsLayer.value.on('load', function (event) {
+wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
 });
 
-// addLulcLegend()
-lulclegendContent()
 
-changeOpacity()
 
 
 

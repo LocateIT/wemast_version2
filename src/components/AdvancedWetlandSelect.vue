@@ -1,17 +1,18 @@
+
 <template>
     <div class="aselect" :data-value="placeholder" :data-list="list">
       <div class="selector" @click="toggle()">
           <div class="label">
-                  <span>{{storeUserSelections.sub_indicator_placeholder}}</span>
+                  <span>{{ advancedFilterSelections.wetland_placeholder}}</span>
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
           <div :class="{ hidden : !visible, visible }">
               <ul>
   
-                  <li :class="{ current : item === sub_indicator_placeholder }"
-                   v-for="item in storeUserSelections.sub_indicator_list" :key="item" 
-                   @click="storeUserSelections.showSelectedSubIndicator(item)">{{ item }}</li>
+                  <li :class="{ current : item === wetland_placeholder }"
+                   v-for="item in  advancedFilterSelections.wetland_list" :key="item" 
+                   @click=" advancedFilterSelections.showSelectedWetland(item)">{{ item }}</li>
                   
               </ul>
           </div>
@@ -22,11 +23,11 @@
 
 <script setup>
   import { ref} from 'vue'
-  import {useCounterStore } from '../stores/counter';
-  const storeUserSelections = useCounterStore()
+  import { useAdvancedStore } from '../stores/compareSelections/advanced_filter';
+  const advancedFilterSelections = useAdvancedStore()
 
 
-          let placeholder = ref('')
+          let placeholder = ref('Land Cover')
         //   let list = ['Land Cover', 'Vegetation Cover', "Wetland Inventory"]
         //   console.log(list, 'regions list')
           let visible = ref(false)
@@ -34,7 +35,8 @@
       
           const toggle = () => {
               visible.value = !visible.value;
-              storeUserSelections.fetchSubIndicatorList()
+              
+               advancedFilterSelections.fetchWetlandsList()
           }
           const select = (option) =>{
               placeholder.value = option;
@@ -52,14 +54,14 @@ left:-0.52vw;
   margin: 20px auto;
 }
       .selector {
-          border: 1px solid rgb(114, 113, 113);
+        border: 1px  #ccc solid;
           background: #F8F8F8;
           /* padding-left: 2px; */
           /* padding-right: 5px; */
           position: relative;
           z-index: 1;
           height: 35px;
-width: 200px;
+width: 180px;
 border-radius: 30px;
 cursor: pointer;
       }
@@ -100,6 +102,8 @@ cursor: pointer;
     background: STEELBLUE;
     border-radius: 7px;
     z-index: 5000;
+    overflow-y:scroll;
+    height: 160px;
       }
       li {
           padding: 12px;

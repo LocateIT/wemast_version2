@@ -25,16 +25,19 @@
     <div v-if="radio_selection ==='wetland'" class="filter_selections">
         <p class="select_country">Select Country</p>
     <div class="country_selection">
-        <CustomSelectCountry />
+        <AdvancedCountrySelect />
     </div>
     <p class="select_wetland">Select Wetland</p>
     <div class="wetland_selection">
-        <CustomSelectCountry />
+        <AdvancedWetlandSelect />
     </div>
-    <p class="select_platform">Select Platform</p>
-    <div class="platform_selection">
-        <CustomSelectCountry />
+    <div class="platform_wrapper">
+        <p class="select_platform">Select Platform</p>
+    <div class="platform_selection" >
+        <AdvancedPlatformSelect  />
     </div>
+    </div>
+    
 
     <button type="button" class="submit">SUBMIT</button>
     </div>
@@ -47,7 +50,11 @@
 
 <script setup>
 
+import AdvancedCountrySelect from './AdvancedCountrySelect.vue';
 import CustomSelectCountry from './CustomSelectCountry.vue';
+import AdvancedWetlandSelect from './AdvancedWetlandSelect.vue';
+import AdvancedPlatformSelect from './AdvancedPlatformSelect.vue';
+
 import { ref } from 'vue'
 let radio_selection = ref("wetland") 
 
@@ -62,7 +69,7 @@ const handleTimeSwap = () => {
 </script>
 
 <style scoped>
-img#disabled:hover {
+.parameters#disabled:hover {
   cursor: not-allowed;
 }
 .radio_selections{
@@ -128,6 +135,7 @@ img#disabled:hover {
         position: absolute;
         top: 6vh;
         left: 1vw;
+        z-index: 10;
 
     }
 
@@ -136,11 +144,15 @@ img#disabled:hover {
         top: 10vh;
         left: 1vw;
         font-weight: 700;
+        
     }
     .wetland_selection{
         position: absolute;
         top: 14vh;
         left: 1vw;
+     z-index: 5;
+        
+        
 
     }
     .select_platform{
@@ -149,12 +161,19 @@ img#disabled:hover {
         left: 1vw;
         font-weight: 700;
     }
+ 
     .platform_selection{
         position: absolute;
         top: 23vh;
         left: 1vw;
+        
 
     }
+    .platform_wrapper{
+        cursor: not-allowed;
+
+    }
+  
     .submit{
         position: absolute;
         top: 32vh;

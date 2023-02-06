@@ -65,7 +65,7 @@
 
 
 
-        <button :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
+        <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
          'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),

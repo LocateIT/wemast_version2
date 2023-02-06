@@ -744,6 +744,7 @@ const opensidenavigationbar = () => {
    
    if(current_geojson.value)map.removeLayer(current_geojson.value)
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+   if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
   
    var selecteRegion = storeUserSelections.getSelectedRegion
@@ -919,16 +920,10 @@ const opensidenavigationbar = () => {
     getSatellite()
     
   })
-  
-  
-  //function to request wms
-  
-  const fetchWmsData = () => {
-    loading.value = true
-    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-  
-  
-    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
+
+  //style functions
+  const lulc_style = () => {
+      if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
       styles.value = 'cuvelai_lulc'
     }
   
@@ -941,11 +936,8 @@ const opensidenavigationbar = () => {
     if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
       styles.value = 'okavango_lulc'
     }
-  
-  
-   
-  
-  
+    }
+const prec_style = () => {
     if(basin.value === 'Cuvelai' && sub_indicator.value === 'Prec Index' ){
       styles.value = 'cuvelai_spi'
     }
@@ -959,8 +951,8 @@ const opensidenavigationbar = () => {
     if(basin.value === 'Okavango' && sub_indicator.value === 'Prec Index' ){
       styles.value = 'okavango_spi'
     }
-  
-  
+  }
+const wetland_inventory_style = () => {
     if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory'){
       styles.value = 'cuvelai_water'
     }
@@ -973,9 +965,9 @@ const opensidenavigationbar = () => {
     if(basin.value === 'Okavango' && sub_indicator.value === 'Wetland Inventory'){
       styles.value = 'okavango_water'
     }
-  
-
-    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
+  }
+const ndvi_style = () => {
+  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
       styles.value = 'cuvelai_ndvi'
     }
     if(basin.value === 'Limpopo' && sub_indicator.value === 'Vegetation Cover' ){
@@ -988,48 +980,48 @@ const opensidenavigationbar = () => {
       styles.value = 'okavango_ndvi'
     }
   
-   
+ }
   
-   
-  
+
+ const addLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {
   
-     // console.log('just to see if request is accessed') //accessed
-     map.createPane("pane800").style.zIndex = 500;
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
   
-  wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
-        pane: 'pane800',
-        layers: `LULC:${year.value}`,
-        crs:L.CRS.EPSG4326,
-        styles: styles.value,
-        format: 'image/png',
-        transparent: true,
-        opacity:1.0
-        // CQL_FILTER: "Band1='1.0'"
-        
-       
-  });
-  
-  
-  wmsLayer.value.addTo(map);
-  
-  
-  // console.log(wmsLayer.value, 'wms')
-  //remove spinner when layer loads
-  wmsLayer.value.on('load', function (event) {
-       loading.value = false
-  });
-  
-  // addLulcLegend()
-  lulclegendContent()
 
-  changeOpacity()
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+     pane: 'pane800',
+     layers: `LULC:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+// addLulcLegend()
+lulclegendContent()
+
+changeOpacity()
+
+}
+ }
   
-  
-  
-  
-  }
-  
+ const addPrecIndexWet = () => {
   if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
   
   // console.log('just to see if request is accessed') //accessed
@@ -1061,6 +1053,9 @@ const opensidenavigationbar = () => {
   
   }
   
+ }
+
+ const addPrecIndexDry = () => {
   if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
   
   // console.log('just to see if request is accessed') //accessed
@@ -1090,8 +1085,8 @@ const opensidenavigationbar = () => {
   changeOpacity()
   
   }
-  
-  
+ }
+ const addWetlandExtent = () => {
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
   
   // console.log('just to see if request is accessed') //accessed
@@ -1129,6 +1124,8 @@ const opensidenavigationbar = () => {
   
   }
 
+ }
+ const addVegCover = () => {
   if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
   
   // console.log('just to see if request is accessed') //accessed
@@ -1160,15 +1157,31 @@ wmsLayer.value.on('load', function (event) {
 
 NDVIlegendContent()
 changeOpacity()
-
-
-
-
 }
+ }
+  //function to request wms
+  
+  const fetchWmsData = () => {
+    loading.value = true
+    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+
+  lulc_style()
+  prec_style()
+  wetland_inventory_style()
+  ndvi_style()
+   
+  
+  addLulcLayer()
+  addPrecIndexWet()
+  addPrecIndexDry()
+  addWetlandExtent()
+  addVegCover()
+  
+ 
+
   
   }
-  
-  
   
   //watch state for loading
   
@@ -1510,41 +1523,21 @@ changeOpacity()
   })
   
 
-
-  const compareLayers = () => {
-    // console.log('compare!')
-    // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-    // if(swipe_control.value)map.removeControl(swipe_control.value)
-    
-
-    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'cuvelai_lulc'
-    }
-  
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'limpopo_lulc'
-    }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'zambezi_lulc'
-    }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'okavango_lulc'
-    }
-  
-
-    if(sub_indicator.value === 'Land Cover') {
+  const addCompareLulcLayer = () => {
+  if(sub_indicator.value === 'Land Cover') {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 500;
+  
 
-  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
      pane: 'pane800',
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.7 //to see if its being added really
+     opacity:1.0
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -1562,12 +1555,172 @@ wmsCompareLayer.value.on('load', function (event) {
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
 
+// addLulcLegend()
+lulclegendContent()
 
-
-
-
+changeOpacity()
 
 }
+ }
+  
+ const addComparePrecIndexWet = () => {
+  if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
+  
+  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
+     pane: 'pane800',
+     layers: `SPI_WET:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsCompareLayer.value.addTo(map);
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+  swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+  preclegendContent()
+  changeOpacity()
+  
+  
+  }
+  
+ }
+
+ const addComparePrecIndexDry = () => {
+  if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
+  
+  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
+     pane: 'pane800',
+     layers: `SPI_DRY:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsCompareLayer.value.addTo(map);
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+  swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+  preclegendContent()
+  changeOpacity()
+  
+  }
+ }
+ const addCompareWetlandExtent = () => {
+  if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
+  
+  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsCompareLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+  swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+  
+  NDWIlegendContent()
+  changeOpacity()
+  
+  
+  
+  
+  
+  }
+
+ }
+ const addCompareVegCover = () => {
+  if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 500;
+
+wmsCompareLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+     pane: 'pane800',
+     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsCompareLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+  
+NDVIlegendContent()
+changeOpacity()
+}
+ }
+  const compareLayers = () => {
+    // console.log('compare!')
+    // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    if(swipe_control.value)map.removeControl(swipe_control.value)
+    
+
+    lulc_style()
+    prec_style()
+    wetland_inventory_style()
+    ndvi_style()
+
+    addCompareLulcLayer()
+    addComparePrecIndexWet()
+    addComparePrecIndexDry()
+    addCompareWetlandExtent()
+    addCompareVegCover()
     
 
   }

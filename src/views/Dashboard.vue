@@ -37,7 +37,7 @@
          </div>
 
 
-         <div class="swap" v-if="wmsCompareLayer != null" >
+         <div class="swap" v-if="wmsCompareLayer != null"  title="Compare Layers" @click="close_swipe">
           <img src="/uiIcons/swap.svg" alt="">
          </div>
          <!-- map controls to be returned if need be -->
@@ -278,7 +278,12 @@
       const zoom_out = () => {
         map.setZoom(map.getZoom() - 1);
       }
-  
+  const close_swipe = () => {
+    if(swipe_control.value)map.removeControl(swipe_control.value)
+    if(swipe_control.value = null)swipe_control.value.addTo(map)
+   
+
+  }
       const handle_baseLayers = () =>{
         setTimeout(() => {
           if (base_map_ctrl_cliked.value === false)
@@ -713,8 +718,7 @@ const opensidenavigationbar = () => {
         var band1 = content.features[0].properties.Band1
       
       band_1.value = band1
-      console.log(typeof(band1), 'type wms band 1')
-      band1.addTo(map)
+      
           return  
           // console.log(latlng, 'lat long');
         
@@ -1684,7 +1688,7 @@ wmsCompareLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserve
      format: 'image/png',
      transparent: true,
      opacity:1.0
-     // CQL_FILTER: "Band1='1.0'"
+     
      
     
 });

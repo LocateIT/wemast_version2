@@ -42,9 +42,10 @@
             <CustomSelectYear />
         </div>
 
-        <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover'}" 
+        <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 'select_year2':(storeUserSelections.selected_sub_indicator === 'Prec Index')}" 
         v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ">Select Season</p>
-        <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover'}"   v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
+        <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 'year_selection2':(storeUserSelections.selected_sub_indicator === 'Prec Index')}" 
+          v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
           <CustomSelectSeason />
         </div>
 
@@ -58,7 +59,8 @@
 
         <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}"
          v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">Select Satellite</p>
-        <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
+        <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}" 
+        v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
             <CustomSelectSatellite />
         </div> 
         

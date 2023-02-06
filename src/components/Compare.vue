@@ -3,13 +3,13 @@
     <div class="radio_labels_container">
         <div class="radio_selections">
        
-       <img src="public/uiIcons/radio.svg"  class="parameters" @click="handleParameterSwap()"   :class="
+       <img src=" /uiIcons/radio.svg"  class="parameters" @click="handleParameterSwap()"   :class="
                           radio_selection === 'parameters'
                             ? 'radio_swap'
                             : ''
                         "
                         style="cursor: pointer;">
-       <img src="public/uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
+       <img src=" /uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
                           radio_selection === 'time'
                             ? 'radio_swap'
                             : ''

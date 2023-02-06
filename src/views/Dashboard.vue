@@ -37,7 +37,7 @@
          </div>
 
 
-         <div class="swap"  >
+         <div class="swap" v-if="wmsCompareLayer != null" >
           <img src="/uiIcons/swap.svg" alt="">
          </div>
          <!-- map controls to be returned if need be -->
@@ -1513,9 +1513,9 @@ changeOpacity()
 
   const compareLayers = () => {
     // console.log('compare!')
-    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     // if(swipe_control.value)map.removeControl(swipe_control.value)
-    // swipe_control.value = L.control.sideBySide().addTo(map)
+    
 
     if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
       styles.value = 'cuvelai_lulc'
@@ -1544,7 +1544,7 @@ changeOpacity()
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.3
+     opacity:0.7 //to see if its being added really
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -1559,6 +1559,8 @@ wmsCompareLayer.value.addTo(map);
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
 });
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
 
 
 

@@ -129,6 +129,11 @@ export const useCounterStore = defineStore({
       satellite_list:[],
       satellite_placeholder:'',
       selected_satellite:'',
+      custom_geojson: {
+        label: 'AOI',
+        custom: true,
+        geojson: {}
+      },
       //visibility for custom selects
       visible_region: null,
       visible_indicator: null,

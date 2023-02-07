@@ -167,6 +167,7 @@
   import Compare from '../components/Compare.vue';
   import sideNavigationbar from '../components/sidenavigationbar.vue'
   import axios from 'axios'
+
   
   //refs go here
   let advanced_filter = ref(false)
@@ -212,6 +213,7 @@
   let sidenavigationbar = ref(false)
   let swipe_control = ref(null)
   let wmsCompareLayer = ref(null)
+  let custom_geojson = ref(null)
   
   
   
@@ -315,7 +317,7 @@
         editableLayers.value = new L.FeatureGroup();
         map.addLayer(editableLayers.value);
         let options = {
-          position: "topright",
+          position: "bottomright",
           draw: {
             polyline: false,
             polygon: {
@@ -344,17 +346,35 @@
         map.addControl(drawControl);
   
         map.on(L.Draw.Event.CREATED, (e) => {
+
+          if(custom_geojson.value)
+          editableLayers.value.removeLayer(custom_geojson.value)
+          
           const layer = e.layer;
-          editableLayers.value.addLayer(layer);
+          custom_geojson.value = layer
+        
+          editableLayers.value.addLayer(custom_geojson.value );
+          console.log(JSON.stringify(custom_geojson.value.toGeoJSON().geometry), 'stringified custom drawn geojson');
+          //link custom geojson in store to this geojson
+          console.log(storeUserSelections.custom_geojson.custom, 'accessed store custom?') //true
+          storeUserSelections.custom_geojson.geojson = custom_geojson.value.toGeoJSON().geometry
+          console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
           // if (process.env.DEV)
-          //   console.log(JSON.stringify(layer.toGeoJSON().geometry));
+          //   
         });
   
       map.on(L.Draw.Event.EDITSTOP, (e) => {
-          // if (process.env.DEV) console.log("stop edit", e);
+          // if (process.env.DEV) 
+          console.log("stop edit", e);
+        //   var layers = e.layers;
+        //  layers.eachLayer(function (layer) {
+        //      //do whatever you want; most likely save back to db
+        //      console.log(layer, 'edit mode')
+        //  });
         });
         map.on(L.Draw.Event.DELETED, (e) => {
-          // if (process.env.DEV) console.log(" deleted ", e);
+          // if (process.env.DEV) 
+          console.log(" deleted ", e);
           //remove the control from map and remove focus on the draw icon by changing color
           draw_polygon();
           document.getElementById("draw_polygon").style.backgroundColor = "white";
@@ -700,9 +720,9 @@ const opensidenavigationbar = () => {
       
       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-      console.log(point, 'point')
+      // console.log(point, 'point')
     
-      console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
       return this._url + L.Util.getParamString(params, this._url, true);
     },
@@ -713,11 +733,11 @@ const opensidenavigationbar = () => {
   
       
         ;
-        console.log(latlng, 'wms latlng')
-        console.log(content, "wms content")
-        var band1 = content.features[0].properties.Band1
+        // console.log(latlng, 'wms latlng')
+        // console.log(content, "wms content")
+      //   var band1 = content.features[0].properties.Band1
       
-      band_1.value = band1
+      // band_1.value = band1
       
           return  
           // console.log(latlng, 'lat long');
@@ -991,11 +1011,11 @@ const ndvi_style = () => {
   if(sub_indicator.value === 'Land Cover') {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 500;
+  map.createPane("pane500").style.zIndex = 500;
   
 
 wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
-     pane: 'pane800',
+     pane: 'pane500',
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
@@ -1358,7 +1378,7 @@ changeOpacity()
   const NDVIlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_DRY%3A2016&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150'
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=${satellite.value}_NDVI_${season.value}%3A2016&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -1411,7 +1431,12 @@ changeOpacity()
     $('#sldOpacity').on('change', function(){
                                     //   $('#image-opacity').html(this.value); //i might revesit
                                       console.log(this.value, 'opacity value')
-                                      wmsLayer.value.setOpacity(this.value)
+                                      if(wmsLayer.value){
+                                        wmsLayer.value.setOpacity(this.value)
+                                      }
+                                      if(wmsCompareLayer) wmsCompareLayer.value.setOpacity(this.value)
+                                    
+                                     
                                     
                     
                                   });
@@ -1711,7 +1736,7 @@ changeOpacity()
  }
   const compareLayers = () => {
     // console.log('compare!')
-    // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(swipe_control.value)map.removeControl(swipe_control.value)
     
 
@@ -1725,6 +1750,7 @@ changeOpacity()
     addComparePrecIndexDry()
     addCompareWetlandExtent()
     addCompareVegCover()
+    changeOpacity()
     
 
   }

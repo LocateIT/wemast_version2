@@ -127,6 +127,6 @@ cursor: pointer;
       .visible {
           visibility: visible;
       }
-      /* the end ;) */
+    
   
 </style>

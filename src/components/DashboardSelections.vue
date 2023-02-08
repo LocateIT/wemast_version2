@@ -35,17 +35,28 @@
 
         <p  :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
+        'select_year3':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status' ),
          'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">Select Year</p>
         <div  :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
-        storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
+        'year_selection3':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status' ), 
+     
          'year_selection':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">
             <CustomSelectYear />
         </div>
 
-        <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 'select_year2':(storeUserSelections.selected_sub_indicator === 'Prec Index')}" 
-        v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ">Select Season</p>
-        <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 'year_selection2':(storeUserSelections.selected_sub_indicator === 'Prec Index')}" 
-          v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
+        <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
+        'select_year2':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 
+        'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}" 
+        v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
+        || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Season</p>
+
+        <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
+        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
+        'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}" 
+          v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' 
+          || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
+          || storeUserSelections.selected_parameter === 'Wetland Status'">
           <CustomSelectSeason />
         </div>
 
@@ -57,10 +68,12 @@
           <CustomSelectParameter />
         </div>
 
-        <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}"
-         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">Select Satellite</p>
-        <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover')}" 
-        v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'">
+        <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
+         'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}"
+         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Satellite</p>
+        <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
+        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}" 
+        v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">
             <CustomSelectSatellite />
         </div> 
         
@@ -69,6 +82,7 @@
 
         <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
          'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
+         'request_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
          'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' ||
@@ -326,6 +340,57 @@ const fetchRegion = () => {
   background-color: steelblue;
   cursor: pointer;
 }
+.request_status{
+    position: absolute;
+  top: 4vh;
+  left: 65vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+
+
+.select_year3{ 
+  position: absolute;
+  top: 0.1vh;
+  left: 54vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.year_selection3{
+  position: absolute;
+  top: 4vh;
+  left: 54vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.season_status{
+  position: absolute;
+  top: 0.1vh;
+  left: 46vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.season_status_selection{
+  position: absolute;
+  top: 4vh;
+  left: 46vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
 
 
 

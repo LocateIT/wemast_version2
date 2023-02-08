@@ -173,11 +173,9 @@ export const useCounterStore = defineStore({
     },
     fetchSeasonsList(){
       
-      if(this.selected_satellite === 'SENTINEL'){
-        this.season_list = ['DRY']
-      }else{
-        this.season_list = ['Wet', 'DRY']
-      }
+      
+        this.season_list = ['WET', 'DRY']
+      
     },
     fetchParameterList(){
     

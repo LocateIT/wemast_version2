@@ -1006,6 +1006,21 @@ const ndvi_style = () => {
   
  }
   
+ const status_style = () => {
+  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
+      styles.value = 'cuvelai_status'
+    }
+    if(basin.value === 'Limpopo' && sub_indicator.value === 'Vegetation Cover' ){
+      styles.value = 'limpopo_status'
+    }
+    if(basin.value === 'Zambezi' && sub_indicator.value === 'Vegetation Cover'){
+      styles.value = 'zambezi_status'
+    }
+    if(basin.value === 'Okavango' && sub_indicator.value === 'Vegetation Cover' ){
+      styles.value = 'okavango_status'
+    }
+  
+ }
 
  const addLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {
@@ -1049,7 +1064,7 @@ changeOpacity()
   if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
      pane: 'pane800',
@@ -1083,7 +1098,7 @@ changeOpacity()
   if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
      pane: 'pane800',
@@ -1114,7 +1129,7 @@ changeOpacity()
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
      pane: 'pane800',
@@ -1149,11 +1164,12 @@ changeOpacity()
   }
 
  }
+
  const addVegCover = () => {
   if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
 
 wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
@@ -1182,7 +1198,40 @@ wmsLayer.value.on('load', function (event) {
 NDVIlegendContent()
 changeOpacity()
 }
+// if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
+  
+//   // console.log('just to see if request is accessed') //accessed
+//   map.createPane("pane800").style.zIndex = 200;
+
+// wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+//      pane: 'pane800',
+//      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+//      crs:L.CRS.EPSG4326,
+//      styles: styles.value,
+//      format: 'image/png',
+//      transparent: true,
+//      opacity:1.0
+//      // CQL_FILTER: "Band1='1.0'"
+     
+    
+// });
+
+
+// wmsLayer.value.addTo(map);
+
+
+// // console.log(wmsLayer.value, 'wms')
+// //remove spinner when layer loads
+// wmsLayer.value.on('load', function (event) {
+//     loading.value = false
+// });
+
+
+
+// changeOpacity()
+// }
  }
+ 
   //function to request wms
   
   const fetchWmsData = () => {
@@ -1194,6 +1243,7 @@ changeOpacity()
   prec_style()
   wetland_inventory_style()
   ndvi_style()
+  // status_style()
    
   
   addLulcLayer()
@@ -1201,6 +1251,7 @@ changeOpacity()
   addPrecIndexDry()
   addWetlandExtent()
   addVegCover()
+ 
   
  
 
@@ -1378,7 +1429,7 @@ changeOpacity()
   const NDVIlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=$_NDVI_${season.value}%3A2016&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -1556,7 +1607,7 @@ changeOpacity()
   if(sub_indicator.value === 'Land Cover') {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
 
 wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
@@ -1596,7 +1647,7 @@ changeOpacity()
   if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
   wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
      pane: 'pane800',
@@ -1631,7 +1682,7 @@ changeOpacity()
   if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
   wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
      pane: 'pane800',
@@ -1663,7 +1714,7 @@ changeOpacity()
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
   
   wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
      pane: 'pane800',
@@ -1703,7 +1754,7 @@ changeOpacity()
   if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
   
   // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 400;
+  map.createPane("pane800").style.zIndex = 200;
 
 wmsCompareLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',

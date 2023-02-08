@@ -210,6 +210,7 @@
   let prec_legend = ref(false)
   let ndwi_legend = ref(false)
   let ndvi_legend = ref(false)
+  let status_legend = ref(null)
   let sidenavigationbar = ref(false)
   let swipe_control = ref(null)
   let wmsCompareLayer = ref(null)
@@ -1201,6 +1202,7 @@ changeOpacity()
 
  }
  const addWetlandStatus = () => {
+  if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
   
   // console.log('just to see if request is accessed') //accessed
@@ -1230,7 +1232,7 @@ wmsLayer.value.on('load', function (event) {
 });
 
 
-
+statuslegendContent()
 changeOpacity()
 }
  }
@@ -1480,6 +1482,58 @@ changeOpacity()
     }
     getLegendContent()
   }
+
+  const statuslegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  
+        var legend = L.control({ position: "bottomright" });
+        status_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        status_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${sub_indicator.value} ${year.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+  
+    return div;
+  };
+  
+  status_legend.value.addTo(map);
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  
 
   //change opacity
   const changeOpacity = () => {

@@ -242,6 +242,17 @@ table {
   left:-2vw
 
 }
+/* #search1{
+  position: absolute;
+  top: 65vh;
+  right:7vw;
+  background-color: #fff;
+  height: 40px;
+  width: 200px;
+  z-index: 2000;
+  border: #777;
+
+} */
 #map_icons{
   height: 20px;
   width:20px;
@@ -623,4 +634,20 @@ top: 36.4vh;
 }
 title{
   background-color: #000;
+}
+.leaflet-control-geosearch form input {
+  min-width: 200px;
+  width: 100%;
+  outline: none;
+  border: none;
+  /* margin-left: -20px; */
+  padding: 0;
+  font-size: 12px;
+  height: 26px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  text-indent: 8px;
+}
+.leaflet-bar-part {
+  background-color: red;
 }

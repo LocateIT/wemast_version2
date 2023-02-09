@@ -117,6 +117,9 @@
           <div  class="spinner"  v-if="loading">
               <img src="/uiIcons/loader_white.svg" alt="">
           </div>
+          <div id="search1">
+
+          </div>
   
   
        
@@ -144,6 +147,8 @@
   import sideByside from "leaflet-side-by-side";
   import "leaflet-side-by-side/layout.css"
   import "leaflet-side-by-side/range.css"
+  import { GeoSearchControl, OpenStreetMapProvider }  from "leaflet-geosearch"
+  import "leaflet-geosearch/dist/geosearch.css"
 
   // import "leaflet-draw/dist/leaflet.draw";
   
@@ -215,7 +220,7 @@
   let swipe_control = ref(null)
   let wmsCompareLayer = ref(null)
   let custom_geojson = ref(null)
-  
+  let search_marker = ref(null)
   
   
   
@@ -656,6 +661,11 @@ const opensidenavigationbar = () => {
       });
 
       closeNav();
+
+
+
+
+
   
   
   })//OnMounted end
@@ -793,6 +803,47 @@ const opensidenavigationbar = () => {
              map.fitBounds(current_geojson.value.getBounds(), {
                              padding: [50, 50],
                            }); 
+
+
+
+                           
+      const provider = new OpenStreetMapProvider();
+// search_marker.value = {
+//     // optional: L.Marker    - default L.Icon.Default
+//     icon: new L.icon({
+//       iconUrl: "/src/assets/plant.svg",
+//       iconSize: [40, 40],
+//       iconAnchor: [15,15]
+//     }),
+//     draggable: false,
+//   }
+
+
+
+const searchControl = new GeoSearchControl({
+  provider: provider,
+  stle: 'bar',
+  marker: search_marker.value,
+  popupFormat: ({ query, result }) => result.label,
+  resultFormat: ({ result}) => result.label
+  //  console.log(result, 'result')
+  
+});
+
+
+const showResult = ({result}) => {
+      console.log(result, result)
+      return result.label
+
+    }
+map.addControl(searchControl);
+
+
+    
+    document.getElementById('location_search').appendChild(
+      document.querySelector(".geosearch")
+    );
+
    
   }
  

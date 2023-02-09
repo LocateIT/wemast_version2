@@ -89,6 +89,11 @@
          storeUserSelections.selected_sub_indicator === 'Burnt Area' || 
          storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
+         <p class="search_location">Search AOI</p>
+         <div id="location_search">
+          
+         </div>
+
         <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
         
 
@@ -390,6 +395,25 @@ const fetchRegion = () => {
   cursor: pointer;
   z-index: 1200;
 }
+.search_location{
+  position: absolute;
+  top: 0.1vh;
+  left: 74vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+#location_search{
+  position: absolute;
+  top: 5vh;
+  left: 74vw;
+  height: 40px;
+  width: 300px;
+  z-index: 1000;
+  /* background-color: #fff; */
+
+}
+
 
 
 

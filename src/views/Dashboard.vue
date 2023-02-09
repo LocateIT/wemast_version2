@@ -29,8 +29,8 @@
   
       <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
   
-      <div id="map">
-        <div class="opacity" v-if="wmsLayer != null">
+      <div id="map" >
+        <div class="opacity" v-if="wmsLayer != null"  :class="{mainopen: sidenavigationbar}">
           <span id="opacity">Opacity:</span>
           <span id="image-opacity"> </span>
           <input type="range" id="sldOpacity" min="0" max="1" step="0.1" value="1" />
@@ -40,19 +40,23 @@
          <div class="swap" v-if="wmsCompareLayer != null"  title="Compare Layers" @click="close_swipe">
           <img src="/uiIcons/swap.svg" alt="">
          </div>
+         <div class="map_controls_wrapper" :class="{mainopen: sidenavigationbar}" >
+
+         </div>
+         
          <!-- map controls to be returned if need be -->
-        <!-- <div class="map_controls"> 
+        <!-- <div class="map_controls"  > 
       
-         <img  title="Download tif" id="map_icons" src="./assets/mapIcons/download_tif.svg" alt="" class="download_tiff">
-         <img title="Download Map" id="map_icons" src="./assets/mapIcons/download_map.svg" alt="" class="download_map">
-         <img title="Measure Distance" id="map_icons" src="./assets/mapIcons/ruler.svg" alt="" class="measure">
-         <img title="" id="map_icons" src="./assets/mapIcons/layers-24px.svg" alt="" class="layers"
+         <img  title="Download tif" id="map_icons" src="/mapIcons/download_tif.svg" alt="" class="download_tiff">
+         <img title="Download Map" id="map_icons" src="/mapIcons/download_map.svg" alt="" class="download_map">
+         <img title="Measure Distance" id="map_icons" src="/mapIcons/ruler.svg" alt="" class="measure">
+         <img title="" id="map_icons" src="/mapIcons/layers-24px.svg" alt="" class="layers"
           @mouseover="base_map_ctrl_selections = true"
           @mouseleave="handle_baseLayers">
-         <img title="Draw Polygon" id="map_icons" src="./assets/mapIcons/square.svg" alt="" class="draw_polygon">
-         <img title="Zoom in" id="map_icons" src="./assets/mapIcons/add-24px.svg" alt="" class="zoom_in" @click="zoom_in">
-         <img title="Zoom out" id="map_icons" src="./assets/mapIcons/remove-24px.svg" alt="" class="zoom_out" @click="zoom_out">
-         <img title="Help" id="map_icons" src="./assets/mapIcons/help.svg" alt="" class="help">
+         <img title="Draw Polygon" id="map_icons" src="/mapIcons/square.svg" alt="" class="draw_polygon">
+         <img title="Zoom in" id="map_icons" src="/mapIcons/add-24px.svg" alt="" class="zoom_in" @click="zoom_in">
+         <img title="Zoom out" id="map_icons" src="/mapIcons/remove-24px.svg" alt="" class="zoom_out" @click="zoom_out">
+         <img title="Help" id="map_icons" src="/mapIcons/help.svg" alt="" class="help">
         </div> -->
   
         
@@ -74,18 +78,207 @@
         </div> -->
   
       </div>
-  
-      <!-- leaflet side bar -->
-      <div class="sideview" v-if="sidenavigationbar">
-        <sideNavigationbar />
+
+  <!-- will revisit -->
+      <!-- leaflet side bar :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index') -->
+      <!-- <div class="sideview" v-if="sidenavigationbar" :class="{sidenavopen: sidenavigationbar}">
+        <sideNavigationbar  />
         
-        <!-- <SideBarView /> -->
-      </div>
+      
+      </div> -->
   
       <!-- sidenav goes here -->
-      <!-- <div class="" @click="opensidenavigationbar">
+      <!-- <div class="" @click="sidenavigationbar = !sidenavigationbar">
         <img class="open_sidebar" src="/uiIcons/drawer.svg" alt="">
       </div> -->
+
+
+
+          <!-- leaflet side bar -->
+    <div class="side-bar-view">
+      <SideBarView />
+    </div>
+
+    <!-- sidenav goes here -->
+    <div id="sidenav" class="sidenav">
+      <div id="mySidenav" style="height: 100%">
+        <div id="protrusion" class="bg-white protrusion">
+          <div class="toggle_icon" @click.stop="toggle_nav">
+            <img style="margin-left:-5vw; margin-top:1.5vw" id="open" src=" /uiIcons/drawer.svg" v-if="show_sidenav" />
+            <img style="margin-left:-5vw; margin-top:1.5vw" id="close" src=" /uiIcons/drawer.svg" v-if="!show_sidenav" />
+          </div>
+        </div>
+        <div class="sidenav_body" v-if="!show_sidenav">
+          <div class="row">
+            <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+              <div class="row" v-if="show_search">
+                <div class="col-xs-6 offset-3">
+                  <input dense outlined v-model="search" label="Search" />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="q-pa-xs">
+                    <div class="data_analysis_text"
+                     
+                      @click="handleAnalysisMetaSwap2()"
+                      style="cursor: pointer"
+                    >
+                      <span
+                        :class="
+                          analysis_swap_toggle === 'data_analysis'
+                            ? 'side_nav_swap'
+                            : ''
+                        "
+                        >Data Analysis</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="q-pa-xs">
+                    <div
+                      class="metadata_text"
+                      @click="handleAnalysisMetaSwap()"
+                      style=""
+                    >
+                      <span
+                        :class="
+                          analysis_swap_toggle === 'metadata'
+                            ? 'side_nav_swap'
+                            : ''
+                        "
+                        >Metadata </span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div  v-if="analysis_swap_toggle === 'data_analysis'" >
+            <!-- <q-btn flat label="get WMS" @click="getWMS_Layer" />    -->
+
+            <p style="margin-top:40px">
+              <label style="margin-top:40px; font-weight: 700;">Summary</label>
+              <br>
+              {{ summary_text }}
+            </p>
+            <br />
+            <label class="text-bold" style="font-family: Montserrat; font-weight: 800;">
+              <!-- <div class="chart_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">{{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}  </div> -->
+            </label>
+            
+            <div class="charts_sidebar"  >
+            <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
+            <!-- <div class="chart_title">No. of blackspots in {{storeUserSelections.selected_region}} that are {{storeUserSelections.selected_cause}}</div> -->
+            <!-- <CausesChart 
+            :height="200"
+            :width="300"
+            :chartData="chartData"
+            :options="options"
+            /> -->
+          </div>
+
+         
+            <br />
+            <label class="text-bold" style="font-family: Montserrat; font-weight: 800;">
+              <!-- <div class="chart2_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">  {{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}</div> -->
+            </label>
+            
+            <div class="charts2_sidebar"  >
+            <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
+            <!-- <div class="chart_title">No. of blackspots in {{storeUserSelections.selected_region}} that are {{storeUserSelections.selected_cause}}</div> -->
+            <!-- <CausesBar 
+            :height="200"
+            :width="300"
+            :chartData="chartData"
+            :options="barchart_options"
+            /> -->
+          </div>
+           
+          </div>
+          <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
+          
+
+
+              <table style="width:100%">
+                  <tr>
+                    <th>Region</th>
+                    <td> {{storeUserSelections.selected_region}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Cause</th>
+      
+                    <td>{{storeUserSelections.selected_cause}}</td>
+                  </tr>
+                  <tr>
+                    <th>CRS</th>
+                    <td>{{storeUserSelections.crs}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Region</th>
+                    <td> {{storeUserSelections.selected_region}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Cause</th>
+      
+                    <td>{{storeUserSelections.selected_cause}}</td>
+                  </tr>
+                  <tr>
+                    <th>CRS</th>
+                    <td>{{storeUserSelections.crs}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Region</th>
+                    <td> {{storeUserSelections.selected_region}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Cause</th>
+      
+                    <td>{{storeUserSelections.selected_cause}}</td>
+                  </tr>
+                  <tr>
+                    <th>CRS
+                      
+                    </th>
+                    
+                    <td>
+                      <table>
+                        <tr>
+                          <th>Region</th>
+                          <td>{{storeUserSelections.selected_region}}</td>
+                        </tr>
+                        <tr>
+                          <th>Cause</th>
+                          <td>{{storeUserSelections.selected_cause}}</td>
+                        </tr>
+                        <tr>
+                          <th>CRS</th>
+                          <td>{{storeUserSelections.crs}}</td>
+                        </tr>
+                      </table>
+                    </td>
+                    
+                    
+                  </tr>
+                </table>
+          </div>
+          <!-- <LineChart :height="250" :width="250" /> -->
+          <p class="partners" style="font-weight:bold;font-size:16px;position: relative;top:53vh;left: 8vw;" >Technical Partners</p>
+          <div class="logos_container row">
+            <!-- <SideNavLogos /> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
       
   
       <!-- advanced filter -->
@@ -117,10 +310,7 @@
           <div  class="spinner"  v-if="loading">
               <img src="/uiIcons/loader_white.svg" alt="">
           </div>
-          <div id="search1">
-
-          </div>
-  
+          
   
        
   
@@ -172,6 +362,7 @@
   import Compare from '../components/Compare.vue';
   import sideNavigationbar from '../components/sidenavigationbar.vue'
   import axios from 'axios'
+  
 
   
   //refs go here
@@ -221,6 +412,7 @@
   let wmsCompareLayer = ref(null)
   let custom_geojson = ref(null)
   let search_marker = ref(null)
+  let controls_container = ref(null)
   
   
   
@@ -452,6 +644,7 @@
         };
   
         leaflet_controls.addTo(map);
+        // document.getElementsByClassName('map_controls_wrapper').appendChild(leaflet_controls)
         const right_ctrls = document.querySelector(".map_controls");
         right_ctrls.addEventListener("click", (event) => {
           const id = event.target.id;
@@ -807,42 +1000,42 @@ const opensidenavigationbar = () => {
 
 
                            
-      const provider = new OpenStreetMapProvider();
-// search_marker.value = {
-//     // optional: L.Marker    - default L.Icon.Default
-//     icon: new L.icon({
-//       iconUrl: "/src/assets/plant.svg",
-//       iconSize: [40, 40],
-//       iconAnchor: [15,15]
-//     }),
-//     draggable: false,
-//   }
+//       const provider = new OpenStreetMapProvider();
+// // search_marker.value = {
+// //     // optional: L.Marker    - default L.Icon.Default
+// //     icon: new L.icon({
+// //       iconUrl: "/src/assets/plant.svg",
+// //       iconSize: [40, 40],
+// //       iconAnchor: [15,15]
+// //     }),
+// //     draggable: false,
+// //   }
 
 
 
-const searchControl = new GeoSearchControl({
-  provider: provider,
-  stle: 'bar',
-  marker: search_marker.value,
-  popupFormat: ({ query, result }) => result.label,
-  resultFormat: ({ result}) => result.label
-  //  console.log(result, 'result')
+// const searchControl = new GeoSearchControl({
+//   provider: provider,
+//   stle: 'bar',
+//   // marker: search_marker.value,
+//   popupFormat: ({ query, result }) => result.label,
+//   resultFormat: ({ result}) => result.label
+//   //  console.log(result, 'result')
   
-});
+// });
 
 
-const showResult = ({result}) => {
-      console.log(result, result)
-      return result.label
+// const showResult = ({result}) => {
+//       console.log(result, result)
+//       return result.label
 
-    }
-map.addControl(searchControl);
+//     }
+// map.addControl(searchControl);
 
 
     
-    document.getElementById('location_search').appendChild(
-      document.querySelector(".geosearch")
-    );
+//     document.getElementById('location_search').appendChild(
+//       document.querySelector(".geosearch")
+//     );
 
    
   }
@@ -1914,6 +2107,9 @@ changeOpacity()
     
 
   }
+ 
+   
+
   
   </script>
   

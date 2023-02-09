@@ -28,7 +28,43 @@
     border-top-right-radius: 28px;
     padding-left: 10px;
     padding-bottom: 10px;
+
+    transition: margin-right 0.3s;
+    overflow: hidden;
+
+
 }
+.mainopen{
+  transition: margin-right 5s;
+  padding: 20px;
+  overflow: hidden;
+  width: 100%;
+  margin-left: -300px;
+}
+.wrapped_controls{
+  transition: margin-right 5s;
+  padding: 20px;
+  overflow: hidden;
+  width: 100%;
+  margin-left: -300px;
+}
+
+
+
+.sidenavopen{
+  height: 100%;
+  width: 20vw;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right:  0;
+  /* background-color: #b32929; */
+  opacity: 0.9;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.3s;
+}
+
 
 
 /* side nav */
@@ -60,11 +96,12 @@ background-color:#fff;
 }
 #mySidenav {
 transition: width 0.3s;
+width: 0;
 }
 .sidenav_body {
 height: 90%;
 
-margin-left: 20px;
+margin-left: 50px;
 overflow-y: scroll;
 position: relative;
 scrollbar-width: thin;
@@ -130,7 +167,7 @@ cursor: pointer;
 .sideview{
   position: absolute;
   top: 26vh;
-  right: 7vw;
+  right: -19vw;
   z-index: 2500;
   transform: translateX(-100%);
   transition: all 150ms ease-in 0s
@@ -188,7 +225,7 @@ table {
   z-index: 500;
   top: 5vh;
   left: 89vw;
-  /* background-color: #fff; */
+  background-color: #fff;
   display: flex;
   gap: 2rem;
   flex-direction: column;

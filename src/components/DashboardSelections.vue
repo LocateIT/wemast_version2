@@ -89,10 +89,10 @@
          storeUserSelections.selected_sub_indicator === 'Burnt Area' || 
          storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
-         <p class="search_location" v-if="storeUserSelections.selected_basin != ''">Search AOI</p>
+         <!-- <p class="search_location" v-if="storeUserSelections.selected_basin != ''">Search AOI</p>
          <div id="location_search">
           
-         </div>
+         </div> -->
 
         <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
         

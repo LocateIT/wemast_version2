@@ -1,6 +1,6 @@
 <template>
 <div class="side">
-    <h1>This is a side navigation bar</h1>
+    <h5>This is a side navigation bar</h5>
 </div>
 </template>
 
@@ -11,11 +11,14 @@ export default {
 </script>
 
 <style scoped>
-h1{
-    height: 80vh;
-    width: 30vh;
-    background-color: #4891e0;
+.side{
+    height: 71vh;
+    width: 40vw;
+    overflow-x: hidden;
+    transition: 0.3s;
+    background-color: #ffffff;
 }
+
 
 
 </style>

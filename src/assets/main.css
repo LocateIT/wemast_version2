@@ -635,19 +635,34 @@ top: 36.4vh;
 title{
   background-color: #000;
 }
-.leaflet-control-geosearch form input {
+/* .leaflet-control-geosearch form input {
   min-width: 200px;
   width: 100%;
   outline: none;
   border: none;
-  /* margin-left: -20px; */
+  
+  margin-top: -4vh;
   padding: 0;
   font-size: 12px;
   height: 26px;
   border: none;
   border-radius: 0 4px 4px 0;
   text-indent: 8px;
-}
-.leaflet-bar-part {
-  background-color: red;
+} */
+
+.leaflet-control-geosearch button.reset {
+  color: black;
+  z-index: 1000;
+  font-weight: bold;
+  position: absolute;
+  line-height: 26px;
+  margin-right: -0.5vw;
+  margin-top: 0.1vw;
+  right: 1vw;
+  top: 0;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  background-color: transparent;
+  /* border-radius: 4px; */
 }

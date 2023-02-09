@@ -89,7 +89,7 @@
          storeUserSelections.selected_sub_indicator === 'Burnt Area' || 
          storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
-         <p class="search_location">Search AOI</p>
+         <p class="search_location" v-if="storeUserSelections.selected_basin != ''">Search AOI</p>
          <div id="location_search">
           
          </div>
@@ -348,7 +348,7 @@ const fetchRegion = () => {
 .request_status{
     position: absolute;
   top: 4vh;
-  left: 65vw;
+  left: 62vw;
   width: 140px;
   height: 35px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

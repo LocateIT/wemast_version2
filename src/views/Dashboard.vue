@@ -1555,7 +1555,8 @@ changeOpacity()
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
               }
     
-    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
   
     return div;
   };
@@ -1607,7 +1608,8 @@ changeOpacity()
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
               }
     
-    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
   
     return div;
   };
@@ -1658,7 +1660,8 @@ changeOpacity()
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
               }
     
-    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
   
     return div;
   };
@@ -1711,7 +1714,8 @@ changeOpacity()
               }
     
     
-  
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
     return div;
   };
   
@@ -1755,14 +1759,16 @@ changeOpacity()
   
         status_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${sub_indicator.value} ${year.value}</p>`;
+            div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
               }
     
     
-  
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
     return div;
   };
   

@@ -1539,7 +1539,7 @@ changeOpacity()
         })
         console.log(colors_array, 'colors array')
   
-  
+        if(status_legend.value)map.removeControl(status_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
@@ -1591,7 +1591,7 @@ changeOpacity()
         })
         console.log(colors_array, 'colors array')
   
-  
+        if(status_legend.value)map.removeControl(status_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
@@ -1642,7 +1642,7 @@ changeOpacity()
         })
         console.log(colors_array, 'colors array')
   
-  
+        if(status_legend.value)map.removeControl(status_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)

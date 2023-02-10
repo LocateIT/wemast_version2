@@ -47,13 +47,15 @@
 
         <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
         'select_year2':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 
-        'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}" 
+        'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
         v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
         || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Season</p>
 
         <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
-        'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}" 
+        'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
           v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' 
           || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
           || storeUserSelections.selected_parameter === 'Wetland Status'">
@@ -69,10 +71,12 @@
         </div>
 
         <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
-         'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}"
+         'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}"
          v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Satellite</p>
         <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
-        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status')}" 
+        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">
             <CustomSelectSatellite />
         </div> 
@@ -412,6 +416,9 @@ const fetchRegion = () => {
   z-index: 1000;
   /* background-color: #fff; */
 
+}
+.satellite_none{
+  display: none;
 }
 
 

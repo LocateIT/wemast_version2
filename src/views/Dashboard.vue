@@ -1446,7 +1446,7 @@ changeOpacity()
 
  }
  const addWetlandStatus = () => {
-  if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
   
   // console.log('just to see if request is accessed') //accessed
@@ -1502,10 +1502,6 @@ changeOpacity()
   addVegCover()
   addWetlandStatus()
  
-  
- 
-
-  
   }
   
   //watch state for loading
@@ -1694,9 +1690,10 @@ changeOpacity()
         })
         console.log(colors_array, 'colors array')
   
-        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
-        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(status_legend.value)map.removeControl(status_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
         var legend = L.control({ position: "bottomright" });
@@ -2087,6 +2084,42 @@ NDVIlegendContent()
 changeOpacity()
 }
  }
+
+ const addCompareWetlandStatus = () => {
+  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+
+wmsCompareLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+     pane: 'pane800',
+     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsCompareLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+statuslegendContent()
+changeOpacity()
+}
+ }
   const compareLayers = () => {
     // console.log('compare!')
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
@@ -2097,12 +2130,14 @@ changeOpacity()
     prec_style()
     wetland_inventory_style()
     ndvi_style()
+    status_style()
 
     addCompareLulcLayer()
     addComparePrecIndexWet()
     addComparePrecIndexDry()
     addCompareWetlandExtent()
     addCompareVegCover()
+    addCompareWetlandStatus()
     changeOpacity()
     
 

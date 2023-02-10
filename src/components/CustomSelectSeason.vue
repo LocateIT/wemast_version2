@@ -26,9 +26,8 @@
   const storeUserSelections = useCounterStore()
 
 
-          let placeholder = ref('Wet')
-        //   let list = ['2019', '2020', '2021', '2022']
-        //   console.log(list, 'regions list')
+          let placeholder = ref('')
+      
           let visible = ref(false)
   
       

@@ -12,16 +12,7 @@
        />
         </div>
 
-        <!-- <select name="" id="country_selection" @click="storeUserSelections.fetchCountriesList"
-     @input="storeUserSelections.showSelectedCountry"
-      placeholder="Select Region"
-     >
-
-     <option>{{ storeUserSelections.placeholder}}</option>
-  
-     <option v-for="country in storeUserSelections.countries" :key="country">{{ country}}</option>
-   </select>
-        -->
+      
 
         <p class="select_cause">Select Indicator</p>
         <div id="cause_selection">

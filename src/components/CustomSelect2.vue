@@ -1,13 +1,14 @@
 <template>
       <div class="aselect" :data-value="placeholder" >
-	    <div    class="selector" @click="toggle()" >
+	    <div    class="selector" @click="toggle()"  >
 	        <div class="label">
 				    <span>{{ storeUserSelections.region_placeholder }}</span>
 	        </div>
-			<!-- <div class="arrow" :class="{ expanded : visible }"></div>  @input="storeUserSelections.showSelectedCountry" -->
+			<!-- <div class="arrow" :class="{ expanded : visible }"></div>  @input="storeUserSelections.showSelectedCountry"
+			:class="{'hide_dropdown':(storeUserSelections.visible_indicator = true)}" -->
             <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
-	        <div :class="{ hidden : !visible, visible }">
-	            <ul>
+	        <div :class="{ hidden : !visible, visible , hide_dropdown : storeUserSelections.visible_indicator === true}">
+	            <ul  >
     
 	                <li :class="{ current : item === storeUserSelections.region_placeholder }" 
 					v-for="item in storeUserSelections.countries" :key="item"
@@ -45,8 +46,8 @@
 			const toggle = () => {
 				visible.value = !visible.value;
 				storeUserSelections.fetchCountriesList()
-				
-				// console.log(storeUserSelections.fetchCountriesList)
+				// storeUserSelections.visible_region = visible.value
+				// console.log(storeUserSelections.visible_region, 'visible region')
 				
             }
 			const select = (option) =>{
@@ -65,6 +66,12 @@
 </script>
 
 <style scoped>
+.show{
+	display: block;
+}
+.hide_dropdown{
+  display: none;
+}
 .aselect {
     position: absolute;
   top: -2vh;

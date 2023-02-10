@@ -50,6 +50,9 @@
 </script>
 
 <style scoped>
+.hide_dropdown{
+  display: none;
+}
 .aselect {
   position: absolute;
 top: -2vh;

@@ -538,6 +538,7 @@
           edit: {
             featureGroup: editableLayers.value, //REQUIRED!!
             edit: {},
+            // delete:true
           },
         };
         let drawControl = new L.Control.Draw(options);
@@ -1306,7 +1307,7 @@ changeOpacity()
  }
   
  const addPrecIndexWet = () => {
-  if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
+  if(sub_indicator.value === 'Prec Index' && season.value === 'WET' ) {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
@@ -1943,7 +1944,7 @@ changeOpacity()
  }
   
  const addComparePrecIndexWet = () => {
-  if(sub_indicator.value === 'Prec Index' && season.value === 'Wet' ) {
+  if(sub_indicator.value === 'Prec Index' && season.value === 'WET' ) {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;

@@ -163,6 +163,7 @@
               <label style="margin-top:40px; font-weight: 700;">Summary</label>
               <br>
               {{ storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
+              storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`: 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
@@ -215,7 +216,9 @@
                   <tr>
                     <th>Description</th>
       
-                    <td>{{storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
+                    <td>{{
+                     storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`:
+                     storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
@@ -275,7 +278,11 @@
                   </tr>
                   <tr>
                     <th>Tags</th>
-                    <td> {{storeUserSelections.selected_basin}}</td>
+                    <td> {{storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season  + ' ' +'season' : 
+                     storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_theme}, ${storeUserSelections.selected_season}  season`:
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season + ' ' +'season': ''}}</td>
                     
                   </tr>
                   <tr>
@@ -302,7 +309,8 @@
                     <th>Theme</th>
       
                     <td>{{
-                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_theme: 
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_theme:
+                   storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_theme}_${storeUserSelections.selected_season} season`:
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme:
@@ -347,7 +355,10 @@
       <!-- login icons -->
       <div class="nav_icons">
              
-                <img class="home" src=" /uiIcons/home-landing.svg" alt=""/>
+                
+                <RouterLink to="/">
+                  <img class="home" src=" /uiIcons/home-landing.svg" alt=""/>
+                </RouterLink>
            
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
     
@@ -356,6 +367,7 @@
               <img class="search" src=" /uiIcons/search.svg" alt="">
           
           </div>
+          <RouterView />
           
           <div  class="spinner"  v-if="loading">
               <img src="/uiIcons/loader_white.svg" alt="">

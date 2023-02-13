@@ -144,10 +144,12 @@ export const useCounterStore = defineStore({
       wetland_inventory_desc: 'NDWI is a satellite-derived product',
       status_desc:'The WWPI uses a proxy data of seasonal vegetation (NDVI) to display the dry',
       default_desc: 'STFU',
+      prec_desc: 'Standardized Precipitation Index for ',
       status_theme: 'WWPI',
       lulc_theme: 'LULC',
       veg_cover_theme: 'NDVI',
-      wetland_inventory_theme: 'NDWI'
+      wetland_inventory_theme: 'NDWI',
+      prec_theme: 'SPI'
   }),
  
   actions: {

@@ -162,7 +162,11 @@
             <p style="margin-top:40px">
               <label style="margin-top:40px; font-weight: 700;">Summary</label>
               <br>
-              {{ summary_text }}
+              {{ storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
+                   storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : '' }}
             </p>
             <br />
             <label class="text-bold" style="font-family: Montserrat; font-weight: 800;">
@@ -204,68 +208,114 @@
 
               <table style="width:100%">
                   <tr>
-                    <th>Region</th>
-                    <td> {{storeUserSelections.selected_region}}</td>
+                    <th>Title</th>
+                    <td> {{`${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`}}</td>
                     
                   </tr>
                   <tr>
-                    <th>Cause</th>
+                    <th>Description</th>
       
-                    <td>{{storeUserSelections.selected_cause}}</td>
+                    <td>{{storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
+                   storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : ''
+            
+
+                     }}</td>
                   </tr>
+
                   <tr>
-                    <th>CRS</th>
-                    <td>{{storeUserSelections.crs}}</td>
-                    
-                  </tr>
-                  <tr>
-                    <th>Region</th>
-                    <td> {{storeUserSelections.selected_region}}</td>
-                    
-                  </tr>
-                  <tr>
-                    <th>Cause</th>
-      
-                    <td>{{storeUserSelections.selected_cause}}</td>
-                  </tr>
-                  <tr>
-                    <th>CRS</th>
-                    <td>{{storeUserSelections.crs}}</td>
-                    
-                  </tr>
-                  <tr>
-                    <th>Region</th>
-                    <td> {{storeUserSelections.selected_region}}</td>
-                    
-                  </tr>
-                  <tr>
-                    <th>Cause</th>
-      
-                    <td>{{storeUserSelections.selected_cause}}</td>
-                  </tr>
-                  <tr>
-                    <th>CRS
+                    <th>Extent
                       
                     </th>
                     
                     <td>
                       <table>
                         <tr>
-                          <th>Region</th>
+                          <th>Western-most Longitude</th>
                           <td>{{storeUserSelections.selected_region}}</td>
                         </tr>
                         <tr>
-                          <th>Cause</th>
+                          <th>Northern-most Latitude</th>
                           <td>{{storeUserSelections.selected_cause}}</td>
                         </tr>
                         <tr>
-                          <th>CRS</th>
+                          <th>Eastern-most Longitude</th>
+                          <td>{{storeUserSelections.crs}}</td>
+                        </tr>
+                        <tr>
+                          <th>Southern-most Latitude</th>
                           <td>{{storeUserSelections.crs}}</td>
                         </tr>
                       </table>
                     </td>
                     
                     
+                  </tr>
+                  <tr>
+                    <th>Resolution</th>
+                    <td>{{storeUserSelections.crs}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>CRS</th>
+                    <td> {{`EPSG:4326`}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Date Created</th>
+      
+                    <td>{{storeUserSelections.selected_year}}</td>
+                  </tr>
+                  <tr>
+                    <th>Region</th>
+                    <td>{{storeUserSelections.selected_basin}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Tags</th>
+                    <td> {{storeUserSelections.selected_basin}}</td>
+                    
+                  </tr>
+                  <tr>
+                    <th>Encoding</th>
+      
+                    <td>{{`UTF-8`}}</td>
+                  </tr>
+                  <tr>
+                    <th>Format</th>
+      
+                    <td>{{`image/tiff`}}</td>
+                  </tr>
+                  <tr>
+                    <th>Data type</th>
+      
+                    <td>{{`raster`}}</td>
+                  </tr>
+                  <tr>
+                    <th>Geo Position</th>
+      
+                    <td>{{storeUserSelections.selected_cause}}</td>
+                  </tr>
+                  <tr>
+                    <th>Theme</th>
+      
+                    <td>{{
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_theme: 
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme:
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme:
+                   storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : ''}}</td>
+                  </tr>
+                  
+                  <tr>
+                    <th>Keyword</th>
+      
+                    <td>{{storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season  + ' ' +'season' : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season + ' ' +'season': ''}}</td>
                   </tr>
                 </table>
           </div>
@@ -1282,7 +1332,7 @@ wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.8
+     opacity:1.0
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -1602,7 +1652,7 @@ changeOpacity()
   
         prec_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${sub_indicator.value} ${year.value} ${season.value} Season</p>`;
+            div.innerHTML += `<p>${basin.value} ${season.value} Season ${year.value} </p>`;
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';

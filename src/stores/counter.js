@@ -139,6 +139,15 @@ export const useCounterStore = defineStore({
       visible_indicator: null,
       visible_sub_indicator: null,
       visible_year: null,
+      lulc_desc: 'The LULC is an ESA product. The integration of the biophysical and human factors plays a leading role in causing land cover changes and is used to explain the dynamics of land usage and trend that occur within an ecosystem.',
+      veg_cover_desc: 'Product derived from indexing the Near Infrared (NIR) band and the Red band from satellite image. Used to assess the difference in seasonal vegetation characteristics',
+      wetland_inventory_desc: 'NDWI is a satellite-derived product',
+      status_desc:'The WWPI uses a proxy data of seasonal vegetation (NDVI) to display the dry',
+      default_desc: 'STFU',
+      status_theme: 'WWPI',
+      lulc_theme: 'LULC',
+      veg_cover_theme: 'NDVI',
+      wetland_inventory_theme: 'NDWI'
   }),
  
   actions: {

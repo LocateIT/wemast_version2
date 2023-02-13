@@ -356,9 +356,9 @@
       <div class="nav_icons">
              
                 
-                <RouterLink to="/">
+                <!-- <RouterLink to="/"> -->
                   <img class="home" src=" /uiIcons/home-landing.svg" alt=""/>
-                </RouterLink>
+                <!-- </RouterLink> -->
            
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
     
@@ -367,7 +367,7 @@
               <img class="search" src=" /uiIcons/search.svg" alt="">
           
           </div>
-          <RouterView />
+          <!-- <RouterView /> -->
           
           <div  class="spinner"  v-if="loading">
               <img src="/uiIcons/loader_white.svg" alt="">
@@ -475,6 +475,8 @@
   let custom_geojson = ref(null)
   let search_marker = ref(null)
   let controls_container = ref(null)
+
+  let geometry = {}
   
   
   
@@ -1039,6 +1041,7 @@ const opensidenavigationbar = () => {
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
   
    var selecteRegion = storeUserSelections.getSelectedRegion
+   geometry = selecteRegion
    console.log(selecteRegion, 'selected region app')
   
    map.createPane("pane1000").style.zIndex = 300;
@@ -1335,6 +1338,17 @@ const ndvi_style = () => {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
+
+  //create params object
+  var lulc_params = {
+                        // ...lulc_params,
+                        geometry: geometry,
+                        //.geometry.coordinates[0] ,
+                        indicator: indicator.value,
+                       sub_indicator: sub_indicator.value,
+                        year: year.value,
+                      };
+                      console.log(lulc_params, 'LULC_PARAMETERS')
   
 
 wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {

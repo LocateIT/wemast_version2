@@ -1368,7 +1368,7 @@ wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/
 wmsLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
     loading.value = false

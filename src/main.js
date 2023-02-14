@@ -8,7 +8,7 @@ import router from './router'
 import './assets/main.css'
 import i18n from './i18n'
 
-const app = createApp(App).use(i18n)
+const app = createApp(Home).use(i18n)
 
 app.use(createPinia())
 app.use(router)

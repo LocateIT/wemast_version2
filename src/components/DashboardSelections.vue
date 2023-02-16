@@ -6,7 +6,7 @@
         </select> -->
         <div id="region_selection">
           <CustomSelect2
-          @input="fetchRegion"
+         
        
         
        />

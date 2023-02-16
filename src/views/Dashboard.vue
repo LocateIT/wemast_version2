@@ -1,5 +1,5 @@
 <template>
-    <div id="app" class="app">
+    <div id="app"  class="app">
   
       <div class="navbar">
          <Navbar />
@@ -7,8 +7,10 @@
       <div class="selections">
         <DashboardSelections
         @fetchData="fetchWmsData" 
-        @fetchRegion="getWemastRegion"/>
+        />
+      
       </div>
+     
       <div class="advanced_filter" @click="show_advanced_filter" >
         <img class="filter_icon" src=" /mapIcons/filter.svg" alt="">
             <img class="filter_open" src=" /mapIcons/right.svg" alt="">
@@ -352,12 +354,12 @@
         @fetchCompareData="compareLayers" />
       </div>
   
-      <!-- login icons -->
+      <!-- login icons @click="$router.push('/')"-->
       <div class="nav_icons">
              
                 
-                <!-- <RouterLink to="/"> -->
-                  <img class="home" src=" /uiIcons/home-landing.svg" alt=""/>
+                <!-- <RouterLink to="/home"> -->
+                  <img class="home" src=" /uiIcons/home-landing.svg" alt="" />
                 <!-- </RouterLink> -->
            
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
@@ -368,6 +370,7 @@
           
           </div>
           <!-- <RouterView /> -->
+          
           
           <div  class="spinner"  v-if="loading">
               <img src="/uiIcons/loader_white.svg" alt="">
@@ -380,11 +383,12 @@
     
     
     
+    
   </template>
   
   
   <script setup>
-  import { RouterLink, RouterView } from 'vue-router'
+  // import { RouterLink, RouterView } from 'vue-router'
   import Navbar from '../components/Navbar.vue';
   import DashboardSelections from '../components/DashboardSelections.vue';
   import "leaflet";
@@ -485,12 +489,14 @@
   const storeUserSelections = useCounterStore()
   const compareUserSelections = useCompareStore()
   
-  console.log(storeUserSelections.fetchCountriesList)
+  // console.log(storeUserSelections.fetchCountriesList)
   
   console.log(storeUserSelections.getLoadingState, 'getLoadingState')
   
   const show_advanced_filter = () =>{
     advanced_filter.value = true
+    // console.log('clicked advanced filter')
+    // alert('clicked advanced filter')
   }
   const show_compare = () =>{
     compare.value = true
@@ -1561,6 +1567,7 @@ changeOpacity()
   //function to request wms
   
   const fetchWmsData = () => {
+   
     loading.value = true
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)

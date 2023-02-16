@@ -1,11 +1,11 @@
 <template>
 
-     <div id="home">
+     <div class="home">
 
       
       <!-- <RouterLink to="/">home</RouterLink>
       <br>
-      <RouterLink to="/dashboard">dash</RouterLink>
+      <RouterLink to="/dashboard">dash</RouterLink>  @click="$router.push('/dashboard')"
       <RouterView /> -->
       <div class="nav">
             <div class="logos">
@@ -31,11 +31,12 @@
             <div class="nav_icons">
                   <img src="uiIcons/home-inactive.svg" alt="">
                   <img src="uiIcons/dashboard-inactive.svg" alt="">
-                  <img src="uiIcons/person-inactive.svg" alt="">
+                  <img src="uiIcons/person-inactive.svg" alt="" @click="$router.push('/about')">
                   <img src="uiIcons/article-inactive.svg" alt="">
                   <img src="uiIcons/contacts-inactive.svg" alt="">
 
             </div>
+            <RouterView />
             <div class="nav_labels">
                   <p>Home</p>
                   <p>Dashboard</p>
@@ -51,9 +52,15 @@
                   WETLAND MONITORING AND ASSESSMENT SERVICE <br> FOR TRANSBOUNDARY
                 BASINS IN SOUTHERN AFRICA <span class="abbreviation">(WeMAST)</span>
             </div>
-            <button class="visit">Visit Geo-Portal</button>
+            <RouterLink to="/dashboard">
+                  <button class="visit">Visit Geo-Portal</button>
+            </RouterLink>
+           <RouterView />
+           
+            
 
       </div>
+      
       <div class="showcase">
             <div class="image_icons">
                   <img src="uiIcons/challenge_hightlight.svg" alt="">
@@ -222,6 +229,7 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
 
             </div>
       </div>
+      
     
      </div>
     
@@ -254,7 +262,7 @@ const scrollToElement = (refName) =>  {
 </script>
 
 <style scoped>
-#home{
+.home{
       font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .nav{

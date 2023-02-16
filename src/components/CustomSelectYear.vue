@@ -1,10 +1,10 @@
 <template>
-    <div class="aselect" :data-value="placeholder" :data-list="list">
+    <div class="aselect" :data-value="placeholder" >
       <div class="selector" @click="toggle()">
           <div class="label">
                   <span>{{ storeUserSelections.year_placeholder }}</span>
           </div>
-          <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
+          <!-- <div class="arrow" :class="{ expanded : visible }"></div> :data-list="list"-->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
           <div :class="{ hidden : !visible, visible }">
               <ul>

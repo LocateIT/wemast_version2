@@ -1,13 +1,19 @@
 <template>
+    <!-- <div id="app">  -->
+        <!-- <router-view /> -->
+    <!-- </div> -->
+ 
   
-<RouterView />
-<!-- <Dashboard /> -->
+  
+
+<Dashboard />
 
 </template>
 
 <script setup>
+
 // import Misc from './misc.vue';
-// import Dashboard from './views/Dashboard.vue'
+import Dashboard from './views/Dashboard.vue'
 // import DashboardSelections from './components/DashboardSelections.vue';
 // import HomeViewVue from './views/HomeView.vue';
 

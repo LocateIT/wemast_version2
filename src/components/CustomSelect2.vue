@@ -1,5 +1,6 @@
 <template>
-      <div class="aselect" :data-value="placeholder" >
+	
+      <div class="aselect" :data-value="placeholder"  >
 	    <div    class="selector" @click="toggle()"  >
 	        <div class="label">
 				    <span>{{ storeUserSelections.region_placeholder }}</span>
@@ -7,7 +8,9 @@
 			<!-- <div class="arrow" :class="{ expanded : visible }"></div>  @input="storeUserSelections.showSelectedCountry"
 			:class="{'hide_dropdown':(storeUserSelections.visible_indicator = true)}" -->
             <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
-	        <div :class="{ hidden : !visible, visible , hide_dropdown : storeUserSelections.visible_indicator === true}">
+	        <div 
+			:class="{ hidden : !visible, visible , hide_dropdown : storeUserSelections.visible_indicator === true}"
+			>
 	            <ul  >
     
 	                <li :class="{ current : item === storeUserSelections.region_placeholder }" 
@@ -21,10 +24,7 @@
 	    </div> 
 		<!-- select end -->
 	</div>
-
 	
-	
-  
 </template>
 
 <script setup>
@@ -39,7 +39,7 @@
             // console.log(list, 'regions list')
 			let counties = ref([])
             let visible = ref(false)
-			var baseurl = 'http://45.63.48.25:8080'
+			
 			let current_geojson = ref({})
 	
 		
@@ -76,8 +76,7 @@
     position: absolute;
   top: -2vh;
   left:-0.52vw;
-   
-    margin: 20px auto;
+	margin: 20px auto;
 }
 		.selector {
 			border: 1px  #ccc solid;
@@ -123,7 +122,7 @@
 			border: 1px solid gainsboro;
 			position: absolute;
             top: 5.5vh;
-			z-index: 1;
+			/* z-index: 1; */
       background: STEELBLUE;
       border-radius: 7px;
       z-index: 5000;

@@ -1,15 +1,18 @@
 <template>
-    <div id="app"  class="app">
+    <div  class="app">
   
       <div class="navbar">
          <Navbar />
       </div>
       <div class="selections">
-        <DashboardSelections
+        
+       <DashboardSelections
         @fetchData="fetchWmsData" 
         />
       
       </div>
+
+      
      
       <div class="advanced_filter" @click="show_advanced_filter" >
         <img class="filter_icon" src=" /mapIcons/filter.svg" alt="">
@@ -342,10 +345,12 @@
       
   
       <!-- advanced filter -->
+    
       <div v-if="advanced_filter" class="advanced_filter_container">
         <img class="close_advanced_filter" src=" /uiIcons/close.png" alt="" @click="close_advanced_filter">
         <AdvancedFilter />
       </div>
+  
   
       <!-- compare -->
       <div v-if="compare" class="compare_container">
@@ -359,7 +364,7 @@
              
                 
                 <!-- <RouterLink to="/home"> -->
-                  <img class="home" src=" /uiIcons/home-landing.svg" alt="" />
+                  <img class="home" src=" /uiIcons/home-landing.svg" alt=""  />
                 <!-- </RouterLink> -->
            
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
@@ -380,7 +385,12 @@
        
   
     </div>
+   
     
+
+
+
+
     
     
     
@@ -769,6 +779,40 @@ const opensidenavigationbar = () => {
     sidenavigationbar.value = true
     
 }
+
+const download_tiff = () => {
+  var url = ""
+  if(sub_indicator.value === 'Land Cover' ) {
+    url = `http://66.42.65.87:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+  }
+  if(sub_indicator.value === 'Prec Index' && season.value === 'WET' ){
+    url = `http://66.42.65.87:8080/geoserver/SPI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+  }
+  if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ){
+    url = `http://66.42.65.87:8080/geoserver/SPI_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+  }
+  if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent'){
+    url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+
+  }
+  if(sub_indicator.value === 'Vegetation Cover' ){
+    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=LANDSAT_NDVI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+  }
+
+  if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
+    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=LANDSAT_NDVI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+  }
+
+  var a = document.createElement("a");
+  a.href = url;
+  a.title = `${basin.value}_${year.value}`;
+  a.download = `${basin.value}_${year.value}.tiff`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  // console.log(url, 'tiff url')
+
+}
         
       const setLeafletMap = () => {
 
@@ -865,6 +909,14 @@ const opensidenavigationbar = () => {
           console.log("click ");
           
           zoom_out();
+        });
+
+        document
+        .getElementById("download_tiff")
+        .addEventListener("click", (e) => {
+          console.log("click ");
+          
+          download_tiff();
         });
   
         document
@@ -2004,7 +2056,7 @@ wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserve
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
-     format: 'image/png',
+     format: 'geotiff',
      transparent: true,
      opacity:1.0
      // CQL_FILTER: "Band1='1.0'"

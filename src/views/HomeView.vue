@@ -52,8 +52,9 @@
                   WETLAND MONITORING AND ASSESSMENT SERVICE <br> FOR TRANSBOUNDARY
                 BASINS IN SOUTHERN AFRICA <span class="abbreviation">(WeMAST)</span>
             </div>
-            <RouterLink to="/dashboard">
-                  <button class="visit">Visit Geo-Portal</button>
+            <!-- @click="$router.push('/dashboard')" -->
+            <RouterLink to="/dashboard"> 
+                  <button class="visit"  >Visit Geo-Portal</button>
             </RouterLink>
            <RouterView />
            

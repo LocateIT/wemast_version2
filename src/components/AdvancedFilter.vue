@@ -1,5 +1,6 @@
 <template>
-  <div class="filter">
+     <RouterView>
+    <div class="filter">
 
 
 
@@ -42,13 +43,13 @@
     <button type="button" class="submit">SUBMIT</button>
     </div>
    
-    
-    
 
   </div>
+ </RouterView>
 </template>
 
 <script setup>
+import { RouterLink, RouterView } from 'vue-router';
 
 import AdvancedCountrySelect from './AdvancedCountrySelect.vue';
 import CustomSelectCountry from './CustomSelectCountry.vue';

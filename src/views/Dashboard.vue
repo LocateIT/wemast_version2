@@ -34,7 +34,7 @@
   
       <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
   
-      <div id="map" >
+      <div id="map">  </div>
         <div class="opacity" v-if="wmsLayer != null"  :class="{mainopen: sidenavigationbar}">
           <span id="opacity">Opacity:</span>
           <span id="image-opacity"> </span>
@@ -82,7 +82,7 @@
           </div>
         </div> -->
   
-      </div>
+     
 
   <!-- will revisit -->
       <!-- leaflet side bar :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index') -->
@@ -360,7 +360,7 @@
       </div>
   
       <!-- login icons @click="$router.push('/')"-->
-      <div class="nav_icons">
+      <div class="nav_icons" id="nav_icons">
              
                 
                 <!-- <RouterLink to="/home"> -->
@@ -415,6 +415,10 @@
   import "leaflet-side-by-side/range.css"
   import { GeoSearchControl, OpenStreetMapProvider }  from "leaflet-geosearch"
   import "leaflet-geosearch/dist/geosearch.css"
+  import domtoimage from "dom-to-image";
+  import "dom-to-image/src/dom-to-image.js";
+  import "dom-to-image/dist/dom-to-image.min.js"
+import { saveAs } from "file-saver";
 
   // import "leaflet-draw/dist/leaflet.draw";
   
@@ -489,6 +493,7 @@
   let custom_geojson = ref(null)
   let search_marker = ref(null)
   let controls_container = ref(null)
+  let search_control = ref(null)
 
   let geometry = {}
   
@@ -805,15 +810,44 @@ const download_tiff = () => {
 
   var a = document.createElement("a");
   a.href = url;
-  a.title = `${basin.value}_${year.value}`;
-  a.download = `${basin.value}_${year.value}.tiff`;
+  a.title = `${basin.value}`;
+  a.download = `${basin.value}.tiff`;
   document.body.appendChild(a);
   a.click();
   a.remove();
   // console.log(url, 'tiff url')
 
 }
+       
+
+const screenshot =  () => {
+  
+  loading.value = true;
+      //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
         
+      //   saveAs(blob, `${basin.value}.png`);
+
+      // });
+ 
+
+      let mapElement = document.getElementById("map");
+      
+      setTimeout(async () => {
+        const dataURL = await domtoimage.toPng(mapElement, {
+          width: mapElement.width,
+          height: mapElement.height
+        });
+
+        let link = document.createElement("a");
+        link.setAttribute("href", dataURL);
+        link.setAttribute("download", `${basin.value}.png`);
+        document.body.appendChild(link); // Required for FF
+        link.click();
+        document.body.removeChild(link);
+       loading.value = false
+      }, 1500);
+
+    }
       const setLeafletMap = () => {
 
         let osm = L.tileLayer(
@@ -917,6 +951,13 @@ const download_tiff = () => {
           console.log("click ");
           
           download_tiff();
+        });
+        document
+        .getElementById("download_map")
+        .addEventListener("click", (e) => {
+          console.log("click ");
+          
+          screenshot();
         });
   
         document
@@ -1124,42 +1165,45 @@ const download_tiff = () => {
 
 
                            
-//       const provider = new OpenStreetMapProvider();
-// // search_marker.value = {
-// //     // optional: L.Marker    - default L.Icon.Default
-// //     icon: new L.icon({
-// //       iconUrl: "/src/assets/plant.svg",
-// //       iconSize: [40, 40],
-// //       iconAnchor: [15,15]
-// //     }),
-// //     draggable: false,
-// //   }
+      const provider = new OpenStreetMapProvider();
+// search_marker.value = {
+//     // optional: L.Marker    - default L.Icon.Default
+//     icon: new L.icon({
+//       iconUrl: "/src/assets/plant.svg",
+//       iconSize: [40, 40],
+//       iconAnchor: [15,15]
+//     }),
+//     draggable: false,
+//   }
 
 
 
-// const searchControl = new GeoSearchControl({
-//   provider: provider,
-//   stle: 'bar',
-//   // marker: search_marker.value,
-//   popupFormat: ({ query, result }) => result.label,
-//   resultFormat: ({ result}) => result.label
-//   //  console.log(result, 'result')
+const searchControl = new GeoSearchControl({
+  provider: provider,
+  stle: 'bar',
+  // marker: search_marker.value,
+  popupFormat: ({ query, result }) => result.label,
+  resultFormat: ({ result}) => result.label
+  //  console.log(result, 'result')
   
-// });
+});
+if(search_control.value)map.removeControl(search_control.value)
 
 
-// const showResult = ({result}) => {
-//       console.log(result, result)
-//       return result.label
+const showResult = ({result}) => {
+      console.log(result, result)
+      return result.label
 
-//     }
-// map.addControl(searchControl);
+    }
+    search_control.value = searchControl
+    
+map.addControl(search_control.value );
 
 
     
-//     document.getElementById('location_search').appendChild(
-//       document.querySelector(".geosearch")
-//     );
+    document.getElementById('location_search').appendChild(
+      document.querySelector(".geosearch")
+    );
 
    
   }
@@ -1426,6 +1470,8 @@ wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/
 wmsLayer.value.addTo(map);
 
 
+
+
 console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
@@ -1632,6 +1678,7 @@ changeOpacity()
    
   
   addLulcLayer()
+  
   addPrecIndexWet()
   addPrecIndexDry()
   addWetlandExtent()
@@ -1926,7 +1973,7 @@ changeOpacity()
                                       if(wmsLayer.value){
                                         wmsLayer.value.setOpacity(this.value)
                                       }
-                                      if(wmsCompareLayer) wmsCompareLayer.value.setOpacity(this.value)
+                                      // if(wmsCompareLayer) wmsCompareLayer.value.setOpacity(this.value)
                                     
                                      
                                     

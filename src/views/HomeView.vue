@@ -31,12 +31,14 @@
             <div class="nav_icons">
                   <img src="uiIcons/home-inactive.svg" alt="">
                   <img src="uiIcons/dashboard-inactive.svg" @click="$router.push('/dashboard')" alt="">
-                  <img src="uiIcons/person-inactive.svg" alt="" @click="$router.push('/about')">
+                  <img src="uiIcons/person-inactive.svg" alt="" >
                   <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
                         <img src="uiIcons/article-inactive.svg" alt="">
                   </a>
+                  <a href="#contact">
+                        <img style="position: relative; top: 0.7vh" src="uiIcons/contacts-inactive.svg" alt="">
+                  </a>
                   
-                  <img src="uiIcons/contacts-inactive.svg" alt="">
 
             </div>
             <RouterView />
@@ -45,7 +47,7 @@
                   <p >Dashboard</p>
                   <p>Profile</p>
                   <p>Documentation</p>
-                  <p>Contact</p>
+                  <p class="nav_contact">Contact</p>
             </div>
             <RouterView />
       </div>
@@ -211,7 +213,7 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
 
                   </div>
 
-                  <div class="contact">
+                  <div class="contact" id="contact">
                         <p id="coord">WeMAST Project Coordination Team</p>
                         <p>SASSCAL Regional Secretariat</p>
                         <p>28 Robert Mugabe Avenue, (c/o Robert Mugabe and Newton street)</p>
@@ -294,6 +296,10 @@ const scrollToElement = (refName) =>  {
       flex-direction: row;
       gap: 3.5rem;
 
+}
+.nav_contact{
+      position: absolute;
+      left: 24.5vw;
 }
 .logos{
       display: flex;

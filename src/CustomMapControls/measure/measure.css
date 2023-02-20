@@ -1,7 +1,13 @@
 .leaflet-control-measure {
+	position: absolute !important;
+	top: 13vh;
+	left: 87.35vw;
 	font-size: 16px;
 	font-weight: bold;
 	line-height: 21px;
+	background-color: #fff;
+	background-image: url('/mapIcons/straighten-24px.svg');
+
 
 	}
 
@@ -39,4 +45,16 @@
 
 .leaflet-measure-tooltip-difference {
 	color: #777;
+	}
+
+	.leaflet-bar a {
+		background-color: #fff;
+		border-bottom: 1px solid #ccc;
+		width: 26px;
+		height: 26px;
+		line-height: 26px;
+		display: block;
+		text-align: center;
+		text-decoration: none;
+		color: transparent;
 	}

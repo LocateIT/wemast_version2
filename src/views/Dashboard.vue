@@ -430,8 +430,10 @@ import { saveAs } from "file-saver";
   // import "leaflet.draw-extension/lib/leaflet.shapefile/leaflet.shapefile"
   // import "leaflet.draw-extension/leaflet.draw-shapefile"
   // import "leaflet.draw-extension/leaflet.draw-shapefile.css"
-  import "../CustomMapControls/measure/MeasureTool";
   import "../CustomMapControls/measure/measure.css";
+  import "../CustomMapControls/measure/MeasureTool.js";
+
+ 
   import SideBarView from "./SideBarView.vue"
   import { close_nav, open_nav } from "../Helpers/SideNavControls";
   import { leaflet_custom_controls } from "../CustomMapControls/LeafletCustomControls"
@@ -815,7 +817,7 @@ const download_tiff = () => {
   document.body.appendChild(a);
   a.click();
   a.remove();
-  // console.log(url, 'tiff url')
+ 
 
 }
 const help = () => {
@@ -901,12 +903,13 @@ const screenshot =  () => {
           // minZoom: 6.5,
           // maxZoom: 20,
           zoom: 5,
-          // measureControl: true,
+          measureControl: true,
           // defaultExtentControl: true,
           layers: [mapboxSatellite]
         }); // add the basemaps to the controls
   
         L.control.layers(baseMaps.value).addTo(map);
+    
          ///////////////////hide layers control
         //  var layerControl = document.getElementsByClassName(
         //   "leaflet-control-layers"
@@ -959,6 +962,16 @@ const screenshot =  () => {
           
           download_tiff();
         });
+
+        // document
+        // .getElementById("measure")
+        // .addEventListener("click", (e) => {
+        //  document.getElementsByClassName("leaflet-control-measure")[0]
+        // //  .dispatchEvent(new Event("click"))
+        //   // console.log("click ");
+          
+        //   // download_tiff();
+        // });
         document
         .getElementById("help")
         .addEventListener("click", (e) => {
@@ -1033,17 +1046,38 @@ const screenshot =  () => {
 
       closeNav();
 
-
+      const plugin = L.control
+      .measure({
+        //  control position
+        position: "topleft",
+        //  weather to use keyboard control for this plugin
+        keyboard: true,
+        //  shortcut to activate measure
+        activeKeyCode: "M".charCodeAt(0),
+        //  shortcut to cancel measure, defaults to 'Esc'
+        cancelKeyCode: 27,
+        //  line color
+        lineColor: "red",
+        //  line weight
+        lineWeight: 2,
+        //  line dash
+        lineDashArray: "6, 6",
+        //  line opacity
+        lineOpacity: 1,
+        formatDistance: "km"
+        //  distance formatter
+        // formatDistance: function (val) {
+        //   return Math.round(1000 * val / 1609.344) / 1000 + 'mile';
+        // }
+      })
+      .addTo(map);
 
 
 
   
   
   })//OnMounted end
-  
-  
-  
-  
+
   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     
     onAdd: function (map) {
@@ -1226,11 +1260,7 @@ map.addControl(search_control.value );
   
   const setSelectedRegion = computed( () => {
     console.log(storeUserSelections.selected_basin, 'selected_basin app')
-    // if(storeUserSelections.selected_region === 'Nyeri'){
-    //     $("#select2").show();
-    //   }else{
-    //     $("#select2").hide();
-    //   }
+    
     return storeUserSelections.getSelectedRegion
   })
   watch( setSelectedRegion , () => {
@@ -1487,10 +1517,7 @@ wmsLayer.value.addTo(map);
 
 
 console.log(wmsLayer.value, 'wms')
-//remove spinner when layer loads
-wmsLayer.value.on('load', function (event) {
-    loading.value = false
-});
+
 
 // addLulcLegend()
 lulclegendContent()
@@ -1698,6 +1725,11 @@ changeOpacity()
   addWetlandExtent()
   addVegCover()
   addWetlandStatus()
+
+  //remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});
  
   }
   

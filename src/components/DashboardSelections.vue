@@ -96,7 +96,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { onMounted, ref } from 'vue';
 import CustomSelect from './CustomSelect.vue';
 import {useCounterStore } from '../stores/counter';
 import CustomSelect2 from './CustomSelect2.vue';
@@ -107,12 +107,14 @@ import CustomSelectSeason from './CustomSelectSeason.vue';
 import CustomSelectParameter from './CustomSelectParameter.vue';
 import CustomSelectSatellite from './CustomSelectSatellite.vue';
 
-
-
-
-// let counties = ref(['Limpopo', 'Cuvelai', 'Okavango', 'Zambezi'])
-
 const storeUserSelections = useCounterStore()
+
+
+
+// onMounted( ()=> {
+  // let counties = ref(['Limpopo', 'Cuvelai', 'Okavango', 'Zambezi'])
+
+
 
 // const fetchData = () => {
 //   console.log('fetch!')
@@ -121,6 +123,7 @@ const storeUserSelections = useCounterStore()
 const fetchRegion = () => {
   console.log('fetched region')
 }
+// })
 
 </script>
 

@@ -363,9 +363,9 @@
       <div class="nav_icons" id="nav_icons">
              
                 
-                <!-- <RouterLink to="/home"> -->
+                <RouterLink to="/">
                   <img class="home" src=" /uiIcons/home-landing.svg" alt=""  />
-                <!-- </RouterLink> -->
+                </RouterLink>
            
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
     
@@ -374,7 +374,7 @@
               <img class="search" src=" /uiIcons/search.svg" alt="">
           
           </div>
-          <!-- <RouterView /> -->
+          <RouterView />
           
           
           <div  class="spinner"  v-if="loading">
@@ -586,16 +586,16 @@ import { saveAs } from "file-saver";
         layerControlElement.getElementsByTagName("input")[index].click();
       }
       //draw control
-      const draw_polygon = () => {
-        if (!show_draw_control.value) {
-          const draw_ctrl = document.getElementsByClassName("leaflet-draw");
-          draw_ctrl[0].style.visibility = "hidden";
-        } else {
-          const draw_ctrl = document.getElementsByClassName("leaflet-draw");
-          draw_ctrl[0].style.visibility = "visible";
-        }
-        show_draw_control.value = !show_draw_control.value;
-      }
+      // const draw_polygon = () => {
+      //   if (!show_draw_control.value) {
+      //     const draw_ctrl = document.getElementsByClassName("leaflet-draw");
+      //     draw_ctrl[0].style.visibility = "hidden";
+      //   } else {
+      //     const draw_ctrl = document.getElementsByClassName("leaflet-draw");
+      //     draw_ctrl[0].style.visibility = "visible";
+      //   }
+      //   show_draw_control.value = !show_draw_control.value;
+      // }
   
      const addDrawCtrl = () => {
         //we add the polygon draw feature to map as seen  below
@@ -999,7 +999,7 @@ const screenshot =  () => {
         
   
       // addDrawCtrl(); //adds draw control to map
-      draw_polygon(); //hides draw controls
+      // draw_polygon(); //hides draw controls
   
       // map.on("baselayerchange", (e) => {
       //   console.log("Layer in basechange ", current_raster_layer.value);
@@ -1010,39 +1010,39 @@ const screenshot =  () => {
   
   
       //trial for custom shapefile upload
-      var  drawControl, drawLayers;
-      drawLayers = new L.FeatureGroup();
-      drawControl = new L.Control.DrawPlus({
-          position: 'topright',		
-          draw: {
-              circle: false,
-              polyline: false,
-              shapefile: {
-                  shapeOptions:{
-                      color: 'black',
-                      weight: 3,
-                      opacity: 1,
-                      fillOpacity: 0					
-                  }
-              }, //Turn on my custom extension
-              geojson: true,   //Could have options if needed.
-          },
-          edit: {
-              featureGroup: drawLayers,
-              edit: false
-          }
-      });
+      // var  drawControl, drawLayers;
+      // drawLayers = new L.FeatureGroup();
+      // drawControl = new L.Control.DrawPlus({
+      //     position: 'topright',		
+      //     draw: {
+      //         circle: false,
+      //         polyline: false,
+      //         shapefile: {
+      //             shapeOptions:{
+      //                 color: 'black',
+      //                 weight: 3,
+      //                 opacity: 1,
+      //                 fillOpacity: 0					
+      //             }
+      //         }, //Turn on my custom extension
+      //         geojson: true,   //Could have options if needed.
+      //     },
+      //     edit: {
+      //         featureGroup: drawLayers,
+      //         edit: false
+      //     }
+      // });
       
-      map.addLayer(drawLayers);
-      map.addControl(drawControl);
+      // map.addLayer(drawLayers);
+      // map.addControl(drawControl);
       
-      map.on(L.Draw.Event.CREATED, function(e){
-          drawLayers.addLayer(e.layer);
-      });
+      // map.on(L.Draw.Event.CREATED, function(e){
+      //     drawLayers.addLayer(e.layer);
+      // });
       
-      drawLayers.on('click',function(e){
-          console.log(e.layer);
-      });
+      // drawLayers.on('click',function(e){
+      //     console.log(e.layer);
+      // });
 
       closeNav();
 

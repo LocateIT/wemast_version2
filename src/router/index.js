@@ -18,6 +18,11 @@ const routes = [
     component: About,
   },
   {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+  },
+  {
     path: "/selections",
     name: "DashboardSelections",
     component: DashboardSelections,

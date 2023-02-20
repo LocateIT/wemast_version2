@@ -4,9 +4,10 @@
 	left: 87.35vw;
 	font-size: 16px;
 	font-weight: bold;
-	line-height: 21px;
-	background-color: #fff;
-	background-image: url('/mapIcons/straighten-24px.svg');
+	height: 20px;
+	/* line-height: 21px; */
+	background-color: red;
+	/* background-image: url('/mapIcons/straighten-24px.svg'); */
 
 
 	}
@@ -48,11 +49,12 @@
 	}
 
 	.leaflet-bar a {
-		background-color: #fff;
+		background-color: transparent; 
+		/* hides the default control */
 		border-bottom: 1px solid #ccc;
-		width: 26px;
-		height: 26px;
-		line-height: 26px;
+		/* width: 26px;
+		height: 26px; */
+		/* line-height: 26px; */
 		display: block;
 		text-align: center;
 		text-decoration: none;

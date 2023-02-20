@@ -34,7 +34,8 @@
     const storeUserSelections = useCounterStore();
 
 
-			let placeholder = ref('Cuvelai')
+			// onMounted( ()=> {
+				let placeholder = ref('Cuvelai')
 			// let list = ["Limpopo","Cuvelai","Zambezi", "Okavango", 'pogba']
             // console.log(list, 'regions list')
 			let counties = ref([])
@@ -57,6 +58,7 @@
 
 
 			}
+			// })
 			
 		
 

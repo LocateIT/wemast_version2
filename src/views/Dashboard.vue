@@ -818,6 +818,13 @@ const download_tiff = () => {
   // console.log(url, 'tiff url')
 
 }
+const help = () => {
+        var url = 'https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki'
+        var a = document.createElement("a");
+        a.setAttribute("href", url);
+        a.setAttribute("target", '_blank');
+        a.click();      
+}
        
 
 const screenshot =  () => {
@@ -951,6 +958,13 @@ const screenshot =  () => {
           console.log("click ");
           
           download_tiff();
+        });
+        document
+        .getElementById("help")
+        .addEventListener("click", (e) => {
+          console.log("click ");
+          
+          help();
         });
         document
         .getElementById("download_map")

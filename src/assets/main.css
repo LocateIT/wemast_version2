@@ -226,7 +226,7 @@ table {
   position: absolute;
   z-index: 500;
   top: 5vh;
-  left: 89vw;
+  left: 98vw;
   background-color: #fff;
   display: flex;
   gap: 2rem;
@@ -302,7 +302,7 @@ table {
 /* wemast_base_layers
 draw_polygon
 zoom_in
-zoom_out
+zoom_outmp
 help */
 .swap{
   z-index: 500;

@@ -252,10 +252,6 @@ export const useCounterStore = defineStore({
 
       }
 
-      
-
-      
-
     },
     showSelectedIndicator(option) {
       this.indicator_placeholder = option;

@@ -370,8 +370,11 @@
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
     
               <img class="person" src=" /uiIcons/person.svg" alt="">
+              <a href="http://169.1.31.169/bkeadmin/#/search" target="_blank" rel="noopener noreferrer">
+                    <img class="search" src=" /uiIcons/search.svg" alt="">
+              </a>
               
-              <img class="search" src=" /uiIcons/search.svg" alt="">
+            
           
           </div>
           <RouterView />
@@ -386,14 +389,6 @@
   
     </div>
    
-    
-
-
-
-
-    
-    
-    
   </template>
   
   

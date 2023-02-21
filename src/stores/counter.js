@@ -92,6 +92,26 @@ export const useCounterStore = defineStore({
         maintainAspectRatio: false,
       
      },
+
+     //lulc chart
+     lulcChartData: {
+      labels: [],
+      datasets: [
+        {
+          data: [],
+          backgroundColor: [
+            "green",
+            "yellow",
+            "blue",
+            "red",
+            "gray",
+            'orange',
+            '#c2a139'
+          ],
+        },
+      ],
+    },
+     
       //spinner loader
       loading:false,
       kwale_geojson:{},
@@ -144,7 +164,7 @@ export const useCounterStore = defineStore({
       wetland_inventory_desc: 'NDWI is a satellite-derived product',
       status_desc:'The WWPI uses a proxy data of seasonal vegetation (NDVI) to display the dry',
       default_desc: 'STFU',
-      prec_desc: 'Standardized Precipitation Index for ',
+      prec_desc: 'Standardized Precipitation Index ',
       status_theme: 'WWPI',
       lulc_theme: 'LULC',
       veg_cover_theme: 'NDVI',
@@ -215,6 +235,41 @@ export const useCounterStore = defineStore({
       console.log(this.selected_basin , 'changed selected basin')
       // // return selected_country
       var data = this.selected_basin
+
+
+
+      const getStatistics = async () => {
+
+        try {
+          
+          
+          const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=STATS:Zonal_stats_LULC&outputFormat=application/json&CQL_FILTER=Name=%27${data}%27`
+          );
+          console.log(response.data.features[0].properties,'stats response')
+          var labels = Object.keys(response.data.features[0].properties)
+          console.log(labels, 'stats labels')
+          console.log(labels.filter(), 'removed labels')
+          this.lulcChartData.labels = labels.slice(4, -2) 
+          // // dataLabels.value = labels.slice(4, -1)
+        
+          var figures = Object.values(response.data.features[0].properties)
+          console.log(figures.slice(1, -1), 'stats figures')
+          this.lulcChartData.datasets[0].data = figures.slice(3, -1)
+          // // dataValues.value = data.slice(4, -1)
+      
+          // var basin = this.selected_basin
+          // console.log(basin, 'basin for stats')
+          // return response.data.features[0].properties
+          
+        } catch (error) {
+          console.error('an error occured'+error);
+          
+        }
+        }
+        getStatistics()
+
+
+    
 
       
      
@@ -463,6 +518,9 @@ export const useCounterStore = defineStore({
 
 
 
+
+
+
     },
 
     fetchKwale(){
@@ -651,7 +709,8 @@ export const useCounterStore = defineStore({
     getSelectedParameter: (state) => state.selected_parameter,
     getSelectedSatellite: (state) => state.selected_satellite,
     getRegionState: (state)=> state.visible_region,
-    getIndicatorState: (state)=> state.visible_indicator
+    getIndicatorState: (state)=> state.visible_indicator,
+    getLulcChartData: (state) => state.lulcChartData
   
     
   },

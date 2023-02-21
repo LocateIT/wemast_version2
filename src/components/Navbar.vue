@@ -19,8 +19,8 @@
         </div>
 
         <div class="languages">
-          <!-- <HelloI18n /> -->
-          <!-- <Misc /> -->
+          
+          <!-- <Languages /> -->
         </div>
         
 
@@ -29,9 +29,10 @@
 </template>
 
 <script setup>
-import Misc from '../misc.vue';
+// import Misc from '../misc.vue';
 
 // import HelloI18n from './HelloI18n.vue';
+import Languages from './Languages.vue'
 
 
 </script>

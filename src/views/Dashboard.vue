@@ -181,13 +181,13 @@
             
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-            <!-- <div class="chart_title">No. of blackspots in {{storeUserSelections.selected_region}} that are {{storeUserSelections.selected_cause}}</div> -->
-            <!-- <CausesChart 
+            <div class="chart_title">{{ `${basin} ${sub_indicator}-${year} (Pie chart)` }}</div>
+            <LulcPie class="lulc_chart" 
             :height="200"
             :width="300"
-            :chartData="chartData"
+            :chartData="storeUserSelections.lulcChartData"
             :options="options"
-            /> -->
+            />
           </div>
 
          
@@ -439,6 +439,7 @@ import { saveAs } from "file-saver";
   import Compare from '../components/Compare.vue';
   import sideNavigationbar from '../components/sidenavigationbar.vue'
   import axios from 'axios'
+  import LulcPie from '../components/Charts/LulcPie.vue'
   
 
   
@@ -493,6 +494,30 @@ import { saveAs } from "file-saver";
   let search_control = ref(null)
 
   let geometry = {}
+
+    let chartData = ref({})
+  
+    
+
+  let options =  {
+          
+          legend: {
+              display: true,
+              position: 'right',
+              margin: 20,
+              labels:{
+                 fontColor: '#000',
+                 fontWeight: 'bolder',
+                 padding: 15,
+                 usePointStyle: true,
+                 pointStyle: 'circle'
+              }
+           },
+           
+           responsive: true,
+           maintainAspectRatio: false,
+         
+        }
   
   
   
@@ -504,6 +529,8 @@ import { saveAs } from "file-saver";
   // console.log(storeUserSelections.fetchCountriesList)
   
   console.log(storeUserSelections.getLoadingState, 'getLoadingState')
+
+  // const chartData = storeUserSelections.getLulcChartData
   
   const show_advanced_filter = () =>{
     advanced_filter.value = true
@@ -581,16 +608,16 @@ import { saveAs } from "file-saver";
         layerControlElement.getElementsByTagName("input")[index].click();
       }
       //draw control
-      // const draw_polygon = () => {
-      //   if (!show_draw_control.value) {
-      //     const draw_ctrl = document.getElementsByClassName("leaflet-draw");
-      //     draw_ctrl[0].style.visibility = "hidden";
-      //   } else {
-      //     const draw_ctrl = document.getElementsByClassName("leaflet-draw");
-      //     draw_ctrl[0].style.visibility = "visible";
-      //   }
-      //   show_draw_control.value = !show_draw_control.value;
-      // }
+      const draw_polygon = () => {
+        if (!show_draw_control.value) {
+          const draw_ctrl = document.getElementsByClassName("leaflet-draw");
+          draw_ctrl[0].style.visibility = "hidden";
+        } else {
+          const draw_ctrl = document.getElementsByClassName("leaflet-draw");
+          draw_ctrl[0].style.visibility = "visible";
+        }
+        show_draw_control.value = !show_draw_control.value;
+      }
   
      const addDrawCtrl = () => {
         //we add the polygon draw feature to map as seen  below
@@ -915,6 +942,7 @@ const screenshot =  () => {
       }
       
   //hooks
+
   onMounted( () => {
     setLeafletMap()
   
@@ -988,7 +1016,7 @@ const screenshot =  () => {
           console.log("click ");
           
           addDrawCtrl();
-          // draw_polygon();
+          draw_polygon();
         });
   
         
@@ -1205,6 +1233,8 @@ const screenshot =  () => {
                              padding: [50, 50],
                            }); 
 
+                          
+
 
 
                            
@@ -1262,8 +1292,9 @@ map.addControl(search_control.value );
     getRegion()
     
   })
-  
-  
+
+ 
+   
   
   
   const getBasinName = () => {
@@ -1284,6 +1315,24 @@ map.addControl(search_control.value );
     getBasinName()
     
   })
+
+  // const getChartData = () => {
+  //   var selected_chartdata = storeUserSelections.getLulcChartData
+  //   chartData.value = selected_chartdata
+  //   console.log(selected_chartdata, 'chart data in app')
+    
+  // }
+
+  // const setChartData = computed( () => {
+  //   console.log(storeUserSelections.lulcChartData, 'lulcChartData app')
+    
+  //   return storeUserSelections.getLulcChartData
+  // })
+  // watch( setChartData , () => {
+  //   getChartData()
+  //   // getBasinName()
+    
+  // })
   
   
   
@@ -2014,7 +2063,7 @@ wmsLayer.value.on('load', function (event) {
                                       if(wmsLayer.value){
                                         wmsLayer.value.setOpacity(this.value)
                                       }
-                                      // if(wmsCompareLayer) wmsCompareLayer.value.setOpacity(this.value)
+                                      if(wmsCompareLayer) wmsCompareLayer.value.setOpacity(this.value)
                                     
                                      
                                     
@@ -2372,6 +2421,7 @@ changeOpacity()
     
 
   }
+
  
    
 

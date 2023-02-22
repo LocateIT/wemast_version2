@@ -100,14 +100,14 @@ export const useCounterStore = defineStore({
         {
           data: [],
           backgroundColor: [
+            "#a8a800",
+            "#ccc",
+            "#bd6860",
             "green",
             "#fff1d2",
-            "#d2efff",
-            "#bd6860",
-            "orange",
             "#55ff00",
-            '#ccc',
-            '#4dd7ff'
+            '#4dd7ff',
+            '#d2efff'
           ],
           barThickness: 40,
        

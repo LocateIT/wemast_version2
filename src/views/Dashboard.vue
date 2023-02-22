@@ -165,7 +165,7 @@
             <!-- <q-btn flat label="get WMS" @click="getWMS_Layer" />    -->
 
             <p style="margin-top:40px">
-              <label style="margin-top:40px; font-weight: 700;">Summary</label>
+              <label style="margin-top:40px; font-weight: 700; font-size:14px">Summary</label>
               <br>
               {{ storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
               storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`: 
@@ -198,13 +198,15 @@
             
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
-            <!-- <div class="chart_title">No. of blackspots in {{storeUserSelections.selected_region}} that are {{storeUserSelections.selected_cause}}</div> -->
-            <!-- <CausesBar 
+            <div class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+            <div id="bar">
+              <LulcBar  class="lulc_bar_chart" 
             :height="200"
-            :width="300"
-            :chartData="chartData"
+            :chartData="storeUserSelections.lulcChartData"
             :options="barchart_options"
-            /> -->
+            />
+            </div>
+           
           </div>
            
           </div>
@@ -440,6 +442,7 @@ import { saveAs } from "file-saver";
   import sideNavigationbar from '../components/sidenavigationbar.vue'
   import axios from 'axios'
   import LulcPie from '../components/Charts/LulcPie.vue'
+  import LulcBar from '../components/Charts/LulcBar.vue'
   
 
   
@@ -494,11 +497,9 @@ import { saveAs } from "file-saver";
   let search_control = ref(null)
 
   let geometry = {}
-
-    let chartData = ref({})
+  let chartData = ref({})
   
-    
-
+  
   let options =  {
           
           legend: {
@@ -508,7 +509,7 @@ import { saveAs } from "file-saver";
               labels:{
                  fontColor: '#000',
                  fontWeight: 'bolder',
-                 padding: 15,
+                 padding: 10,
                  usePointStyle: true,
                  pointStyle: 'circle'
               }
@@ -518,6 +519,53 @@ import { saveAs } from "file-saver";
            maintainAspectRatio: false,
          
         }
+
+let barchart_options= {
+        scales: {
+           xAxes: [{
+            //   stacked: true,
+         
+              
+              
+              ticks: {
+                 beginAtZero: true,
+               
+                 fontColor: '#000',
+              },
+              gridLines: {
+                 display: false,
+                  color: '#9b9797',
+                  // padding: 2
+              }
+           }],
+           yAxes: [{
+            //   stacked: true,
+            // stepSize: 10000,
+                   barPercentage: 0.95,
+                 
+               ticks: {
+                  beginAtZero: true,
+                   
+                 // fontColor: '#2FA036',
+                 fontSize: 10,
+              },
+              gridLines: {
+                 display: true,
+                 color: '#9b9797'
+                 
+              }
+           }]
+        },
+ 
+       legend: {
+           display: false,
+       
+        },
+        
+        responsive: true,
+        maintainAspectRatio: false,
+      
+     }
   
   
   

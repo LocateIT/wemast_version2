@@ -105,10 +105,13 @@ export const useCounterStore = defineStore({
             "#d2efff",
             "#bd6860",
             "orange",
-            "#88ff4d",
+            "#55ff00",
             '#ccc',
             '#4dd7ff'
           ],
+          barThickness: 40,
+       
+       
         },
       ],
     },
@@ -259,12 +262,10 @@ export const useCounterStore = defineStore({
         
           var figures = Object.values(newObj)
           console.log(figures, 'stats figures')
-          this.lulcChartData.datasets[0].data = figures 
-          // // dataValues.value = data.slice(4, -1)
-      
-          // var basin = this.selected_basin
-          // console.log(basin, 'basin for stats')
-          // return response.data.features[0].properties
+          // var converted = figures.map( (item) => item/100)
+          // console.log(converted, 'converted figres')
+          this.lulcChartData.datasets[0].data = figures
+       
           
         } catch (error) {
           console.error('an error occured'+error);

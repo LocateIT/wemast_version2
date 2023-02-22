@@ -498,6 +498,28 @@ import { saveAs } from "file-saver";
 
   let geometry = {}
   let chartData = ref({})
+
+  let lulcChartData = {
+      labels: [],
+      datasets: [
+        {
+          data: [],
+          backgroundColor: [
+            "green",
+            "#fff1d2",
+            "#d2efff",
+            "#bd6860",
+            "orange",
+            "#55ff00",
+            '#ccc',
+            '#4dd7ff'
+          ],
+          barThickness: 40,
+       
+       
+        },
+      ],
+    }
   
   
   let options =  {
@@ -1822,8 +1844,69 @@ changeOpacity()
 wmsLayer.value.on('load', function (event) {
     loading.value = false
 });
+
+// getStatistics()
+
+
+
+
  
   }
+
+
+    //   const getStatistics = async () => {
+    //   if(sub_indicator.value === 'Land Cover') {
+    //     try {
+      
+      
+    //   const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:${year.value}&outputFormat=application/json&CQL_FILTER=Name=%27${basin.value}%27`
+    //   );
+    //   console.log(response.data.features[0].properties,'stats response')
+    //   var obj = response.data.features[0].properties
+      
+    //   const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+    //   console.log(newObj, 'NEW OBJECT')
+
+    //   var labels = Object.keys(newObj)
+    //   console.log(labels, 'stats labels')
+    // // lulcChartData.labels = labels 
+    
+
+    //   var figures = Object.values(newObj)
+    //   console.log(figures, 'stats figures')
+    //   // var converted = figures.map( (item) => item/100)
+    //   // console.log(converted, 'converted figres')
+      
+
+    //   const updateData = computed( () => {
+      
+    //     lulcChartData.datasets[0].data = figures
+        
+
+    //     return lulcChartData.datasets[0].data
+    //   })
+    //   watch(updateData)
+    //   const updateLabels = computed( () => {
+    //     lulcChartData.labels = labels 
+    //     lulcChartData.labels
+    //   })
+    //   watch(updateLabels)
+
+      
+    // } catch (error) {
+    //   console.error('an error occured'+error);
+      
+    // }
+
+    //   }
+
+
+    // }
+
+
+
+
+  
   
   //watch state for loading
   
@@ -2470,7 +2553,8 @@ changeOpacity()
 
   }
 
- 
+    
+
    
 
   

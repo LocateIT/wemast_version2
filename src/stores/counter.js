@@ -239,45 +239,14 @@ export const useCounterStore = defineStore({
       console.log(this.selected_basin , 'changed selected basin')
       // // return selected_country
       var data = this.selected_basin
+      // this.showSelectedYear()
+     
+      // var year = this.selected_year
+      // console.log(data, 'stats basin')
+      // console.log(year, 'stats year')
+      this.getstats()
 
-
-
-      const getStatistics = async () => {
-
-        try {
-          
-          
-          const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=STATS:Zonal_stats_LULC&outputFormat=application/json&CQL_FILTER=Name=%27${data}%27`
-          );
-          console.log(response.data.features[0].properties,'stats response')
-          var obj = response.data.features[0].properties
-          
-          const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-          console.log(newObj, 'NEW OBJECT')
-
-          var labels = Object.keys(newObj)
-          console.log(labels, 'stats labels')
-          this.lulcChartData.labels = labels
-         
-        
-          var figures = Object.values(newObj)
-          console.log(figures, 'stats figures')
-          // var converted = figures.map( (item) => item/100)
-          // console.log(converted, 'converted figres')
-          this.lulcChartData.datasets[0].data = figures
-       
-          
-        } catch (error) {
-          console.error('an error occured'+error);
-          
-        }
-        }
-        getStatistics()
-
-
-    
-
-      
+ 
      
 //using async await
 
@@ -335,6 +304,8 @@ export const useCounterStore = defineStore({
 
       this.selected_year=  option
       console.log(this.selected_year , 'changed selected year')
+
+      this.getstats()
     },
     showSelectedSeason(option) {
       this.season_placeholder = option;
@@ -342,6 +313,11 @@ export const useCounterStore = defineStore({
 
       this.selected_season=  option
       console.log(this.selected_season , 'changed selected season')
+
+
+
+ 
+      
     },
     showSelectedParameter(option) {
       this.parameter_placeholder = option;
@@ -528,6 +504,55 @@ export const useCounterStore = defineStore({
 
 
     },
+    getstats() {
+      const getStatistics = async () => {
+     
+      
+
+        try {
+          
+          // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+       var basin = this.selected_basin
+      //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+
+
+       var year = this.selected_year
+      //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+  
+          const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:'+year+'&outputFormat=application/json&CQL_FILTER=Name=%27'+basin+'%27'
+          );
+          console.log(response.data.features[0].properties,'stats response')
+          var obj = response.data.features[0].properties
+          
+          const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+          console.log(newObj, 'NEW OBJECT')
+  
+          var labels = Object.keys(newObj)
+          console.log(labels, 'stats labels')
+          this.lulcChartData.labels = labels
+         
+        
+          var figures = Object.values(newObj)
+          console.log(figures, 'stats figures')
+          // var converted = figures.map( (item) => item/100)
+          // console.log(converted, 'converted figres')
+          this.lulcChartData.datasets[0].data = figures
+       
+          
+        } catch (error) {
+          console.error('an error occured'+error);
+          
+        }
+        } 
+        getStatistics()
+
+    },
+
+    
+     
+
+
+    
 
     fetchKwale(){
       const sendKwaleRequest = async () => {

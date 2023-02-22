@@ -714,7 +714,7 @@ title{
 }
 .lulc_chart{
   position: relative;
-  top: -1vh;
+  top: 2vh;
   width: 15vw;
-  height: 10vh;
+  height: 15vh;
 }

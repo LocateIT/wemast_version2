@@ -101,12 +101,13 @@ export const useCounterStore = defineStore({
           data: [],
           backgroundColor: [
             "green",
-            "yellow",
-            "blue",
-            "red",
-            "gray",
-            'orange',
-            '#c2a139'
+            "#fff1d2",
+            "#d2efff",
+            "#bd6860",
+            "orange",
+            "#88ff4d",
+            '#ccc',
+            '#4dd7ff'
           ],
         },
       ],
@@ -246,15 +247,19 @@ export const useCounterStore = defineStore({
           const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=STATS:Zonal_stats_LULC&outputFormat=application/json&CQL_FILTER=Name=%27${data}%27`
           );
           console.log(response.data.features[0].properties,'stats response')
-          var labels = Object.keys(response.data.features[0].properties)
+          var obj = response.data.features[0].properties
+          
+          const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+          console.log(newObj, 'NEW OBJECT')
+
+          var labels = Object.keys(newObj)
           console.log(labels, 'stats labels')
-          console.log(labels.filter(), 'removed labels')
-          this.lulcChartData.labels = labels.slice(4, -2) 
-          // // dataLabels.value = labels.slice(4, -1)
+          this.lulcChartData.labels = labels
+         
         
-          var figures = Object.values(response.data.features[0].properties)
-          console.log(figures.slice(1, -1), 'stats figures')
-          this.lulcChartData.datasets[0].data = figures.slice(3, -1)
+          var figures = Object.values(newObj)
+          console.log(figures, 'stats figures')
+          this.lulcChartData.datasets[0].data = figures 
           // // dataValues.value = data.slice(4, -1)
       
           // var basin = this.selected_basin

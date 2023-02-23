@@ -1,5 +1,5 @@
 export default {
-    wemast_title: `Wetland Monitoring and Assessment Service for Transboundary  Basins in `,
+    wemast_title: `WETLAND MONITORING AND ASSESSMENT SERVICE FOR TRANSBOUNDARY  BASINS IN `,
     wemast_subtitle:`SOUTHERN AFRICA `,
     wemast_bracket:`(WeMAST)`,
     wemast_change_language:`Change Language`,

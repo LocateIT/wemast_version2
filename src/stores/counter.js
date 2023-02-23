@@ -144,6 +144,7 @@ export const useCounterStore = defineStore({
 
       language_placeholder: 'English',
       language_list:[],
+      selected_language: '',
       season_list:[],
       season_placeholder: '',
       selected_season: '',
@@ -226,6 +227,16 @@ export const useCounterStore = defineStore({
     fetchSatelliteList(){
       this.satellite_list = ['SENTINEL', 'LANDSAT']
 
+    },
+    fetchLanguagesList(){
+      this.language_list = ['English', 'French', 'Portuguese']
+
+    },
+    showSelectedLanguage(option){
+      this.language_placeholder = option;
+      // console.log(option, 'selected language ')
+      this.selected_language=  option
+      // console.log(this.selected_language , 'changed selected language')
     },
 
    
@@ -507,42 +518,46 @@ export const useCounterStore = defineStore({
     getstats() {
       const getStatistics = async () => {
      
+        if(this.selected_sub_indicator === 'Land Cover') {
+          try {
+          
+            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+         var basin = this.selected_basin
+        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+  
+  
+         var year = this.selected_year
+        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
       
-
-        try {
+    
+            const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:'+year+'&outputFormat=application/json&CQL_FILTER=Name=%27'+basin+'%27'
+            );
+            console.log(response.data.features[0].properties,'stats response')
+            var obj = response.data.features[0].properties
+            
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+            console.log(newObj, 'NEW OBJECT')
+    
+            var labels = Object.keys(newObj)
+            console.log(labels, 'stats labels')
+            this.lulcChartData.labels = labels
+           
           
-          // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
-       var basin = this.selected_basin
-      //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
-
-
-       var year = this.selected_year
-      //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
-  
-          const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:'+year+'&outputFormat=application/json&CQL_FILTER=Name=%27'+basin+'%27'
-          );
-          console.log(response.data.features[0].properties,'stats response')
-          var obj = response.data.features[0].properties
-          
-          const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-          console.log(newObj, 'NEW OBJECT')
-  
-          var labels = Object.keys(newObj)
-          console.log(labels, 'stats labels')
-          this.lulcChartData.labels = labels
+            var figures = Object.values(newObj)
+            console.log(figures, 'stats figures')
+            // var converted = figures.map( (item) => item/100)
+            // console.log(converted, 'converted figres')
+            this.lulcChartData.datasets[0].data = figures
          
+            
+          } catch (error) {
+            console.error('an error occured'+error);
+            
+          }
         
-          var figures = Object.values(newObj)
-          console.log(figures, 'stats figures')
-          // var converted = figures.map( (item) => item/100)
-          // console.log(converted, 'converted figres')
-          this.lulcChartData.datasets[0].data = figures
-       
-          
-        } catch (error) {
-          console.error('an error occured'+error);
-          
         }
+
+       
         } 
         getStatistics()
 
@@ -741,7 +756,8 @@ export const useCounterStore = defineStore({
     getSelectedSatellite: (state) => state.selected_satellite,
     getRegionState: (state)=> state.visible_region,
     getIndicatorState: (state)=> state.visible_indicator,
-    getLulcChartData: (state) => state.lulcChartData
+    getLulcChartData: (state) => state.lulcChartData,
+    getSelectedLanguage: (state) => state.selected_language
   
     
   },

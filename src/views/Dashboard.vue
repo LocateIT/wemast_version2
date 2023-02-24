@@ -542,6 +542,7 @@ import { saveAs } from "file-saver";
          
         }
 
+      
 let barchart_options= {
         scales: {
            xAxes: [{

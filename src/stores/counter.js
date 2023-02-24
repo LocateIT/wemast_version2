@@ -604,6 +604,49 @@ export const useCounterStore = defineStore({
         
         }
 
+
+        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent') {
+          try {
+          
+            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+         var basin = this.selected_basin
+        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+  
+  
+         var year = this.selected_year
+        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+     
+      
+    
+            const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=STATS_NDWI:${year}&outputFormat=application/json&CQL_FILTER=Name=%27${basin}%27`
+            );
+            console.log(response.data.features[0].properties,'stats response')
+            var obj = response.data.features[0].properties
+            
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('255') && !key.includes('No Data') && !key.includes('Name') && !key.includes('0')))
+            console.log(newObj, 'NEW OBJECT')
+    
+            var labels = Object.keys(newObj)
+            console.log(labels, 'stats labels')
+            this.lulcChartData.labels = labels
+           
+          
+            var figures = Object.values(newObj)
+            console.log(figures, 'stats figures')
+            // var converted = figures.map( (item) => item/100)
+            // console.log(converted, 'converted figres')
+            this.lulcChartData.datasets[0].data = figures
+            this.lulcChartData.datasets[0].backgroundColor = ['#c29aea','#c2fefe', '#67a1fe']
+         
+            
+          } catch (error) {
+            console.error('an error occured'+error);
+            
+          }
+        
+        }
+
+
        
         } 
         getStatistics()

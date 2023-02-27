@@ -98,22 +98,32 @@ background-color:#ffffff;
 
 /* margin-left: -1px; */
 }
+
+#close:active ~ .download_map{
+  /* position: absolute;
+  top: 5vh;
+  left: 40vw !important; */
+  background-color: #801113 !important;
+}
+
+
 #mySidenav {
 transition: width 0.3s;
-width: 0px;
+/* background-color: #f13737; */
+/* width: 0px; */
 
 }
 .sidenav_body {
 height: 90%;
-
-margin-left: 40px;
+/* background-color: #a35a5a; */
+margin-left: 20px;
 overflow-y: scroll;
 position: relative;
 scrollbar-width: thin;
 scrollbar-color: steelblue white;
 }
 .sidenav_body::-webkit-scrollbar {
-width: 5px;
+width: 0.8px;
 }
 .sidenav_body::-webkit-scrollbar-track {
 background: white; /* color of the tracking area */
@@ -124,7 +134,28 @@ background-color: steelblue; /* color of the scroll thumb */
 border-radius: 20px; /* roundness of the scroll thumb */
 border: 1px solid rgb(224, 213, 193); /* creates padding around scroll thumb */
 }
-.protrusion {
+@media screen and (max-height: 720px) {
+  .protrusion {
+    top: 174px;
+    position: absolute;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .protrusion {
+    top: 112px;
+    position: absolute;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    /* background-color: #e01d1d; */
+  }
+}
+/* .protrusion {
 top: 110px;
 position: absolute;
 border-radius: 50%;
@@ -132,7 +163,7 @@ width: 45px;
 height: 45px;
 cursor: pointer;
 
-}
+} */
 
 .toggle_icon{
   position: absolute;
@@ -168,13 +199,13 @@ cursor: pointer;
   padding: 5px;
 
 }
-.open_sidebar{
+/* .open_sidebar{
   position: absolute;
   top: 26vh;
   right: 7vw;
   background-color: #4891e0;
   z-index: 2500;
-}
+} */
 .sideview{
   position: absolute;
   top: 26vh;
@@ -296,6 +327,8 @@ table {
   }
   } */
 
+
+ 
 
   .download_tiff_2{
     position: absolute;
@@ -701,6 +734,7 @@ top: 36.4vh;
 
 }
 .legend {
+ 
   padding: 6px 8px;
   font: 14px Arial, Helvetica, sans-serif;
   background: white;
@@ -709,6 +743,11 @@ top: 36.4vh;
   border-radius: 10px;
   line-height: 24px;
   color: #555;
+}
+div.legend.leaflet-control{
+  position: relative;
+  left: 0vw;
+  top: 45vh;
 }
 .legend h4 {
   text-align: center;

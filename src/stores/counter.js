@@ -684,9 +684,6 @@ export const useCounterStore = defineStore({
         
         }
 
-
-
-       
         } 
         getStatistics()
 

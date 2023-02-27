@@ -33,7 +33,7 @@
 // import HelloI18n from './HelloI18n.vue';
 import { useI18n } from "vue-i18n"
   import i18n from '../i18n.js';
-import Languages from './Languages.vue'
+// import Languages from './Languages.vue'
 
 import CustomLanguage from './CustomLanguage.vue';
 const { t } = useI18n({

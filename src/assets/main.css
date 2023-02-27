@@ -94,16 +94,19 @@ z-index: 3000;
 top: 14vh;
 right: 0;
 caret-color: transparent;
-background-color:#fff;
+background-color:#ffffff;
+
+/* margin-left: -1px; */
 }
 #mySidenav {
 transition: width 0.3s;
-width: 0;
+width: 0px;
+
 }
 .sidenav_body {
 height: 90%;
 
-margin-left: 50px;
+margin-left: 40px;
 overflow-y: scroll;
 position: relative;
 scrollbar-width: thin;
@@ -138,6 +141,12 @@ cursor: pointer;
   height: 50px;
   width: 50px;
  
+}
+
+.toggle_is_open{
+  position: absolute;
+  top: 2vh;
+  left: -2.7vw;
 }
 
 #close {
@@ -222,17 +231,83 @@ table {
   text-indent: initial;
   border-spacing: 2px;
 }
- .map_controls{
+ /* .map_controls{
   position: absolute;
   z-index: 500;
   top: 5vh;
   left: 98vw;
-  background-color: #fff;
+ 
   display: flex;
   gap: 2rem;
   flex-direction: column;
-}
+} */
+/* #controls{
+  position: absolute;
+  right: -2vw !important;
 
+} */
+/* @media screen and (max-width: 1400px) {
+  .download_tiff{
+    position: absolute;
+    top: 5vh;
+  background-color: #e23c3c;
+    right: -4vw !important;
+  }
+  .download_map{
+    position: absolute;
+    top: 9vh;
+    left:  4vw;
+  }
+  
+  .measure{
+    position: absolute;
+    top: 13vh;
+    left:  4vw;
+  
+  }
+  .wemast_base_layers{
+    position: absolute;
+    top: 17vh;
+    left:  4vw;
+  }
+  .draw_polygon{
+    position: absolute;
+    top: 21vh;
+    left:  4vw;
+  
+  }
+  .zoom_in{
+    position: absolute;
+    top: 25vh;
+    left:  4vw;
+  
+  }
+  .zoom_out{
+    position: absolute;
+    top: 29vh;
+    left: 4vw;
+  
+  }
+  .help{
+    position: absolute;
+    top: 33vh;
+    left: 4vw
+  
+  }
+  } */
+
+
+  .download_tiff_2{
+    position: absolute;
+    top: 5vh;
+  
+    left: 4vw;
+  }
+  .download_map_2{
+    position: absolute;
+    top: 9vh;
+    left:  4vw;
+  }
 
 .download_tiff{
   position: absolute;
@@ -240,11 +315,13 @@ table {
 
   left: -2vw;
 }
+
 .download_map{
   position: absolute;
   top: 9vh;
   left:  -2vw;
 }
+
 
 .measure{
   position: absolute;
@@ -747,7 +824,7 @@ title{
 .lulc_bar_chart{
   position: relative;
   top: -1vh;
-  left: 10%;
+  left: 4%;
   width: 25vw;
 
   

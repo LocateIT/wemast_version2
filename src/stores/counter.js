@@ -340,6 +340,7 @@ export const useCounterStore = defineStore({
       this.satellite_placeholder = option;
       this.selected_satellite=  option
       console.log(this.selected_satellite , 'changed selected satellite')
+      this.getstats()
     },
 
 
@@ -636,7 +637,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#c29aea','#c2fefe', '#67a1fe']
+            this.lulcChartData.datasets[0].backgroundColor = ['#b3b3cc','#c2fefe', '#2578fd']
          
             
           } catch (error) {
@@ -645,6 +646,44 @@ export const useCounterStore = defineStore({
           }
         
         }
+
+        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Status') {
+          try {
+          
+           
+            var basin = this.selected_basin
+            var year = this.selected_year
+            var season = this.selected_season
+            var satellite = this.selected_satellite
+    
+            const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=${satellite}_${season}_STATS:${year}&outputFormat=application/json&CQL_FILTER=Name=%27${basin}%27`
+            );
+            console.log(response.data.features[0].properties,'stats response')
+            var obj = response.data.features[0].properties
+            
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('255') && !key.includes('No Data') && !key.includes('Name') && !key.includes('0')))
+            console.log(newObj, 'NEW OBJECT')
+    
+            var labels = Object.keys(newObj)
+            console.log(labels, 'stats labels')
+            this.lulcChartData.labels = labels
+           
+          
+            var figures = Object.values(newObj)
+            console.log(figures, 'stats figures')
+            // var converted = figures.map( (item) => item/100)
+            // console.log(converted, 'converted figres')
+            this.lulcChartData.datasets[0].data = figures
+            this.lulcChartData.datasets[0].backgroundColor = ['#0cefef','#d2e409', '#1eb301']
+         
+            
+          } catch (error) {
+            console.error('an error occured'+error);
+            
+          }
+        
+        }
+
 
 
        

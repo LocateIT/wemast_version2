@@ -1,8 +1,8 @@
 export const leaflet_custom_controls = 
 
-`<div class="map_controls" >
+`<div class="map_controls" id="controls">
     
-<img  title="Download tif" id="download_tiff" src=" /mapIcons/file_download-24px.svg" alt="" class="download_tiff">
+<img  title="Download tif" id="download_tiff" src=" /mapIcons/file_download-24px.svg" alt="" class="download_tiff" >
 <img title="Download Map" id="download_map" src=" /uiIcons/insert_photo-24px.svg" alt="" class="download_map">
 <img title="Measure Distance" id="measure" src=" /mapIcons/straighten-24px.svg" alt="" class="measure">
 <div  id="show_base_layers" class="  " style="display:none;background-color:white; height:130px; width:150px; padding-right:10px; position:absolute; top: 17vh;

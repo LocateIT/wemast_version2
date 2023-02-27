@@ -110,7 +110,7 @@
         <div id="protrusion" class="bg-white protrusion">
           <div class="toggle_icon" @click.stop="toggle_nav">
             <img style="margin-left:-5vw; margin-top:1.5vw" id="open" src=" /uiIcons/drawer.svg" v-if="show_sidenav" />
-            <img style="margin-left:-5vw; margin-top:1.5vw" id="close" src=" /uiIcons/drawer.svg" v-if="!show_sidenav" />
+            <img :class="{'toggle_is_open':(!show_sidenav)}" id="close" src=" /uiIcons/drawer.svg" v-if="!show_sidenav" />
           </div>
         </div>
         <div class="sidenav_body" v-if="!show_sidenav">
@@ -557,13 +557,17 @@ let barchart_options= {
               },
               gridLines: {
                  display: false,
-                  color: '#9b9797',
+                  color: '#eee',
                   // padding: 2
               }
            }],
            yAxes: [{
             //   stacked: true,
             // stepSize: 10000,
+            scaleLabel: {
+                    display: true,
+                    labelString: 'Area in Hectares (Ha)'
+                },
                    barPercentage: 0.95,
                  
                ticks: {
@@ -574,7 +578,7 @@ let barchart_options= {
               },
               gridLines: {
                  display: true,
-                 color: '#9b9797'
+                 color: '#d9dcd6'
                  
               }
            }]
@@ -622,19 +626,167 @@ let barchart_options= {
   const toggle_nav = (e)  => {
         console.log(" toggle_nav ", e.target.id);
         const cmd = e.target.id;
-        if (cmd === "close") return closeNav();
+        if (cmd === "close")
+
+          // document.querySelector("#download_tiff").style.backgroundColor = "absolute"
+          // document.querySelector("#download_tiff").style.left = "-2vw"
+
+          
+          // document.querySelector("#download_map").style.position = "absolute"
+          // document.querySelector("#download_map").style.left = "-2vw"
+
+         
+          // document.querySelector("#measure").style.position = "absolute"
+          // document.querySelector("#measure").style.left = "-2vw"
+
+         
+          // document.querySelector("#wemast_base_layers").style.position = "absolute"
+          // document.querySelector("#wemast_base_layers").style.left = "-2vw"
+
+         
+          // document.querySelector("#draw_polygon").style.position = "absolute"
+          // document.querySelector("#draw_polygon").style.left = "-2vw"
+
+          
+          // document.querySelector("#zoom_in").style.position = "absolute"
+          // document.querySelector("#zoom_in").style.left = "-2vw"
+
+         
+          // document.querySelector("#zoom_out").style.position = "absolute"
+          // document.querySelector("#zoom_out").style.left = "-2vw"
+
+         
+          // document.querySelector("#help").style.position = "absolute"
+          // document.querySelector("#help").style.left = "-2vw"
+       
+
+          
+       
+        
+        return closeNav();
+        if(cmd === "open"){
+
+          // document.querySelector("#download_tiff").style.position = "absolute"
+          // document.querySelector("#download_tiff").style.left = "4vw"
+
+          
+          // document.querySelector("#download_map").style.position = "absolute"
+          // document.querySelector("#download_map").style.left = "4vw"
+
+         
+          // document.querySelector("#measure").style.position = "absolute"
+          // document.querySelector("#measure").style.left = "4vw"
+
+         
+          // document.querySelector("#wemast_base_layers").style.position = "absolute"
+          // document.querySelector("#wemast_base_layers").style.left = "4vw"
+
+         
+          // document.querySelector("#draw_polygon").style.position = "absolute"
+          // document.querySelector("#draw_polygon").style.left = "4vw"
+
+          
+          // document.querySelector("#zoom_in").style.position = "absolute"
+          // document.querySelector("#zoom_in").style.left = "4vw"
+
+         
+          // document.querySelector("#zoom_out").style.position = "absolute"
+          // document.querySelector("#zoom_out").style.left = "4vw"
+
+         
+          // document.querySelector("#help").style.position = "absolute"
+          // document.querySelector("#help").style.left = "4vw"
+
+
+
+
+
+          
+       
+        } 
+        else{
+       
+          // document.querySelector("#download_tiff").style.position = "absolute"
+          // document.querySelector("#download_tiff").style.backgroundColor = "red"
+          // document.querySelector("#download_tiff").style.left = "-2vw !important"
+
+          
+          // document.querySelector("#download_map").style.position = "absolute"
+          // document.querySelector("#download_map").style.left = "-2vw"
+
+         
+          // document.querySelector("#measure").style.position = "absolute"
+          // document.querySelector("#measure").style.left = "-2vw"
+
+         
+          // document.querySelector("#wemast_base_layers").style.position = "absolute"
+          // document.querySelector("#wemast_base_layers").style.left = "-2vw"
+
+         
+          // document.querySelector("#draw_polygon").style.position = "absolute"
+          // document.querySelector("#draw_polygon").style.left = "-2vw"
+
+          
+          // document.querySelector("#zoom_in").style.position = "absolute"
+          // document.querySelector("#zoom_in").style.left = "-2vw"
+
+         
+          // document.querySelector("#zoom_out").style.position = "absolute"
+          // document.querySelector("#zoom_out").style.left = "-2vw"
+
+         
+          // document.querySelector("#help").style.position = "absolute"
+          // document.querySelector("#help").style.left = "-2vw"
+       
+        }
         return openNav();
       }
   
      const openNav = () => {
         sidebar.value.open("home1");
         show_sidenav.value = false;
+
+
+        // if(show_sidenav.value === false){
+        //   document.querySelector("#download_tiff").style.position = "absolute"
+        //   document.querySelector("#download_tiff").style.left = "-2vw"
+
+          
+        //   document.querySelector("#download_map").style.position = "absolute"
+        //   document.querySelector("#download_map").style.left = "-2vw"
+
+         
+        //   document.querySelector("#measure").style.position = "absolute"
+        //   document.querySelector("#measure").style.left = "-2vw"
+
+         
+        //   document.querySelector("#wemast_base_layers").style.position = "absolute"
+        //   document.querySelector("#wemast_base_layers").style.left = "-2vw"
+
+         
+        //   document.querySelector("#draw_polygon").style.position = "absolute"
+        //   document.querySelector("#draw_polygon").style.left = "-2vw"
+
+          
+        //   document.querySelector("#zoom_in").style.position = "absolute"
+        //   document.querySelector("#zoom_in").style.left = "-2vw"
+
+         
+        //   document.querySelector("#zoom_out").style.position = "absolute"
+        //   document.querySelector("#zoom_out").style.left = "-2vw"
+
+         
+        //   document.querySelector("#help").style.position = "absolute"
+        //   document.querySelector("#help").style.left = "-2vw"
+
+        // }
         open_nav();
       }
   
       const closeNav = () => {
         sidebar.value.close("home1");
         close_nav();
+       
         show_sidenav.value= true;
       }
       const handleAnalysisMetaSwap = () => {
@@ -817,16 +969,21 @@ let barchart_options= {
       }
   
      const AddCustomRightControls = () => {
-        const leaflet_controls = L.control({ position: "topright" });
+        const leaflet_controls = L.control({ position: "topright"});
         leaflet_controls.onAdd = () => {
           let div = L.DomUtil.create("div", "WeMAST_zoom");
           div.innerHTML = leaflet_custom_controls;
+        
           return div;
         };
   
         leaflet_controls.addTo(map);
         // document.getElementsByClassName('map_controls_wrapper').appendChild(leaflet_controls)
         const right_ctrls = document.querySelector(".map_controls");
+        // if (show_sidenav.value === true){
+        //   // document.querySelector(".map_controls").style.position="absolute"
+        //   document.querySelector(".map_controls").style.backgroundColor = "red"
+        // }
         right_ctrls.addEventListener("click", (event) => {
           const id = event.target.id;
           event.stopPropagation();
@@ -865,6 +1022,22 @@ let barchart_options= {
               document.getElementById(`${id}`).style.backgroundColor =
                 "white";
             } catch (err) {}
+          }
+          if (
+            ![
+              "zoom_in",
+              "zoom_out",
+              "download_map",
+              'download_tiff',
+              "wemast_base_layers",
+            ].includes(id) && show_sidenav == true
+          ){
+            // document.getElementById(`${id}`).style.position =
+            //     "absolute";
+            //     document.getElementById(`${id}`).style.left =
+            //     "40vw";
+            console.log('sidenav is open')
+
           }
   
           

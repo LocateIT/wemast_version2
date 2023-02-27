@@ -697,6 +697,10 @@ let barchart_options= {
 
           document.querySelector(".opacity").style.position = "absolute"
             document.querySelector(".opacity").style.left = "50vw"
+            
+
+            document.querySelector(".swap").style.position = "absolute"
+            document.querySelector(".swap").style.left = "62vw"
 
         } 
         
@@ -2503,7 +2507,7 @@ wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserve
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
-     format: 'geotiff',
+     format: 'image/png',
      transparent: true,
      opacity:1.0
      // CQL_FILTER: "Band1='1.0'"

@@ -695,6 +695,9 @@ let barchart_options= {
           document.querySelector("#help").style.position = "absolute"
           document.querySelector("#help").style.left = "4vw"
 
+          document.querySelector(".opacity").style.position = "absolute"
+            document.querySelector(".opacity").style.left = "50vw"
+
         } 
         
         return openNav();
@@ -778,7 +781,12 @@ let barchart_options= {
             document.querySelector("#help").style.position = "absolute"
             document.querySelector("#help").style.left = "-2vw"
 
+           
+            
 
+
+            // document.querySelector(".legend_lulc").style.position = "relative"
+            // document.querySelector(".legend_lulc").style.top =  "45vh"
 
             // document.getElementsByClassName('legend.leaflet-control')[0].style.position = "absolute"
 
@@ -2116,7 +2124,7 @@ wmsLayer.value.on('load', function (event) {
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
-        var legend = L.control({ className: 'legend_lulc' });
+        var legend = L.control({ position:'bottomright', className: 'legend_lulc' });
         lulc_legend.value = legend
         var colors = colors_array
         var labels = label_array

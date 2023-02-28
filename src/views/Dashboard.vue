@@ -310,7 +310,7 @@
                   <tr>
                     <th>Geo Position</th>
       
-                    <td>{{storeUserSelections.selected_cause}}</td>
+                    <td>{{geoposition}}</td>
                   </tr>
                   <tr>
                     <th>Theme</th>
@@ -496,6 +496,7 @@ import { saveAs } from "file-saver";
   let search_marker = ref(null)
   let controls_container = ref(null)
   let search_control = ref(null)
+  let geoposition = ref(null)
 
   let geometry = {}
   let chartData = ref({})
@@ -2039,6 +2040,13 @@ changeOpacity()
 wmsLayer.value.on('load', function (event) {
     loading.value = false
 });
+
+
+console.log(map.getCenter(), 'center')
+var center = map.getCenter()
+var lat = center.lat.toFixed(2)
+var lon = center.lng.toFixed(2)
+geoposition.value = `${lat}, ${lon}`
 
 // getStatistics()
 

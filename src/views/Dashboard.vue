@@ -265,7 +265,7 @@
                   </tr>
                   <tr>
                     <th>Resolution</th>
-                    <td>{{storeUserSelections.crs}}</td>
+                    <td>{{`${storeUserSelections.resolution} Meters`}}</td>
                     
                   </tr>
                   <tr>

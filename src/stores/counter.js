@@ -180,6 +180,7 @@ export const useCounterStore = defineStore({
       northern_lat: '',
       eastern_lon: '',
       southern_lat: '',
+      resolution: ''
   }),
  
   actions: {
@@ -562,6 +563,8 @@ export const useCounterStore = defineStore({
              this.northern_lat = bbox[1]
              this.eastern_lon = bbox[2]
              this.southern_lat = bbox[3]
+
+             this.resolution = '300'
            
          
             
@@ -616,6 +619,7 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
+              this.resolution = '300'
             
          
             
@@ -667,6 +671,8 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
+
+              this.resolution = '300'
             
          
             
@@ -713,7 +719,14 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
-            
+
+              if(satellite === 'SENTINEL'){
+                this.resolution = '10'
+              }
+             
+              if(satellite === 'LANDSAT'){
+                this.resolution = '300'
+              }
          
             
           } catch (error) {

@@ -175,7 +175,11 @@ export const useCounterStore = defineStore({
       lulc_theme: 'LULC',
       veg_cover_theme: 'NDVI',
       wetland_inventory_theme: 'NDWI',
-      prec_theme: 'SPI'
+      prec_theme: 'SPI',
+      western_lon: '',
+      northern_lat: '',
+      eastern_lon: '',
+      southern_lat: '',
   }),
  
   actions: {
@@ -550,6 +554,14 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
+
+            //capture bbox
+            var bbox = response.data.features[0].bbox
+            console.log(bbox, 'BOUNDING BOX')
+             this.western_lon = bbox[0]
+             this.northern_lat = bbox[1]
+             this.eastern_lon = bbox[2]
+             this.southern_lat = bbox[3]
            
          
             
@@ -596,6 +608,15 @@ export const useCounterStore = defineStore({
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+
+             //capture bbox
+             var bbox = response.data.features[0].bbox
+             console.log(bbox, 'BOUNDING BOX')
+              this.western_lon = bbox[0]
+              this.northern_lat = bbox[1]
+              this.eastern_lon = bbox[2]
+              this.southern_lat = bbox[3]
+            
          
             
           } catch (error) {
@@ -638,6 +659,15 @@ export const useCounterStore = defineStore({
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#b3b3cc','#c2fefe', '#2578fd']
+
+             //capture bbox
+             var bbox = response.data.features[0].bbox
+             console.log(bbox, 'BOUNDING BOX')
+              this.western_lon = bbox[0]
+              this.northern_lat = bbox[1]
+              this.eastern_lon = bbox[2]
+              this.southern_lat = bbox[3]
+            
          
             
           } catch (error) {
@@ -675,6 +705,15 @@ export const useCounterStore = defineStore({
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#0cefef','#d2e409', '#1eb301']
+
+             //capture bbox
+             var bbox = response.data.features[0].bbox
+             console.log(bbox, 'BOUNDING BOX')
+              this.western_lon = bbox[0]
+              this.northern_lat = bbox[1]
+              this.eastern_lon = bbox[2]
+              this.southern_lat = bbox[3]
+            
          
             
           } catch (error) {

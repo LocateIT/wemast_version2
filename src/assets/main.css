@@ -118,6 +118,7 @@ height: 90%;
 /* background-color: #a35a5a; */
 margin-left: 20px;
 overflow-y: scroll;
+overflow-x: hidden;
 position: relative;
 scrollbar-width: thin;
 scrollbar-color: steelblue white;

@@ -209,10 +209,6 @@
            
           </div>
           
-         
-          
-        
-           
           </div>
           <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
           
@@ -248,19 +244,19 @@
                       <table>
                         <tr>
                           <th>Western-most Longitude</th>
-                          <td>{{storeUserSelections.selected_region}}</td>
+                          <td>{{storeUserSelections.western_lon +'°'}}</td>
                         </tr>
                         <tr>
                           <th>Northern-most Latitude</th>
-                          <td>{{storeUserSelections.selected_cause}}</td>
+                          <td>{{storeUserSelections.northern_lat +'°'}}</td>
                         </tr>
                         <tr>
                           <th>Eastern-most Longitude</th>
-                          <td>{{storeUserSelections.crs}}</td>
+                          <td>{{storeUserSelections.eastern_lon +'°'}}</td>
                         </tr>
                         <tr>
                           <th>Southern-most Latitude</th>
-                          <td>{{storeUserSelections.crs}}</td>
+                          <td>{{storeUserSelections.southern_lat +'°'}}</td>
                         </tr>
                       </table>
                     </td>
@@ -339,10 +335,10 @@
                 </table>
           </div>
           <!-- <LineChart :height="250" :width="250" /> -->
-          <p class="partners" style="font-weight:bold; font-size:16px; position: relative; top:4vh; left: 12vw;" >Technical Partners</p>
+          <p class="partners" style="font-weight:bold; font-size:16px; position: relative; top:2vh; left: 12vw;" >Technical Partners</p>
           <div class="logos_container row">
             <!-- <SideNavLogos /> -->
-            <img src="../assets/logos/bottom.png" alt="" style="width: 600px; position: relative; top: 11vh; left: -8vw;">
+            <img src="../assets/logos/bottom.png" alt="" style="width: 600px; position: relative; top: 32vh; left: -8vw;">
           </div>
         </div>
       </div>
@@ -701,17 +697,17 @@ let barchart_options= {
           document.querySelector("#help").style.left = "4vw"
 
 
-          if(wmsLayer != null){
-              document.querySelector(".opacity").style.position = "absolute"
-            document.querySelector(".opacity").style.left = "50vw"
+          // if(wmsLayer != null){
+          //     document.querySelector(".opacity").style.position = "absolute"
+          //   document.querySelector(".opacity").style.left = "50vw"
             
-          }
+          // }
 
 
-          if(wmsCompareLayer != null){
-             document.querySelector(".swap").style.position = "absolute"
-            document.querySelector(".swap").style.left = "62vw"
-          }
+          // if(wmsCompareLayer != null){
+          //    document.querySelector(".swap").style.position = "absolute"
+          //   document.querySelector(".swap").style.left = "62vw"
+          // }
           
 
         } 
@@ -798,18 +794,18 @@ let barchart_options= {
             document.querySelector("#help").style.left = "-2vw"
 
 
-            if(wmsLayer == null){
+            // if(wmsLayer == null){
               
-            document.querySelector(".opacity").style.position = "absolute"
-            document.querySelector(".opacity").style.left = "67vw"
+            // document.querySelector(".opacity").style.position = "absolute"
+            // document.querySelector(".opacity").style.left = "67vw"
 
-            }
+            // }
        
 
-            if(wmsCompareLayer == null){
-               document.querySelector(".swap").style.position = "absolute"
-            document.querySelector(".swap").style.left = "78vw"
-            }
+            // if(wmsCompareLayer == null){
+            //    document.querySelector(".swap").style.position = "absolute"
+            // document.querySelector(".swap").style.left = "78vw"
+            // }
             
 
 

@@ -76,7 +76,7 @@ const { t } = useI18n({
   position: absolute;
   top: 2vh;
   z-index: 1000;
-  left: 58vw;
+  left: 74.2vw;
   
 }
 .WeMast_Dashboard_logos {

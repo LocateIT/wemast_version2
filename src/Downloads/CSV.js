@@ -14,7 +14,7 @@ function convertChartDataToCSV(args) {
       ctr = 0;
       keys.forEach(function(key) {
         if (ctr > 0) result += columnDelimiter;
-        if (process.env.DEV) console.log(item[key]," key csv ", key);
+       console.log(item[key]," key csv ", key);
         result += item[key];
         ctr++;
       });
@@ -24,13 +24,13 @@ function convertChartDataToCSV(args) {
   }
   
   export function downloadCSV(args) {
-    if (process.env.DEV) console.log("download csv data args", args);
+   console.log("download csv data args", args);
     let data, filename, link;
     let csv = "";
     csv += convertChartDataToCSV({
       data: args.data
     });
-    if (process.env.DEV) console.log("csv ",csv);
+    console.log("csv ",csv);
     if (csv === "") return;
     filename = args.filename || "chart-data.csv";
     if (!csv.match(/^data:text\/csv/i)) {

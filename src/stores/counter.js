@@ -93,6 +93,14 @@ export const useCounterStore = defineStore({
       
      },
 
+     stats_array: [ 
+      {
+        labels: [],
+        data_figures: []
+      }
+     
+     ],
+
      //lulc chart
      lulcChartData: {
       labels: [],
@@ -556,6 +564,12 @@ export const useCounterStore = defineStore({
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
 
+
+            //for new array
+            this.stats_array.labels = labels
+            this.stats_array.data_figures = figures
+
+
             //capture bbox
             var bbox = response.data.features[0].bbox
             console.log(bbox, 'BOUNDING BOX')
@@ -936,6 +950,7 @@ export const useCounterStore = defineStore({
     getRegionState: (state)=> state.visible_region,
     getIndicatorState: (state)=> state.visible_indicator,
     getLulcChartData: (state) => state.lulcChartData,
+    getStatsArray: (state) => state.stats_array,
     getSelectedLanguage: (state) => state.selected_language
   
     

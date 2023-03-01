@@ -186,7 +186,7 @@
             <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
-            
+            @click="downloadcsv"
             >
             <LulcPie class="lulc_chart" 
             :height="200"
@@ -2240,10 +2240,10 @@ geoposition.value = `${lat}, ${lon}`
   
   
   const setChartdata = computed ( () => {
-    console.log(storeUserSelections.lulcChartData, 'lulc chart data app')
-    chartData.value = storeUserSelections.lulcChartData
+    console.log(storeUserSelections.stats_array, 'lulc chart data app')
+    chartData.value = storeUserSelections.stats_array
     console.log(chartData.value.labels, 'chart data value')
-    return storeUserSelections.getLulcChartData
+    return storeUserSelections.getStatsArray
   
   })
   watch( setChartdata , () => {
@@ -2252,19 +2252,23 @@ geoposition.value = `${lat}, ${lon}`
   })
       // console.log(storeUserSelections.lulcChartData.labels, 'chart data app')
       
-      //  console.log("downloadcsv ", stats.value);
-      // console.log(typeof(chartData.value), 'chart data type')
-      // chartData.value.forEach((data, i) => {
-      //   csv_data.push({
-      //     Class: chartData.value.labels[i],
-      //     Color: `${chartData.value.datasets[0][i].backgroundColor.split("#")[1]}`,
-      //     "Area (Ha)": chartData.value.datasets[0].data
-      //   });
-      // });
-      // let name = `${basin.value}.csv`;
-      // downloadCSV({ filename: name, data: csv_data });
+       console.log("downloadcsv ", chartData.value);
+      // console.log(chartData.value, 'chart data type')
+      console.log(chartData.value.data_figures, 'datafigures')
+       var figures = chartData.value.data_figures
+      chartData.value.labels.map((data, i) => {
+       
+        csv_data.push({
+          Class: data,
+          // Color: `${chartData.value.datasets[i].backgroundColor.split("#")[1]}`,
+          "Area (Ha)": figures[i]
+        });
+      });
+ 
+      let name = `${basin.value}_${sub_indicator.value}_${year.value}.csv`;
+      downloadCSV({ filename: name, data: csv_data });
     }
-    downloadcsv()
+    
 
   const setLoadingState= computed( () => {
     return storeUserSelections.getLoadingState

@@ -1,6 +1,6 @@
 <template>
     <div>
-    <PieChart 
+    <DoughnutChart 
     :chartData="chartData"
     :options="options"
         
@@ -15,7 +15,7 @@
   
   <script >
   import { defineComponent, ref, computed, watch, toRef, onMounted } from 'vue';
-  import { PieChart } from 'vue-chart-3';
+  import { DoughnutChart } from 'vue-chart-3';
   import { Chart, registerables } from "chart.js";
 
 //   import { useCounterStore } from '@/stores/counter';
@@ -27,7 +27,7 @@
   
   export default defineComponent({
     
-    components: { PieChart },
+    components: { DoughnutChart },
     props: {
 
       label: {

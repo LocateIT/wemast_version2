@@ -683,7 +683,7 @@ export const useCounterStore = defineStore({
         
         }
 
-        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Status') {
+        if(this.selected_sub_indicator === 'Vegetation Cover' ) {
           try {
           
            
@@ -702,6 +702,7 @@ export const useCounterStore = defineStore({
     
             var labels = Object.keys(newObj)
             console.log(labels, 'stats labels')
+            // labels = ['Water Areas', 'Dry areas', 'Wetness area']
             this.lulcChartData.labels = labels
            
           
@@ -710,7 +711,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#0cefef','#d2e409', '#1eb301']
+            this.lulcChartData.datasets[0].backgroundColor = ['#ffbb33','#1eb301', '#88ff4d']
 
              //capture bbox
              var bbox = response.data.features[0].bbox

@@ -872,3 +872,9 @@ title{
 #bar-chart{
   height:250px !important;
 }
+.analysis_logos{
+  width: 600px; position: relative; top: 7vh; left: -8vw;
+}
+.metadata_logos{
+  width: 600px; position: relative; top: 32vh; left: -8vw;
+}

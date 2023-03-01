@@ -182,6 +182,12 @@
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
             <div class="chart_title">{{ `${basin} ${sub_indicator}-${year} (Pie chart)` }}</div>
+            <img src="mapIcons/download_map.svg" alt="" class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;">
+            <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
+            alt="" class="chart_download_png" 
+            style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
+            
+            >
             <LulcPie class="lulc_chart" 
             :height="200"
             :width="300"
@@ -199,6 +205,12 @@
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
             <div class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+            <img src="mapIcons/download_map.svg" alt="" class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;">
+            <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
+            alt="" class="chart_download_png" 
+            style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
+            @click="downloadCSV"
+            >
             <div id="bar">
               <LulcBar  class="lulc_bar_chart" 
             :height="200"
@@ -338,7 +350,8 @@
           <p class="partners" style="font-weight:bold; font-size:16px; position: relative; top:2vh; left: 12vw;" >Technical Partners</p>
           <div class="logos_container row">
             <!-- <SideNavLogos /> -->
-            <img src="../assets/logos/bottom.png" alt="" style="width: 600px; position: relative; top: 32vh; left: -8vw;">
+            <img src="../assets/logos/bottom.png" alt="" :class="{ 'analysis_logos' : (analysis_swap_toggle === 'data_analysis'),
+             'metadata_logos' : (analysis_swap_toggle === 'metadata') }">
           </div>
         </div>
       </div>
@@ -444,6 +457,7 @@ import { saveAs } from "file-saver";
   import axios from 'axios'
   import LulcPie from '../components/Charts/LulcPie.vue'
   import LulcBar from '../components/Charts/LulcBar.vue'
+  import { downloadCSV } from '../Downloads/CSV'
   
 
   
@@ -499,7 +513,8 @@ import { saveAs } from "file-saver";
   let geoposition = ref(null)
 
   let geometry = {}
-  let chartData = ref({})
+  let chartData = ref([])
+  let stats = ref({})
 
   let lulcChartData = {
       labels: [],
@@ -2057,6 +2072,103 @@ geoposition.value = `${lat}, ${lon}`
   }
 
 
+
+//   const downloadCSV = () => {
+//     // const data = storeUserSelections.lulcChartData
+
+//     const download = function (data) {
+ 
+//  // Creating a Blob for having a csv file format
+//  // and passing the data with type
+//  const blob = new Blob([data], { type: 'text/csv' });
+
+//  // Creating an object for downloading url
+//  const url = window.URL.createObjectURL(blob)
+
+//  // Creating an anchor(a) tag of HTML
+//  const a = document.createElement('a')
+
+//  // Passing the blob downloading url
+//  a.setAttribute('href', url)
+
+//  // Setting the anchor tag attribute for downloading
+//  // and passing the download file name
+//  a.setAttribute('download', 'download.csv');
+
+//  // Performing a download with click
+//  a.click()
+// }
+
+// const csvmaker = function (data) {
+ 
+//  // Empty array for storing the values
+// var csvRows = [];
+
+//  // Headers is basically a keys of an
+//  // object which is id, name, and
+//  // profession
+//  const headers = Object.keys(data);
+
+//  // As for making csv format, headers
+//  // must be separated by comma and
+//  // pushing it into array
+//  csvRows.push(headers.join(','));
+
+//  // Pushing Object values into array
+//  // with comma separation
+//  const values = Object.values(data).join(',');
+//  csvRows.push(values)
+
+//  // Returning the array joining with new line
+//  return csvRows.join('\n')
+// }
+
+// const get = async function () {
+ 
+//  // JavaScript object
+// //  const data = storeUserSelections.lulcChartData
+// const data = {
+//   'Agricultur': 6172455,
+// 'Bareland': 85003,
+// 'Built-Up': 133314,
+// 'Forest': 11860205,
+// 'Grassland': 3252977,
+// 'Shrubland': 23485568,
+// 'Water': 220571,
+// 'Wetland': 52928
+        
+//     }
+
+//  const csvdata = csvmaker(data);
+//  download(csvdata);
+// }
+
+// //  document.getElementById('chart_csv')
+// //           .addEventListener('click');
+
+//         //   document
+//         // .getElementById("chart_csv")
+//         // .addEventListener("click", (e) => {
+//         //   console.log("clicked csv download ");
+          
+//         //  get();
+//         // });
+
+//         var el = document.getElementById('chart_csv');
+//         if(el){
+//           el.addEventListener('click', (e) => {
+//             console.log('clicked csv')
+
+//             get()
+//           } );
+//         }
+
+//   }
+  
+
+ 
+
+
     //   const getStatistics = async () => {
     //   if(sub_indicator.value === 'Land Cover') {
     //     try {
@@ -2113,6 +2225,47 @@ geoposition.value = `${lat}, ${lon}`
   
   //watch state for loading
   
+  
+
+ const downloadcsv = () => {
+      let csv_data = [];
+
+      const getChartData= () => {
+    var selectedchartdata= storeUserSelections.getLulcChartData
+   console.log(selectedchartdata, 'chart data app')
+  // chartData.value = selectedchartdata
+  // console.log(chartData.value, 'chartData.value')
+  
+  }
+  
+  
+  const setChartdata = computed ( () => {
+    console.log(storeUserSelections.lulcChartData, 'lulc chart data app')
+    chartData.value = storeUserSelections.lulcChartData
+    console.log(chartData.value.labels, 'chart data value')
+    return storeUserSelections.getLulcChartData
+  
+  })
+  watch( setChartdata , () => {
+    getChartData()
+    
+  })
+      // console.log(storeUserSelections.lulcChartData.labels, 'chart data app')
+      
+      //  console.log("downloadcsv ", stats.value);
+      // console.log(typeof(chartData.value), 'chart data type')
+      // chartData.value.forEach((data, i) => {
+      //   csv_data.push({
+      //     Class: chartData.value.labels[i],
+      //     Color: `${chartData.value.datasets[0][i].backgroundColor.split("#")[1]}`,
+      //     "Area (Ha)": chartData.value.datasets[0].data
+      //   });
+      // });
+      // let name = `${basin.value}.csv`;
+      // downloadCSV({ filename: name, data: csv_data });
+    }
+    downloadcsv()
+
   const setLoadingState= computed( () => {
     return storeUserSelections.getLoadingState
   })

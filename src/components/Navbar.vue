@@ -76,12 +76,12 @@ const { t } = useI18n({
   position: absolute;
   top: 2vh;
   z-index: 1000;
-  left: 74.2vw;
+  left: 72vw;
   
 }
 .WeMast_Dashboard_logos {
  
- height: 45px;
+ height: 50px;
 
  margin: 2px;
 

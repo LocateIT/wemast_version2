@@ -49,7 +49,7 @@ export const useCompareStore = defineStore({
           this.sub_indicator_list = ['Water Quality', 'Soil Moisure Index']
         }
         if(this.selected_indicator === 'Resiliance' ){
-          this.sub_indicator_list = ['Burnt Area', 'Prec Index', 'Undulation']
+          this.sub_indicator_list = ['Burnt Area', 'Precipitation Index', 'Undulation']
         }
       },
       fetchYearList(){

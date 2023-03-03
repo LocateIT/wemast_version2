@@ -217,9 +217,15 @@ export const useCounterStore = defineStore({
       }
     },
     fetchYearList(){
-      this.year_list = ["1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006",
+      if(this.selected_satellite === 'LANDSAT') {
+        this.year_list = ["1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006",
       "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
         '2018','2019','2020', '2021', "2022"]
+      }
+      if(this.selected_satellite === 'SENTINEL') {
+        this.year_list = ["2016","2017", '2018','2019','2020', '2021', "2022"]
+      }
+      
     },
     fetchSeasonsList(){
       
@@ -626,6 +632,11 @@ export const useCounterStore = defineStore({
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
 
+
+             //for new array
+             this.stats_array.labels = labels
+             this.stats_array.data_figures = figures
+
              //capture bbox
              var bbox = response.data.features[0].bbox
              console.log(bbox, 'BOUNDING BOX')
@@ -678,6 +689,10 @@ export const useCounterStore = defineStore({
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#b3b3cc','#c2fefe', '#2578fd']
 
+             //for new array
+             this.stats_array.labels = labels
+             this.stats_array.data_figures = figures
+
              //capture bbox
              var bbox = response.data.features[0].bbox
              console.log(bbox, 'BOUNDING BOX')
@@ -726,6 +741,10 @@ export const useCounterStore = defineStore({
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#ffbb33','#1eb301', '#88ff4d']
+
+             //for new array
+             this.stats_array.labels = labels
+             this.stats_array.data_figures = figures
 
              //capture bbox
              var bbox = response.data.features[0].bbox

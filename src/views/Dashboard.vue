@@ -183,12 +183,14 @@
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
             <div class="chart_title">{{ `${basin} ${sub_indicator}-${year} (Pie chart)` }}</div>
             <img src="mapIcons/download_map.svg" alt="" 
+            title="Download Png"
             class="chart_download_png" 
             style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="chart_png"
             >
             <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
+            title="Download CSV"
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
@@ -213,11 +215,15 @@
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
             <div class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
-            <img src="mapIcons/download_map.svg" alt="" class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;">
+            <img src="mapIcons/download_map.svg" alt="" title="Download Png"
+            class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
+            @click="bar_chart_png"
+            >
             <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
+            title="Download CSV"
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
-            @click="downloadCSV"
+            @click="downloadcsv"
             >
             <div id="bar">
               <LulcBar  class="lulc_bar_chart" 
@@ -2058,6 +2064,7 @@ geoposition.value = `${lat}, ${lon}`
 
 
  const downloadcsv = () => {
+ 
       let csv_data = [];
 
       const getChartData= () => {
@@ -2097,6 +2104,7 @@ geoposition.value = `${lat}, ${lon}`
  
       let name = `${basin.value}_${sub_indicator.value}_${year.value}.csv`;
       downloadCSV({ filename: name, data: csv_data });
+      
     }
 
 
@@ -2128,6 +2136,36 @@ geoposition.value = `${lat}, ${lon}`
       }, 1500);
 
     }
+
+    const bar_chart_png =  () => {
+  
+  loading.value = true;
+      //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
+        
+      //   saveAs(blob, `${basin.value}.png`);
+
+      // });
+ 
+
+      let mapElement = document.getElementById("bar-chart");
+      
+      setTimeout(async () => {
+        const dataURL = await domtoimage.toPng(mapElement, {
+          width: mapElement.width,
+          height: mapElement.height
+        });
+
+        let link = document.createElement("a");
+        link.setAttribute("href", dataURL);
+        link.setAttribute("download", `${basin.value}_${sub_indicator.value}_${year.value}.png`);
+        document.body.appendChild(link); // Required for FF
+        link.click();
+        document.body.removeChild(link);
+       loading.value = false
+      }, 1500);
+
+    }
+    
     
 
   const setLoadingState= computed( () => {

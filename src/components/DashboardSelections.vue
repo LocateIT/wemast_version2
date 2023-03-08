@@ -35,19 +35,26 @@
         </div>
 
         <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
-        'select_year2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ), 
+        'select_year2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+        || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
+        || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ), 
         'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
-        v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
+        v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+        || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
          || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
+         || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'
         || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Season</p>
 
         <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
-        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
+        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'
+         || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
+         || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'),
         'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
           v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
           || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
+          || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'
           || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
           || storeUserSelections.selected_parameter === 'Wetland Status'">
           <CustomSelectSeason />
@@ -78,7 +85,7 @@
         <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
         ||storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
          'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
-         'burnt_request':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
+         'burnt_request':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'    || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'),
          'request_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),

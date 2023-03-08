@@ -1937,6 +1937,43 @@ changeOpacity()
 }
  }
  
+ const addFirmsLayer = () => {
+  if(sub_indicator.value === 'Burnt Area FIRMS') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/FIRMS_${season.value}/wms?`, {
+     pane: 'pane400',
+     layers: `FIRMS_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_firms`,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+console.log(wmsLayer.value, 'wms')
+
+
+
+
+changeOpacity()
+
+}
+ }
   //function to request wms
   
   const fetchWmsData = () => {
@@ -1960,6 +1997,7 @@ changeOpacity()
   addVegCover()
   addWetlandStatus()
   addBurntLayer()
+  addFirmsLayer()
 
   //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {

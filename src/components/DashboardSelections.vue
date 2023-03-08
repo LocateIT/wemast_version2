@@ -75,13 +75,14 @@
 
 
 
-        <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
+        <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+        ||storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
          'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
          'burnt_request':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
          'request_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
-         'request1':(
+         'request1':( storeUserSelections.selected_sub_indicator === '' || storeUserSelections.selected_sub_indicator === 'Land Cover' ||
          storeUserSelections.selected_sub_indicator === 'Burnt Area MODIS' || 
          storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 

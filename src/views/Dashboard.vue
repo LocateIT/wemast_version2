@@ -1974,6 +1974,44 @@ changeOpacity()
 
 }
  }
+
+ const addSMILayer = () => {
+  if(sub_indicator.value === 'Soil Moisure Index') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
+     pane: 'pane400',
+     layers: `SMI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_smi`,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+console.log(wmsLayer.value, 'wms')
+
+
+
+
+changeOpacity()
+
+}
+ }
   //function to request wms
   
   const fetchWmsData = () => {
@@ -1998,6 +2036,7 @@ changeOpacity()
   addWetlandStatus()
   addBurntLayer()
   addFirmsLayer()
+  addSMILayer()
 
   //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {

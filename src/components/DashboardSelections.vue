@@ -35,17 +35,19 @@
         </div>
 
         <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
-        'select_year2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'), 
+        'select_year2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ), 
         'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
-        v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
+        v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
+         || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
         || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Season</p>
 
         <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
-        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
+        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
         'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
           v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+          || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
           || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
           || storeUserSelections.selected_parameter === 'Wetland Status'">
           <CustomSelectSeason />
@@ -75,11 +77,12 @@
 
         <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
          'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
+         'burnt_request':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
          'request_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
-         'request1':(storeUserSelections.selected_sub_indicator !== 'Precipitation Index' ||
-         storeUserSelections.selected_sub_indicator === 'Burnt Area' || 
+         'request1':(
+         storeUserSelections.selected_sub_indicator === 'Burnt Area MODIS' || 
          storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 
          <p class="search_location" v-if="storeUserSelections.selected_basin != ''">Search Location</p>
@@ -87,7 +90,7 @@
           
          </div>
 
-        <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" -->
+        <!-- <button type="button">Upload Shapefile</button> "$emit('increment-btn', 1)" storeUserSelections.selected_sub_indicator !== 'Precipitation Index' || --> 
         
 
     </div>
@@ -248,6 +251,22 @@ const fetchRegion = () => {
 }
 
 .request{
+    position: absolute;
+  top: 4vh;
+  left: 46vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+
+
+.burnt_request{
     position: absolute;
   top: 4vh;
   left: 46vw;

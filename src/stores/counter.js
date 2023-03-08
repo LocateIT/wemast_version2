@@ -213,11 +213,11 @@ export const useCounterStore = defineStore({
         this.sub_indicator_list = ['Water Quality', 'Soil Moisure Index']
       }
       if(this.selected_indicator === 'Resiliance' ){
-        this.sub_indicator_list = ['Burnt Area', 'Precipitation Index', 'Undulation']
+        this.sub_indicator_list = ['Burnt Area MODIS', 'Burnt Area FIRMS', 'Precipitation Index', 'Undulation']
       }
     },
     fetchYearList(){
-      if(this.selected_sub_indicator === 'Precipitation Index' || this.selected_sub_indicator === 'Burnt Area'){
+      if(this.selected_sub_indicator === 'Precipitation Index' || this.selected_sub_indicator === 'Burnt Area MODIS'){
         this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
           '2018','2019','2020', '2021', "2022"]
@@ -266,7 +266,7 @@ export const useCounterStore = defineStore({
 
       }
       if(this.selected_sub_indicator === 'Water Quality'){
-        this.parameter_list = ['Nitrogen Content', 'Turbidity', 'Sus Sediments']
+        this.parameter_list = ['Turbidity', 'Sus Sediments']
       }
 
     },
@@ -623,7 +623,7 @@ export const useCounterStore = defineStore({
 
 
 
-        if(this.selected_sub_indicator === 'Prec Index') {
+        if(this.selected_sub_indicator === 'Precipitation Index') {
           try {
           
             // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
@@ -781,11 +781,11 @@ export const useCounterStore = defineStore({
               this.southern_lat = bbox[3]
 
               if(satellite === 'SENTINEL'){
-                this.resolution = '10'
+                this.resolution = '100'
               }
              
               if(satellite === 'LANDSAT'){
-                this.resolution = '300'
+                this.resolution = '100'
               }
          
             

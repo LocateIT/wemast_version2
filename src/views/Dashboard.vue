@@ -1672,6 +1672,8 @@ const ndvi_style = () => {
   
  }
 
+
+
  const addLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {
   
@@ -1895,6 +1897,45 @@ statuslegendContent()
 changeOpacity()
 }
  }
+
+
+ const addBurntLayer = () => {
+  if(sub_indicator.value === 'Burnt Area') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/FIRE/wms?", {
+     pane: 'pane400',
+     layers: `FIRE:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_fire`,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+console.log(wmsLayer.value, 'wms')
+
+
+
+
+changeOpacity()
+
+}
+ }
  
   //function to request wms
   
@@ -1918,6 +1959,7 @@ changeOpacity()
   addWetlandExtent()
   addVegCover()
   addWetlandStatus()
+  addBurntLayer()
 
   //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {

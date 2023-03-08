@@ -35,17 +35,17 @@
         </div>
 
         <p :class="{'select_season_satellite ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
-        'select_year2':(storeUserSelections.selected_sub_indicator === 'Prec Index'), 
+        'select_year2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'), 
         'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
-        v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
+        v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
         || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Season</p>
 
         <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
-        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
+        'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
         'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
-          v-if="storeUserSelections.selected_sub_indicator === 'Prec Index' 
+          v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
           || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
           || storeUserSelections.selected_parameter === 'Wetland Status'">
           <CustomSelectSeason />
@@ -61,11 +61,11 @@
 
         <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
          'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Prec Index')}"
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index')}"
          v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Satellite</p>
         <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Prec Index')}" 
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index')}" 
         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">
             <CustomSelectSatellite />
         </div> 
@@ -73,12 +73,12 @@
 
 
 
-        <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index'),
+        <button id="request_layers" :class="{'request':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
          'request_satellite':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
          'request_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
-         'request1':(storeUserSelections.selected_sub_indicator !== 'Prec Index' ||
+         'request1':(storeUserSelections.selected_sub_indicator !== 'Precipitation Index' ||
          storeUserSelections.selected_sub_indicator === 'Burnt Area' || 
          storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
 

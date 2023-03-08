@@ -49,56 +49,7 @@
 
          </div>
          
-         <!-- map controls to be returned if need be -->
-        <!-- <div class="map_controls"  > 
-      
-         <img  title="Download tif" id="map_icons" src="/mapIcons/download_tif.svg" alt="" class="download_tiff">
-         <img title="Download Map" id="map_icons" src="/mapIcons/download_map.svg" alt="" class="download_map">
-         <img title="Measure Distance" id="map_icons" src="/mapIcons/ruler.svg" alt="" class="measure">
-         <img title="" id="map_icons" src="/mapIcons/layers-24px.svg" alt="" class="layers"
-          @mouseover="base_map_ctrl_selections = true"
-          @mouseleave="handle_baseLayers">
-         <img title="Draw Polygon" id="map_icons" src="/mapIcons/square.svg" alt="" class="draw_polygon">
-         <img title="Zoom in" id="map_icons" src="/mapIcons/add-24px.svg" alt="" class="zoom_in" @click="zoom_in">
-         <img title="Zoom out" id="map_icons" src="/mapIcons/remove-24px.svg" alt="" class="zoom_out" @click="zoom_out">
-         <img title="Help" id="map_icons" src="/mapIcons/help.svg" alt="" class="help">
-        </div> -->
-  
-        
-        <!-- <div
-          class="base_map_ctrl_selections"
-          v-if="base_map_ctrl_selections"
-          @mouseover="
-            (base_map_ctrl_selections = true), (base_map_ctrl_cliked = true)
-          "
-          @mouseleave="
-            (base_map_ctrl_selections = false), (base_map_ctrl_cliked = false)
-          "
-        >
-          <div v-for="base_map in Object.keys(baseMaps)" :key="base_map">
-            <div class="base_map" @click="change_base_map(base_map)">
-              <div class="base_map_name">{{ base_map }}</div>
-            </div>
-          </div>
-        </div> -->
-  
-     
-
-  <!-- will revisit -->
-      <!-- leaflet side bar :class="{'request':(storeUserSelections.selected_sub_indicator === 'Prec Index') -->
-      <!-- <div class="sideview" v-if="sidenavigationbar" :class="{sidenavopen: sidenavigationbar}">
-        <sideNavigationbar  />
-        
-      
-      </div> -->
-  
-      <!-- sidenav goes here -->
-      <!-- <div class="" @click="sidenavigationbar = !sidenavigationbar">
-        <img class="open_sidebar" src="/uiIcons/drawer.svg" alt="">
-      </div> -->
-
-
-
+    
           <!-- leaflet side bar -->
     <!-- <div class="side-bar-view"> -->
       <SideBarView />
@@ -168,7 +119,7 @@
               <label style="margin-top:40px; font-weight: 700; font-size:14px">Summary</label>
               <br>
               {{ storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
-              storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`: 
+              storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`: 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
@@ -250,7 +201,7 @@
                     <th>Description</th>
       
                     <td>{{
-                     storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`:
+                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`:
                      storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
@@ -312,7 +263,7 @@
                   <tr>
                     <th>Tags</th>
                     <td> {{storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season  + ' ' +'season' : 
-                     storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_theme}, ${storeUserSelections.selected_season}  season`:
+                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_theme}, ${storeUserSelections.selected_season}  season`:
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
                    storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season + ' ' +'season': ''}}</td>
@@ -343,7 +294,7 @@
       
                     <td>{{
                    storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_theme:
-                   storeUserSelections.selected_sub_indicator === 'Prec Index' ? `${storeUserSelections.prec_theme}_${storeUserSelections.selected_season} season`:
+                   storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_theme}_${storeUserSelections.selected_season} season`:
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme:
@@ -754,39 +705,7 @@ let barchart_options= {
         show_sidenav.value = false;
 
 
-        // if(show_sidenav.value === false){
-        //   document.querySelector("#download_tiff").style.position = "absolute"
-        //   document.querySelector("#download_tiff").style.left = "-2vw"
-
-          
-        //   document.querySelector("#download_map").style.position = "absolute"
-        //   document.querySelector("#download_map").style.left = "-2vw"
-
-         
-        //   document.querySelector("#measure").style.position = "absolute"
-        //   document.querySelector("#measure").style.left = "-2vw"
-
-         
-        //   document.querySelector("#wemast_base_layers").style.position = "absolute"
-        //   document.querySelector("#wemast_base_layers").style.left = "-2vw"
-
-         
-        //   document.querySelector("#draw_polygon").style.position = "absolute"
-        //   document.querySelector("#draw_polygon").style.left = "-2vw"
-
-          
-        //   document.querySelector("#zoom_in").style.position = "absolute"
-        //   document.querySelector("#zoom_in").style.left = "-2vw"
-
-         
-        //   document.querySelector("#zoom_out").style.position = "absolute"
-        //   document.querySelector("#zoom_out").style.left = "-2vw"
-
-         
-        //   document.querySelector("#help").style.position = "absolute"
-        //   document.querySelector("#help").style.left = "-2vw"
-
-        // }
+        
         open_nav();
       }
   
@@ -796,7 +715,7 @@ let barchart_options= {
        
         show_sidenav.value= true;
 
-        // document.querySelector("#download_tiff").style.backgroundColor = "absolute"
+     
         document.querySelector("#download_tiff").style.left = "-2vw"
 
           
@@ -828,19 +747,6 @@ let barchart_options= {
             document.querySelector("#help").style.left = "-2vw"
 
 
-            // if(wmsLayer == null){
-              
-            // document.querySelector(".opacity").style.position = "absolute"
-            // document.querySelector(".opacity").style.left = "67vw"
-
-            // }
-       
-
-            // if(wmsCompareLayer == null){
-            //    document.querySelector(".swap").style.position = "absolute"
-            // document.querySelector(".swap").style.left = "78vw"
-            // }
-            
 
 
       }
@@ -1087,10 +993,7 @@ let barchart_options= {
               "wemast_base_layers",
             ].includes(id) && show_sidenav == true
           ){
-            // document.getElementById(`${id}`).style.position =
-            //     "absolute";
-            //     document.getElementById(`${id}`).style.left =
-            //     "40vw";
+           
             console.log('sidenav is open')
 
           }
@@ -1113,10 +1016,10 @@ const download_tiff = () => {
   if(sub_indicator.value === 'Land Cover' ) {
     url = `http://66.42.65.87:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
-  if(sub_indicator.value === 'Prec Index' && season.value === 'WET' ){
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ){
     url = `http://66.42.65.87:8080/geoserver/SPI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
-  if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ){
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ){
     url = `http://66.42.65.87:8080/geoserver/SPI_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent'){
@@ -1331,40 +1234,7 @@ const screenshot =  () => {
       // });
   
   
-      //trial for custom shapefile upload
-      // var  drawControl, drawLayers;
-      // drawLayers = new L.FeatureGroup();
-      // drawControl = new L.Control.DrawPlus({
-      //     position: 'topright',		
-      //     draw: {
-      //         circle: false,
-      //         polyline: false,
-      //         shapefile: {
-      //             shapeOptions:{
-      //                 color: 'black',
-      //                 weight: 3,
-      //                 opacity: 1,
-      //                 fillOpacity: 0					
-      //             }
-      //         }, //Turn on my custom extension
-      //         geojson: true,   //Could have options if needed.
-      //     },
-      //     edit: {
-      //         featureGroup: drawLayers,
-      //         edit: false
-      //     }
-      // });
-      
-      // map.addLayer(drawLayers);
-      // map.addControl(drawControl);
-      
-      // map.on(L.Draw.Event.CREATED, function(e){
-      //     drawLayers.addLayer(e.layer);
-      // });
-      
-      // drawLayers.on('click',function(e){
-      //     console.log(e.layer);
-      // });
+     
 
       closeNav();
 
@@ -1538,15 +1408,15 @@ const screenshot =  () => {
 
                            
       const provider = new OpenStreetMapProvider();
-// search_marker.value = {
-//     // optional: L.Marker    - default L.Icon.Default
-//     icon: new L.icon({
-//       iconUrl: "/src/assets/plant.svg",
-//       iconSize: [40, 40],
-//       iconAnchor: [15,15]
-//     }),
-//     draggable: false,
-//   }
+search_marker.value = {
+    // optional: L.Marker    - default L.Icon.Default
+    icon: new L.icon({
+      iconUrl: "/src/assets/plant.svg",
+      iconSize: [40, 40],
+      iconAnchor: [15,15]
+    }),
+    draggable: false,
+  }
 
 
 
@@ -1742,17 +1612,17 @@ map.addControl(search_control.value );
     }
     }
 const prec_style = () => {
-    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Prec Index' ){
+    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Precipitation Index' ){
       styles.value = 'cuvelai_spi'
     }
   
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Prec Index' ){
+    if(basin.value === 'Limpopo' && sub_indicator.value === 'Precipitation Index' ){
       styles.value = 'limpopo_spi'
     }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Prec Index' ){
+    if(basin.value === 'Zambezi' && sub_indicator.value === 'Precipitation Index' ){
       styles.value = 'zambezi_spi'
     }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'Prec Index' ){
+    if(basin.value === 'Okavango' && sub_indicator.value === 'Precipitation Index' ){
       styles.value = 'okavango_spi'
     }
   }
@@ -1851,7 +1721,7 @@ changeOpacity()
  }
   
  const addPrecIndexWet = () => {
-  if(sub_indicator.value === 'Prec Index' && season.value === 'WET' ) {
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
@@ -1885,7 +1755,7 @@ changeOpacity()
  }
 
  const addPrecIndexDry = () => {
-  if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
@@ -2615,7 +2485,7 @@ changeOpacity()
  }
   
  const addComparePrecIndexWet = () => {
-  if(sub_indicator.value === 'Prec Index' && season.value === 'WET' ) {
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
@@ -2650,7 +2520,7 @@ changeOpacity()
  }
 
  const addComparePrecIndexDry = () => {
-  if(sub_indicator.value === 'Prec Index' && season.value === 'DRY' ) {
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;

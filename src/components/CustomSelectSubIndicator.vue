@@ -63,7 +63,7 @@ left:-0.52vw;
           position: relative;
           z-index: 1;
           height: 35px;
-width: 180px;
+width: 185px;
 border-radius: 30px;
 cursor: pointer;
       }

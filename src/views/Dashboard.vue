@@ -1700,7 +1700,7 @@ wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/
      format: 'image/png',
      transparent: true,
      opacity:1.0
-     // CQL_FILTER: "Band1='1.0'"
+     
      
     
 });
@@ -1900,7 +1900,7 @@ changeOpacity()
 
 
  const addBurntLayer = () => {
-  if(sub_indicator.value === 'Burnt Area') {
+  if(sub_indicator.value === 'Burnt Area MODIS') {
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;

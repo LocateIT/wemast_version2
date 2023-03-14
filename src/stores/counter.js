@@ -749,12 +749,51 @@ export const useCounterStore = defineStore({
             var season = this.selected_season
             var satellite = this.selected_satellite
     
-            const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=${satellite}_${season}_STATS:${year}&outputFormat=application/json&CQL_FILTER=Name=%27${basin}%27`
+            const response = await axios.get(`http://66.42.65.87:8080/geoserver/NDVI_${season}_ZONE2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=NDVI_${season}_ZONE2%3A${year}&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
             );
-            console.log(response.data.features[0].properties,'stats response')
+            console.log(response.data.features, 'NEW NDVI STATS')
+          //   var ids_object = response.data.features
+
+          //   for(let item of Object.keys(ids_object)) {
+          //     // if( myObject[item] == "John" ) {
+          //     //     myObject[item] = 'Salvador'
+          //     // }
+          //   var names =  ids_object.map( (item) => {
+          //     // var year = this.selected_year
+          //     // item.id = `${year}`
+              
+          //     if(item.id.includes('.1')){
+          //       item.id = 'Zambezi'
+          //      }
+          //      if(item.id.includes('.2')){
+          //       item.id = 'Limpopo'
+          //      }
+
+          //      if(item.id.includes('.3')){
+          //       item.id = 'Okavango'
+          //      }
+          //      if(item.id.includes('.4')){
+          //       item.id = 'Cuvelai'
+          //      }
+                
+          //       return item.id
+          //     })
+
+          //     // console.log(names, 'names zambezi')
+              
+             
+              
+
+          // }
+          // console.log(ids_object)
+           
+       
+           
+        
+            console.log(response.data.features[0].properties,'stats response')  
             var obj = response.data.features[0].properties
             
-            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('255') && !key.includes('No Data') && !key.includes('Name') && !key.includes('0')))
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('255') && !key.includes('No Data') && !key.includes('Name') && !key.includes('count')))
             console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
@@ -770,7 +809,7 @@ export const useCounterStore = defineStore({
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#ffbb33','#1eb301', '#88ff4d']
 
-             //for new array
+            //  //for new array for stats download
              this.stats_array.labels = labels
              this.stats_array.data_figures = figures
 

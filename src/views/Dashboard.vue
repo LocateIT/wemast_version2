@@ -132,7 +132,7 @@
             
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-            <div class="chart_title">{{ `${basin} ${sub_indicator}-${year} (Pie chart)` }}</div>
+            <div class="chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <img src="mapIcons/download_map.svg" alt="" 
             title="Download Png"
             class="chart_download_png" 
@@ -145,7 +145,7 @@
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
-            <div id="chart_pie">
+            <div id="chart_pie" v-if="sub_indicator != 'Vegetation Cover'">
               <LulcPie class="lulc_chart" 
             :height="200"
             :width="300"
@@ -176,11 +176,20 @@
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
-            <div id="bar">
+            <div id="bar" :class=" sub_indicator === 'Vegetation Cover'
+                            ? 'bar_veg_cover'
+                            : '' ">
               <LulcBar  class="lulc_bar_chart" 
             :height="200"
             :chartData="storeUserSelections.lulcChartData"
             :options="barchart_options"
+            />
+
+            <LulcLine  class="lulc_line_chart" v-if="wmsTimeseriesLayer != null"
+            
+            :chartData="lineChartData"
+            :options="barchart_options"
+            
             />
             </div>
            
@@ -426,6 +435,7 @@ import { saveAs } from "file-saver";
   import axios from 'axios'
   import LulcPie from '../components/Charts/LulcPie.vue'
   import LulcBar from '../components/Charts/LulcBar.vue'
+  import LulcLine from '../components/Charts/LulcLine.vue'
   import { downloadCSV } from '../Downloads/CSV'
   
 
@@ -480,27 +490,28 @@ import { saveAs } from "file-saver";
   let controls_container = ref(null)
   let search_control = ref(null)
   let geoposition = ref(null)
+  let wmsTimeseriesLayer = ref(null)
+  let year_2013 = ref(null)
+  let year_2014 = ref(null)
+  let year_2015 = ref(null)
+  let year_2016 = ref(null)
+  let year_2017 = ref(null)
+  let year_2018 = ref(null)
+  let year_2019 = ref(null)
+  let year_2020 = ref(null)
+  let year_2021 = ref(null)
+  let year_2022 = ref(null)
 
   let geometry = {}
   let chartData = ref([])
   let stats = ref({})
 
-  let lulcChartData = {
+  let lineChartData = {
       labels: [],
       datasets: [
         {
           data: [],
-          backgroundColor: [
-            "green",
-            "#fff1d2",
-            "#d2efff",
-            "#bd6860",
-            "orange",
-            "#55ff00",
-            '#ccc',
-            '#4dd7ff'
-          ],
-          barThickness: 40,
+          
        
        
         },
@@ -1270,105 +1281,12 @@ const screenshot =  () => {
   
   })//OnMounted end
 
-  L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
-    
-    onAdd: function (map) {
-      // Triggered when the layer is added to a map.
-      //   Register a click listener, then do all the upstream WMS things
-      L.TileLayer.WMS.prototype.onAdd.call(this, map);
-      map.on('click' , this.getFeatureInfo, this);
-    },
-    
-    onRemove: function (map) {
-      // Triggered when the layer is removed from a map.
-      //   Unregister a click listener, then do all the upstream WMS things
-      L.TileLayer.WMS.prototype.onRemove.call(this, map);
-      map.off('click', this.getFeatureInfo, this);
-    },
-    
-    getFeatureInfo: function (evt) {
-      // Make an AJAX request to the server and hope for the best
-      var url = this.getFeatureInfoUrl(evt.latlng),
-          showResults = L.Util.bind(this.showGetFeatureInfo, this);
-      $.ajax({
-        url: url,
-        success: function (data, status, xhr) {
-          var err = typeof data === 'string' ? null : data;
-          showResults(err, evt.latlng, data);
-        },
-        error: function (xhr, status, error) {
-          showResults(error);  
-        }
-      });
-    },
-    
-    getFeatureInfoUrl: function (latlng) {
-      // Construct a GetFeatureInfo request URL given a point
-      var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
-      
-          size = this._map.getSize(),
-          
-          params = {
-            request: 'GetFeatureInfo',
-            service: 'WMS',
-            srs: 'EPSG:4326',
-            styles: this.wmsParams.styles,
-            transparent: this.wmsParams.transparent,
-            version: this.wmsParams.version,      
-            format: this.wmsParams.format,
-            bbox: this._map.getBounds().toBBoxString(),
-            height: size.y,
-            width: size.x,
-            layers: this.wmsParams.layers,
-            query_layers: this.wmsParams.layers,
-            // X: point.x,
-            // Y: point.y,
-            info_format: 'application/json'
-          };
-      
-      params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
-      params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-      // console.log(point, 'point')
-    
-      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
-      
-      return this._url + L.Util.getParamString(params, this._url, true);
-    },
-    
-    showGetFeatureInfo: function (err, latlng, content) {
-      if (err) {
-        // console.log(latlng, 'lat long')
-  
-      
-        ;
-        // console.log(latlng, 'wms latlng')
-        // console.log(content, "wms content")
-      //   var band1 = content.features[0].properties.Band1
-      
-      // band_1.value = band1
-      
-          return  
-          // console.log(latlng, 'lat long');
-        
-        } // do nothing if there's an error
-     
-        
-      // Otherwise show the content in a popup, or something.
-   
-      // L.popup({ maxWidth: 800})
-      //   .setLatLng(latlng)
-      //   .setContent( content)
-      //   .openOn(this._map);
-  
-    
-    }
-  }); //end of L.extend
+
+
   
   
-  
-  L.tileLayer.betterWms = function (url, options) {
-    return new L.TileLayer.BetterWMS(url, options);  
-  };
+
+
   
       //function to get regions 
   
@@ -1832,8 +1750,271 @@ changeOpacity()
   
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
+  map.createPane("timeseries").style.zIndex = 300;
 
-wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+
+
+
+
+
+
+  L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
+    
+    onAdd: function (map) {
+      // Triggered when the layer is added to a map.
+      //   Register a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onAdd.call(this, map);
+      map.on('click' , this.getFeatureInfo, this);
+    },
+    
+    onRemove: function (map) {
+      // Triggered when the layer is removed from a map.
+      //   Unregister a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onRemove.call(this, map);
+      map.off('click', this.getFeatureInfo, this);
+    },
+    
+    getFeatureInfo: function (evt) {
+      // Make an AJAX request to the server and hope for the best
+      var url = this.getFeatureInfoUrl(evt.latlng),
+          showResults = L.Util.bind(this.showGetFeatureInfo, this);
+      $.ajax({
+        url: url,
+        success: function (data, status, xhr) {
+          var err = typeof data === 'string' ? null : data;
+          showResults(err, evt.latlng, data);
+        },
+        error: function (xhr, status, error) {
+          showResults(error);  
+        }
+      });
+    },
+    
+    getFeatureInfoUrl: function (latlng) {
+      // Construct a GetFeatureInfo request URL given a point
+      var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
+      
+          size = this._map.getSize(),
+          
+          params = {
+            request: 'GetFeatureInfo',
+            service: 'WMS',
+            srs: 'EPSG:4326',
+            styles: this.wmsParams.styles,
+            transparent: this.wmsParams.transparent,
+            version: this.wmsParams.version,      
+            format: this.wmsParams.format,
+            bbox: this._map.getBounds().toBBoxString(),
+            height: size.y,
+            width: size.x,
+            layers: this.wmsParams.layers,
+            query_layers: this.wmsParams.layers,
+            // X: point.x,
+            // Y: point.y,
+            info_format: 'application/json'
+          };
+      
+      params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
+      params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+      // console.log(point, 'point')
+    
+      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      
+      return this._url + L.Util.getParamString(params, this._url, true);
+    },
+    
+    showGetFeatureInfo: function (err, latlng, content) {
+      if (err) {
+        // console.log(latlng, 'lat long')
+  
+      
+        ;
+        // console.log(latlng, 'wms latlng')
+        console.log(content.features[0].properties, "ndvi wms content")
+        
+        var bands = content.features[0].properties
+        
+        var band_names = Object.keys(bands)
+        console.log(band_names, 'band names')
+
+        lineChartData.labels = band_names
+
+        var band_values = Object.values(bands)
+        console.log(band_values, 'band values')
+        lineChartData.datasets[0].data = band_values
+
+        console.log(lineChartData, 'line chart data')
+
+        
+        
+
+        storeUserSelections.band_2013 = band_values[0]
+        storeUserSelections.band_2014 = band_values[1]
+        storeUserSelections.band_2015 = band_values[2]
+        storeUserSelections.band_2016 = band_values[3]
+        storeUserSelections.band_2017 = band_values[4]
+        storeUserSelections.band_2018 = band_values[5]
+        storeUserSelections.band_2019 = band_values[6]
+        storeUserSelections.band_2020 = band_values[7]
+        storeUserSelections.band_2021 = band_values[8]
+        storeUserSelections.band_2022 = band_values[9]
+
+        const getClicked2013 = () => {
+          year_2013.value = storeUserSelections.band_2013
+        }
+
+        const getClicked2014 = () => {
+          year_2014.value = storeUserSelections.band_2014
+          console.log(year_2014.value, 'year 2014.value')
+        }
+
+        const getClicked2015 = () => {
+          year_2015.value = storeUserSelections.band_2015
+        }
+
+        const getClicked2016 = () => {
+          year_2016.value = storeUserSelections.band_2016
+        }
+
+        const getClicked2017 = () => {
+          year_2017.value = storeUserSelections.band_2017
+        }
+        const getClicked2018 = () => {
+          year_2018.value = storeUserSelections.band_2018
+        }
+
+        const getClicked2019 = () => {
+          year_2019.value = storeUserSelections.band_2019
+        }
+
+        const getClicked2020 = () => {
+          year_2020.value = storeUserSelections.band_2020
+        }
+
+        const getClicked2021 = () => {
+          year_2021.value = storeUserSelections.band_2021
+        }
+
+        const getClicked2022 = () => {
+          year_2022.value = storeUserSelections.band_2022
+        }
+
+
+const set2013 = computed( () => {
+  return storeUserSelections.getBand2013
+})
+const set2014 = computed( () => {
+  return storeUserSelections.getBand2014
+})
+
+const set2015 = computed( () => {
+  return storeUserSelections.getBand2015
+})
+
+const set2016 = computed( () => {
+  return storeUserSelections.getBand2016
+})
+
+const set2017 = computed( () => {
+  return storeUserSelections.getBand2017
+})
+
+const set2018 = computed( () => {
+  return storeUserSelections.getBand2018
+})
+
+const set2019 = computed( () => {
+  return storeUserSelections.getBand2019
+})
+
+const set2020 = computed( () => {
+  return storeUserSelections.getBand2020
+})
+
+const set2021 = computed( () => {
+  return storeUserSelections.getBand2021
+})
+
+const set2022 = computed( () => {
+  return storeUserSelections.getBand2022
+})
+
+
+watch( set2013, () => {
+  getClicked2013
+})
+
+watch( set2014, () => {
+  getClicked2014
+})
+
+watch( set2015, () => {
+  getClicked2015
+})
+
+watch( set2016, () => {
+  getClicked2016
+})
+
+watch( set2017, () => {
+  getClicked2017
+})
+
+watch( set2018, () => {
+  getClicked2018
+})
+
+watch( set2019, () => {
+  getClicked2019
+})
+
+watch( set2020, () => {
+  getClicked2020
+})
+
+watch( set2021, () => {
+  getClicked2021
+})
+
+watch( set2022, () => {
+  getClicked2022
+})
+
+
+
+        // console.log(storeUserSelections.band_2022 , 'store band22')
+        
+        // console.log(storeUserSelections.band_2013, '2013 band') accessible
+
+      //   var band1 = content.features[0].properties.Band1
+      
+      // band_1.value = band1
+      
+          return  
+          // console.log(latlng, 'lat long');
+        
+        } // do nothing if there's an error
+     
+        
+      // Otherwise show the content in a popup, or something.
+   
+      // L.popup({ maxWidth: 800})
+      //   .setLatLng(latlng)
+      //   .setContent( content)
+      //   .openOn(this._map);
+  
+    
+    }
+  }); //end of L.extend
+  
+  
+  
+  L.tileLayer.betterWms = function (url, options) {
+    return new L.TileLayer.BetterWMS(url, options);  
+  };
+
+
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -1848,6 +2029,26 @@ wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${sat
 
 
 wmsLayer.value.addTo(map);
+
+
+
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/NDVI_${season.value}/wms?`, {
+     pane: 'timeseries',
+     layers: `NDVI_${season.value}:NDVI`,
+     crs:L.CRS.EPSG4326,
+    //  styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:0.5
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsTimeseriesLayer.value.addTo(map);
+
+
 
 
 // console.log(wmsLayer.value, 'wms')
@@ -2209,7 +2410,7 @@ geoposition.value = `${lat}, ${lon}`
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
               }
     
-              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+              let draggable = new L.Draggable(div); //the legend can be dragged 
         draggable.enable();
   
     return div;

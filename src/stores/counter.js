@@ -188,7 +188,18 @@ export const useCounterStore = defineStore({
       northern_lat: '',
       eastern_lon: '',
       southern_lat: '',
-      resolution: ''
+      resolution: '',
+      //multibands
+      band_2013: null,
+      band_2014: null,
+      band_2015: null,
+      band_2016: null,
+      band_2017: null,
+      band_2018: null,
+      band_2019: null,
+      band_2020: null,
+      band_2021: null,
+      band_2022: null,
   }),
  
   actions: {
@@ -1037,7 +1048,17 @@ export const useCounterStore = defineStore({
     getIndicatorState: (state)=> state.visible_indicator,
     getLulcChartData: (state) => state.lulcChartData,
     getStatsArray: (state) => state.stats_array,
-    getSelectedLanguage: (state) => state.selected_language
+    getSelectedLanguage: (state) => state.selected_language,
+    getBand2013: (state) => state.band_2013,
+    getBand2014: (state) => state.band_2014,
+    getBand2015: (state) => state.band_2015,
+    getBand2016: (state) => state.band_2016,
+    getBand2017: (state) => state.band_2017,
+    getBand2018: (state) => state.band_2018,
+    getBand2019: (state) => state.band_2019,
+    getBand2020: (state) => state.band_2020,
+    getBand2021: (state) => state.band_2021,
+    getBand2022: (state) => state.band_2022,
   
     
   },

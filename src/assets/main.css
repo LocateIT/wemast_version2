@@ -832,7 +832,7 @@ title{
 .charts_sidebar{
   position: relative;
   top: 1vh;
-  height: 200px;
+  height: 250px;
   width: 99%;
   background-color: #eee;
   padding: 20px;
@@ -851,7 +851,7 @@ title{
 .charts2_sidebar{
   position: relative;
   top: 3vh;
-  height: 250px;
+  height: 230px;
   width: 99%;
   background-color: #eee;
   padding: 20px;
@@ -879,3 +879,25 @@ title{
 .metadata_logos{
   width: 600px; position: relative; top: 32vh; left: -8vw;
 }
+
+.bar_veg_cover{
+  position: absolute;
+  top: -32vh;
+  left: 2%;
+  width: 15vw;
+  height: 16.5vh;
+  padding: 5px;
+  margin: 5px;
+}
+
+.lulc_line_chart{
+  position: relative;
+  top: -1vh;
+  left: 4%;
+  width: 25vw;
+
+  
+}
+/* #line-chart{
+  height: 100px;
+} */

@@ -187,8 +187,8 @@
 
             <LulcLine  class="lulc_line_chart" v-if="wmsTimeseriesLayer != null"
             
-            :chartData="lineChartData"
-            :options="barchart_options"
+            :chartData="lineData"
+           :options="linechartOptions"
             
             />
             </div>
@@ -511,12 +511,43 @@ import { saveAs } from "file-saver";
       datasets: [
         {
           data: [],
+          fill: false,
+          borderColor: '#1eb301',
+          backgroundColor: '#ffbb33',
+          borderWidth: 3
           
        
        
         },
       ],
     }
+    let lineData = ref({})
+
+    let linechartOptions = {
+      scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              gridLines: {
+                display: true
+              }
+            }],
+            xAxes: [ {
+              gridLines: {
+                display: false
+              }
+            }]
+          },
+          legend: {
+            display: false
+          },
+          responsive: true,
+          maintainAspectRatio: false
+        }
+      
+
+    
   
   
   let options =  {
@@ -533,6 +564,19 @@ import { saveAs } from "file-saver";
                  pointStyle: 'circle'
               }
            },
+           tooltips: {
+      callbacks: {
+        label: function(tooltipItem, data) {
+        	var dataset = storeUserSelections.lulcChartData.datasets[tooltipItem.datasetIndex];
+          var total = dataset.data.reduce(function(previousValue, currentValue, currentIndex, array) {
+            return previousValue + currentValue;
+          });
+          var currentValue = dataset.data[tooltipItem.index];
+          var precentage = Math.floor(((currentValue/total) * 100)+0.5);         
+          return precentage + "%";
+        }
+      }
+    },
            
            responsive: true,
            maintainAspectRatio: false,
@@ -1295,6 +1339,7 @@ const screenshot =  () => {
    if(current_geojson.value)map.removeLayer(current_geojson.value)
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+   if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
   
    var selecteRegion = storeUserSelections.getSelectedRegion
@@ -1610,7 +1655,7 @@ const ndvi_style = () => {
                       console.log(lulc_params, 'LULC_PARAMETERS')
   
 
-wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
      pane: 'pane400',
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -1846,6 +1891,8 @@ changeOpacity()
         console.log(lineChartData, 'line chart data')
 
         
+
+        
         
 
         storeUserSelections.band_2013 = band_values[0]
@@ -1861,6 +1908,7 @@ changeOpacity()
 
         const getClicked2013 = () => {
           year_2013.value = storeUserSelections.band_2013
+          console.log(year_2013.value, 'year 2013.value')
         }
 
         const getClicked2014 = () => {
@@ -1903,7 +1951,7 @@ changeOpacity()
 const set2013 = computed( () => {
   return storeUserSelections.getBand2013
 })
-const set2014 = computed( () => {
+const setYear_2014 = computed( () => {
   return storeUserSelections.getBand2014
 })
 
@@ -1941,54 +1989,54 @@ const set2022 = computed( () => {
 
 
 watch( set2013, () => {
-  getClicked2013
+  getClicked2013()
 })
 
-watch( set2014, () => {
-  getClicked2014
+watch( setYear_2014, () => {
+  getClicked2014()
 })
 
 watch( set2015, () => {
-  getClicked2015
+  getClicked2015()
 })
 
 watch( set2016, () => {
-  getClicked2016
+  getClicked2016()
 })
 
 watch( set2017, () => {
-  getClicked2017
+  getClicked2017()
 })
 
 watch( set2018, () => {
-  getClicked2018
+  getClicked2018()
 })
 
 watch( set2019, () => {
-  getClicked2019
+  getClicked2019()
 })
 
 watch( set2020, () => {
-  getClicked2020
+  getClicked2020()
 })
 
 watch( set2021, () => {
-  getClicked2021
+  getClicked2021()
 })
 
 watch( set2022, () => {
-  getClicked2022
+  getClicked2022()
 })
 
+const updateLineChartData =  () => {
+  lineData.value = lineChartData
+        console.log(lineData.value, 'REF LINE CHART DATA')
+        return lineData.value
+}
+watch( () => {
+  updateLineChartData()
+})
 
-
-        // console.log(storeUserSelections.band_2022 , 'store band22')
-        
-        // console.log(storeUserSelections.band_2013, '2013 band') accessible
-
-      //   var band1 = content.features[0].properties.Band1
-      
-      // band_1.value = band1
       
           return  
           // console.log(latlng, 'lat long');
@@ -2036,7 +2084,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geose
      pane: 'timeseries',
      layers: `NDVI_${season.value}:NDVI`,
      crs:L.CRS.EPSG4326,
-    //  styles: styles.value,
+     styles: styles.value,
      format: 'image/png',
      transparent: true,
      opacity:0.5
@@ -2046,7 +2094,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geose
 });
 
 
-wmsTimeseriesLayer.value.addTo(map);
+wmsTimeseriesLayer.value.addTo(map).bringToFront();
 
 
 
@@ -2054,6 +2102,8 @@ wmsTimeseriesLayer.value.addTo(map);
 // console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});wmsTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
 });
 
@@ -2220,6 +2270,7 @@ changeOpacity()
     loading.value = true
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+    if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
 
   lulc_style()
   prec_style()

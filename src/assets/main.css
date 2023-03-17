@@ -892,12 +892,12 @@ title{
 
 .lulc_line_chart{
   position: relative;
-  top: -1vh;
+  top: 5vh;
   left: 4%;
   width: 25vw;
 
   
 }
-/* #line-chart{
-  height: 100px;
-} */
+#line-chart{
+  height: 250px !important;
+}

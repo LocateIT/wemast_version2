@@ -526,6 +526,10 @@ import { saveAs } from "file-saver";
     let linechartOptions = {
       scales: {
             yAxes: [{
+              scaleLabel: {
+                    display: true,
+                    labelString: 'NDVI Values'
+                },
               ticks: {
                 beginAtZero: true
               },
@@ -534,6 +538,10 @@ import { saveAs } from "file-saver";
               }
             }],
             xAxes: [ {
+              scaleLabel: {
+                    display: true,
+                    labelString: 'Years'
+                },
               gridLines: {
                 display: false
               }
@@ -1766,6 +1774,7 @@ changeOpacity()
         
         var band_names = Object.keys(bands)
         console.log(band_names.slice(15,23), 'band names')
+          
 
         lineChartData.labels = band_names
 
@@ -1776,6 +1785,7 @@ changeOpacity()
         console.log(lineChartData, 'line chart data')
 
         storeUserSelections.lineChartData.labels = band_names.slice(15,23)
+        storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
         storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,23)
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 
@@ -2058,6 +2068,7 @@ changeOpacity()
         console.log(lineChartData, 'line chart data')
 
         storeUserSelections.lineChartData.labels = band_names
+        storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
         storeUserSelections.lineChartData.datasets[0].data = band_values
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 

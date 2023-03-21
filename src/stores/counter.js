@@ -124,6 +124,22 @@ export const useCounterStore = defineStore({
         },
       ],
     },
+
+    lineChartData : {
+      labels: [],
+      datasets: [
+        {
+          data: [],
+          fill: false,
+          borderColor: '#1eb301',
+          backgroundColor: '#ffbb33',
+          borderWidth: 3
+          
+       
+       
+        },
+      ],
+    },
      
       //spinner loader
       loading:false,

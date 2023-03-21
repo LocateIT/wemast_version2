@@ -187,7 +187,7 @@
 
             <LulcLine  class="lulc_line_chart" v-if="wmsTimeseriesLayer != null"
             
-            :chartData="lineData"
+            :chartData="storeUserSelections.lineChartData"
            :options="linechartOptions"
             
             />
@@ -1890,35 +1890,39 @@ changeOpacity()
 
         console.log(lineChartData, 'line chart data')
 
-        
+        storeUserSelections.lineChartData.labels = band_names
+        storeUserSelections.lineChartData.datasets[0].data = band_values
+        console.log(storeUserSelections.lineChartData, 'store linechart data')
 
         
+
+        
         
 
-        storeUserSelections.band_2013 = band_values[0]
-        storeUserSelections.band_2014 = band_values[1]
-        storeUserSelections.band_2015 = band_values[2]
-        storeUserSelections.band_2016 = band_values[3]
-        storeUserSelections.band_2017 = band_values[4]
-        storeUserSelections.band_2018 = band_values[5]
-        storeUserSelections.band_2019 = band_values[6]
-        storeUserSelections.band_2020 = band_values[7]
-        storeUserSelections.band_2021 = band_values[8]
-        storeUserSelections.band_2022 = band_values[9]
+        // storeUserSelections.band_2013 = band_values[0]
+        // storeUserSelections.band_2014 = band_values[1]
+        // storeUserSelections.band_2015 = band_values[2]
+        storeUserSelections.band_2016 = band_values[0]
+        storeUserSelections.band_2017 = band_values[1]
+        storeUserSelections.band_2018 = band_values[2]
+        storeUserSelections.band_2019 = band_values[3]
+        storeUserSelections.band_2020 = band_values[4]
+        storeUserSelections.band_2021 = band_values[5]
+        storeUserSelections.band_2022 = band_values[6]
 
-        const getClicked2013 = () => {
-          year_2013.value = storeUserSelections.band_2013
-          console.log(year_2013.value, 'year 2013.value')
-        }
+        // const getClicked2013 = () => {
+        //   year_2013.value = storeUserSelections.band_2013
+        //   console.log(year_2013.value, 'year 2013.value')
+        // }
 
-        const getClicked2014 = () => {
-          year_2014.value = storeUserSelections.band_2014
-          console.log(year_2014.value, 'year 2014.value')
-        }
+        // const getClicked2014 = () => {
+        //   year_2014.value = storeUserSelections.band_2014
+        //   console.log(year_2014.value, 'year 2014.value')
+        // }
 
-        const getClicked2015 = () => {
-          year_2015.value = storeUserSelections.band_2015
-        }
+        // const getClicked2015 = () => {
+        //   year_2015.value = storeUserSelections.band_2015
+        // }
 
         const getClicked2016 = () => {
           year_2016.value = storeUserSelections.band_2016
@@ -2028,14 +2032,28 @@ watch( set2022, () => {
   getClicked2022()
 })
 
-const updateLineChartData =  () => {
-  lineData.value = lineChartData
-        console.log(lineData.value, 'REF LINE CHART DATA')
-        return lineData.value
-}
-watch( () => {
-  updateLineChartData()
-})
+// const updateLineChartData =  () => {
+//   lineData.value = lineChartData
+//         console.log(lineData.value, 'REF LINE CHART DATA')
+//         return lineData.value
+// }
+// const updateLineChartData = computed ( () => {
+//   lineData.value = lineChartData
+//         console.log(lineData.value, 'REF LINE CHART DATA')
+//         return lineData.value
+
+
+// } ) 
+// watch(updateLineChartData)
+  
+
+// const setLineChartData = computed( () => {
+//   return lineData.value
+// })
+// watch( setLineChartData, () => {
+  
+//   updateLineChartData()
+// })
 
       
           return  
@@ -2052,8 +2070,10 @@ watch( () => {
       //   .openOn(this._map);
   
     
-    }
+    },
+    
   }); //end of L.extend
+  
   
   
   
@@ -2076,7 +2096,7 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite
 });
 
 
-wmsLayer.value.addTo(map);
+// wmsLayer.value.addTo(map);
 
 
 
@@ -2296,7 +2316,7 @@ wmsLayer.value.on('load', function (event) {
 });
 
 
-console.log(map.getCenter(), 'center')
+// console.log(map.getCenter(), 'center')
 var center = map.getCenter()
 var lat = center.lat.toFixed(2)
 var lon = center.lng.toFixed(2)

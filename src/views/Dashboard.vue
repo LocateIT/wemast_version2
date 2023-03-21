@@ -145,8 +145,8 @@
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
-            <div id="chart_pie" v-if="sub_indicator != 'Vegetation Cover'">
-              <LulcPie class="lulc_chart" 
+            <div id="chart_pie" v-if="sub_indicator != 'Vegetation Cover' ">
+              <LulcPie class="lulc_chart" v-if="sub_indicator != 'Precipitation Index'"
             :height="200"
             :width="300"
             :chartData="storeUserSelections.lulcChartData"
@@ -176,7 +176,7 @@
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
-            <div id="bar" :class=" sub_indicator === 'Vegetation Cover'
+            <div id="bar" :class=" sub_indicator === 'Vegetation Cover' || sub_indicator === 'Precipitation Index'
                             ? 'bar_veg_cover'
                             : '' ">
               <LulcBar  class="lulc_bar_chart" 
@@ -1684,6 +1684,289 @@ changeOpacity()
 
 }
  }
+
+
+
+ const addPrecTimeSeries = () => {
+  L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
+    
+    onAdd: function (map) {
+      // Triggered when the layer is added to a map.
+      //   Register a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onAdd.call(this, map);
+      map.on('click' , this.getFeatureInfo, this);
+    },
+    
+    onRemove: function (map) {
+      // Triggered when the layer is removed from a map.
+      //   Unregister a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onRemove.call(this, map);
+      map.off('click', this.getFeatureInfo, this);
+    },
+    
+    getFeatureInfo: function (evt) {
+      // Make an AJAX request to the server and hope for the best
+      var url = this.getFeatureInfoUrl(evt.latlng),
+          showResults = L.Util.bind(this.showGetFeatureInfo, this);
+      $.ajax({
+        url: url,
+        success: function (data, status, xhr) {
+          var err = typeof data === 'string' ? null : data;
+          showResults(err, evt.latlng, data);
+        },
+        error: function (xhr, status, error) {
+          showResults(error);  
+        }
+      });
+    },
+    
+    getFeatureInfoUrl: function (latlng) {
+      // Construct a GetFeatureInfo request URL given a point
+      var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
+      
+          size = this._map.getSize(),
+          
+          params = {
+            request: 'GetFeatureInfo',
+            service: 'WMS',
+            srs: 'EPSG:4326',
+            styles: this.wmsParams.styles,
+            transparent: this.wmsParams.transparent,
+            version: this.wmsParams.version,      
+            format: this.wmsParams.format,
+            bbox: this._map.getBounds().toBBoxString(),
+            height: size.y,
+            width: size.x,
+            layers: this.wmsParams.layers,
+            query_layers: this.wmsParams.layers,
+            // X: point.x,
+            // Y: point.y,
+            info_format: 'application/json'
+          };
+      
+      params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
+      params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+      // console.log(point, 'point')
+    
+      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      
+      return this._url + L.Util.getParamString(params, this._url, true);
+    },
+    
+    showGetFeatureInfo: function (err, latlng, content) {
+      if (err) {
+        // console.log(latlng, 'lat long')
+  
+      
+        ;
+        // console.log(latlng, 'wms latlng')
+        console.log(content.features[0].properties, "ndvi wms content")
+        
+        var bands = content.features[0].properties
+        
+        var band_names = Object.keys(bands)
+        console.log(band_names, 'band names')
+
+        lineChartData.labels = band_names
+
+        var band_values = Object.values(bands)
+        console.log(band_values, 'band values')
+        lineChartData.datasets[0].data = band_values
+
+        console.log(lineChartData, 'line chart data')
+
+        storeUserSelections.lineChartData.labels = band_names
+        storeUserSelections.lineChartData.datasets[0].data = band_values
+        console.log(storeUserSelections.lineChartData, 'store linechart data')
+
+        
+
+        
+        
+
+        // storeUserSelections.band_2013 = band_values[0]
+        // storeUserSelections.band_2014 = band_values[1]
+        // storeUserSelections.band_2015 = band_values[2]
+        storeUserSelections.band_2016 = band_values[16]
+        storeUserSelections.band_2017 = band_values[17]
+        storeUserSelections.band_2018 = band_values[18]
+        storeUserSelections.band_2019 = band_values[19]
+        storeUserSelections.band_2020 = band_values[20]
+        storeUserSelections.band_2021 = band_values[21]
+        storeUserSelections.band_2022 = band_values[22]
+
+        // const getClicked2013 = () => {
+        //   year_2013.value = storeUserSelections.band_2013
+        //   console.log(year_2013.value, 'year 2013.value')
+        // }
+
+        // const getClicked2014 = () => {
+        //   year_2014.value = storeUserSelections.band_2014
+        //   console.log(year_2014.value, 'year 2014.value')
+        // }
+
+        // const getClicked2015 = () => {
+        //   year_2015.value = storeUserSelections.band_2015
+        // }
+
+        const getClicked2016 = () => {
+          year_2016.value = storeUserSelections.band_2016
+        }
+
+        const getClicked2017 = () => {
+          year_2017.value = storeUserSelections.band_2017
+        }
+        const getClicked2018 = () => {
+          year_2018.value = storeUserSelections.band_2018
+        }
+
+        const getClicked2019 = () => {
+          year_2019.value = storeUserSelections.band_2019
+        }
+
+        const getClicked2020 = () => {
+          year_2020.value = storeUserSelections.band_2020
+        }
+
+        const getClicked2021 = () => {
+          year_2021.value = storeUserSelections.band_2021
+        }
+
+        const getClicked2022 = () => {
+          year_2022.value = storeUserSelections.band_2022
+        }
+
+
+// const set2013 = computed( () => {
+//   return storeUserSelections.getBand2013
+// })
+// const setYear_2014 = computed( () => {
+//   return storeUserSelections.getBand2014
+// })
+
+// const set2015 = computed( () => {
+//   return storeUserSelections.getBand2015
+// })
+
+const set2016 = computed( () => {
+  return storeUserSelections.getBand2016
+})
+
+const set2017 = computed( () => {
+  return storeUserSelections.getBand2017
+})
+
+const set2018 = computed( () => {
+  return storeUserSelections.getBand2018
+})
+
+const set2019 = computed( () => {
+  return storeUserSelections.getBand2019
+})
+
+const set2020 = computed( () => {
+  return storeUserSelections.getBand2020
+})
+
+const set2021 = computed( () => {
+  return storeUserSelections.getBand2021
+})
+
+const set2022 = computed( () => {
+  return storeUserSelections.getBand2022
+})
+
+
+// watch( set2013, () => {
+//   getClicked2013()
+// })
+
+// watch( setYear_2014, () => {
+//   getClicked2014()
+// })
+
+// watch( set2015, () => {
+//   getClicked2015()
+// })
+
+watch( set2016, () => {
+  getClicked2016()
+})
+
+watch( set2017, () => {
+  getClicked2017()
+})
+
+watch( set2018, () => {
+  getClicked2018()
+})
+
+watch( set2019, () => {
+  getClicked2019()
+})
+
+watch( set2020, () => {
+  getClicked2020()
+})
+
+watch( set2021, () => {
+  getClicked2021()
+})
+
+watch( set2022, () => {
+  getClicked2022()
+})
+
+// const updateLineChartData =  () => {
+//   lineData.value = lineChartData
+//         console.log(lineData.value, 'REF LINE CHART DATA')
+//         return lineData.value
+// }
+// const updateLineChartData = computed ( () => {
+//   lineData.value = lineChartData
+//         console.log(lineData.value, 'REF LINE CHART DATA')
+//         return lineData.value
+
+
+// } ) 
+// watch(updateLineChartData)
+  
+
+// const setLineChartData = computed( () => {
+//   return lineData.value
+// })
+// watch( setLineChartData, () => {
+  
+//   updateLineChartData()
+// })
+
+      
+          return  
+          // console.log(latlng, 'lat long');
+        
+        } // do nothing if there's an error
+     
+        
+      // Otherwise show the content in a popup, or something.
+   
+      // L.popup({ maxWidth: 800})
+      //   .setLatLng(latlng)
+      //   .setContent( content)
+      //   .openOn(this._map);
+  
+    
+    },
+    
+  }); //end of L.extend
+  
+  
+  
+  
+  L.tileLayer.betterWms = function (url, options) {
+    return new L.TileLayer.BetterWMS(url, options);  
+  };
+
+ }
   
  const addPrecIndexWet = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
@@ -1691,7 +1974,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
+  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
      pane: 'pane800',
      layers: `SPI_WET:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -1703,14 +1986,37 @@ changeOpacity()
      
     
   });
-  
-  
-  wmsLayer.value.addTo(map);
+
+
+
+
+  // wmsLayer.value.addTo(map);
   // console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
   });
+
+
+   //adding timeseries layer
+   addPrecTimeSeries()
+   wmsTimeseriesLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/Wet/wms?", {
+     pane: 'pane800',
+     layers: `Wet:SPI`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:0.5
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  wmsTimeseriesLayer.value.on('load', function (event) {
+    loading.value = false
+});
   preclegendContent()
   changeOpacity()
   
@@ -1725,7 +2031,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
+  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
      pane: 'pane800',
      layers: `SPI_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -1756,7 +2062,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -1992,17 +2298,17 @@ const set2022 = computed( () => {
 })
 
 
-watch( set2013, () => {
-  getClicked2013()
-})
+// watch( set2013, () => {
+//   getClicked2013()
+// })
 
-watch( setYear_2014, () => {
-  getClicked2014()
-})
+// watch( setYear_2014, () => {
+//   getClicked2014()
+// })
 
-watch( set2015, () => {
-  getClicked2015()
-})
+// watch( set2015, () => {
+//   getClicked2015()
+// })
 
 watch( set2016, () => {
   getClicked2016()
@@ -2123,7 +2429,9 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront();
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
     loading.value = false
-});wmsTimeseriesLayer.value.on('load', function (event) {
+});
+
+wmsTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
 });
 
@@ -2140,7 +2448,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2179,7 +2487,7 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/FIRE/wms?", {
+wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/FIRE/wms?", {
      pane: 'pane400',
      layers: `FIRE:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2217,7 +2525,7 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/FIRMS_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_${season.value}/wms?`, {
      pane: 'pane400',
      layers: `FIRMS_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2255,7 +2563,7 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
      pane: 'pane400',
      layers: `SMI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2842,7 +3150,7 @@ geoposition.value = `${lat}, ${lon}`
   map.createPane("pane800").style.zIndex = 200;
   
 
-wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
      pane: 'pane800',
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2874,6 +3182,9 @@ changeOpacity()
 
 }
  }
+
+
+
   
  const addComparePrecIndexWet = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
@@ -2881,7 +3192,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
      pane: 'pane800',
      layers: `SPI_WET:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2916,7 +3227,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
      pane: 'pane800',
      layers: `SPI_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2948,7 +3259,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsCompareLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2988,7 +3299,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3025,7 +3336,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,

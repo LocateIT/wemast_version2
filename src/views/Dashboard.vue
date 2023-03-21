@@ -1765,180 +1765,21 @@ changeOpacity()
         var bands = content.features[0].properties
         
         var band_names = Object.keys(bands)
-        console.log(band_names, 'band names')
+        console.log(band_names.slice(15,23), 'band names')
 
         lineChartData.labels = band_names
 
         var band_values = Object.values(bands)
-        console.log(band_values, 'band values')
+        console.log(band_values.slice(15,23), 'band values')
         lineChartData.datasets[0].data = band_values
 
         console.log(lineChartData, 'line chart data')
 
-        storeUserSelections.lineChartData.labels = band_names
-        storeUserSelections.lineChartData.datasets[0].data = band_values
+        storeUserSelections.lineChartData.labels = band_names.slice(15,23)
+        storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,23)
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 
         
-
-        
-        
-
-        // storeUserSelections.band_2013 = band_values[0]
-        // storeUserSelections.band_2014 = band_values[1]
-        // storeUserSelections.band_2015 = band_values[2]
-        storeUserSelections.band_2016 = band_values[16]
-        storeUserSelections.band_2017 = band_values[17]
-        storeUserSelections.band_2018 = band_values[18]
-        storeUserSelections.band_2019 = band_values[19]
-        storeUserSelections.band_2020 = band_values[20]
-        storeUserSelections.band_2021 = band_values[21]
-        storeUserSelections.band_2022 = band_values[22]
-
-        // const getClicked2013 = () => {
-        //   year_2013.value = storeUserSelections.band_2013
-        //   console.log(year_2013.value, 'year 2013.value')
-        // }
-
-        // const getClicked2014 = () => {
-        //   year_2014.value = storeUserSelections.band_2014
-        //   console.log(year_2014.value, 'year 2014.value')
-        // }
-
-        // const getClicked2015 = () => {
-        //   year_2015.value = storeUserSelections.band_2015
-        // }
-
-        const getClicked2016 = () => {
-          year_2016.value = storeUserSelections.band_2016
-        }
-
-        const getClicked2017 = () => {
-          year_2017.value = storeUserSelections.band_2017
-        }
-        const getClicked2018 = () => {
-          year_2018.value = storeUserSelections.band_2018
-        }
-
-        const getClicked2019 = () => {
-          year_2019.value = storeUserSelections.band_2019
-        }
-
-        const getClicked2020 = () => {
-          year_2020.value = storeUserSelections.band_2020
-        }
-
-        const getClicked2021 = () => {
-          year_2021.value = storeUserSelections.band_2021
-        }
-
-        const getClicked2022 = () => {
-          year_2022.value = storeUserSelections.band_2022
-        }
-
-
-// const set2013 = computed( () => {
-//   return storeUserSelections.getBand2013
-// })
-// const setYear_2014 = computed( () => {
-//   return storeUserSelections.getBand2014
-// })
-
-// const set2015 = computed( () => {
-//   return storeUserSelections.getBand2015
-// })
-
-const set2016 = computed( () => {
-  return storeUserSelections.getBand2016
-})
-
-const set2017 = computed( () => {
-  return storeUserSelections.getBand2017
-})
-
-const set2018 = computed( () => {
-  return storeUserSelections.getBand2018
-})
-
-const set2019 = computed( () => {
-  return storeUserSelections.getBand2019
-})
-
-const set2020 = computed( () => {
-  return storeUserSelections.getBand2020
-})
-
-const set2021 = computed( () => {
-  return storeUserSelections.getBand2021
-})
-
-const set2022 = computed( () => {
-  return storeUserSelections.getBand2022
-})
-
-
-// watch( set2013, () => {
-//   getClicked2013()
-// })
-
-// watch( setYear_2014, () => {
-//   getClicked2014()
-// })
-
-// watch( set2015, () => {
-//   getClicked2015()
-// })
-
-watch( set2016, () => {
-  getClicked2016()
-})
-
-watch( set2017, () => {
-  getClicked2017()
-})
-
-watch( set2018, () => {
-  getClicked2018()
-})
-
-watch( set2019, () => {
-  getClicked2019()
-})
-
-watch( set2020, () => {
-  getClicked2020()
-})
-
-watch( set2021, () => {
-  getClicked2021()
-})
-
-watch( set2022, () => {
-  getClicked2022()
-})
-
-// const updateLineChartData =  () => {
-//   lineData.value = lineChartData
-//         console.log(lineData.value, 'REF LINE CHART DATA')
-//         return lineData.value
-// }
-// const updateLineChartData = computed ( () => {
-//   lineData.value = lineChartData
-//         console.log(lineData.value, 'REF LINE CHART DATA')
-//         return lineData.value
-
-
-// } ) 
-// watch(updateLineChartData)
-  
-
-// const setLineChartData = computed( () => {
-//   return lineData.value
-// })
-// watch( setLineChartData, () => {
-  
-//   updateLineChartData()
-// })
 
       
           return  
@@ -1990,7 +1831,7 @@ watch( set2022, () => {
 
 
 
-  // wmsLayer.value.addTo(map);
+  wmsLayer.value.addTo(map);
   // console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
@@ -2007,7 +1848,7 @@ watch( set2022, () => {
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.5
+     opacity:0.2
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -2051,6 +1892,26 @@ watch( set2022, () => {
   wmsLayer.value.on('load', function (event) {
     loading.value = false
   });
+
+  //adding timeseries layer
+  addPrecTimeSeries()
+   wmsTimeseriesLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/Dry/wms?", {
+     pane: 'pane800',
+     layers: `Dry:SPI`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:0.2
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  wmsTimeseriesLayer.value.on('load', function (event) {
+    loading.value = false
+});
   preclegendContent()
   changeOpacity()
   

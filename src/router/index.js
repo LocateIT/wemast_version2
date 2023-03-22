@@ -3,7 +3,8 @@ import Home from "@/views/HomeView.vue";
 import About from "@/views/AboutView.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Error from "@/views/Error.vue"
-import DashboardSelections from "../components/DashboardSelections.vue"
+// import DashboardSelections from "../components/DashboardSelections.vue"
+import DataCollection from "@/views/DataCollection.vue"
 
 
 const routes = [
@@ -23,10 +24,16 @@ const routes = [
     component: Dashboard,
   },
   {
-    path: "/selections",
-    name: "DashboardSelections",
-    component: DashboardSelections,
+    path: "/datacollection",
+    name: "DataCollection",
+    component: DataCollection,
+
   },
+  // {
+  //   path: "/selections",
+  //   name: "DashboardSelections",
+  //   component: DashboardSelections,
+  // },
   
   // {
   //   path: "/",

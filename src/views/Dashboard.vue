@@ -367,6 +367,10 @@
               <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
                     <img class="search" src=" /uiIcons/search.svg" alt="">
               </a>
+
+              <!-- <RouterLink to="/datacollection"> -->
+                  <img class="home" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection" style="margin-left: -5px;" />
+                <!-- </RouterLink> -->
               
             
           
@@ -1654,6 +1658,7 @@ const prec_style = () => {
       styles.value = 'okavango_spi'
     }
   }
+
 const wetland_inventory_style = () => {
     if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory'){
       styles.value = 'cuvelai_water'
@@ -1709,19 +1714,19 @@ const ndvi_style = () => {
   map.createPane("pane400").style.zIndex = 200;
 
   //create params object
-  var lulc_params = {
-                        // ...lulc_params,
-                        geometry: geometry,
-                        //.geometry.coordinates[0] ,
-                        indicator: indicator.value,
-                       sub_indicator: sub_indicator.value,
-                        year: year.value,
-                      };
-                      console.log(lulc_params, 'LULC_PARAMETERS')
+  // var lulc_params = {
+  //                       // ...lulc_params,
+  //                       geometry: geometry,
+  //                       //.geometry.coordinates[0] ,
+  //                       indicator: indicator.value,
+  //                      sub_indicator: sub_indicator.value,
+  //                       year: year.value,
+  //                     };
+  //                     console.log(lulc_params, 'LULC_PARAMETERS')
   
 
 wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
-     pane: 'pane400',
+     pane: 'pane400', 
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
@@ -1739,7 +1744,7 @@ wmsLayer.value.addTo(map);
 
 
 
-console.log(wmsLayer.value, 'wms')
+// console.log(wmsLayer.value, 'wms')
 
 
 // addLulcLegend()
@@ -1841,9 +1846,9 @@ changeOpacity()
 
         console.log(lineChartData, 'line chart data')
 
-        storeUserSelections.lineChartData.labels = band_names.slice(15,23)
-        storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
-        storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,23)
+        storeUserSelections.lineChartData.labels = band_names.slice(15,22)
+        storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
+        storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,22)
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 
         
@@ -2169,7 +2174,7 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite
 });
 
 
-// wmsLayer.value.addTo(map);
+wmsLayer.value.addTo(map);
 
 
 
@@ -2358,6 +2363,44 @@ changeOpacity()
 
 }
  }
+
+ const addFloodLayer = () => {
+  if(sub_indicator.value === 'Undulation') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FLOOD/wms`, {
+     pane: 'pane400',
+     layers: `FLOOD:FLOOD`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_flood`,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+console.log(wmsLayer.value, 'wms')
+
+
+
+
+changeOpacity()
+
+}
+ }
   //function to request wms
   
   const fetchWmsData = () => {
@@ -2384,6 +2427,7 @@ changeOpacity()
   addBurntLayer()
   addFirmsLayer()
   addSMILayer()
+  addFloodLayer()
 
   //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {

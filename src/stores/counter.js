@@ -889,7 +889,9 @@ export const useCounterStore = defineStore({
     
             var labels = Object.keys(newObj)
             console.log(labels, 'stats labels')
+
             this.lulcChartData.labels = labels
+            this.lulcChartData.labels = ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4']
            
           
             var figures = Object.values(newObj)
@@ -897,7 +899,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+            this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00']
 
 
              //for new array
@@ -948,6 +950,7 @@ export const useCounterStore = defineStore({
             var labels = Object.keys(newObj)
             console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
+            this.lulcChartData.labels = ['Total Burnt Area']
            
           
             var figures = Object.values(newObj)
@@ -955,7 +958,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+            this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00']
 
 
              //for new array

@@ -22,15 +22,15 @@
             <CustomSelectSubIndicator />
         </div>
 
-        <p  :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
+        <p  v-if="storeUserSelections.selected_sub_indicator !== 'Undulation'" :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
         'select_year3':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status' ),
          'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">Select Year</p>
-        <div  :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
+        <div v-if="storeUserSelections.selected_sub_indicator !== 'Undulation'" :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
         'year_selection3':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status' ), 
      
-         'year_selection':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">
+         'year_selection':(storeUserSelections.selected_sub_indicator !== 'Water Quality')}  ">
             <CustomSelectYear />
         </div>
 
@@ -90,8 +90,10 @@
         'request2':(storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'),
          'request1':( storeUserSelections.selected_sub_indicator === '' || storeUserSelections.selected_sub_indicator === 'Land Cover' ||
-         storeUserSelections.selected_sub_indicator === 'Burnt Area MODIS' || 
-         storeUserSelections.selected_sub_indicator === 'Undulation')} " type="button" @click="$emit('fetchData')">REQUEST</button>
+         storeUserSelections.selected_sub_indicator === 'Burnt Area MODIS' ),
+         
+         'flood_request':(storeUserSelections.selected_sub_indicator === 'Undulation')
+         } " type="button" @click="$emit('fetchData')">REQUEST</button>
 
          <p class="search_location" v-if="storeUserSelections.selected_basin != ''">Search Location</p>
          <div id="location_search">
@@ -208,6 +210,23 @@ const fetchRegion = () => {
   left: 29vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 500;
+}
+
+.flood_request{
+  position: absolute;
+  top: 4vh;
+  left: 29vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+
+
 }
 
 .year_selection{

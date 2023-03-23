@@ -5,6 +5,7 @@ import Dashboard from "@/views/Dashboard.vue";
 import Error from "@/views/Error.vue"
 // import DashboardSelections from "../components/DashboardSelections.vue"
 import DataCollection from "@/views/DataCollection.vue"
+import Signup from "@/views/Signup.vue"
 
 
 const routes = [
@@ -29,11 +30,11 @@ const routes = [
     component: DataCollection,
 
   },
-  // {
-  //   path: "/selections",
-  //   name: "DashboardSelections",
-  //   component: DashboardSelections,
-  // },
+  {
+    path: "/signup",
+    name: "Signup",
+    component: Signup,
+  },
   
   // {
   //   path: "/",

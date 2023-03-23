@@ -129,6 +129,7 @@ export const useCounterStore = defineStore({
       labels: [],
       datasets: [
         {
+          // label: 'NDVI Time Series',
           data: [],
           fill: false,
           borderColor: '#1eb301',

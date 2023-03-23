@@ -145,8 +145,9 @@
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
+            <!--  v-if="sub_indicator != 'Precipitation Index'" -->
             <div id="chart_pie" v-if="sub_indicator != 'Vegetation Cover' ">
-              <LulcPie class="lulc_chart" v-if="sub_indicator != 'Precipitation Index'"
+              <LulcPie class="lulc_chart"
             :height="200"
             :width="300"
             :chartData="storeUserSelections.lulcChartData"
@@ -176,8 +177,9 @@
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
             >
-            <div id="bar" :class=" sub_indicator === 'Vegetation Cover' || sub_indicator === 'Precipitation Index'
-                            ? 'bar_veg_cover'
+            <div id="bar" :class=" sub_indicator === 'Vegetation Cover' 
+                            ? 'bar_veg_cover' :
+                            sub_indicator === 'Precipitation Index' ? 'prec_bar'
                             : '' ">
               <LulcBar  class="lulc_bar_chart" 
             :height="200"
@@ -185,13 +187,18 @@
             :options="sub_indicator === 'Vegetation Cover' ? veg_barchart_options : barchart_options"
             />
 
-            <LulcLine  class="lulc_line_chart" v-if="wmsTimeseriesLayer != null"
+           
+            </div>
+            <p class="time_series_title" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' "> Time Series </p>
+            <LulcLine  class="lulc_line_chart" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' "
             
             :chartData="storeUserSelections.lineChartData"
            :options="linechartOptions"
             
             />
-            </div>
+
            
           </div>
           
@@ -359,9 +366,11 @@
            
               <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="">
     
-              <a href="http://169.1.31.169/bkeadmin/#/search" target="_blank" rel="noopener noreferrer">
+              <!-- <a href="http://169.1.31.169/bkeadmin/#/search" target="_blank" rel="noopener noreferrer"> -->
+                <RouterLink to="/signup">
                 <img class="person" src=" /uiIcons/person.svg" alt="">
-              </a>
+              </RouterLink>
+              <!-- </a> -->
           
 
               <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
@@ -441,6 +450,7 @@ import { saveAs } from "file-saver";
   import LulcBar from '../components/Charts/LulcBar.vue'
   import LulcLine from '../components/Charts/LulcLine.vue'
   import { downloadCSV } from '../Downloads/CSV'
+  import PrecBar from '../components/Charts/PrecBar.vue';
   
 
   
@@ -556,7 +566,9 @@ import { saveAs } from "file-saver";
             }]
           },
           legend: {
-            display: false
+            display: false,
+          
+            
           },
           responsive: true,
           maintainAspectRatio: false

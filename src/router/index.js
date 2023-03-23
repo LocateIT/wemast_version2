@@ -6,6 +6,9 @@ import Error from "@/views/Error.vue"
 // import DashboardSelections from "../components/DashboardSelections.vue"
 import DataCollection from "@/views/DataCollection.vue"
 import Signup from "@/views/Signup.vue"
+import Login from "@/views/Login.vue"
+import Forgot from "@/views/Forgot.vue"
+import Reset from "@/views/Reset.vue"
 
 
 const routes = [
@@ -34,6 +37,21 @@ const routes = [
     path: "/signup",
     name: "Signup",
     component: Signup,
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
+  },
+  {
+    path: "/forgot",
+    name: "Forgot",
+    component: Forgot,
+  },
+  {
+    path: "/reset",
+    name: "Reset",
+    component: Reset,
   },
   
   // {

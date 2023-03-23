@@ -1,19 +1,4 @@
 <template>
-
-<div class="signup">
-    <div class="welcome">
-        <h2 class="welcome_text">Welcome Back!</h2>
-        <p class="already">If you already have an account, please login from here</p>
-
-        <RouterLink to="/login">
-
-        
-        <button class="login">Login</button>
-    </RouterLink>
-    <RouterView />
-
-    </div>
-
     <div class="register">
         <form class="form" style="margin-left: 0%;  margin-top: 0%; ">
     <p id="heading">
@@ -22,11 +7,11 @@
     </p>
 
 
-
+<!-- 
     <div class="field">
     <Person width="20" height="16" color="#164b75" />
       <input autocomplete="off" placeholder="Username" class="input-field" type="text">
-    </div>
+    </div> -->
 
     <div class="field">
     <Envelope width="18" height="15"  color="#164b75"/>
@@ -35,27 +20,28 @@
 
 
 
-    <div class="field">
+    <!-- <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
         <input placeholder="Password" class="input-field" type="password">
-    </div>
+    </div> -->
 
-    <div class="field">
+    <!-- <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
         <input placeholder="Confirm Password" class="input-field" type="password">
-    </div>
+    </div> -->
 
 
 
     <div class="btn">
 
     <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
-    <RouterLink to="/login" >
-    <button class="button2">Sign Up</button>
+    <RouterLink to="/reset" >
+    <button class="button2">Request Password</button>
     </RouterLink>
-    <RouterView />
 
+    
 
+    
     </div>
 
     <!-- <button class="button3">Forgot Password</button> -->
@@ -63,73 +49,25 @@
 
     </div>
 
-
-</div>
-  
-   
   
 </template>
 
 <script setup>
 
-
-  import { NButton, NSpace, NInput } from 'naive-ui'
+import { NButton, NSpace, NInput } from 'naive-ui'
   import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
   import { Envelope } from "@vicons/fa"
   import { CashOutline as CashIcon } from "@vicons/ionicons5";
 
-  
 </script>
 
 <style scoped>
-.signup{
-    margin-top: 10em;
-    display: flex;
-    flex-direction: row;
-    /* background-color: #d3d0d0; */
-    height: 100% !important;
-    width: 100%;
-}
-.welcome{
-    background-color: steelblue;
-    width: 35%;
-    height: 60vh;
-    margin-top: 2em;
-    margin-left: 15em;
-    color: #fffbfb;
-    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-.welcome_text{
-    font-size: xx-large;
-    margin-left: 7em;
-    margin-top: 5em;
-}
-.already{
-    font-size: x-large;
-    margin-left: 2em;
-    margin-top: 2em;
-}
-.login{
-    margin-left: 18em;
-    margin-top: 3em;
-    padding: 1em;
-  padding-left: 4.3em;
-  padding-right: 4.3em;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-  transition: .4s ease-in-out;
-  background-color: rgb(22, 75, 117);
-  color: white;
-  margin-bottom: 1.5rem;
-  cursor: pointer;
-}
 .register{
     /* background-color: aliceblue; */
     width: 30%;
-    height: 60vh;
-    margin-top: 2em;
-    /* margin-left: 0.2em; */
+    height: 50vh;
+    margin-top: 12em;
+    margin-left: 40em;
     background-color: #f0f0f0;
 
 }
@@ -232,20 +170,12 @@
   color: white;
 }
 
-.button3 {
-  margin-bottom: 3em;
-  padding: 0.5em;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  transition: .4s ease-in-out;
-  background-color: rgb(22, 75, 117);
-  color: white;
+.forgot{
+   position: relative;
+   top: -4vh;
+   left: 4.5vw;
+   text-decoration: underline;
+   color: rgb(64, 153, 226) ;
+   cursor: pointer;
 }
-
-.button3:hover {
-  background-color: red;
-  color: white;
-}
-
 </style>

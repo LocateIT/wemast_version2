@@ -496,6 +496,7 @@ import { saveAs } from "file-saver";
   let ndwi_legend = ref(false)
   let ndvi_legend = ref(false)
   let status_legend = ref(null)
+  let flood_legend = ref(null)
   let sidenavigationbar = ref(false)
   let swipe_control = ref(null)
   let wmsCompareLayer = ref(null)
@@ -2408,7 +2409,7 @@ console.log(wmsLayer.value, 'wms')
 
 
 
-
+floodlegendContent()
 changeOpacity()
 
 }
@@ -2599,6 +2600,7 @@ geoposition.value = `${lat}, ${lon}`
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
   
         var legend = L.control({ position:'bottomright', className: 'legend_lulc' });
         lulc_legend.value = legend
@@ -2652,6 +2654,7 @@ geoposition.value = `${lat}, ${lon}`
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
   
         var legend = L.control({ position: "bottomright" });
         prec_legend.value = legend
@@ -2704,6 +2707,7 @@ geoposition.value = `${lat}, ${lon}`
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
   
         var legend = L.control({ position: "bottomright" });
         ndwi_legend.value = legend
@@ -2751,12 +2755,13 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
-  
+        if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
   
         var legend = L.control({ position: "bottomright" });
         ndvi_legend.value = legend
@@ -2831,6 +2836,60 @@ geoposition.value = `${lat}, ${lon}`
   };
   
   status_legend.value.addTo(map);
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  
+
+  const floodlegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FLOOD%3AFLOOD&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  
+        var legend = L.control({ position: "bottomright" });
+        flood_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        flood_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  flood_legend.value.addTo(map);
         
       } catch (error) {
         console.log(error)

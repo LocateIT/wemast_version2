@@ -983,6 +983,62 @@ export const useCounterStore = defineStore({
           }
         
         }
+        if(this.selected_basin && this.selected_sub_indicator === 'Undulation') {
+          try {
+          
+         var basin = this.selected_basin
+         console.log(basin, 'basin flood')
+        //  var year = this.selected_year
+        //  var season = this.selected_season
+
+ 
+      
+    
+            const response = await axios.get('http://66.42.65.87:8080/geoserver/FLOOD_STATS/ows?service=WFS&version=1.0.0&request=GetFeature&CQL_FILTER=Name=%27'+basin+'%27&typeName=FLOOD_STATS%3A2022&maxFeatures=50&outputFormat=application%2Fjson'
+            );
+            console.log(response.data.features[0].properties,'Floods stats response')
+            var obj = response.data.features[0].properties
+            
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('0.0') && !key.includes('Basin_Name') && !key.includes('Name')))
+            console.log(newObj, 'NEW OBJECT')
+    
+            var labels = Object.keys(newObj)
+            console.log(labels, 'stats labels')
+            this.lulcChartData.labels = labels
+            this.lulcChartData.labels = ["Flooded Areas", "Wetness", "Moderate Wetness", "Moderate Dryness", "Dry Areas"]
+           
+          
+            var figures = Object.values(newObj)
+            console.log(figures, 'stats figures')
+            // var converted = figures.map( (item) => item/100)
+            // console.log(converted, 'converted figres')
+            this.lulcChartData.datasets[0].data = figures
+            this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00', '#bd6860']
+
+
+             //for new array
+             this.stats_array.labels = labels
+             this.stats_array.data_figures = figures
+
+             //capture bbox
+             var bbox = response.data.features[0].bbox
+             console.log(bbox, 'BOUNDING BOX')
+              this.western_lon = bbox[0]
+              this.northern_lat = bbox[1]
+              this.eastern_lon = bbox[2]
+              this.southern_lat = bbox[3]
+              this.resolution = '300'
+            
+         
+            
+          } catch (error) {
+            console.error('an error occured'+ '' + error);
+            
+          }
+        
+        }
+
+       
 
 
         } 

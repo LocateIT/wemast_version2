@@ -2190,11 +2190,11 @@ wmsLayer.value.addTo(map);
 
 
 
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://66.42.65.87:8080/geoserver/NDVI_${season.value}/wms?`, {
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDVI_${season.value}/wms?`, {
      pane: 'timeseries',
-     layers: `NDVI_${season.value}:NDVI`,
+     layers: `NDVI_${season.value}:NDVI_${season.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+    //  styles: styles.value,
      format: 'image/png',
      transparent: true,
      opacity:0.5
@@ -2445,6 +2445,7 @@ changeOpacity()
 wmsLayer.value.on('load', function (event) {
     loading.value = false
 });
+
 
 
 // console.log(map.getCenter(), 'center')

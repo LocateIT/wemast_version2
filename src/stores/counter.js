@@ -245,8 +245,7 @@ export const useCounterStore = defineStore({
       }
     },
     fetchYearList(){
-      if(this.selected_sub_indicator === 'Precipitation Index' || this.selected_sub_indicator === 'Burnt Area MODIS'
-       || this.selected_sub_indicator === 'Burnt Area FIRMS'
+      if(this.selected_sub_indicator === 'Precipitation Index' 
        || this.selected_sub_indicator === 'Soil Moisure Index'){
         this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
@@ -258,6 +257,14 @@ export const useCounterStore = defineStore({
       "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
         '2018','2019','2020', '2021', "2022"]
       }
+      
+      if(this.selected_sub_indicator === 'Burnt Area MODIS'
+      || this.selected_sub_indicator === 'Burnt Area FIRMS') {
+        this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
+      "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
+        '2018']
+      }
+      
       
       
 
@@ -892,7 +899,7 @@ export const useCounterStore = defineStore({
             console.log(labels, 'stats labels')
 
             this.lulcChartData.labels = labels
-            this.lulcChartData.labels = ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4']
+            this.lulcChartData.labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4']
            
           
             var figures = Object.values(newObj)
@@ -926,62 +933,119 @@ export const useCounterStore = defineStore({
         }
 
         if(this.selected_sub_indicator === 'Burnt Area FIRMS') {
-          try {
+        //   try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
-         var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //     // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+        //  var basin = this.selected_basin
+        // //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
-         var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
-        var season = this.selected_season
+        //  var year = this.selected_year
+        // //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        // var season = this.selected_season
 
-        // console.log(season, 'season for stattttttttsssssss')
+        // // console.log(season, 'season for stattttttttsssssss')
       
     
-            const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_STATS_${season}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRMS_STATS_${season}%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
-            );
-            console.log(response.data.features[0].properties,'FIRMS stats response')
-            var obj = response.data.features[0].properties
+        //     const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_STATS_${season}/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRMS_STATS_${season}%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
+        //     );
+        //     console.log(response.data.features[0].properties,'FIRMS stats response')
+        //     var obj = response.data.features[0].properties
             
-            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-            console.log(newObj, 'NEW OBJECT')
+        //     const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+        //     console.log(newObj, 'NEW OBJECT')
     
-            var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
-            this.lulcChartData.labels = labels
-            this.lulcChartData.labels = ['Total Burnt Area']
+        //     var labels = Object.keys(newObj)
+        //     console.log(labels, 'stats labels')
+        //     this.lulcChartData.labels = labels
+        //     this.lulcChartData.labels = ['Total Burnt Area']
            
           
-            var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
-            // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
-            this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00']
+        //     var figures = Object.values(newObj)
+        //     console.log(figures, 'stats figures')
+        //     // var converted = figures.map( (item) => item/100)
+        //     // console.log(converted, 'converted figres')
+        //     this.lulcChartData.datasets[0].data = figures
+        //     this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00']
 
 
-             //for new array
-             this.stats_array.labels = labels
-             this.stats_array.data_figures = figures
+        //      //for new array
+        //      this.stats_array.labels = labels
+        //      this.stats_array.data_figures = figures
 
-             //capture bbox
-             var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
-              this.western_lon = bbox[0]
-              this.northern_lat = bbox[1]
-              this.eastern_lon = bbox[2]
-              this.southern_lat = bbox[3]
-              this.resolution = '300'
+        //      //capture bbox
+        //      var bbox = response.data.features[0].bbox
+        //      console.log(bbox, 'BOUNDING BOX')
+        //       this.western_lon = bbox[0]
+        //       this.northern_lat = bbox[1]
+        //       this.eastern_lon = bbox[2]
+        //       this.southern_lat = bbox[3]
+        //       this.resolution = '300'
             
          
             
-          } catch (error) {
-            console.error('an error occured'+error);
+        //   } catch (error) {
+        //     console.error('an error occured'+error);
             
-          }
+        //   }
         
+
+        try {
+          
+          // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+       var basin = this.selected_basin
+      //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+
+
+       var year = this.selected_year
+      //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+      var season = this.selected_season
+
+      // console.log(season, 'season for stattttttttsssssss')
+    
+  
+          const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRE_STATS/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRE_STATS%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
+          );
+          console.log(response.data.features[0].properties,'fire stats response')
+          var obj = response.data.features[0].properties
+          
+          const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+          console.log(newObj, 'NEW OBJECT')
+  
+          var labels = Object.keys(newObj)
+          console.log(labels, 'stats labels')
+
+          this.lulcChartData.labels = labels
+          this.lulcChartData.labels = ['Jan-March', 'Apr-June', 'July-Sep', 'Oct-Dec']
+         
+        
+          var figures = Object.values(newObj)
+          console.log(figures, 'stats figures')
+          // var converted = figures.map( (item) => item/100)
+          // console.log(converted, 'converted figres')
+          this.lulcChartData.datasets[0].data = figures
+          this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00']
+
+
+           //for new array
+           this.stats_array.labels = labels
+           this.stats_array.data_figures = figures
+
+           //capture bbox
+           var bbox = response.data.features[0].bbox
+           console.log(bbox, 'BOUNDING BOX')
+            this.western_lon = bbox[0]
+            this.northern_lat = bbox[1]
+            this.eastern_lon = bbox[2]
+            this.southern_lat = bbox[3]
+            this.resolution = '300'
+          
+       
+          
+        } catch (error) {
+          console.error('an error occured'+error);
+          
+        }
         }
         if(this.selected_basin && this.selected_sub_indicator === 'Undulation') {
           try {
@@ -1013,7 +1077,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00', '#bd6860']
+            this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#e6ac93', '#f0eec7', '#d8dc5c', '#6acb75']
 
 
              //for new array

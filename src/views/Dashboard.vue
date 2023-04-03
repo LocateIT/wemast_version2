@@ -497,6 +497,8 @@ import { saveAs } from "file-saver";
   let ndvi_legend = ref(false)
   let status_legend = ref(null)
   let flood_legend = ref(null)
+  let modis_legend = ref(null)
+  let firms_legend = ref(null)
   let sidenavigationbar = ref(false)
   let swipe_control = ref(null)
   let wmsCompareLayer = ref(null)
@@ -1926,14 +1928,14 @@ changeOpacity()
 
    //adding timeseries layer
    addPrecTimeSeries()
-   wmsTimeseriesLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/Wet/wms?", {
+   wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `Wet:SPI`,
+     layers: `SPI_${season.value}:SPI`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.2
+     opacity:0.1
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -1980,14 +1982,14 @@ changeOpacity()
 
   //adding timeseries layer
   addPrecTimeSeries()
-   wmsTimeseriesLayer.value =  L.tileLayer.betterWms("http://66.42.65.87:8080/geoserver/Dry/wms?", {
+  wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `Dry:SPI`,
+     layers: `SPI_${season.value}:SPI`,
      crs:L.CRS.EPSG4326,
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.2
+     opacity:0.1
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -2195,10 +2197,10 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      pane: 'timeseries',
      layers: `NDVI_${season.value}:NDVI_${season.value}`,
      crs:L.CRS.EPSG4326,
-    //  styles: styles.value,
+     styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.5
+     opacity:0.1
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -2294,7 +2296,7 @@ wmsLayer.value.addTo(map);
 console.log(wmsLayer.value, 'wms')
 
 
-
+modislegendContent()
 
 changeOpacity()
 
@@ -2333,12 +2335,137 @@ console.log(wmsLayer.value, 'wms')
 
 
 
-
+firmslegendContent()
 changeOpacity()
 
 }
  }
 
+
+//  const addSMITimeSeries = () => {
+//   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
+    
+//     onAdd: function (map) {
+//       // Triggered when the layer is added to a map.
+//       //   Register a click listener, then do all the upstream WMS things
+//       L.TileLayer.WMS.prototype.onAdd.call(this, map);
+//       map.on('click' , this.getFeatureInfo, this);
+//     },
+    
+//     onRemove: function (map) {
+//       // Triggered when the layer is removed from a map.
+//       //   Unregister a click listener, then do all the upstream WMS things
+//       L.TileLayer.WMS.prototype.onRemove.call(this, map);
+//       map.off('click', this.getFeatureInfo, this);
+//     },
+    
+//     getFeatureInfo: function (evt) {
+//       // Make an AJAX request to the server and hope for the best
+//       var url = this.getFeatureInfoUrl(evt.latlng),
+//           showResults = L.Util.bind(this.showGetFeatureInfo, this);
+//       $.ajax({
+//         url: url,
+//         success: function (data, status, xhr) {
+//           var err = typeof data === 'string' ? null : data;
+//           showResults(err, evt.latlng, data);
+//         },
+//         error: function (xhr, status, error) {
+//           showResults(error);  
+//         }
+//       });
+//     },
+    
+//     getFeatureInfoUrl: function (latlng) {
+//       // Construct a GetFeatureInfo request URL given a point
+//       var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
+      
+//           size = this._map.getSize(),
+          
+//           params = {
+//             request: 'GetFeatureInfo',
+//             service: 'WMS',
+//             srs: 'EPSG:4326',
+//             styles: this.wmsParams.styles,
+//             transparent: this.wmsParams.transparent,
+//             version: this.wmsParams.version,      
+//             format: this.wmsParams.format,
+//             bbox: this._map.getBounds().toBBoxString(),
+//             height: size.y,
+//             width: size.x,
+//             layers: this.wmsParams.layers,
+//             query_layers: this.wmsParams.layers,
+//             // X: point.x,
+//             // Y: point.y,
+//             info_format: 'application/json'
+//           };
+      
+//       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
+//       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+//       // console.log(point, 'point')
+    
+//       // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      
+//       return this._url + L.Util.getParamString(params, this._url, true);
+//     },
+    
+//     showGetFeatureInfo: function (err, latlng, content) {
+//       if (err) {
+//         // console.log(latlng, 'lat long')
+  
+      
+//         ;
+//         // console.log(latlng, 'wms latlng')
+//         console.log(content.features[0].properties, "smi wms content")
+        
+//         var bands = content.features[0].properties
+        
+//         var band_names = Object.keys(bands)
+//         console.log(band_names.slice(15,23), 'band names')
+          
+
+//         lineChartData.labels = band_names
+
+//         var band_values = Object.values(bands)
+//         console.log(band_values.slice(15,23), 'band values')
+//         lineChartData.datasets[0].data = band_values
+
+//         console.log(lineChartData, 'line chart data')
+
+//         storeUserSelections.lineChartData.labels = band_names.slice(15,22)
+//         storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
+//         storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,22)
+//         console.log(storeUserSelections.lineChartData, 'store linechart data')
+
+        
+
+      
+//           return  
+//           // console.log(latlng, 'lat long');
+        
+//         } // do nothing if there's an error
+     
+        
+//       // Otherwise show the content in a popup, or something.
+   
+//       // L.popup({ maxWidth: 800})
+//       //   .setLatLng(latlng)
+//       //   .setContent( content)
+//       //   .openOn(this._map);
+  
+    
+//     },
+    
+//   }); //end of L.extend
+  
+  
+  
+  
+//   L.tileLayer.betterWms = function (url, options) {
+//     return new L.TileLayer.BetterWMS(url, options);  
+//   };
+
+//  }
+  
  const addSMILayer = () => {
   if(sub_indicator.value === 'Soil Moisure Index') {
   
@@ -2362,12 +2489,31 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${seaso
 });
 
 
-wmsLayer.value.addTo(map);
+// wmsLayer.value.addTo(map);
 
 
 
 
-console.log(wmsLayer.value, 'wms')
+//Add SMI Timeseries 
+
+// addSMITimeSeries()
+// wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SMI_${season.value}/wms?`, {
+//      pane: 'pane800',
+//      layers: `SMI_${season.value}:SMI`,
+//      crs:L.CRS.EPSG4326,
+//     //  styles: styles.value,
+//      format: 'image/png',
+//      transparent: true,
+//      opacity:0.1
+     
+     
+    
+//   });
+//   wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+//   wmsTimeseriesLayer.value.on('load', function (event) {
+//     loading.value = false
+// });
 
 
 
@@ -2863,6 +3009,7 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
+        if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
@@ -2898,6 +3045,121 @@ geoposition.value = `${lat}, ${lon}`
     }
     getLegendContent()
   }
+
+  const modislegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRE%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+
+        
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  
+        var legend = L.control({ position: "bottomright" });
+        modis_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        modis_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  modis_legend.value.addTo(map);
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  const firmslegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+
+        
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  
+        var legend = L.control({ position: "bottomright" });
+        firms_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        firms_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  firms_legend.value.addTo(map);
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  
+  
   
 
   //change opacity

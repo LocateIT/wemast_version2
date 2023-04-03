@@ -497,6 +497,7 @@ import { saveAs } from "file-saver";
   let ndvi_legend = ref(false)
   let status_legend = ref(null)
   let flood_legend = ref(null)
+  let smi_legend = ref(null)
   let modis_legend = ref(null)
   let firms_legend = ref(null)
   let sidenavigationbar = ref(false)
@@ -2312,9 +2313,9 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?`, {
      pane: 'pane400',
-     layers: `FIRMS_${season.value}:${year.value}`,
+     layers: `FIRMS_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
      styles: `${basin.value}_firms`,
      format: 'image/png',
@@ -2489,7 +2490,7 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${seaso
 });
 
 
-// wmsLayer.value.addTo(map);
+wmsLayer.value.addTo(map);
 
 
 
@@ -2516,7 +2517,7 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${seaso
 // });
 
 
-
+SMIlegendContent()
 
 changeOpacity()
 
@@ -2740,13 +2741,15 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
-  
-        if(status_legend.value)map.removeControl(status_legend.value)
-        if(prec_legend.value)map.removeControl(prec_legend.value)
-        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
-        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
-        if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
         var legend = L.control({ position:'bottomright', className: 'legend_lulc' });
         lulc_legend.value = legend
@@ -2795,12 +2798,15 @@ geoposition.value = `${lat}, ${lon}`
         })
         console.log(colors_array, 'colors array')
   
-        if(status_legend.value)map.removeControl(status_legend.value)
-        if(prec_legend.value)map.removeControl(prec_legend.value)
-        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
-        if(lulc_legend.value)map.removeControl(lulc_legend.value)
-        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
         var legend = L.control({ position: "bottomright" });
         prec_legend.value = legend
@@ -2848,13 +2854,15 @@ geoposition.value = `${lat}, ${lon}`
         })
         console.log(colors_array, 'colors array')
   
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
-        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
-        if(flood_legend.value)map.removeControl(flood_legend.value)
-  
         var legend = L.control({ position: "bottomright" });
         ndwi_legend.value = legend
         var colors = colors_array
@@ -2901,11 +2909,14 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
-        if(prec_legend.value)map.removeControl(prec_legend.value)
-        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
   
@@ -2955,6 +2966,10 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
@@ -3009,6 +3024,9 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
@@ -3065,6 +3083,8 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
@@ -3121,6 +3141,8 @@ geoposition.value = `${lat}, ${lon}`
          return item.color
         })
         console.log(colors_array, 'colors array')
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
@@ -3159,6 +3181,108 @@ geoposition.value = `${lat}, ${lon}`
     getLegendContent()
   }
   
+  const SMIlegendContent = () => {
+
+        if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_legend.value)map.removeControl(flood_legend.value)
+        if(status_legend.value)map.removeControl(status_legend.value)
+        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(prec_legend.value)map.removeControl(prec_legend.value)
+        if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+    var legend = L.control({ position: "bottomright" });
+        smi_legend.value = legend
+  //       var colors = colors_array
+  //       var labels = label_array
+  
+        smi_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            // var image = document.createElement('img');
+            // image.src="http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150"; 
+            div.innerHTML += (`<p>${basin.value} SMI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+            
+            // document.getElementById('map').appendChild(image);
+            
+
+            // for (var i = 0; i < colors.length; i++) {
+            //       div.innerHTML +=
+            //           ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+            //   }
+    
+            //add image instead
+            // div.innerHTML += "<img src=\"http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150\">";
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  smi_legend.value.addTo(map);
+   
+  //   const getLegendContent = async () => {
+  //     try {
+  //       const response = await axios.get(`http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+  //       )
+  //       console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+  //       var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+  //      var label_array =  object_array.map( (item) => {
+  //        console.log(item.label, 'labels items array') 
+  //        return item.label
+  //       })
+  //       console.log(label_array, 'label array')
+  
+  //       var colors_array = object_array.map( (item)=> {
+  //        return item.color
+  //       })
+  //       console.log(colors_array, 'colors array')
+  //       if(smi_legend.value)map.removeControl(smi_legend.value)
+  //       if(flood_legend.value)map.removeControl(flood_legend.value)
+  //       if(status_legend.value)map.removeControl(status_legend.value)
+  //       if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+  //       if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+  //       if(prec_legend.value)map.removeControl(prec_legend.value)
+  //       if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  
+  //       var legend = L.control({ position: "bottomright" });
+  //       smi_legend.value = legend
+  //       var colors = colors_array
+  //       var labels = label_array
+  
+  //       smi_legend.value.onAdd = function(map) {
+  //           var div = L.DomUtil.create("div", "smi_legend");
+  //           div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
+
+            
+
+  //           // for (var i = 0; i < colors.length; i++) {
+  //           //       div.innerHTML +=
+  //           //           ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+  //           //   }
+    
+  //           //add image instead
+  //           // div.innerHTML += "<img src=\"http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150\">";
+    
+  //             let draggable = new L.Draggable(div); //the legend can be dragged around the div
+  //       draggable.enable();
+
+  //   return div;
+  // };
+  
+  // smi_legend.value.addTo(map);
+        
+  //     } catch (error) {
+  //       console.log(error)
+        
+  //     }
+  //   }
+    // getLegendContent()
+  }
+
   
   
 

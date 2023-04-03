@@ -784,6 +784,15 @@ top: 36.4vh;
   background-size: 18px;
   background-color: rgba(255, 255, 255, 1);
 }
+.legend img {
+ 
+  margin-left: 15px;
+}
+
+
+
+
+
 
 .side-bar-view{
   background-color: rgb(202, 124, 124);

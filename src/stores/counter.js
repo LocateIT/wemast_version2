@@ -1004,7 +1004,7 @@ export const useCounterStore = defineStore({
       // console.log(season, 'season for stattttttttsssssss')
     
   
-          const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRE_STATS/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRE_STATS%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
+          const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_STATS_DRY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRMS_STATS_DRY%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
           );
           console.log(response.data.features[0].properties,'fire stats response')
           var obj = response.data.features[0].properties
@@ -1016,7 +1016,7 @@ export const useCounterStore = defineStore({
           console.log(labels, 'stats labels')
 
           this.lulcChartData.labels = labels
-          this.lulcChartData.labels = ['Jan-March', 'Apr-June', 'July-Sep', 'Oct-Dec']
+          this.lulcChartData.labels = ['Oct-Dec']
          
         
           var figures = Object.values(newObj)
@@ -1024,7 +1024,7 @@ export const useCounterStore = defineStore({
           // var converted = figures.map( (item) => item/100)
           // console.log(converted, 'converted figres')
           this.lulcChartData.datasets[0].data = figures
-          this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#f36f21', '#fcde8b', '#55ff00']
+          this.lulcChartData.datasets[0].backgroundColor = ['#55ff00', '#f36f21', '#fcde8b', '#ff0000']
 
 
            //for new array

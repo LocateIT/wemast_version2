@@ -2781,61 +2781,42 @@ geoposition.value = `${lat}, ${lon}`
   }
   
   const preclegendContent = () => {
-    const getLegendContent = async () => {
-      try {
-        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SPI_WET:2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150'
-        )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
-        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
-       var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
-         return item.label
-        })
-        console.log(label_array, 'label array')
-  
-        var colors_array = object_array.map( (item)=> {
-         return item.color
-        })
-        console.log(colors_array, 'colors array')
-  
-        if(firms_legend.value)map.removeControl(firms_legend.value)
-        if(smi_legend.value)map.removeControl(smi_legend.value)
-        if(modis_legend.value)map.removeControl(modis_legend.value)
-        if(flood_legend.value)map.removeControl(flood_legend.value)
-        if(status_legend.value)map.removeControl(status_legend.value)
-        if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
-        if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
-        if(prec_legend.value)map.removeControl(prec_legend.value)
-        if(lulc_legend.value)map.removeControl(lulc_legend.value)
-  
-        var legend = L.control({ position: "bottomright" });
-        prec_legend.value = legend
-        var colors = colors_array
-        var labels = label_array
-  
-        prec_legend.value.onAdd = function(map) {
-            var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${season.value} Season ${year.value} </p>`;
-            for (var i = 0; i < colors.length; i++) {
-                  div.innerHTML +=
-                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
-              }
+
+if(firms_legend.value)map.removeControl(firms_legend.value)
+if(smi_legend.value)map.removeControl(smi_legend.value)
+if(modis_legend.value)map.removeControl(modis_legend.value)
+if(flood_legend.value)map.removeControl(flood_legend.value)
+if(status_legend.value)map.removeControl(status_legend.value)
+if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+if(prec_legend.value)map.removeControl(prec_legend.value)
+if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+var legend = L.control({ position: "bottomright" });
+smi_legend.value = legend
+//       var colors = colors_array
+//       var labels = label_array
+
+smi_legend.value.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
     
-              let draggable = new L.Draggable(div); //the legend can be dragged around the div
-        draggable.enable();
-  
-    return div;
-  };
-  
-  prec_legend.value.addTo(map);
-        
-      } catch (error) {
-        console.log(error)
-        
-      }
-    }
-    getLegendContent()
-  }
+    div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+    
+   
+
+      let draggable = new L.Draggable(div); //the legend can be dragged around the div
+draggable.enable();
+
+return div;
+};
+
+smi_legend.value.addTo(map);
+
+
+
+}
+
   const NDWIlegendContent = () => {
     const getLegendContent = async () => {
       try {
@@ -3200,21 +3181,11 @@ geoposition.value = `${lat}, ${lon}`
   
         smi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            // var image = document.createElement('img');
-            // image.src="http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150"; 
+            
             div.innerHTML += (`<p>${basin.value} SMI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
 
             
-            // document.getElementById('map').appendChild(image);
-            
-
-            // for (var i = 0; i < colors.length; i++) {
-            //       div.innerHTML +=
-            //           ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
-            //   }
-    
-            //add image instead
-            // div.innerHTML += "<img src=\"http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150\">";
+           
     
               let draggable = new L.Draggable(div); //the legend can be dragged around the div
         draggable.enable();
@@ -3224,63 +3195,8 @@ geoposition.value = `${lat}, ${lon}`
   
   smi_legend.value.addTo(map);
    
-  //   const getLegendContent = async () => {
-  //     try {
-  //       const response = await axios.get(`http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
-  //       )
-  //       console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
-  //       var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
-  //      var label_array =  object_array.map( (item) => {
-  //        console.log(item.label, 'labels items array') 
-  //        return item.label
-  //       })
-  //       console.log(label_array, 'label array')
   
-  //       var colors_array = object_array.map( (item)=> {
-  //        return item.color
-  //       })
-  //       console.log(colors_array, 'colors array')
-  //       if(smi_legend.value)map.removeControl(smi_legend.value)
-  //       if(flood_legend.value)map.removeControl(flood_legend.value)
-  //       if(status_legend.value)map.removeControl(status_legend.value)
-  //       if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
-  //       if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
-  //       if(prec_legend.value)map.removeControl(prec_legend.value)
-  //       if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
-  //       var legend = L.control({ position: "bottomright" });
-  //       smi_legend.value = legend
-  //       var colors = colors_array
-  //       var labels = label_array
-  
-  //       smi_legend.value.onAdd = function(map) {
-  //           var div = L.DomUtil.create("div", "smi_legend");
-  //           div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
-
-            
-
-  //           // for (var i = 0; i < colors.length; i++) {
-  //           //       div.innerHTML +=
-  //           //           ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
-  //           //   }
-    
-  //           //add image instead
-  //           // div.innerHTML += "<img src=\"http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150\">";
-    
-  //             let draggable = new L.Draggable(div); //the legend can be dragged around the div
-  //       draggable.enable();
-
-  //   return div;
-  // };
-  
-  // smi_legend.value.addTo(map);
-        
-  //     } catch (error) {
-  //       console.log(error)
-        
-  //     }
-  //   }
-    // getLegendContent()
   }
 
   

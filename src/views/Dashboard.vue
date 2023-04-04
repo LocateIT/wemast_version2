@@ -179,7 +179,8 @@
             >
             <div id="bar" :class=" sub_indicator === 'Vegetation Cover' 
                             ? 'bar_veg_cover' :
-                            sub_indicator === 'Precipitation Index' ? 'prec_bar'
+                            sub_indicator === 'Precipitation Index'  ? 'prec_bar' :
+                            sub_indicator === 'Soil Moisure Index'  ? 'prec_bar'
                             : '' ">
               <LulcBar  class="lulc_bar_chart" 
             :height="200"
@@ -190,9 +191,9 @@
            
             </div>
             <p class="time_series_title" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
-             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' "> Time Series </p>
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' "> Time Series </p>
             <LulcLine  class="lulc_line_chart" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
-             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' "
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'"
             
             :chartData="storeUserSelections.lineChartData"
            :options="linechartOptions"
@@ -523,6 +524,15 @@ import { saveAs } from "file-saver";
   let geometry = {}
   let chartData = ref([])
   let stats = ref({})
+  let indexx = ref('')
+    //variables
+    const storeUserSelections = useCounterStore()
+  const compareUserSelections = useCompareStore()
+  
+  // console.log(storeUserSelections.fetchCountriesList)
+  
+  console.log(storeUserSelections.getLoadingState, 'getLoadingState')
+  
 
   let lineChartData = {
       labels: [],
@@ -540,6 +550,21 @@ import { saveAs } from "file-saver";
       ],
     }
     let lineData = ref({})
+    const createIndices = () => {
+    if(sub_indicator.value === 'Vegetation Cover'){
+    indexx.value = 'NDVI'
+  }
+  if(sub_indicator.value === 'Soil Moisure Index'){
+    indexx.value = 'SMI'
+  }
+  if(sub_indicator.value === 'Precipitation Index'){
+    indexx.value = 'SPI'
+  }
+  console.log(indexx.value, 'indices')
+  return indexx.value
+
+
+  }
 
     let linechartOptions = {
       scales: {
@@ -548,7 +573,7 @@ import { saveAs } from "file-saver";
                     display: true,
                     fontStyle: "bold",
                     fontFamily: "Helvetica",
-                    labelString: 'NDVI Values'
+                    labelString: 'Values'
                 },
               ticks: {
                 beginAtZero: true
@@ -723,13 +748,7 @@ let barchart_options= {
   
   
   
-  //variables
-  const storeUserSelections = useCounterStore()
-  const compareUserSelections = useCompareStore()
-  
-  // console.log(storeUserSelections.fetchCountriesList)
-  
-  console.log(storeUserSelections.getLoadingState, 'getLoadingState')
+
 
   // const chartData = storeUserSelections.getLulcChartData
   
@@ -1559,6 +1578,9 @@ map.addControl(search_control.value );
     var selectedSubIndicator= storeUserSelections.getSelectedSubIndcator
    console.log(selectedSubIndicator, 'selected sub indicator app')
    sub_indicator.value = selectedSubIndicator
+
+
+
   
   }
   
@@ -2490,31 +2512,31 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${seaso
 });
 
 
-wmsLayer.value.addTo(map);
+// wmsLayer.value.addTo(map);
 
 
 
 
 //Add SMI Timeseries 
 
-// addSMITimeSeries()
-// wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SMI_${season.value}/wms?`, {
-//      pane: 'pane800',
-//      layers: `SMI_${season.value}:SMI`,
-//      crs:L.CRS.EPSG4326,
-//     //  styles: styles.value,
-//      format: 'image/png',
-//      transparent: true,
-//      opacity:0.1
+addPrecTimeSeries()
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SMI_${season.value}/wms?`, {
+     pane: 'pane800',
+     layers: `SMI_${season.value}:SMI`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_smi`,
+     format: 'image/png',
+     transparent: true,
+     opacity:0.6
      
      
     
-//   });
-//   wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  });
+  wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
-//   wmsTimeseriesLayer.value.on('load', function (event) {
-//     loading.value = false
-// });
+  wmsTimeseriesLayer.value.on('load', function (event) {
+    loading.value = false
+});
 
 
 SMIlegendContent()
@@ -2588,6 +2610,8 @@ changeOpacity()
   addFirmsLayer()
   addSMILayer()
   addFloodLayer()
+
+  createIndices()
 
   //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {

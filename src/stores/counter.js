@@ -1102,6 +1102,64 @@ export const useCounterStore = defineStore({
         
         }
 
+        if(this.selected_sub_indicator === 'Soil Moisure Index') {
+          try {
+          
+            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+         var basin = this.selected_basin
+        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+  
+  
+         var year = this.selected_year
+        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        var season = this.selected_season
+
+        // console.log(season, 'season for stattttttttsssssss')
+      
+    
+            const response = await axios.get(`http://66.42.65.87:8080/geoserver/SMI_${season}_STATS2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=SMI_${season}_STATS2%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
+            );
+            console.log(response.data.features[0].properties,'SMI stats response')
+            var obj = response.data.features[0].properties
+            
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('count') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+            console.log(newObj, 'NEW OBJECT')
+    
+            var labels = Object.keys(newObj)
+            console.log(labels, 'stats labels')
+            this.lulcChartData.labels = labels
+           
+          
+            var figures = Object.values(newObj)
+            console.log(figures, 'stats figures')
+            // var converted = figures.map( (item) => item/100)
+            // console.log(converted, 'converted figres')
+            this.lulcChartData.datasets[0].data = figures
+            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+
+
+             //for new array
+             this.stats_array.labels = labels
+             this.stats_array.data_figures = figures
+
+             //capture bbox
+             var bbox = response.data.features[0].bbox
+             console.log(bbox, 'BOUNDING BOX')
+              this.western_lon = bbox[0]
+              this.northern_lat = bbox[1]
+              this.eastern_lon = bbox[2]
+              this.southern_lat = bbox[3]
+              this.resolution = '300'
+            
+         
+            
+          } catch (error) {
+            console.error('an error occured'+error);
+            
+          }
+        
+        }
+
        
 
 

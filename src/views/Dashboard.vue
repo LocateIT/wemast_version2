@@ -2512,7 +2512,9 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${seaso
 });
 
 
-// wmsLayer.value.addTo(map);
+wmsLayer.value.addTo(map);
+SMIlegendContent()
+changeOpacity()
 
 
 
@@ -2527,7 +2529,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      styles: `${basin.value}_smi`,
      format: 'image/png',
      transparent: true,
-     opacity:0.6
+     opacity:0.1
      
      
     
@@ -2539,9 +2541,9 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
 });
 
 
-SMIlegendContent()
 
-changeOpacity()
+
+
 
 }
  }

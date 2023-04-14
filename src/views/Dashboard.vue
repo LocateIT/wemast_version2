@@ -169,7 +169,8 @@
             
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
-            <div class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+            <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+            <div  v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">{{ `${basin} ${parameter}` }}</div>
             <img src="mapIcons/download_map.svg" alt="" title="Download Png"
             class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="bar_chart_png"
@@ -2711,7 +2712,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
     //  styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.5
+     opacity:0.1
      
      
     

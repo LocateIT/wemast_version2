@@ -180,12 +180,13 @@
             title="Download CSV"
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
-            v-if="sub_indicator !='Precipitation Index'"
+            v-if="sub_indicator !=='Precipitation Index'"
             >
             <div id="bar" :class=" sub_indicator === 'Vegetation Cover' 
                             ? 'bar_veg_cover' :
                             sub_indicator === 'Precipitation Index'  ? 'prec_bar' :
-                            sub_indicator === 'Soil Moisure Index'  ? 'prec_bar'
+                            sub_indicator === 'Soil Moisure Index'  ? 'prec_bar':
+                            sub_indicator === 'Water Quality'      ? 'prec_bar'
                             : '' ">
               <LulcBar  class="lulc_bar_chart" 
             :height="200"
@@ -196,9 +197,13 @@
            
             </div>
             <p class="time_series_title" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
-             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' "> Time Series </p>
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+             || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
+              || storeUserSelections.selected_sub_indicator === 'Water Quality'"> Time Series </p>
             <LulcLine  class="lulc_line_chart" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
-             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'"
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+             || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
+             || storeUserSelections.selected_sub_indicator === 'Water Quality'"
             
             :chartData="storeUserSelections.lineChartData"
            :options="linechartOptions"
@@ -1706,16 +1711,16 @@ const prec_style = () => {
   }
 
 const wetland_inventory_style = () => {
-    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory'){
+    if(basin.value === 'Cuvelai' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
       styles.value = 'cuvelai_water'
     }
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Wetland Inventory'){
+    if(basin.value === 'Limpopo' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
       styles.value = 'limpopo_water'
     }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Wetland Inventory'){
+    if(basin.value === 'Zambezi' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
       styles.value = 'zambezi_water'
     }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'Wetland Inventory'){
+    if(basin.value === 'Okavango' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
       styles.value = 'okavango_water'
     }
   }
@@ -1733,6 +1738,21 @@ const ndvi_style = () => {
       styles.value = 'okavango_ndvi'
     }
   
+ }
+
+ const sus_style = () => {
+  if( basin.value === 'Cuvelai' && sub_indicator.value === 'Water Quality' ){
+    styles.value = 'cuvelai_ndvi'
+  }
+  if( basin.value === 'Limpopo' && sub_indicator.value === 'Water Quality' ){
+    styles.value = 'limpopo_ndvi'
+  }
+  if( basin.value === 'Zambezi' && sub_indicator.value === 'Water Quality' ){
+    styles.value = 'zambezi_ndvi'
+  }
+  if( basin.value === 'Okavango' && sub_indicator.value === 'Water Quality' ){
+    styles.value = 'okavango_ndvi'
+  }
  }
   
  const status_style = () => {
@@ -1778,7 +1798,7 @@ wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?",
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.5
+     opacity:1.0
      
      
     
@@ -1947,7 +1967,8 @@ changeOpacity()
 
         storeUserSelections.lineChartData.labels = band_names.slice(15,22)
         storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
-        storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,22)
+        console.log('band values', band_values )
+        storeUserSelections.lineChartData.datasets[0].data = band_values
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 
         
@@ -2640,6 +2661,77 @@ changeOpacity()
 
 }
  }
+
+
+
+
+ const addSuspendedSediments = () => {
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+
+
+ 
+
+
+  
+  // NDWIlegendContent()
+  changeOpacity()
+
+ //ADDTIMESERIES
+  addPrecTimeSeries()
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDSSI/wms?`, {
+     pane: 'pane800',
+     layers: `NDSSI:NDSSI_DRY`,
+     crs:L.CRS.EPSG4326,
+    //  styles: styles.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:0.5
+     
+     
+    
+  });
+  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  wmsTimeseriesLayer.value.on('load', function (event) {
+    console.log('sus sediments loaded')
+    loading.value = false
+});
+
+  
+  
+  
+  
+  
+  }
+
+ }
+ 
   //function to request wms
   
   const fetchWmsData = () => {
@@ -2654,6 +2746,7 @@ changeOpacity()
   wetland_inventory_style()
   ndvi_style()
   status_style()
+  // sus_style()
    
   
   addLulcLayer()
@@ -2667,6 +2760,7 @@ changeOpacity()
   addFirmsLayer()
   addSMILayer()
   addFloodLayer()
+  addSuspendedSediments()
 
   createIndices()
 

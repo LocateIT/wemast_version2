@@ -268,7 +268,7 @@ export const useCounterStore = defineStore({
       
       
 
-      if( this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' ) {
+      if( this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' ||this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments' ) {
         this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
           '2018','2019','2020', '2021', "2022"]
@@ -416,7 +416,7 @@ export const useCounterStore = defineStore({
     showSelectedParameter(option) {
       this.parameter_placeholder = option;
       this.selected_parameter=  option
-      console.log(this.selected_parameter , 'changed selected satellite')
+      console.log(this.selected_parameter , 'changed selected parameter')
     },
     showSelectedSatellite(option) {
       this.satellite_placeholder = option;
@@ -510,7 +510,7 @@ export const useCounterStore = defineStore({
             console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
-            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0') && !key.includes('count')))
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')&& !key.includes('count')))
             console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
@@ -549,7 +549,7 @@ export const useCounterStore = defineStore({
         }
 
 
-        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent') {
+        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments')) {
           try {
           
             // console.log(this.selected_basin, 'BASIN FOR STATISTICS')

@@ -241,7 +241,7 @@ export const useCounterStore = defineStore({
         this.sub_indicator_list = ['Water Quality', 'Soil Moisure Index']
       }
       if(this.selected_indicator === 'Resiliance' ){
-        this.sub_indicator_list = ['Burnt Area MODIS', 'Burnt Area FIRMS', 'Precipitation Index', 'Undulation']
+        this.sub_indicator_list = [ 'Burnt Area FIRMS', 'Precipitation Index', 'Undulation']
       }
     },
     fetchYearList(){
@@ -510,7 +510,7 @@ export const useCounterStore = defineStore({
             console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
-            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0') && !key.includes('count')))
             console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)

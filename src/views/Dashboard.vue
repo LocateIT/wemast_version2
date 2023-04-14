@@ -35,6 +35,9 @@
       <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
   
       <div id="map">  </div>
+      <!-- <div class="clip" style="position: absolute; left: 67vw; top: 10vh;">
+        <button @click="clip_custom">clip custom</button>
+      </div> -->
         <div class="opacity" v-if="wmsLayer != null"  :class="{mainopen: sidenavigationbar}">
           <span id="opacity">Opacity:</span>
           <span id="image-opacity"> </span>
@@ -422,6 +425,7 @@
   import "dom-to-image/src/dom-to-image.js";
   import "dom-to-image/dist/dom-to-image.min.js"
 import { saveAs } from "file-saver";
+import * as wkt from 'wkt'
 
   // import "leaflet-draw/dist/leaflet.draw";
   
@@ -510,6 +514,8 @@ import { saveAs } from "file-saver";
   let search_control = ref(null)
   let geoposition = ref(null)
   let wmsTimeseriesLayer = ref(null)
+
+  let customWmsLayer = ref(null)
   let year_2013 = ref(null)
   let year_2014 = ref(null)
   let year_2015 = ref(null)
@@ -1770,7 +1776,7 @@ wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?",
      styles: styles.value,
      format: 'image/png',
      transparent: true,
-     opacity:1.0
+     opacity:0.5
      
      
     
@@ -1792,6 +1798,59 @@ changeOpacity()
 
 }
  }
+
+//  const clip_custom = () => {
+  
+//     // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+  
+//   // console.log('just to see if request is accessed') //accessed
+//   map.createPane("pane400").style.zIndex = 600;
+
+//   var drawn_polygon = storeUserSelections.custom_geojson.geojson.coordinates
+//   console.log(drawn_polygon, 'drawn polygon')
+//   //get bounds
+//   var custom_bounds = custom_geojson.value.getBounds()
+//   console.log(custom_bounds, 'custom bounds')
+//   var north_east = custom_bounds._northEast
+//   var south_west = custom_bounds._southWest
+
+  
+//   // var latlng1 = L.latLng(drawn_polygon[0]);
+//   // var latlng2 = L.latLng(drawn_polygon[2]);
+//   // const myLatLngBounds = L.latLngBounds(latlng1, latlng2);
+
+
+//   // var str = wkt.stringify(drawn_polygon)
+//   // console.log(str, 'wkt custom str')
+
+  
+
+// customWmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+//      pane: 'pane400', 
+//      layers: `LULC:${year.value}`,
+//      crs:L.CRS.EPSG4326,
+//     //  styles: styles.value,
+//      format: 'image/png',
+//      bounds: custom_bounds,
+//      transparent: true,
+//      opacity:1.0
+     
+     
+    
+// });
+
+
+// customWmsLayer.value.addTo(map);
+// console.log(customWmsLayer.value, 'custom wms layer')
+
+
+
+
+
+
+
+
+//  }
 
 
 
@@ -2076,10 +2135,6 @@ changeOpacity()
 
 
 
-
-
-
-
   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     
     onAdd: function (map) {
@@ -2190,9 +2245,7 @@ changeOpacity()
     
   }); //end of L.extend
   
-  
-  
-  
+ 
   L.tileLayer.betterWms = function (url, options) {
     return new L.TileLayer.BetterWMS(url, options);  
   };

@@ -173,12 +173,14 @@
             <img src="mapIcons/download_map.svg" alt="" title="Download Png"
             class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="bar_chart_png"
+            v-if="sub_indicator !='Precipitation Index'" 
             >
             <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
             title="Download CSV"
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
             @click="downloadcsv"
+            v-if="sub_indicator !='Precipitation Index'"
             >
             <div id="bar" :class=" sub_indicator === 'Vegetation Cover' 
                             ? 'bar_veg_cover' :

@@ -3768,6 +3768,43 @@ SMIlegendContent()
 changeOpacity()
 }
  }
+
+ const addCompareSusSediments = () => {
+  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+
+wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+
+
+wmsCompareLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+NDWIlegendContent()
+changeOpacity()
+}
+ }
   const compareLayers = () => {
     // console.log('compare!')
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
@@ -3788,6 +3825,7 @@ changeOpacity()
     addCompareWetlandStatus()
     addCompareFirmsLayer()
     addCompareSMILayer()
+    addCompareSusSediments()
     changeOpacity()
     
 

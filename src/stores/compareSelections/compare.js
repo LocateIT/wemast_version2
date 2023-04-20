@@ -53,6 +53,13 @@ export const useCompareStore = defineStore({
         }
       },
       fetchYearList(){
+
+        if(this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments'){
+          this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
+          "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
+            '2018','2019','2020', '2021', "2022"]
+        }
+       
         if(this.selected_sub_indicator === 'Precipitation Index' 
          || this.selected_sub_indicator === 'Soil Moisure Index'){
           this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
@@ -76,7 +83,7 @@ export const useCompareStore = defineStore({
         
         
   
-        if( this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' ||this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments' ) {
+        if( this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' ) {
           this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
           "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
             '2018','2019','2020', '2021', "2022"]

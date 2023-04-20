@@ -3698,6 +3698,41 @@ statuslegendContent()
 changeOpacity()
 }
  }
+ const addCompareFirmsLayer = () => {
+  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  if(sub_indicator.value === 'Burnt Area FIRMS' ) { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?`, {
+     pane: 'pane400',
+     layers: `FIRMS_DRY:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_firms`,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsCompareLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+statuslegendContent()
+changeOpacity()
+}
+ }
   const compareLayers = () => {
     // console.log('compare!')
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
@@ -3716,6 +3751,7 @@ changeOpacity()
     addCompareWetlandExtent()
     addCompareVegCover()
     addCompareWetlandStatus()
+    addCompareFirmsLayer()
     changeOpacity()
     
 

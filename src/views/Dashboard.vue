@@ -3729,7 +3729,42 @@ wmsCompareLayer.value.on('load', function (event) {
 });
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
-statuslegendContent()
+firmslegendContent()
+changeOpacity()
+}
+ }
+ const addCompareSMILayer = () => {
+  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  if(sub_indicator.value === 'Soil Moisure Index') { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+
+wmsCompareLayer.value =   L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
+     pane: 'pane400',
+     layers: `SMI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: `${basin.value}_smi`,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsCompareLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+SMIlegendContent()
 changeOpacity()
 }
  }
@@ -3752,6 +3787,7 @@ changeOpacity()
     addCompareVegCover()
     addCompareWetlandStatus()
     addCompareFirmsLayer()
+    addCompareSMILayer()
     changeOpacity()
     
 

@@ -116,6 +116,7 @@ cursor: pointer;
           padding: 12px;
           color: white;
     border-top: white 1px solid;
+    
 
   
 }

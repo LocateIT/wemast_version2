@@ -1680,97 +1680,70 @@ map.addControl(search_control.value );
   })
 
   //style functions
-  const lulc_style = () => {
-      if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'cuvelai_lulc'
-    }
+  // const lulc_style = () => {
+  //     if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
+  //     styles.value = 'cuvelai_lulc'
+  //   }
   
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'limpopo_lulc'
-    }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'zambezi_lulc'
-    }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
-      styles.value = 'okavango_lulc'
-    }
-    }
-const prec_style = () => {
-    if(basin.value === 'Cuvelai' && sub_indicator.value === 'Precipitation Index' ){
-      styles.value = 'cuvelai_spi'
-    }
-  
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Precipitation Index' ){
-      styles.value = 'limpopo_spi'
-    }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Precipitation Index' ){
-      styles.value = 'zambezi_spi'
-    }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'Precipitation Index' ){
-      styles.value = 'okavango_spi'
-    }
-  }
+  //   if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover' ){
+  //     styles.value = 'limpopo_lulc'
+  //   }
+  //   if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover' ){
+  //     styles.value = 'zambezi_lulc'
+  //   }
+  //   if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
+  //     styles.value = 'okavango_lulc'
+  //   }
+  //   }
 
-const wetland_inventory_style = () => {
-    if(basin.value === 'Cuvelai' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-      styles.value = 'cuvelai_water'
-    }
-    if(basin.value === 'Limpopo' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-      styles.value = 'limpopo_water'
-    }
-    if(basin.value === 'Zambezi' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-      styles.value = 'zambezi_water'
-    }
-    if(basin.value === 'Okavango' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-      styles.value = 'okavango_water'
-    }
-  }
-const ndvi_style = () => {
-  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
-      styles.value = 'cuvelai_ndvi'
-    }
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Vegetation Cover' ){
-      styles.value = 'limpopo_ndvi'
-    }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Vegetation Cover'){
-      styles.value = 'zambezi_ndvi'
-    }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'Vegetation Cover' ){
-      styles.value = 'okavango_ndvi'
-    }
-  
- }
 
- const sus_style = () => {
-  if( basin.value === 'Cuvelai' && sub_indicator.value === 'Water Quality' ){
-    styles.value = 'cuvelai_ndvi'
-  }
-  if( basin.value === 'Limpopo' && sub_indicator.value === 'Water Quality' ){
-    styles.value = 'limpopo_ndvi'
-  }
-  if( basin.value === 'Zambezi' && sub_indicator.value === 'Water Quality' ){
-    styles.value = 'zambezi_ndvi'
-  }
-  if( basin.value === 'Okavango' && sub_indicator.value === 'Water Quality' ){
-    styles.value = 'okavango_ndvi'
-  }
- }
+// const wetland_inventory_style = () => {
+//     if(basin.value === 'Cuvelai' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
+//       styles.value = 'cuvelai_water'
+//     }
+//     if(basin.value === 'Limpopo' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
+//       styles.value = 'limpopo_water'
+//     }
+//     if(basin.value === 'Zambezi' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
+//       styles.value = 'zambezi_water'
+//     }
+//     if(basin.value === 'Okavango' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
+//       styles.value = 'okavango_water'
+//     }
+//   }
+// const ndvi_style = () => {
+//   if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
+//       styles.value = 'cuvelai_ndvi'
+//     }
+//     if(basin.value === 'Limpopo' && sub_indicator.value === 'Vegetation Cover' ){
+//       styles.value = 'limpopo_ndvi'
+//     }
+//     if(basin.value === 'Zambezi' && sub_indicator.value === 'Vegetation Cover'){
+//       styles.value = 'zambezi_ndvi'
+//     }
+//     if(basin.value === 'Okavango' && sub_indicator.value === 'Vegetation Cover' ){
+//       styles.value = 'okavango_ndvi'
+//     }
   
- const status_style = () => {
-  if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
-      styles.value = 'cuvelai_status'
-    }
-    if(basin.value === 'Limpopo' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status'){
-      styles.value = 'limpopo_status'
-    }
-    if(basin.value === 'Zambezi' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status'){
-      styles.value = 'zambezi_status'
-    }
-    if(basin.value === 'Okavango' && sub_indicator.value === 'VWetland Inventory' && parameter.value === 'Wetland Status' ){
-      styles.value = 'okavango_status'
-    }
+//  }
+
+
   
- }
+//  const status_style = () => {
+//   if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
+//       styles.value = 'cuvelai_status'
+//     }
+//     if(basin.value === 'Limpopo' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status'){
+//       styles.value = 'limpopo_status'
+//     }
+//     if(basin.value === 'Zambezi' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status'){
+//       styles.value = 'zambezi_status'
+//     }
+//     if(basin.value === 'Okavango' && sub_indicator.value === 'VWetland Inventory' && parameter.value === 'Wetland Status' ){
+//       styles.value = 'okavango_status'
+//     }
+  
+//  }
 
 
 
@@ -1796,7 +1769,7 @@ wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?",
      pane: 'pane400', 
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2012,7 +1985,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `SPI_WET:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2038,7 +2011,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `SPI_${season.value}:SPI`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
      opacity:0.1
@@ -2069,7 +2042,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `SPI_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2092,7 +2065,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `SPI_${season.value}:SPI`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
      opacity:0.1
@@ -2120,7 +2093,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2279,7 +2252,7 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2297,7 +2270,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      pane: 'timeseries',
      layers: `NDVI_${season.value}:NDVI_${season.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
      format: 'image/png',
      transparent: true,
      opacity:0.1
@@ -2339,7 +2312,7 @@ wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_status' :  basin.value === 'Zambezi' ? 'zambezi_status':  basin.value === 'Limpopo' ? 'limpopo_status': 'okavango_status',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2676,7 +2649,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2709,7 +2682,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      pane: 'pane800',
      layers: `NDSSI:NDSSI_DRY`,
      crs:L.CRS.EPSG4326,
-    //  styles: styles.value,
+    //  styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',value,
      format: 'image/png',
      transparent: true,
      opacity:0.1
@@ -2742,11 +2715,11 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
 
-  lulc_style()
-  prec_style()
-  wetland_inventory_style()
-  ndvi_style()
-  status_style()
+  // lulc_style()
+  // prec_style()
+  // wetland_inventory_style()
+  // ndvi_style()
+  // status_style()
   // sus_style()
    
   
@@ -3515,7 +3488,7 @@ wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC
      pane: 'pane800',
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3557,7 +3530,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `SPI_WET:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3592,7 +3565,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `SPI_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3624,7 +3597,7 @@ changeOpacity()
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3664,7 +3637,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${sa
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3701,7 +3674,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${sa
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: styles.value,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_status' :  basin.value === 'Zambezi' ? 'zambezi_status':  basin.value === 'Limpopo' ? 'limpopo_status': 'okavango_status',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3731,11 +3704,11 @@ changeOpacity()
     if(swipe_control.value)map.removeControl(swipe_control.value)
     
 
-    lulc_style()
-    prec_style()
-    wetland_inventory_style()
-    ndvi_style()
-    status_style()
+    // lulc_style()
+    // prec_style()
+    // wetland_inventory_style()
+    // ndvi_style()
+    // status_style()
 
     addCompareLulcLayer()
     addComparePrecIndexWet()

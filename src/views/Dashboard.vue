@@ -390,7 +390,7 @@
               </a>
 
               <!-- <RouterLink to="/datacollection"> -->
-                  <img class="home" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection" style="margin-left: -5px;" />
+                  <img class="home" @click="show_mobile_panel" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection" style="margin-left: -5px;" />
                 <!-- </RouterLink> -->
               
             
@@ -401,6 +401,11 @@
           
           <div  class="spinner"  v-if="loading">
               <img src="/uiIcons/loader_white.svg" alt="">
+          </div>
+          <div class="mobile_filter" v-if="show_mobile_data">
+            <button @click="fetchMobileData" class="fetch_mobile">Fetch Data</button>
+            <img @click="close_mobile_panel" src="/uiIcons/close.svg"/>
+
           </div>
           
   
@@ -539,6 +544,7 @@ import * as wkt from 'wkt'
   let chartData = ref([])
   let stats = ref({})
   let indexx = ref('')
+  let show_mobile_data = ref(false)
     //variables
     const storeUserSelections = useCounterStore()
   const compareUserSelections = useCompareStore()
@@ -2690,6 +2696,38 @@ geoposition.value = `${lat}, ${lon}`
  
   }
 
+  const show_mobile_panel = () => {
+    show_mobile_data.value = true
+  }
+  const close_mobile_panel  = ()  => {
+  show_mobile_data.value = false
+  }
+
+  const fetchMobileData = async () => {
+    try {
+            
+              const resp = await  axios.get(`http://wemast.glenwell.com/fieldtableData.geojson`
+              );
+              
+
+              // this.current_geojson = resp.data
+              
+              console.log(resp.data, 'mobile geojson');
+              // var object = resp.data.features.map( (item) => {
+              //   console.log(item, 'object items')
+              //   return item
+              // })
+              
+            
+             
+              return resp.data
+          } catch (err) {
+              // Handle Error Here
+              console.error('an error occured'+err);
+          }
+
+
+  }
 
  const downloadcsv = () => {
  

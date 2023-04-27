@@ -923,3 +923,27 @@ title{
 .prec_bar{
   display: none;
 }
+.mobile_filter{
+  position: absolute;
+  top: 56vh;
+  left: 4.1vw;
+  z-index: 1500;
+  background-color: #fff;
+  width: 300px;
+  height: 220px;
+}
+.fetch_mobile{
+  background-color:steelblue;
+  color: #fff;
+  height: 35px;
+  width: 100px;
+  margin-left: 100px;
+  margin-top: 90px;
+  outline: none;
+  border: none;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  
+}

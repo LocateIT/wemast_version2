@@ -1,5 +1,5 @@
 <template>
-    <label class="change" for="">{{ t('wemast_change_language') }}</label>
+    <label class="change" for=""></label>
     <div class="aselect"  >
       <div    class="selector" @click="toggle()">
           <div class="label">
@@ -27,8 +27,8 @@
 
 <script setup>
   import { ref, computed, watch, onMounted} from 'vue'
-  import { useI18n } from "vue-i18n"
-  import i18n from '../i18n.js';
+  // import { useI18n } from "vue-i18n"
+  // import i18n from '../i18n.js';
   import {useCounterStore } from '../stores/counter';
   import axios from 'axios';
   const storeUserSelections = useCounterStore();
@@ -66,10 +66,10 @@
         //   }
 
 
-          const { t } = useI18n({
-            inheritLocale: true,
-            useScope: 'local'
-        })
+        //   const { t } = useI18n({
+        //     inheritLocale: true,
+        //     useScope: 'local'
+        // })
 
 
         const changeLocale = (locale) => {

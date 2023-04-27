@@ -120,7 +120,7 @@ export const useCompareStore = defineStore({
   
         }
         if(this.selected_sub_indicator === 'Water Quality'){
-          this.parameter_list = ['Nitrogen Content', 'Turbidity', 'Sus Sediments']
+          this.parameter_list = ['Turbidity', 'Sus Sediments']
         }
   
       },

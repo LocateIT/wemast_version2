@@ -29,14 +29,14 @@
             </div>
 
             <div class="nav_icons">
-                  <img src="uiIcons/home-inactive.svg" alt="">
-                  <img src="uiIcons/dashboard-inactive.svg" @click="$router.push('/dashboard')" alt="">
-                  <img src="uiIcons/person-inactive.svg" alt="" @click="$router.push('/about')"  >
+                  <img src="/uiIcons/home-inactive.svg" alt="">
+                  <img src="/uiIcons/dashboard-inactive.svg" @click="$router.push('/dashboard')" alt="">
+                  <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/about')"  >
                   <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
-                        <img src="uiIcons/article-inactive.svg" alt="">
+                        <img src="/uiIcons/article-inactive.svg" alt="">
                   </a>
                   <a href="#contact">
-                        <img style="position: relative; top: 0.7vh" src="uiIcons/contacts-inactive.svg" alt="">
+                        <img style="position: relative; top: 0.7vh" src="/uiIcons/contacts-inactive.svg" alt="">
                   </a>
                   
 
@@ -53,7 +53,7 @@
       </div>
 
       <div class="banner">
-            <img class="bulb" src="uiIcons/challenge.svg" alt="">
+            <img class="bulb" src="/uiIcons/challenge.svg" alt="">
             <div class="title">
                   WETLAND MONITORING AND ASSESSMENT SERVICE <br> FOR TRANSBOUNDARY
                 BASINS IN SOUTHERN AFRICA <span class="abbreviation">(WeMAST)</span>
@@ -70,10 +70,10 @@
       
       <div class="showcase">
             <div class="image_icons">
-                  <img src="uiIcons/challenge_hightlight.svg" alt="">
-                  <img src="uiIcons/watch.svg" alt="">
-                  <img class="manuals" src="uiIcons/article.svg" alt="">
-                  <img class="analytics_bulb" src="uiIcons/challenge_hightlight.svg" alt="">
+                  <img src="/uiIcons/challenge_hightlight.svg" alt="">
+                  <img src="/uiIcons/watch.svg" alt="">
+                  <img class="manuals" src="/uiIcons/article.svg" alt="">
+                  <img class="analytics_bulb" src="/uiIcons/challenge_hightlight.svg" alt="">
             </div>
             <div class="image_text">
                   <p class="geodata">Geo-Data</p>
@@ -89,10 +89,10 @@
                   <p class="analytics_subtext">Statistical visualisation of Geo- Spatial data</p>
             </div>
             <div class="screenshot_carosel">
-                  <img src="images/geodata.png" alt="" class="hightlight-item">
-                  <img src="images/timeseries.png" alt="" class="hightlight-item">
-                  <img src="uiIcons/documents.png" alt="" class="hightlight-item">
-                  <img src="uiIcons/analytics.png" alt="" class="hightlight-item">
+                  <img src="/images/geodata.png" alt="" class="hightlight-item">
+                  <img src="/images/timeseries.png" alt="" class="hightlight-item">
+                  <img src="/uiIcons/documents.png" alt="" class="hightlight-item">
+                  <img src="/uiIcons/analytics.png" alt="" class="hightlight-item">
             </div>
 
       </div>
@@ -101,12 +101,12 @@
             <p class="eo_products">Earth Observation Products and Services for Sustainable Wetland Management</p>
             <p class="sadc-text">Earth Observation Products and Services for Sustainable Wetland Management The Wetland Monitoring and Assessment Service for Transboundary Basins (WeMAST) Project in Southern African Development Community (SADC) Project was developed and implemented with Earth Observation (EO) data to supports Sustainable Wetland Assessment and Monitoring Services, in order to support policy implementation and management practices in the region</p>
             <div class="sadc_images">
-                  <img class="sadc-img" src="images/sadc1.png" alt="">
-                  <img class="sadc-img" src="images/sadc2.png" alt="">
+                  <img class="sadc-img" src="/images/sadc1.png" alt="">
+                  <img class="sadc-img" src="/images/sadc2.png" alt="">
             </div>
             <div class="caption_icons">
-                  <img src="uiIcons/sadc_arrow_left.svg" alt="">
-                  <img src="uiIcons/sadc_arrow_left.svg" alt="">
+                  <img src="/uiIcons/sadc_arrow_left.svg" alt="">
+                  <img src="/uiIcons/sadc_arrow_left.svg" alt="">
             </div>
             <div class="captions">
                   <p  class="caption1">Wetland coverage & status analytics</p>
@@ -195,7 +195,7 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
             </div>
             <div class="project">
                   <p class="project_name">Project Name</p>
-                  <img class="project_logo" src="images/project_logo.png" alt="">
+                  <img class="project_logo" src="/images/project_logo.png" alt="">
             </div>
             <div class="project_info">
                   <div class="basin_list">
@@ -616,7 +616,7 @@ const scrollToElement = (refName) =>  {
 }
 
 #flamingo{
-      background-image: url('images/sadc2.png');
+      background-image: url('/images/sadc2.png');
       background-repeat: no-repeat ;
       background-size: 55rem 39rem;
    
@@ -682,14 +682,14 @@ const scrollToElement = (refName) =>  {
   padding: 30px;
 }
 #hippo{
-      background-image: url('images/hippo.png');
+      background-image: url('/images/hippo.png');
       background-repeat: no-repeat ;
       background-size: 55rem 52rem;
       height: 50rem;
 
 }
 #waterfall{
-      background-image: url('images/waterfall.png');
+      background-image: url('/images/waterfall.png');
       background-repeat: no-repeat ;
       background-size: 55rem 52rem;
       height: 50rem;
@@ -756,7 +756,7 @@ const scrollToElement = (refName) =>  {
   padding: 30px;
 }
 #lion{
-      background-image: url('images/lion.png');
+      background-image: url('/images/lion.png');
       background-repeat: no-repeat ;
       background-size: 55rem 52rem;
       height: 50rem;

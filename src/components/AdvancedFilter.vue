@@ -7,9 +7,9 @@
     <div class="radio_labels_container">
         <div class="radio_selections">
        
-       <img src="public/uiIcons/radio.svg" id="disabled"  class="parameters" @click="handleParameterSwap()"   
+       <img src="/uiIcons/radio.svg" id="disabled"  class="parameters" @click="handleParameterSwap()"   
                         >
-       <img src="public/uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
+       <img src="/uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
                           radio_selection === 'wetland'
                             ? 'radio_swap'
                             : ''

@@ -5,7 +5,8 @@
       
         <div class="project_title">
 
-           <span class="project_title1">{{ t('wemast_title') }} {{ t('wemast_subtitle') }}</span> 
+           <span class="project_title1">WETLAND MONITORING AND ASSESSMENT SERVICE FOR TRANSBOUNDARY  BASINS IN
+SOUTHERN AFRICA</span> 
           <br>
           <span class="wemast_span" style="color:steelblue;font-weight:bold">(WeMAST)</span>
         </div>
@@ -31,15 +32,15 @@
 // import Misc from '../misc.vue';
 
 // import HelloI18n from './HelloI18n.vue';
-import { useI18n } from "vue-i18n"
-  import i18n from '../i18n.js';
+// import { useI18n } from "vue-i18n"
+  // import i18n from '../i18n.js';
 // import Languages from './Languages.vue'
 
 import CustomLanguage from './CustomLanguage.vue';
-const { t } = useI18n({
-            inheritLocale: true,
-            useScope: 'local'
-        })
+// const { t } = useI18n({
+//             inheritLocale: true,
+//             useScope: 'local'
+//         })
 
 
 

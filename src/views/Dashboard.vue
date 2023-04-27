@@ -136,13 +136,13 @@
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
             <div class="chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
-            <img src="mapIcons/download_map.svg" alt="" 
+            <img src="/mapIcons/download_map.svg" alt="" 
             title="Download Png"
             class="chart_download_png" 
             style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="chart_png"
             >
-            <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
+            <img id="chart_csv" src="/mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
             title="Download CSV"
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
@@ -171,12 +171,12 @@
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
             <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <div  v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">{{ `${basin} ${parameter}-${year}` }}</div>
-            <img src="mapIcons/download_map.svg" alt="" title="Download Png"
+            <img src="/mapIcons/download_map.svg" alt="" title="Download Png"
             class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="bar_chart_png"
             v-if="sub_indicator !='Precipitation Index'" 
             >
-            <img id="chart_csv" src="mapIcons/file_download-24px.svg" 
+            <img id="chart_csv" src="/mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
             title="Download CSV"
             style="position: absolute; top: -2.5vh; left: 29.5vw; height: 25px; width: 25px;"
@@ -1679,73 +1679,7 @@ map.addControl(search_control.value );
     
   })
 
-  //style functions
-  // const lulc_style = () => {
-  //     if(basin.value === 'Cuvelai' && sub_indicator.value === 'Land Cover' ){
-  //     styles.value = 'cuvelai_lulc'
-  //   }
-  
-  //   if(basin.value === 'Limpopo' && sub_indicator.value === 'Land Cover' ){
-  //     styles.value = 'limpopo_lulc'
-  //   }
-  //   if(basin.value === 'Zambezi' && sub_indicator.value === 'Land Cover' ){
-  //     styles.value = 'zambezi_lulc'
-  //   }
-  //   if(basin.value === 'Okavango' && sub_indicator.value === 'Land Cover' ){
-  //     styles.value = 'okavango_lulc'
-  //   }
-  //   }
-
-
-// const wetland_inventory_style = () => {
-//     if(basin.value === 'Cuvelai' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-//       styles.value = 'cuvelai_water'
-//     }
-//     if(basin.value === 'Limpopo' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-//       styles.value = 'limpopo_water'
-//     }
-//     if(basin.value === 'Zambezi' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-//       styles.value = 'zambezi_water'
-//     }
-//     if(basin.value === 'Okavango' && (sub_indicator.value === 'Wetland Inventory' || 'Water Quality')){
-//       styles.value = 'okavango_water'
-//     }
-//   }
-// const ndvi_style = () => {
-//   if(basin.value === 'Cuvelai' && sub_indicator.value === 'Vegetation Cover'  ){
-//       styles.value = 'cuvelai_ndvi'
-//     }
-//     if(basin.value === 'Limpopo' && sub_indicator.value === 'Vegetation Cover' ){
-//       styles.value = 'limpopo_ndvi'
-//     }
-//     if(basin.value === 'Zambezi' && sub_indicator.value === 'Vegetation Cover'){
-//       styles.value = 'zambezi_ndvi'
-//     }
-//     if(basin.value === 'Okavango' && sub_indicator.value === 'Vegetation Cover' ){
-//       styles.value = 'okavango_ndvi'
-//     }
-  
-//  }
-
-
-  
-//  const status_style = () => {
-//   if(basin.value === 'Cuvelai' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
-//       styles.value = 'cuvelai_status'
-//     }
-//     if(basin.value === 'Limpopo' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status'){
-//       styles.value = 'limpopo_status'
-//     }
-//     if(basin.value === 'Zambezi' && sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status'){
-//       styles.value = 'zambezi_status'
-//     }
-//     if(basin.value === 'Okavango' && sub_indicator.value === 'VWetland Inventory' && parameter.value === 'Wetland Status' ){
-//       styles.value = 'okavango_status'
-//     }
-  
-//  }
-
-
+ 
 
  const addLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {

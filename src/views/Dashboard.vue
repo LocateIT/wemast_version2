@@ -1189,8 +1189,30 @@ const opensidenavigationbar = () => {
     sidenavigationbar.value = true
     
 }
+const lulc_style = () => {
+  basin.value === 'Cuvelai' ? styles.value = 'cuvelai_lulc' :  basin.value === 'Zambezi' ? styles.value = 'zambezi_lulc':  basin.value === 'Limpopo' ?  styles.value = 'limpopo_lulc': 'okavango_lulc'
+
+}
+const prec_style = () => {
+  basin.value === 'Cuvelai' ?  styles.value ='cuvelai_spi' :  basin.value === 'Zambezi' ? styles.value = 'zambezi_spi':  basin.value === 'Limpopo' ? styles.value = 'limpopo_spi': 'okavango_spi'
+}
+
+const wetland_extent_style = () => {
+  basin.value === 'Cuvelai' ? styles.value = 'cuvelai_water' :  basin.value === 'Zambezi' ? styles.value = 'zambezi_water':  basin.value === 'Limpopo' ? styles.value = 'limpopo_water': 'okavango_water'
+}
+const vegcover_style = () => {
+  basin.value === 'Cuvelai' ? styles.value  = 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? styles.value  = 'zambezi_ndvi':  basin.value === 'Limpopo' ? styles.value  = 'limpopo_ndvi': 'okavango_ndvi'
+}
+const status_style = () => {
+  basin.value === 'Cuvelai' ? styles.value = 'cuvelai_status' :  basin.value === 'Zambezi' ?  styles.value ='zambezi_status':  basin.value === 'Limpopo' ? styles.value = 'limpopo_status': 'okavango_status'
+}
 
 const download_tiff = () => {
+  lulc_style()
+  prec_style()
+  wetland_extent_style()
+  vegcover_style()
+  status_style()
   var url = ""
   if(sub_indicator.value === 'Land Cover' ) {
     url = `http://66.42.65.87:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
@@ -1212,11 +1234,20 @@ const download_tiff = () => {
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
     url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=LANDSAT_NDVI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
+  if(sub_indicator.value === 'Burnt Area FIRMS') {
+    url = `http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`
+  }
+  if(sub_indicator.value === 'Soil Moisure Index') {
+    url = `http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=SMI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_smi&format=image%2Fgeotiff`
+  }
+  if(sub_indicator.value === 'Undulation') {
+    url = `http://66.42.65.87:8080/geoserver/FLOOD/wms?service=WMS&version=1.1.0&request=GetMap&layers=FLOOD%3AFLOOD&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_flood&format=image%2Fgeotiff`
+  }
 
   var a = document.createElement("a");
   a.href = url;
   a.title = `${basin.value}`;
-  a.download = `${basin.value}.tiff`;
+  a.download = `RASTER.tiff`;
   document.body.appendChild(a);
   a.click();
   a.remove();

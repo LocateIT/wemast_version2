@@ -404,7 +404,7 @@
           </div>
           <div class="mobile_filter" v-if="show_mobile_data">
             <button @click="fetchMobileData" class="fetch_mobile">Fetch Data</button>
-            <img @click="close_mobile_panel" src="/uiIcons/close.svg"/>
+            <img style="cursor:pointer; position: absolute; top: 0.5vh; right:0.5vw;" @click="close_mobile_panel" src="/uiIcons/close.png"/>
 
           </div>
           
@@ -2723,7 +2723,7 @@ geoposition.value = `${lat}, ${lon}`
               return resp.data
           } catch (err) {
               // Handle Error Here
-              console.error('an error occured'+err);
+              console.error('an error occured'+ err);
           }
 
 

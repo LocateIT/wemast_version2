@@ -226,7 +226,7 @@ export const useCounterStore = defineStore({
 
     fetchCountriesList() {
       this.countries =  ["Limpopo","Cuvelai","Zambezi", "Okavango"]
-      return this.countries
+      return this.countries.sort()
 
     },
     fetchIndicatorList(){

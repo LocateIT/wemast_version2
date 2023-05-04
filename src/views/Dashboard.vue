@@ -3494,6 +3494,7 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
 
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
@@ -3502,7 +3503,8 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
-    var legend = L.control({ position: "bottomright" });
+    if(wmsLayer.value){
+      var legend = L.control({ position: "bottomleft" });
         smi_legend.value = legend
   //       var colors = colors_array
   //       var labels = label_array
@@ -3522,6 +3524,30 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   };
   
   smi_legend.value.addTo(map);
+    }
+
+    if(wmsCompareLayer.value) {
+      var legend = L.control({ position: "bottomright" });
+        smi_compare_legend.value = legend
+  //       var colors = colors_array
+  //       var labels = label_array
+  
+        smi_compare_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            
+            div.innerHTML += (`<p>${basin.value} SMI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+            
+           
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  smi_compare_legend.value.addTo(map);
+    }
    
   
   
@@ -3921,7 +3947,7 @@ changeOpacity()
 
 wmsCompareLayer.value =   L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
      pane: 'pane400',
-     layers: `SMI_${season.value}:${year.value}`,
+     layers: `SMI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: `${basin.value}_smi`,
      format: 'image/png',

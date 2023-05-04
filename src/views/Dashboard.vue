@@ -507,6 +507,8 @@ import * as wkt from 'wkt'
   let season = ref(null)
   let parameter = ref(null)
   let satellite = ref(null)
+
+  let compare_year = ref(null)
   let styles = ref(null)
   let band_1 = ref(null)
   let lulc_legend = ref(false)
@@ -518,6 +520,17 @@ import * as wkt from 'wkt'
   let smi_legend = ref(null)
   let modis_legend = ref(null)
   let firms_legend = ref(null)
+
+  let lulc_compare_legend = ref(false)
+  let prec_compare_legend = ref(false)
+  let ndwi_compare_legend = ref(false)
+  let ndvi_compare_legend = ref(false)
+  let status_compare_legend = ref(null)
+  let flood_compare_legend = ref(null)
+  let smi_compare_legend = ref(null)
+  let modis_compare_legend = ref(null)
+  let firms_compare_legend = ref(null)
+
   let sidenavigationbar = ref(false)
   let swipe_control = ref(null)
   let wmsCompareLayer = ref(null)
@@ -1190,7 +1203,13 @@ const opensidenavigationbar = () => {
     
 }
 const lulc_style = () => {
-  basin.value === 'Cuvelai' ? styles.value = 'cuvelai_lulc' :  basin.value === 'Zambezi' ? styles.value = 'zambezi_lulc':  basin.value === 'Limpopo' ?  styles.value = 'limpopo_lulc': 'okavango_lulc'
+//  if(basin.value === 'Cuvelai'){
+//   styles.value = 'cuvelai_lulc' 
+//  }
+//  if(basin.value === 'Zambezi' ) styles.value = 'zambezi_lulc'
+//  if(basin.value === 'Limpopo') styles.value = 'limpopo_lulc'
+//  if(basin.value === 'Okavango') styles.value = 'okavango_lulc'
+basin.value === 'Cuvelai' ?  styles.value ='cuvelai_lulc' :  basin.value === 'Zambezi' ? styles.value = 'zambezi_lulc':  basin.value === 'Limpopo' ? styles.value = 'limpopo_lulc': 'okavango_lulc'
 
 }
 const prec_style = () => {
@@ -1228,11 +1247,11 @@ const download_tiff = () => {
 
   }
   if(sub_indicator.value === 'Vegetation Cover' ){
-    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=LANDSAT_NDVI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
 
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
-    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=LANDSAT_NDVI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Burnt Area FIRMS') {
     url = `http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`
@@ -1247,7 +1266,7 @@ const download_tiff = () => {
   var a = document.createElement("a");
   a.href = url;
   a.title = `${basin.value}`;
-  a.download = `RASTER.tiff`;
+  a.download = `Raster.tiff`;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -2902,8 +2921,10 @@ geoposition.value = `${lat}, ${lon}`
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
   
-        var legend = L.control({ position:'bottomright', className: 'legend_lulc' });
+        if(wmsLayer.value) {
+          var legend = L.control({ position: 'bottomleft', className: 'legend_lulc' });
         lulc_legend.value = legend
         var colors = colors_array
         var labels = label_array
@@ -2923,6 +2944,30 @@ geoposition.value = `${lat}, ${lon}`
   };
   
   lulc_legend.value.addTo(map);
+        }
+
+        if(wmsCompareLayer.value){
+          var legend = L.control({ position: 'bottomright', className: 'legend_lulc' });
+        lulc_compare_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        lulc_compare_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${compare_year.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged 
+        draggable.enable();
+  
+    return div;
+  };
+  
+  lulc_compare_legend.value.addTo(map);
+        }
         
       } catch (error) {
         console.log(error)
@@ -2943,27 +2988,47 @@ if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
 if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
 if(prec_legend.value)map.removeControl(prec_legend.value)
 if(lulc_legend.value)map.removeControl(lulc_legend.value)
+if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
 
-var legend = L.control({ position: "bottomright" });
-smi_legend.value = legend
-//       var colors = colors_array
-//       var labels = label_array
 
-smi_legend.value.onAdd = function(map) {
-    var div = L.DomUtil.create("div", "legend");
-    
-    div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+                  if(wmsLayer.value){
+                    var legend = L.control({ position: "bottomleft" });
+                  smi_legend.value = legend
 
-    
-   
+                  smi_legend.value.onAdd = function(map) {
+                  var div = L.DomUtil.create("div", "legend");
+                      
+                  div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
 
-      let draggable = new L.Draggable(div); //the legend can be dragged around the div
-draggable.enable();
+                      
+                  let draggable = new L.Draggable(div); //the legend can be dragged around the div
+                  draggable.enable();
 
-return div;
-};
+                  return div;
+                  };
 
-smi_legend.value.addTo(map);
+                  smi_legend.value.addTo(map);
+                  }
+
+
+                  if(wmsCompareLayer.value){
+                    var legend = L.control({ position: "bottomright" });
+                  smi_compare_legend.value = legend
+
+                  smi_compare_legend.value.onAdd = function(map) {
+                  var div = L.DomUtil.create("div", "legend");
+                      
+                  div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+                      
+                  let draggable = new L.Draggable(div); //the legend can be dragged around the div
+                  draggable.enable();
+
+                  return div;
+                  };
+
+                  smi_compare_legend.value.addTo(map);
+                  }
 
 
 
@@ -3415,8 +3480,8 @@ smi_legend.value.addTo(map);
   const getCompareYear = () => {
     var selectedYear= compareUserSelections.getSelectedYear
   
-   year.value = selectedYear
-   console.log(year.value, 'compare year app')
+    compare_year.value = selectedYear
+   console.log(compare_year.value, 'compare year app')
   
   }
   

@@ -3018,7 +3018,7 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
                   smi_compare_legend.value.onAdd = function(map) {
                   var div = L.DomUtil.create("div", "legend");
                       
-                  div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+                  div.innerHTML += (`<p>${basin.value} SPI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
 
                       
                   let draggable = new L.Draggable(div); //the legend can be dragged around the div

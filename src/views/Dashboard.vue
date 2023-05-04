@@ -3059,12 +3059,14 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
 
         
-        var legend = L.control({ position: "bottomright" });
+       if(wmsLayer.value){
+        var legend = L.control({ position: "bottomleft" });
         ndwi_legend.value = legend
         var colors = colors_array
         var labels = label_array
@@ -3084,6 +3086,31 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   };
   
   ndwi_legend.value.addTo(map);
+       }
+
+
+       if(wmsCompareLayer.value){
+        var legend = L.control({ position: "bottomright" });
+        ndwi_compare_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        ndwi_compare_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${parameter.value} ${compare_year.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+  
+    return div;
+  };
+  
+  ndwi_compare_legend.value.addTo(map);
+       }
         
       } catch (error) {
         console.log(error)

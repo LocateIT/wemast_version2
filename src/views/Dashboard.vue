@@ -3061,6 +3061,9 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+
+        
         var legend = L.control({ position: "bottomright" });
         ndwi_legend.value = legend
         var colors = colors_array
@@ -3195,12 +3198,14 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
-        var legend = L.control({ position: "bottomright" });
+        if(wmsLayer.value){
+          var legend = L.control({ position: "bottomleft" });
         status_legend.value = legend
         var colors = colors_array
         var labels = label_array
@@ -3221,6 +3226,31 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   };
   
   status_legend.value.addTo(map);
+        }
+
+        if(wmsCompareLayer.value) {
+          var legend = L.control({ position: "bottomright" });
+        status_compare_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        status_compare_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${parameter.value} ${compare_year.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  status_compare_legend.value.addTo(map);
+        }
         
       } catch (error) {
         console.log(error)
@@ -3580,7 +3610,7 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
 
 wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
      pane: 'pane800',
-     layers: `LULC:${year.value}`,
+     layers: `LULC:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
      format: 'image/png',
@@ -3622,7 +3652,7 @@ changeOpacity()
   
   wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
      pane: 'pane800',
-     layers: `SPI_WET:${year.value}`,
+     layers: `SPI_WET:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
@@ -3657,7 +3687,7 @@ changeOpacity()
   
   wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
      pane: 'pane800',
-     layers: `SPI_DRY:${year.value}`,
+     layers: `SPI_DRY:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
@@ -3689,7 +3719,7 @@ changeOpacity()
   
   wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
      pane: 'pane800',
-     layers: `NDWI:${year.value}`,
+     layers: `NDWI:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
      format: 'image/png',
@@ -3729,7 +3759,7 @@ changeOpacity()
 
 wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+     layers: `${satellite.value}_NDVI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
      format: 'image/png',
@@ -3766,7 +3796,7 @@ changeOpacity()
 
 wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+     layers: `${satellite.value}_NDVI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_status' :  basin.value === 'Zambezi' ? 'zambezi_status':  basin.value === 'Limpopo' ? 'limpopo_status': 'okavango_status',
      format: 'image/png',

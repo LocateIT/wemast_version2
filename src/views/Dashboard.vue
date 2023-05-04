@@ -3423,6 +3423,7 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         })
         console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
@@ -3432,14 +3433,15 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
   
-        var legend = L.control({ position: "bottomright" });
+        if(wmsLayer.value){
+          var legend = L.control({ position: "bottomleft" });
         firms_legend.value = legend
         var colors = colors_array
         var labels = label_array
   
         firms_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
+            div.innerHTML += `<p>${basin.value} FIRMS ${year.value}</p>`;
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -3453,6 +3455,32 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   };
   
   firms_legend.value.addTo(map);
+        }
+
+
+        if(wmsCompareLayer.value) {
+          var legend = L.control({ position: "bottomright" });
+        firms_compare_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        firms_compare_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} FIRMS ${compare_year.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+
+    return div;
+  };
+  
+  firms_compare_legend.value.addTo(map);
+        }
         
       } catch (error) {
         console.log(error)
@@ -3858,7 +3886,7 @@ changeOpacity()
 
 wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?`, {
      pane: 'pane400',
-     layers: `FIRMS_DRY:${year.value}`,
+     layers: `FIRMS_DRY:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: `${basin.value}_firms`,
      format: 'image/png',

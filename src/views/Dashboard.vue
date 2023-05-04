@@ -3984,7 +3984,7 @@ changeOpacity()
 
 wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
      pane: 'pane800',
-     layers: `NDWI:${year.value}`,
+     layers: `NDWI:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
      format: 'image/png',

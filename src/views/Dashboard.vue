@@ -3113,12 +3113,14 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(flood_legend.value)map.removeControl(flood_legend.value)
         if(status_legend.value)map.removeControl(status_legend.value)
         if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
   
-        var legend = L.control({ position: "bottomright" });
+       if(wmsLayer.value){
+        var legend = L.control({ position: "bottomleft" });
         ndvi_legend.value = legend
         var colors = colors_array
         var labels = label_array
@@ -3138,6 +3140,30 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   };
   
   ndvi_legend.value.addTo(map);
+       }
+
+       if(wmsCompareLayer.value){
+        var legend = L.control({ position: "bottomright" });
+        ndvi_compare_legend.value = legend
+        var colors = colors_array
+        var labels = label_array
+  
+        ndvi_compare_legend.value.onAdd = function(map) {
+            var div = L.DomUtil.create("div", "legend");
+            div.innerHTML += `<p>${basin.value} ${sub_indicator.value} ${compare_year.value}</p>`;
+            for (var i = 0; i < colors.length; i++) {
+                  div.innerHTML +=
+                      ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
+              }
+    
+    
+              let draggable = new L.Draggable(div); //the legend can be dragged around the div
+        draggable.enable();
+    return div;
+  };
+  
+  ndvi_compare_legend.value.addTo(map);
+       }
         
       } catch (error) {
         console.log(error)

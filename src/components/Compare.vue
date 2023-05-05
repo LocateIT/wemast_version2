@@ -47,7 +47,7 @@
     <div v-if="radio_selection ==='satellite'" class="compare_selections">
         <p class="select_satellite">Select Satellite</p>
         <div class="satellite_selection">
-            <AdvancedPlatformSelect />
+            <CompareSatelliteSelect />
                 
         </div>
 
@@ -73,7 +73,8 @@
     import CustomSelectIndicatorCompare from '../components/CustomSelectIndicatorCompare.vue';
     import CustomSelectYearCompare from './CustomYearSelectCompare.vue'
     import CustomSelectSubIndicatorCompare from '../components/CustomSelectSubIndicatorCompare.vue'
-    import AdvancedPlatformSelect from './AdvancedPlatformSelect.vue';
+    // import CompareSatelliteSelect from './CompareSatelliteSelect.vue';
+    import CompareSatelliteSelect from './CompareSatelliteSelect.vue';
     import { ref } from 'vue'
 
     let radio_selection = ref("parameters") 

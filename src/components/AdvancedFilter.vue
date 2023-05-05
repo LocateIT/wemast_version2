@@ -28,10 +28,15 @@
     <div class="country_selection">
         <AdvancedCountrySelect />
     </div>
-    <p class="select_wetland">Select Wetland</p>
+
+    <div class="wetland_wrapper">
+        <p class="select_wetland">Select Wetland</p>
     <div class="wetland_selection">
         <AdvancedWetlandSelect />
     </div>
+
+    </div>
+    
     <div class="platform_wrapper">
         <p class="select_platform">Select Platform</p>
     <div class="platform_selection" >
@@ -152,6 +157,7 @@ const handleTimeSwap = () => {
         top: 14vh;
         left: 1vw;
      z-index: 5;
+     cursor: not-allowed;
         
         
 
@@ -171,10 +177,13 @@ const handleTimeSwap = () => {
 
     }
     .platform_wrapper{
-        cursor: not-allowed;
+        cursor: not-allowed ;
 
     }
-  
+    .wetland_wrapper#disabled:hover{
+        cursor: not-allowed ;
+    }
+   
     .submit{
         position: absolute;
         top: 32vh;

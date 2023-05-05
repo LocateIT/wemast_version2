@@ -3,16 +3,16 @@
     <div class="aselect" :data-value="placeholder" :data-list="list">
       <div class="selector" @click="toggle()">
           <div class="label">
-                  <span>{{ advancedFilterSelections.wetland_placeholder}}</span>
+                  <span>{{ compareSelections.satellite_placeholder}}</span>
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
           <div :class="{ hidden : !visible, visible }">
               <ul>
   
-                  <li  :class="{ current : item === wetland_placeholder }"
-                   v-for="item in  advancedFilterSelections.wetland_list" :key="item"  disabled
-                   @click=" advancedFilterSelections.showSelectedWetland(item)">{{ item }}</li>
+                  <li :class="{ current : item === satellite_placeholder }"
+                   v-for="item in  compareSelections.satellite_list" :key="item" 
+                   @click=" compareSelections.showSelectedSatellite(item)">{{ item }}</li>
                   
               </ul>
           </div>
@@ -24,7 +24,9 @@
 <script setup>
   import { ref} from 'vue'
   import { useAdvancedStore } from '../stores/compareSelections/advanced_filter';
-  const advancedFilterSelections = useAdvancedStore()
+  import { useCompareStore } from '../stores/compareSelections/compare'
+//   const compareSelections = useAdvancedStore()
+  const compareSelections = useCompareStore()
 
 
           let placeholder = ref('Land Cover')
@@ -36,7 +38,7 @@
           const toggle = () => {
               visible.value = !visible.value;
               
-               advancedFilterSelections.fetchWetlandsList()
+               compareSelections.fetchWetlandsList()
           }
           const select = (option) =>{
               placeholder.value = option;
@@ -63,7 +65,7 @@ left:-0.52vw;
           height: 35px;
 width: 180px;
 border-radius: 30px;
-cursor: pointer;
+
       }
           .arrow {
               position: absolute;
@@ -90,7 +92,6 @@ cursor: pointer;
           }
       
       ul {
-        
           width: 100%;
           list-style-type: none;
           padding: 8px;
@@ -103,8 +104,7 @@ cursor: pointer;
     background: STEELBLUE;
     border-radius: 7px;
     z-index: 5000;
-    overflow-y:scroll;
-    height: 160px;
+    
       }
       li {
           padding: 12px;

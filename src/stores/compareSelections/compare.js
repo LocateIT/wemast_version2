@@ -29,7 +29,8 @@ export const useCompareStore = defineStore({
       parameter_list:[],
       parameter_placeholder: '',
       selected_parameter:'',
-      satellite_list:[],
+      satellite_list:['SENTINEL', 'LANDSAT'],
+      platform_placeholder: '',
       satellite_placeholder:'',
       selected_satellite:'',
 

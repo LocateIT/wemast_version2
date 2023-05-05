@@ -510,6 +510,7 @@ import * as wkt from 'wkt'
   let satellite = ref(null)
 
   let compare_year = ref(null)
+  let compare_satellite = ref(null)
   let styles = ref(null)
   let band_1 = ref(null)
   let lulc_legend = ref(false)
@@ -4103,8 +4104,8 @@ smi_compare_legend.value.addTo(map);
 
   const getCompareSatellite = () => {
     var selectedSatellite = compareUserSelections.getSelectedSatellite
-    satellite.value = selectedSatellite
-    console.log(satellite.value, 'compare satellite app')
+    compare_satellite.value = selectedSatellite
+    console.log(compare_satellite.value, 'compare satellite app')
 
   }
   const setCompareSatellite = computed ( () => {
@@ -4277,9 +4278,9 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `${satellite.value}_NDVI_${season.value}:${compare_year.value}`,
+     layers: `${compare_satellite.value}_NDVI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
      format: 'image/png',
@@ -4315,9 +4316,9 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
-     layers: `${satellite.value}_NDVI_${season.value}:${compare_year.value}`,
+     layers: `${compare_satellite.value}_NDVI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
      styles: basin.value === 'Cuvelai' ? 'cuvelai_status' :  basin.value === 'Zambezi' ? 'zambezi_status':  basin.value === 'Limpopo' ? 'limpopo_status': 'okavango_status',
      format: 'image/png',

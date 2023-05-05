@@ -8,7 +8,7 @@ export const useAdvancedStore = defineStore({
         country_placeholder: 'South Africa',
         selected_country:'',
         wetland_list: [],
-        wetland_placeholder: 'Modemolle',
+        wetland_placeholder: '',
       selected_wetland:'',
       platform_list:['SENTINEL', 'LANDSAT'],
       platform_placeholder: '',

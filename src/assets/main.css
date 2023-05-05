@@ -696,6 +696,7 @@ top: 36.4vh;
   top: 1vh;
   left: 14vw;
   cursor: pointer;
+ 
 }
 .compare_container{
   position: absolute;
@@ -709,9 +710,11 @@ top: 36.4vh;
   /* background-color: #d31ae4; */
   /* height: 50px;
   width: 50px; */
-  top: 1vh;
-  left: 14vw;
+  top: 0.2vh;
+  left: 14.5vw;
   cursor: pointer;
+  height: 20px !important;
+  width: 20px !important;
   z-index: 3000;
 }
 

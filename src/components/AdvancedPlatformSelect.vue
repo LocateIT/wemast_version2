@@ -24,7 +24,9 @@
 <script setup>
   import { ref} from 'vue'
   import { useAdvancedStore } from '../stores/compareSelections/advanced_filter';
+  import { useCompareStore } from '../stores/compareSelections/compare'
   const advancedFilterSelections = useAdvancedStore()
+  const compareSelections = useCompareStore()
 
 
           let placeholder = ref('Land Cover')

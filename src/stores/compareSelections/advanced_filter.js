@@ -12,7 +12,8 @@ export const useAdvancedStore = defineStore({
       selected_wetland:'',
       platform_list:[],
       platform_placeholder: '',
-      selected_platform:''
+      selected_platform:'',
+      current_geojson:{},
 
 
 
@@ -30,6 +31,40 @@ export const useAdvancedStore = defineStore({
          
             this.selected_country =  option
             console.log(this.selected_country , 'changed selected country')
+
+            var data = this.selected_country
+            if(data) {
+              const sendGetRequest = async () => {
+                try {
+                  // this.loading = true;
+                    const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/WEMAST/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=WEMAST%3AWemast_Countries&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${data}%27`
+                    );
+                    
+      
+                    this.current_geojson = resp.data
+                    
+                    console.log(resp.data.features, 'advanced countries geojson');
+                    // var object = resp.data.features.map( (item) => {
+                    //   console.log(item, 'object items')
+                    //   return item
+                    // })
+                    
+                    // this.loading = false;
+                   
+                    return resp.data
+                } catch (err) {
+                    // Handle Error Here
+                    console.error('an error occured'+err);
+                }
+                // finally  { if (this.current_geojson)this.loading = false
+              
+                // }
+            };
+      
+            sendGetRequest();
+      
+            }
+      
           },
           showSelectedWetland(option) {
             this.wetland_placeholder = option;
@@ -50,6 +85,8 @@ export const useAdvancedStore = defineStore({
 
     },
     getters: {
+      getSelectedCountry:(state) => state.selected_country,
+      getSelectedRegion:(state) => state.current_geojson,
 
     }
 })

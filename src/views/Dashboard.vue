@@ -149,7 +149,7 @@
             @click="downloadcsv"
             >
             <!--  v-if="sub_indicator != 'Precipitation Index'" -->
-            <div id="chart_pie" v-if="sub_indicator != 'Vegetation Cover' ">
+            <div id="chart_pie" v-if="sub_indicator != 'Vegetation Cover'  ">
               <LulcPie class="lulc_chart"
             :height="200"
             :width="300"
@@ -460,6 +460,7 @@ import * as wkt from 'wkt'
   import { onMounted, ref, watch, computed } from '@vue/runtime-core';
   import { useCounterStore } from '@/stores/counter';
   import { useCompareStore } from '../stores/compareSelections/compare';
+  import { useAdvancedStore } from '../stores/compareSelections/advanced_filter'
   import AdvancedFilter from '../components/AdvancedFilter.vue';
   import Compare from '../components/Compare.vue';
   import sideNavigationbar from '../components/sidenavigationbar.vue'
@@ -558,9 +559,14 @@ import * as wkt from 'wkt'
   let stats = ref({})
   let indexx = ref('')
   let show_mobile_data = ref(false)
+
+
+  //advanced filter variables
+  let country = ref(null)
     //variables
     const storeUserSelections = useCounterStore()
   const compareUserSelections = useCompareStore()
+  const advancedUserSelections = useAdvancedStore()
   
   // console.log(storeUserSelections.fetchCountriesList)
   
@@ -966,6 +972,19 @@ let barchart_options= {
   const close_swipe = () => {
     if(swipe_control.value)map.removeControl(swipe_control.value)
     if(swipe_control.value = null)swipe_control.value.addTo(map)
+    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
    
 
   }
@@ -2102,7 +2121,12 @@ changeOpacity()
     loading.value = false
   });
   
-  NDWIlegendContent()
+  
+    NDWIlegendContent()
+
+  
+  
+  
   changeOpacity()
   
   
@@ -2695,6 +2719,74 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   }
 
  }
+
+
+ const addTurbidity = () => {
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+
+
+ 
+
+
+  
+  NDWIlegendContent()
+  changeOpacity()
+
+ //ADDTIMESERIES
+  addPrecTimeSeries()
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`45.32.233.93:8085/geoserver/NDTI/wms?`, {
+     pane: 'pane800',
+     layers: `NDTI:NDTI_DRY`,
+     crs:L.CRS.EPSG4326,
+    //  styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',value,
+     format: 'image/png',
+     transparent: true,
+     opacity:0.1
+     
+     
+    
+  });
+  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  wmsTimeseriesLayer.value.on('load', function (event) {
+    console.log('sus sediments loaded')
+    loading.value = false
+});
+
+  
+  
+  
+  
+  
+  }
+
+ }
  
   //function to request wms
   
@@ -2704,6 +2796,9 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
+
+
+           
 
   // lulc_style()
   // prec_style()
@@ -2725,6 +2820,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   addSMILayer()
   addFloodLayer()
   addSuspendedSediments()
+  addTurbidity()
 
   createIndices()
 
@@ -2741,6 +2837,11 @@ var lat = center.lat.toFixed(2)
 var lon = center.lng.toFixed(2)
 geoposition.value = `${lat}, ${lon}`
 
+
+
+
+
+
 // getStatistics()
 
  
@@ -2756,7 +2857,7 @@ geoposition.value = `${lat}, ${lon}`
   const fetchMobileData = async () => {
     try {
             
-              const resp = await  axios.get(`http://wemast.glenwell.com/fieldtableData.geojson`
+              const resp = await axios.get('http://wemast.glenwell.com/fieldtableData.geojson'
               );
               
 
@@ -2768,7 +2869,6 @@ geoposition.value = `${lat}, ${lon}`
               //   return item
               // })
               
-            
              
               return resp.data
           } catch (err) {
@@ -2921,7 +3021,17 @@ geoposition.value = `${lat}, ${lon}`
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
   
         if(wmsLayer.value) {
           var legend = L.control({ position: 'bottomleft', className: 'legend_lulc' });
@@ -2945,6 +3055,47 @@ geoposition.value = `${lat}, ${lon}`
   
   lulc_legend.value.addTo(map);
         }
+
+       
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+
+  const compareLulcLegend = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+  
+       
 
         if(wmsCompareLayer.value){
           var legend = L.control({ position: 'bottomright', className: 'legend_lulc' });
@@ -2975,6 +3126,7 @@ geoposition.value = `${lat}, ${lon}`
       }
     }
     getLegendContent()
+
   }
   
   const preclegendContent = () => {
@@ -2989,6 +3141,16 @@ if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
 if(prec_legend.value)map.removeControl(prec_legend.value)
 if(lulc_legend.value)map.removeControl(lulc_legend.value)
 if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
 
 
                   if(wmsLayer.value){
@@ -3010,6 +3172,27 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
                   smi_legend.value.addTo(map);
                   }
 
+
+              
+
+
+
+}
+const comparePrecLegend = () => {
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+
+                
 
                   if(wmsCompareLayer.value){
                     var legend = L.control({ position: "bottomright" });
@@ -3064,6 +3247,16 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
 
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
         
        if(wmsLayer.value){
         var legend = L.control({ position: "bottomleft" });
@@ -3087,6 +3280,49 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   
   ndwi_legend.value.addTo(map);
        }
+
+
+       
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  const compareNDWIlegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+  
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+        
+      
 
 
        if(wmsCompareLayer.value){
@@ -3148,6 +3384,17 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
   
        if(wmsLayer.value){
         var legend = L.control({ position: "bottomleft" });
@@ -3171,6 +3418,47 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   
   ndvi_legend.value.addTo(map);
        }
+
+  
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  const compareNDVIlegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+  
+     
 
        if(wmsCompareLayer.value){
         var legend = L.control({ position: "bottomright" });
@@ -3230,6 +3518,17 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
   
         if(wmsLayer.value){
           var legend = L.control({ position: "bottomleft" });
@@ -3254,6 +3553,48 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   
   status_legend.value.addTo(map);
         }
+
+       
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+
+  const comparestatuslegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+        
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+  
+    
 
         if(wmsCompareLayer.value) {
           var legend = L.control({ position: "bottomright" });
@@ -3287,6 +3628,7 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
     getLegendContent()
   }
   
+  
 
   const floodlegendContent = () => {
     const getLegendContent = async () => {
@@ -3314,6 +3656,16 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
   
         var legend = L.control({ position: "bottomright" });
         flood_legend.value = legend
@@ -3432,6 +3784,17 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
   
         if(wmsLayer.value){
           var legend = L.control({ position: "bottomleft" });
@@ -3456,6 +3819,48 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   
   firms_legend.value.addTo(map);
         }
+
+
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+    getLegendContent()
+  }
+  const comparefirmslegendContent = () => {
+    const getLegendContent = async () => {
+      try {
+        const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        )
+        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+
+        
+       var label_array =  object_array.map( (item) => {
+         console.log(item.label, 'labels items array') 
+         return item.label
+        })
+        console.log(label_array, 'label array')
+  
+        var colors_array = object_array.map( (item)=> {
+         return item.color
+        })
+        console.log(colors_array, 'colors array')
+      
+
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+  
 
 
         if(wmsCompareLayer.value) {
@@ -3503,6 +3908,17 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
 
+
+        if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
     if(wmsLayer.value){
       var legend = L.control({ position: "bottomleft" });
         smi_legend.value = legend
@@ -3526,32 +3942,52 @@ if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
   smi_legend.value.addTo(map);
     }
 
-    if(wmsCompareLayer.value) {
-      var legend = L.control({ position: "bottomright" });
-        smi_compare_legend.value = legend
-  //       var colors = colors_array
-  //       var labels = label_array
-  
-        smi_compare_legend.value.onAdd = function(map) {
-            var div = L.DomUtil.create("div", "legend");
-            
-            div.innerHTML += (`<p>${basin.value} SMI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
-
-            
-           
     
-              let draggable = new L.Draggable(div); //the legend can be dragged around the div
-        draggable.enable();
-
-    return div;
-  };
-  
-  smi_compare_legend.value.addTo(map);
-    }
-   
   
   
   }
+
+  const compareSMIlegendContent = () => {
+
+if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+if(modis_legend.value)map.removeControl(modis_legend.value)
+if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+
+
+if(wmsCompareLayer.value) {
+var legend = L.control({ position: "bottomright" });
+smi_compare_legend.value = legend
+//       var colors = colors_array
+//       var labels = label_array
+
+smi_compare_legend.value.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    
+    div.innerHTML += (`<p>${basin.value} SMI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+    
+   
+
+      let draggable = new L.Draggable(div); //the legend can be dragged around the div
+draggable.enable();
+
+return div;
+};
+
+smi_compare_legend.value.addTo(map);
+}
+
+
+
+}
+
 
   
   
@@ -3715,7 +4151,8 @@ wmsCompareLayer.value.on('load', function (event) {
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
 
 // addLulcLegend()
-lulclegendContent()
+// lulclegendContent()
+compareLulcLegend()
 
 changeOpacity()
 
@@ -3752,7 +4189,8 @@ changeOpacity()
     loading.value = false
   });
   swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
-  preclegendContent()
+  // preclegendContent()
+  comparePrecLegend()
   changeOpacity()
   
   
@@ -3822,7 +4260,8 @@ changeOpacity()
   });
   swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
   
-  NDWIlegendContent()
+  // NDWIlegendContent()
+  compareNDWIlegendContent()
   changeOpacity()
   
   
@@ -3863,7 +4302,8 @@ wmsCompareLayer.value.on('load', function (event) {
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
   
-NDVIlegendContent()
+// NDVIlegendContent()
+compareNDVIlegendContent()
 changeOpacity()
 }
  }
@@ -3899,7 +4339,8 @@ wmsCompareLayer.value.on('load', function (event) {
 });
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
-statuslegendContent()
+// statuslegendContent()
+comparestatuslegendContent()
 changeOpacity()
 }
  }
@@ -3934,10 +4375,12 @@ wmsCompareLayer.value.on('load', function (event) {
 });
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
-firmslegendContent()
+// firmslegendContent()
+comparefirmslegendContent()
 changeOpacity()
 }
  }
+ 
  const addCompareSMILayer = () => {
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Soil Moisure Index') { //&& season.value === 'DRY'
@@ -3969,7 +4412,8 @@ wmsCompareLayer.value.on('load', function (event) {
 });
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
-SMIlegendContent()
+// SMIlegendContent()
+compareSMIlegendContent()
 changeOpacity()
 }
  }
@@ -4006,7 +4450,7 @@ wmsCompareLayer.value.on('load', function (event) {
 });
 
 swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
-NDWIlegendContent()
+compareNDWIlegendContent()
 changeOpacity()
 }
  }
@@ -4035,6 +4479,76 @@ changeOpacity()
     
 
   }
+
+
+
+
+
+
+
+
+  //advanced filter functionalities
+  const getAdvancedCountryName = () => {
+    var selected_country = advancedUserSelections.getSelectedCountry
+    
+    country.value = selected_country
+    // console.log(selected_country, 'selected country app')
+  
+  }
+  
+  const setSelectedCountry = computed ( () => {
+    // console.log(advancedUserSelections.selected_country, 'selected country app')
+  
+    return advancedUserSelections.getSelectedCountry
+  
+  })
+  watch( setSelectedCountry , () => {
+    getAdvancedCountryName()
+    
+  })
+
+
+  const getAdvancedCountry = async () => {
+
+    if(current_geojson.value)map.removeLayer(current_geojson.value)
+   
+    var selectedCountry = advancedUserSelections.getSelectedRegion
+  //  geometry = selecteRegion
+   console.log(selectedCountry, 'selected country app')
+  
+   map.createPane("pane1000").style.zIndex = 300;
+   current_geojson.value = L.geoJSON(selectedCountry, {
+           style: {
+             color: "steelblue",
+             opacity: 1,
+             fillOpacity:0,
+             weight: 4
+           },
+           pane: 'pane1000'
+            })
+   
+  
+   current_geojson.value.addTo(map)
+  
+  
+             map.fitBounds(current_geojson.value.getBounds(), {
+                             padding: [50, 50],
+                           }); 
+
+  }
+
+    //watch for changes
+  
+    const setSelectedAdvancedCountry = computed( () => {
+    console.log(advancedUserSelections.selected_country, 'selected_country app')
+    
+    return advancedUserSelections.getSelectedRegion
+  })
+  watch( setSelectedAdvancedCountry , () => {
+    getAdvancedCountry()
+    
+  })
+
 
     
 

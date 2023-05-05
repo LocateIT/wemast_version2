@@ -268,7 +268,9 @@ export const useCounterStore = defineStore({
       
       
 
-      if( this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' ||this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments' ) {
+      if( this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent'
+       ||this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments'
+       ||this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Turbidity' ) {
         this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
           '2018','2019','2020', '2021', "2022"]
@@ -490,7 +492,7 @@ export const useCounterStore = defineStore({
 
 
 
-        if(this.selected_sub_indicator === 'Precipitation Index') {
+        if(this.selected_sub_indicator === 'Precipitation Index' && this.selected_season === 'DRY') {
           try {
           
             // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
@@ -505,12 +507,69 @@ export const useCounterStore = defineStore({
         // console.log(season, 'season for stattttttttsssssss')
       
     
-            const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=SPI_${season}_STATS:${year}&outputFormat=application/json&CQL_FILTER=Name=%27${basin}%27`
+            const response = await axios.get(`http://66.42.65.87:8080/geoserver/SPI_MIN/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=SPI_MIN%3A${year}.shp&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=name=%27${basin}%27`
             );
             console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
-            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')&& !key.includes('count')))
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('id') && !key.includes('geom') && !key.includes('name') && !key.includes('0')&& !key.includes('count')))
+            console.log(newObj, 'NEW OBJECT')
+    
+            var labels = Object.keys(newObj)
+            console.log(labels, 'stats labels')
+            this.lulcChartData.labels = labels
+           
+          
+            var figures = Object.values(newObj)
+            console.log(figures, 'stats figures')
+            // var converted = figures.map( (item) => item/100)
+            // console.log(converted, 'converted figres')
+            this.lulcChartData.datasets[0].data = figures
+            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+
+
+             //for new array
+             this.stats_array.labels = labels
+             this.stats_array.data_figures = figures
+
+             //capture bbox
+             var bbox = response.data.features[0].bbox
+             console.log(bbox, 'BOUNDING BOX')
+              this.western_lon = bbox[0]
+              this.northern_lat = bbox[1]
+              this.eastern_lon = bbox[2]
+              this.southern_lat = bbox[3]
+              this.resolution = '300'
+            
+         
+            
+          } catch (error) {
+            console.error('an error occured'+error);
+            
+          }
+        
+        }
+        if(this.selected_sub_indicator === 'Precipitation Index' && this.selected_season === 'WET') {
+          try {
+          
+            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+         var basin = this.selected_basin
+        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+  
+  
+         var year = this.selected_year
+        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        var season = this.selected_season
+
+        // console.log(season, 'season for stattttttttsssssss')
+      
+    
+            const response = await axios.get(`http://66.42.65.87:8080/geoserver/SPI_MAX/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=SPI_MAX%3A${year}.shp&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=name=%27${basin}%27`
+            );
+            console.log(response.data.features[0].properties,'stats response')
+            var obj = response.data.features[0].properties
+            
+            const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('id') && !key.includes('geom') && !key.includes('name') && !key.includes('0')&& !key.includes('count')))
             console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
@@ -549,7 +608,10 @@ export const useCounterStore = defineStore({
         }
 
 
-        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent' || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments')) {
+
+        if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent'
+         || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments')
+        || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Turbidity')) {
           try {
           
             // console.log(this.selected_basin, 'BASIN FOR STATISTICS')

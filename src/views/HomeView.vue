@@ -120,7 +120,7 @@
                   <div class="basin" id="flamingo">
                          <!-- <img class="basin_img1" src="images/sadc2.png" alt=""> -->
                   </div>
-                  <div class="basin" ref="Cuvelai">
+                  <div class="basin" ref="Cuvelai" id="cuvelai_basin_id">
                         <p class="cuvelai_basin">The Cuvelai Basin</p>
                         <p class="cuvelai_text">The Cuvelai drainage system channels runoff from Angola’s summer rainfall through a complex system of ephemeral river channels,
                                referred to as the Oshanas.
@@ -136,7 +136,7 @@
 </p>
                   </div>
                   <div class="basin" id="limpopo">
-                        <p class="limpopo_basin">The Limpopo Basin</p>
+                        <p class="limpopo_basin" id="limpopo_basin_id">The Limpopo Basin</p>
                         <p class="limpopo_text">
                               The majority of wetlands along the Limpopo basin are located in Mozambique and along the Changane River. There are three Ramsar wetland sites in the Limpopo basin: The Makuleke Wetlands, the Nylsvley Nature Reserve and the Verloren Valei Nature Reserve. All three wetland sites have conservation status and therefore contribute to the local economies with tourism. Most of the Makuleke wetlands are situated within the Kruger National Park. The wetlands are of floodplain vlei type and are intermittently filled by floods and rain. They sustain riverine ecosystems, including wildlife, well into the dry season. The floodplains also serve to attenuate floods, thereby reducing flood damage downstream. <br>
 
@@ -147,7 +147,7 @@
                   <div class="basin" id="hippo"></div>
                   <div class="basin" id="waterfall"></div>
                   <div class="basin" id="okavango">
-                        <div class="okavango_basin">The Okavango Basin</div>
+                        <div class="okavango_basin" id="okavango_basin_id">The Okavango Basin</div>
                         <div class="okavango_text">
                               The Okavango Basin’s main stream, the Okavango River, is southern Africa’s fourth longest river and is produced by seasonal flooding during the summer months. It begins as the Rio Cubango in Angola, flows south to form the border between Angola and Namibia and, in Botswana, it reaches the large swampy inland delta called the Okavango Delta, a UNESCO World Heritage Site.
                               <br>
@@ -159,7 +159,7 @@
                         </div>
                   </div>
                   <div class="basin" id="zambezi">
-                        <p class="zambezi_basin">The Zambezi Basin</p>
+                        <p class="zambezi_basin" id="zambezi_basin_id">The Zambezi Basin</p>
                         <p class="zambezi_text">The Zambezi basin is the fourth-largest river basin of Africa with a large area covered by wetlands. These include the Barotse Floodplains in Zambia, the Chobe Swamps in northeastern Namibia, the Linyanti Swamp in Botswana, the Busanga Swamps on the Lunga River, the Lukanga Swamps and the Kafue Flats on the Luangwa River, and the Elephant Marsh near the town of Chiromo in Malawi. These wetlands are used for fisheries, including commercial fisheries, agriculture, wildlife management and transportation services. Moreover, these wetlands are important habitats for fish, and its riverine woodlands supports support wildlife and birds, by providing vegetative cover and suitable breeding and feeding grounds, which drive tourism activities, that include photography, bird watching and hunting. Furthermore, the wetlands provide hydrological services by decreasing downstream flood risks. <br>
 
                               <br>
@@ -199,16 +199,16 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
             </div>
             <div class="project_info">
                   <div class="basin_list">
-                        <div class="cuv_basin" @click="scrollToElement('Cuvelai')">The Cuvelai Basin</div>
+                        <div class="cuv_basin" @click="scrollToCuvelaiBasin">The Cuvelai Basin</div>
                         <div class="basin_underline" ></div>
 
-                        <div class="lim_basin">The Limpopo Basin</div>
+                        <div class="lim_basin"  @click="scrollToLimpopoBasin">The Limpopo Basin</div>
                         <div class="basin_underline"></div>
 
-                        <div class="oka_basin">The Okavango Basin</div>
+                        <div class="oka_basin"  @click="scrollToOkavangoBasin">The Okavango Basin</div>
                         <div class="basin_underline"></div>
 
-                        <div class="zam_basin">The Zambezi Basin</div>
+                        <div class="zam_basin"  @click="scrollToZambeziBasin">The Zambezi Basin</div>
                         <div class="basin_underline"></div>
 
                   </div>
@@ -265,6 +265,18 @@ const scrollToElement = (refName) =>  {
 
 //       window.scrollTo(0, top);
 //     }
+const scrollToCuvelaiBasin = () => {
+      document.getElementById('cuvelai_basin_id').scrollIntoView();
+}
+const scrollToLimpopoBasin = () => {
+      document.getElementById('limpopo_basin_id').scrollIntoView();
+}
+const scrollToZambeziBasin = () => {
+      document.getElementById('zambezi_basin_id').scrollIntoView();
+}
+const scrollToOkavangoBasin = () => {
+      document.getElementById('okavango_basin_id').scrollIntoView();
+}
 
 </script>
 
@@ -560,7 +572,7 @@ const scrollToElement = (refName) =>  {
 }
 #river_basins{
    position: absolute;
-   top: 2000px;
+   top: 1900px;
    left: 3.5vw;
 }
 .river_basins_title {

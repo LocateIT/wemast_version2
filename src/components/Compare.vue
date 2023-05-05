@@ -9,6 +9,12 @@
                             : ''
                         "
                         style="cursor: pointer;">
+        <img src=" /uiIcons/radio.svg"  class="satellite" @click="handleSatelliteSwap()"   :class="
+                          radio_selection === 'satellite'
+                            ? 'radio_swap'
+                            : ''
+                        "
+                        style="cursor: pointer;">
        <img src=" /uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
                           radio_selection === 'time'
                             ? 'radio_swap'
@@ -19,6 +25,7 @@
    </div>
    <div class="radio_labels">
        <label for="" class="parameters1">Parameters</label>
+       <label for="" class="satellite1">Satellite</label>
        <label for="" class="time1">Time</label>
    </div>
     </div>
@@ -35,6 +42,16 @@
         <div class="sub_indicator_selection">
                 <CustomSelectSubIndicatorCompare />
         </div>
+    </div>
+
+    <div v-if="radio_selection ==='satellite'" class="compare_selections">
+        <p class="select_satellite">Select Satellite</p>
+        <div class="satellite_selection">
+            <AdvancedPlatformSelect />
+                
+        </div>
+
+       
     </div>
 
     <div v-if="radio_selection ==='time'" class="compare_selections">
@@ -56,6 +73,7 @@
     import CustomSelectIndicatorCompare from '../components/CustomSelectIndicatorCompare.vue';
     import CustomSelectYearCompare from './CustomYearSelectCompare.vue'
     import CustomSelectSubIndicatorCompare from '../components/CustomSelectSubIndicatorCompare.vue'
+    import AdvancedPlatformSelect from './AdvancedPlatformSelect.vue';
     import { ref } from 'vue'
 
     let radio_selection = ref("parameters") 
@@ -63,6 +81,10 @@
     const handleParameterSwap = () => {
       radio_selection.value = 'parameters';
     }
+    const handleSatelliteSwap = () => {
+      radio_selection.value = 'satellite';
+    }
+
 
     const handleTimeSwap = () => {
       radio_selection.value = 'time';
@@ -103,7 +125,7 @@
         background-color: grey;
         
     }
-    .parameters, .time{
+    .parameters, .time, .satellite{
         width: 20px;
         height: 20px;
         z-index: 1500;
@@ -126,12 +148,25 @@
         left: 1vw;
         font-weight: 700;
     }
+    .select_satellite{
+        position: absolute;
+        top: 8vh;
+        left: 1vw;
+        font-weight: 700;
+    }
     .indicator_selection{
         position: absolute;
         top: 11vh; 
         left: 1vw;
         z-index: 500;
     }
+    .satellite_selection{
+        position: absolute;
+        top: 13vh; 
+        left: 1vw;
+        z-index: 500;
+    }
+
 
     .select_sub_indicator{
         position: absolute;

@@ -10,7 +10,7 @@ export const useAdvancedStore = defineStore({
         wetland_list: [],
         wetland_placeholder: 'Modemolle',
       selected_wetland:'',
-      platform_list:[],
+      platform_list:['SENTINEL', 'LANDSAT'],
       platform_placeholder: '',
       selected_platform:'',
       current_geojson:{},

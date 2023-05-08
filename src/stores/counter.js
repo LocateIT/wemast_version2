@@ -217,6 +217,11 @@ export const useCounterStore = defineStore({
       band_2020: null,
       band_2021: null,
       band_2022: null,
+      //usermanagement
+      username: '',
+      email: '',
+      password: '',
+      confirm_password: ''
   }),
  
   actions: {
@@ -427,6 +432,13 @@ export const useCounterStore = defineStore({
       this.getstats()
     },
 
+    showUsernameInput() {
+      this.username = option;
+     
+      console.log(this.username , 'changed username')
+      
+    },
+
 
     
 
@@ -525,7 +537,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147',  '#93be89']
 
 
              //for new array
@@ -582,7 +594,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147',  '#93be89']
 
 
              //for new array
@@ -1027,7 +1039,7 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
-            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147', '#c2fefe', '#66b7fe']
+            this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147',  '#93be89']
 
 
              //for new array
@@ -1106,6 +1118,11 @@ export const useCounterStore = defineStore({
     getBand2020: (state) => state.band_2020,
     getBand2021: (state) => state.band_2021,
     getBand2022: (state) => state.band_2022,
+    //user management
+    getUsernameInput:(state) => state.username,
+    getEmailInput:(state) => state.email,
+    getPasswordInput:(state)=> state.password,
+    getConfirmPassword:(state) => state.confirm_password
   
     
   },

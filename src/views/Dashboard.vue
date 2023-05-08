@@ -1315,10 +1315,12 @@ const screenshot =  () => {
       let mapElement = document.getElementById("map");
       
       setTimeout(async () => {
-        const dataURL = await domtoimage.toPng(mapElement, {
-          width: mapElement.width,
-          height: mapElement.height
-        });
+        const dataURL = await domtoimage.toPng(mapElement
+        // , {
+        //   // width: mapElement.width,
+        //   // height: mapElement.height
+        // }
+        );
 
         let link = document.createElement("a");
         link.setAttribute("href", dataURL);
@@ -1330,6 +1332,26 @@ const screenshot =  () => {
       }, 1500);
 
     }
+
+   const screenshot2 = async () =>  {
+   
+   await domtoimage.toBlob(document.getElementById('map'))
+       .then(function (blob) {
+           saveAs(blob, 'map.png');
+       });
+
+      //  try {
+      //   await domtoimage.toBlob(document.getElementById('map'))
+      //   function (blob) {
+      //      saveAs(blob, 'map.png');
+      //  }
+        
+      //  } catch (error) {
+        
+      //  }
+       
+   
+     } 
       const setLeafletMap = () => {
 
         let osm = L.tileLayer(
@@ -1458,7 +1480,7 @@ const screenshot =  () => {
         .addEventListener("click", (e) => {
           console.log("click ");
           
-          screenshot();
+          screenshot2();
         });
   
         document
@@ -2761,7 +2783,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
 
  //ADDTIMESERIES
   addPrecTimeSeries()
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`45.32.233.93:8085/geoserver/NDTI/wms?`, {
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDTI/wms?`, {
      pane: 'pane800',
      layers: `NDTI:NDTI_DRY`,
      crs:L.CRS.EPSG4326,

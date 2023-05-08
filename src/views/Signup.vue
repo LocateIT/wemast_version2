@@ -15,34 +15,34 @@
     </div>
 
     <div class="register">
-        <form class="form" style="margin-left: 0%;  margin-top: 0%; ">
-    <p id="heading">
+        <form @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
+        <p id="heading">
         
         <PersonOutline width="250" height="100" color="#164b75" />
-    </p>
+       </p>
 
 
 
     <div class="field">
     <Person width="20" height="16" color="#164b75" />
-      <input autocomplete="off" placeholder="Username" class="input-field" type="text">
+      <input autocomplete="off" placeholder="Username" class="input-field" type="text" @input="showUsernameInput">
     </div>
 
     <div class="field">
     <Envelope width="18" height="15"  color="#164b75"/>
-      <input autocomplete="off" placeholder="Email" class="input-field" type="text">
+      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
     </div>
 
 
 
     <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password">
+        <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
     </div>
 
     <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Confirm Password" class="input-field" type="password">
+        <input placeholder="Confirm Password" class="input-field" type="password" @input="showConfirmPasswordInput">
     </div>
 
 
@@ -50,10 +50,10 @@
     <div class="btn">
 
     <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
-    <RouterLink to="/login" >
-    <button class="button2">Sign Up</button>
-    </RouterLink>
-    <RouterView />
+    <!-- <RouterLink to="/login" > -->
+    <button type="submit" class="button2">Sign Up</button>
+    <!-- </RouterLink> -->
+    <!-- <RouterView /> -->
 
 
     </div>
@@ -77,6 +77,106 @@
   import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
   import { Envelope } from "@vicons/fa"
   import { CashOutline as CashIcon } from "@vicons/ionicons5";
+  import { onMounted, computed, watch, ref } from 'vue'
+  import { useCounterStore } from '../stores/counter'
+  import axios from 'axios';
+
+  const storeUserSelections = useCounterStore()
+
+
+  let username = ref('')
+  let email = ref('')
+  let password = ref('')
+  let confirm_password = ref('')
+
+
+  onMounted( () => {
+    submitForm()
+
+  })
+
+  const showUsernameInput = (e) => {
+              username.value = e.target.value
+            }
+            const showEmailInput = (e) => {
+            email.value = e.target.value
+          }
+            const showPasswordInput = (e) => {
+              password.value = e.target.value
+            }
+         
+            const showConfirmPasswordInput = (e) => {
+         confirm_password.value = e.target.value 
+            }
+
+  const submitForm = async () => {
+
+    const formInputsData = {
+              username: username.value,
+             email: email.value,
+             password: password.value,
+             confirm: confirm_password.value
+            }
+            console.log(formInputsData , 'formInputsData target')
+
+            const headers = {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': 'http://45.32.233.93'
+              // 'Authorization': 'JWT fefege...'
+            }
+            try {
+              const response = await axios.post('http://wemast.glenwell.com/wemast_gen.php', formInputsData, {
+                headers: headers
+              });
+              console.log(response, 'response')
+              
+            } catch (error) {
+              console.log(error, 'error')
+              
+            }
+
+         
+       
+        // console.log(response.data.user_data.username, 'signup response')
+        // this.$router.push('/login')
+        // this.$emit("username", response.data.user_data.username)
+        // alert('check email to verify')
+        //  .then(response => {
+        
+        //      console.log(response, 'response')
+             
+        //  })
+        //  .catch(error => {
+        //      console.log(error, 'error')
+        //  })
+
+      
+
+            }
+
+           
+
+          
+
+  //           const getUserName = () => {
+  //   var username_input = storeUserSelections.getUsernameInput
+    
+  //  username.value = username_input
+  //   console.log(username_input, 'username_input')
+  
+  // }
+
+  // const setUsernameInput = computed ( () => {
+  //   console.log(storeUserSelections.username, 'username computed')
+  
+  //   return storeUserSelections.getUsernameInput
+  
+  // })
+  // watch( setUsernameInput , () => {
+  //   getUserName()
+    
+  // })
+       
 
   
 </script>

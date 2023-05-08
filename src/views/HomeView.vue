@@ -858,7 +858,7 @@ const scrollToOkavangoBasin = () => {
       left: 12vw;
       display: flex;
       flex-direction: column;
-      gap: -10px;
+      gap: -5rem;
       color: #ffffff;
       font-size: 12px;
 }

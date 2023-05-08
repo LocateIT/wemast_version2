@@ -170,6 +170,7 @@ export const useCompareStore = defineStore({
         this.selected_satellite=  option
         console.log(this.selected_satellite , 'changed selected satellite')
       },
+      
   
 
     },

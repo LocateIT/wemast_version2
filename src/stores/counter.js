@@ -108,16 +108,7 @@ export const useCounterStore = defineStore({
         {
           data: [],
 
-          backgroundColor: [
-            "#a8a800",
-            "#ccc",
-            "#bd6860",
-            "green",
-            "#fff1d2",
-            "#55ff00",
-            '#4dd7ff',
-            '#d2efff'
-          ],
+          backgroundColor: [],
           barThickness: 40,
        
        
@@ -482,6 +473,16 @@ export const useCounterStore = defineStore({
             // var converted = figures.map( (item) => item/100)
             // console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
+            this.lulcChartData.datasets[0].backgroundColor = [
+              "#a8a800",
+              "#ccc",
+              "#bd6860",
+              "green",
+              "#fff1d2",
+              "#55ff00",
+              '#4dd7ff',
+              '#d2efff'
+            ]
 
 
             //for new array

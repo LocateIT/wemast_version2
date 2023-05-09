@@ -106,7 +106,7 @@
             }
          
             const showConfirmPasswordInput = (e) => {
-         confirm_password.value = e.target.value 
+              confirm_password.value = e.target.value 
             }
 
   const submitForm = async () => {

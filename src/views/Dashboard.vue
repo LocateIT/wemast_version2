@@ -118,14 +118,19 @@
           <div  v-if="analysis_swap_toggle === 'data_analysis'" >
             <!-- <q-btn flat label="get WMS" @click="getWMS_Layer" />    -->
 
-            <p style="margin-top:40px">
+            <p style="margin-top:40px " :class="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' || 'Undulation' ? 'burnt_summary': ''" >
               <label style="margin-top:40px; font-weight: 700; font-size:14px">Summary</label>
               <br>
               {{ storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
-              storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`: 
+              storeUserSelections.selected_parameter === 'Wetland Extent' ? storeUserSelections.extent_summary: 
+               storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? storeUserSelections.burnt_summary: 
+               storeUserSelections.selected_sub_indicator === 'Undulation' ? storeUserSelections.undulation_summary:
+              storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? storeUserSelections.prec_summary: 
+              storeUserSelections.selected_parameter === 'Turbidity' ? storeUserSelections.turbidity_summary: 
+              storeUserSelections.selected_parameter === 'Sus Sediments' ? storeUserSelections.sus_summary: 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
-                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
+           
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : '' }}
             </p>
             <br />
@@ -190,7 +195,8 @@
                             sub_indicator === 'Soil Moisure Index'  ? 'prec_bar':
                             sub_indicator === 'Water Quality'      ? 'prec_bar'
                             : '' ">
-              <LulcBar  class="lulc_bar_chart" 
+                            <!-- class="lulc_bar_chart" -->
+              <LulcBar   :class="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'|| 'Undulation' ? 'burnt_bar_chart' : 'lulc_bar_chart'"
             :height="200"
             :chartData="storeUserSelections.lulcChartData"
             :options="sub_indicator === 'Vegetation Cover' ? veg_barchart_options : barchart_options"
@@ -230,9 +236,13 @@
                     <th>Description</th>
       
                     <td>{{
-                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_desc} for ${storeUserSelections.selected_season}  season`:
+                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? storeUserSelections.prec_summary:
+                     storeUserSelections.selected_parameter === 'Turbidity' ? storeUserSelections.turbidity_summary: 
+              storeUserSelections.selected_parameter === 'Sus Sediments' ? storeUserSelections.sus_summary: 
+              storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? storeUserSelections.burnt_summary:
+              storeUserSelections.selected_sub_indicator === 'Undulation' ? storeUserSelections.undulation_summary: 
                      storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
-                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc: 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : ''

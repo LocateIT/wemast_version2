@@ -148,15 +148,15 @@ export const useCounterStore = defineStore({
       indicator_list: [], 
       sub_indicator_list:[],
       year_list:[],
-      region_placeholder:'',
+      region_placeholder:'Zambezi',
       selected_basin:'',
-      indicator_placeholder:'',
+      indicator_placeholder:'Exposure',
       selected_indicator:'',
 
-      sub_indicator_placeholder:'',
+      sub_indicator_placeholder:'Land Cover',
       selected_sub_indicator:'',
 
-      year_placeholder:'',
+      year_placeholder:'2010',
       selected_year:'',
 
       language_placeholder: 'English',

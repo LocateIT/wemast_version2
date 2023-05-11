@@ -154,7 +154,7 @@
             @click="downloadcsv"
             >
             <!--  v-if="sub_indicator != 'Precipitation Index'" -->
-            <div id="chart_pie" v-if="sub_indicator === 'Land Cover' || sub_indicator === 'Wetland Inventory' || sub_indicator === 'Water Quality' || sub_indicator === 'Soil Moisure Index' 
+            <div id="chart_pie" v-if="sub_indicator === 'Land Cover' || sub_indicator === 'Wetland Inventory' || sub_indicator === 'Water Quality' 
             || sub_indicator === 'Burnt Area FIRMS' ||  sub_indicator === 'Undulation' ">
               <LulcPie class="lulc_chart"
             :height="200"
@@ -192,7 +192,8 @@
             <div id="bar"  :class=" sub_indicator === 'Vegetation Cover'  
                             ? 'bar_veg_cover' :
                             sub_indicator === 'Precipitation Index'  ? 'bar_veg_cover' :
-                            sub_indicator === 'Soil Moisure Index'  ? 'prec_bar':
+                            sub_indicator === 'Soil Moisure Index'   ? 'bar_veg_cover' :
+                            
                             sub_indicator === 'Water Quality'      ? 'prec_bar'
                             : '' ">
                             <!-- class="lulc_bar_chart" -->

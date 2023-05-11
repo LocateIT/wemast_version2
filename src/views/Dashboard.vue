@@ -1484,52 +1484,46 @@ const screenshot =  () => {
 
     fetchZambezi()
 
-    //loadd extent
-    const addWetlandExtent = () => {
+    //loadd lulc
+    const addLulcLayer = () => {
+  
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
   
 
-  // console.log('just to see if request is accessed') //accessed
-  map.createPane("pane800").style.zIndex = 200;
-  
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
-     pane: 'pane800',
-     layers: `NDWI:2010`,
+wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+     pane: 'pane400', 
+     layers: `LULC:2010`,
      crs:L.CRS.EPSG4326,
-     styles: 'zambezi_water',
+     styles:'zambezi_lulc',
      format: 'image/png',
      transparent: true,
      opacity:1.0
-     // CQL_FILTER: "Band1='1.0'"
+     
      
     
-  });
-  
-  
-  wmsLayer.value.addTo(map);
-  
-  
-  // console.log(wmsLayer.value, 'wms')
-  //remove spinner when layer loads
-  wmsLayer.value.on('load', function (event) {
-    loading.value = false
-  });
-  
-  
-    NDWIlegendContent()
+});
 
-  
-  
-  
-  changeOpacity()
-  
-  
-  
-  
-  
-  
+
+wmsLayer.value.addTo(map);
+
+
+
+
+// console.log(wmsLayer.value, 'wms')
+
+
+// addLulcLegend()
+lulclegendContent()
+
+changeOpacity()
+
 
  }
- addWetlandExtent()
+
+ addLulcLayer()
 
  //load stats for zambezi ndwi
 
@@ -3194,7 +3188,13 @@ geoposition.value = `${lat}, ${lon}`
   
         lulc_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
+          if(basin.value && sub_indicator.value && year.value) {
             div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${year.value}</p>`;
+
+          } else{
+            div.innerHTML += `<p>Zambezi NDVI 2010</p>`;
+
+          }
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -3419,12 +3419,11 @@ const comparePrecLegend = () => {
   
         ndwi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            if(basin.value && parameter.value && year.value) {
+           
               div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
-            } else{
-              div.innerHTML += `<p>Zambezi NDWI 2010</p>`;
+             
 
-            }
+            
             
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=

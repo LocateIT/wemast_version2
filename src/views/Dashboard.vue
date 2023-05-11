@@ -155,7 +155,7 @@
             >
             <!--  v-if="sub_indicator != 'Precipitation Index'" -->
             <div id="chart_pie" v-if="sub_indicator === 'Land Cover' || sub_indicator === 'Wetland Inventory' 
-            || sub_indicator === 'Burnt Area FIRMS' ||  sub_indicator === 'Undulation' ">
+            || sub_indicator === 'Burnt Area FIRMS' ||  sub_indicator === 'Undulation'  ">
               <LulcPie class="lulc_chart"
             :height="200"
             :width="300"
@@ -164,7 +164,20 @@
             />
 
             </div>
-          
+
+            
+            <div id="chart_pie" v-if=" show_zambezi_stats === true ">
+              <LulcPie class="lulc_chart"
+            :height="200"
+            :width="300"
+            :chartData="storeUserSelections.lulcChartData"
+            :options="options"
+            />
+
+            </div>
+
+
+            
           </div>
 
          
@@ -572,6 +585,9 @@ import * as wkt from 'wkt'
   let stats = ref({})
   let indexx = ref('')
   let show_mobile_data = ref(false)
+  let default_zambezi_region = ref({})
+  let default_stats = ref({})
+  let show_zambezi_stats = ref(true)
 
 
   //advanced filter variables
@@ -1430,6 +1446,90 @@ const screenshot =  () => {
 
   onMounted( () => {
     setLeafletMap()
+
+    //load zambezi
+    const fetchZambezi = async () => {
+      const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/aoi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aoi%3AZambezi&maxFeatures=50&outputFormat=application%2Fjson`
+              );
+           var zambezi_region = resp.data
+           default_zambezi_region.value =  resp.data
+
+              map.createPane("pane1000").style.zIndex = 300;
+   current_geojson.value = L.geoJSON(zambezi_region, {
+           style: {
+             color: "black",
+             opacity: 1,
+             fillOpacity:0,
+             weight: 4
+           },
+           pane: 'pane1000'
+            })
+   
+  
+   current_geojson.value.addTo(map)
+  
+  
+             map.fitBounds(current_geojson.value.getBounds(), {
+                             padding: [50, 50],
+                           }); 
+              
+    }
+
+    fetchZambezi()
+
+    //loadd extent
+    const addWetlandExtent = () => {
+  
+
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+     pane: 'pane800',
+     layers: `NDWI:2010`,
+     crs:L.CRS.EPSG4326,
+     styles: 'zambezi_water',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+  
+  
+    NDWIlegendContent()
+
+  
+  
+  
+  changeOpacity()
+  
+  
+  
+  
+  
+  
+
+ }
+ addWetlandExtent()
+
+ //load stats for zambezi ndwi
+
+ storeUserSelections.getDefaultStats()
+default_stats.value =  storeUserSelections.getDefaultStats()
+
+ 
   
 
       AddCustomRightControls();
@@ -1569,6 +1669,9 @@ const screenshot =  () => {
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
    if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
+
+  removeDefaultStats()
+  
   
    var selecteRegion = storeUserSelections.getSelectedRegion
    geometry = selecteRegion
@@ -1655,15 +1758,23 @@ map.addControl(search_control.value );
 
  
    
-  
+  const removeDefaultStats = () => {
+    show_zambezi_stats.value = false
+  }
   
   const getBasinName = () => {
+    removeDefaultStats()
     var selected_basin = storeUserSelections.getSelectedBasin
     
     basin.value = selected_basin
     console.log(selected_basin, 'selected basin app')
+
+
+  // show_zambezi_stats.value == false
+ }
+
   
-  }
+  
   
   const setSelectedBasin = computed ( () => {
     console.log(storeUserSelections.selected_basin, 'selected basin app')
@@ -3301,7 +3412,13 @@ const comparePrecLegend = () => {
   
         ndwi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
+            if(basin.value && parameter.value && year.value) {
+              div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
+            } else{
+              div.innerHTML += `<p>Zambezi NDWI 2010</p>`;
+
+            }
+            
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';

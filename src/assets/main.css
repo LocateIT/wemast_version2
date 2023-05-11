@@ -960,3 +960,7 @@ title{
   width: 25vw;
   height:100px !important;
 }
+.zambezi_chart{
+  display: none;
+
+}

@@ -140,7 +140,8 @@
             
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-            <div class="chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi NDWI 2010</div>
+            <div v-if=" basin && sub_indicator && year" class="chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <img src="/mapIcons/download_map.svg" alt="" 
             title="Download Png"
             class="chart_download_png" 
@@ -188,8 +189,14 @@
             
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
-            <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+
+            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi NDWI 2010</div>
+            <div  v-if=" basin && sub_indicator && year"  class="chart_dynamic_titles">
+              <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <div  v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">{{ `${basin} ${parameter}-${year}` }}</div>
+
+            </div>
+           
             <img src="/mapIcons/download_map.svg" alt="" title="Download Png"
             class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="bar_chart_png"

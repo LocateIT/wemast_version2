@@ -868,6 +868,12 @@ title{
   background-color: #eee;
   padding: 20px;
 }
+.default_layer_title{
+  position: relative;
+  top: -4.5vh;
+  left: -1vw;
+  font-weight: 700;
+}
 .bar_chart_title{
   position: relative;
   top: -5vh;

@@ -160,7 +160,7 @@
               <LulcPie class="lulc_chart"
             :height="200"
             :width="300"
-            :chartData="storeUserSelections.lulcChartData"
+            :chartData=" compare_year ? compareUserSelections.lulcChartData : storeUserSelections.lulcChartData"
             :options="options"
             />
 
@@ -171,7 +171,7 @@
               <LulcPie class="lulc_chart"
             :height="200"
             :width="300"
-            :chartData="storeUserSelections.lulcChartData"
+            :chartData=" storeUserSelections.lulcChartData "
             :options="options"
             />
 
@@ -219,7 +219,7 @@
                             <!-- class="lulc_bar_chart"  sub_indicator === 'Water Quality'      ? 'prec_bar' -->
               <LulcBar   :class="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'|| 'Undulation' ? 'burnt_bar_chart' : 'lulc_bar_chart'"
             :height="200"
-            :chartData="storeUserSelections.lulcChartData"
+            :chartData=" compare_year ? compareUserSelections.lulcChartData : storeUserSelections.lulcChartData"
             :options="sub_indicator === 'Vegetation Cover' ? veg_barchart_options : barchart_options"
             />
 

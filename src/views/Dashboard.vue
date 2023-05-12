@@ -140,7 +140,7 @@
             
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi NDWI 2010</div>
+            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2010</div>
             <div v-if=" basin && sub_indicator && year" class="chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <img src="/mapIcons/download_map.svg" alt="" 
             title="Download Png"
@@ -190,7 +190,7 @@
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
 
-            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi NDWI 2010</div>
+            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2010</div>
             <div  v-if=" basin && sub_indicator && year"  class="chart_dynamic_titles">
               <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <div  v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">{{ `${basin} ${parameter}-${year}` }}</div>
@@ -3192,7 +3192,7 @@ geoposition.value = `${lat}, ${lon}`
             div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${year.value}</p>`;
 
           } else{
-            div.innerHTML += `<p>Zambezi NDVI 2010</p>`;
+            div.innerHTML += `<p>Zambezi LULC 2010</p>`;
 
           }
             for (var i = 0; i < colors.length; i++) {

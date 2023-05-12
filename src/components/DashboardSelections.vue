@@ -4,7 +4,7 @@
         <!-- <select name="" id="region_selection">
             <option value=""></option>
         </select> -->
-        <div id="region_selection">
+        <div id="region_selection" v-if="region_selection">
           <CustomSelect2
        />
         </div>
@@ -13,7 +13,7 @@
       
 
         <p class="select_cause">Select Indicator</p>
-        <div id="cause_selection">
+        <div id="cause_selection"  @click="clickedMe">
           <CustomSelectIndicator />
         </div>
 
@@ -121,6 +121,11 @@ import CustomSelectSeason from './CustomSelectSeason.vue';
 import CustomSelectParameter from './CustomSelectParameter.vue';
 import CustomSelectSatellite from './CustomSelectSatellite.vue';
 
+//refs
+let region_selection = ref(true)
+let indicator_selection = ref(true)
+let year_selection = ref(true)
+
 const storeUserSelections = useCounterStore()
 
 
@@ -138,6 +143,12 @@ const fetchRegion = () => {
   console.log('fetched region')
 }
 // })
+
+const clickedMe = () => {
+  console.log('clicked indicator select')
+
+
+}
 
 </script>
 

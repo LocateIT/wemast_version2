@@ -1,19 +1,21 @@
 <template>
 	
-      <div class="aselect" :data-value="placeholder"  >
-	    <div    class="selector" @click="toggle()"  >
+      <div class="aselect" :data-value="placeholder"   >
+	    <div   class="selector" @click="toggle()"  >
 	        <div class="label">
 				    <span>{{ storeUserSelections.region_placeholder }}</span>
 	        </div>
 			<!-- <div class="arrow" :class="{ expanded : visible }"></div>  @input="storeUserSelections.showSelectedCountry"
-			:class="{'hide_dropdown':(storeUserSelections.visible_indicator = true)}" -->
-            <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
+			:class="{'hide_dropdown':(storeUserSelections.visible_indicator = true)}" element_id !== element_id  -->
+            <img  id="region_dropdown" src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }" @click="getelementid($event)">
 	        <div 
-			:class="{ hidden : !visible, visible , hide_dropdown : storeUserSelections.visible_indicator === true}"
+			:class="{ hidden : !visible, visible, hide_dropdown : storeUserSelections.visible_indicator === true
+				 || storeUserSelections.visible_sub_indicator === true
+				 || storeUserSelections.visible_year === true }"
 			>
-	            <ul  >
+	            <ul  >  
     
-	                <li :class="{ current : item === storeUserSelections.region_placeholder }" 
+	                <li   :class="{ current : item === storeUserSelections.region_placeholder }" 
 					v-for="item in storeUserSelections.countries" :key="item"
 					 @click="storeUserSelections.showSelectedCountry(item)"   
 					
@@ -28,7 +30,7 @@
 </template>
 
 <script setup>
-    import { ref, computed, watch, onMounted} from 'vue'
+    import { ref, computed, watch} from 'vue'
     import {useCounterStore } from '../stores/counter';
 	import axios from 'axios';
     const storeUserSelections = useCounterStore();
@@ -40,17 +42,39 @@
             // console.log(list, 'regions list')
 			let counties = ref([])
             let visible = ref(false)
-			
+			let region_state = ref(null)
 			let current_geojson = ref({})
+			let element_id = ref('')
 	
 		
 			const toggle = () => {
 				visible.value = !visible.value;
 				storeUserSelections.fetchCountriesList()
-				// storeUserSelections.visible_region = visible.value
+				
+				storeUserSelections.visible_region = visible.value
 				// console.log(storeUserSelections.visible_region, 'visible region')
 				
             }
+
+
+			const getRegionState = () => {
+    var selectedState = storeUserSelections.getRegionState
+    region_state.value = selectedState
+    console.log(region_state.value , 'changed state region')
+  
+  }
+  const setSelectedState = computed ( () => {
+    console.log(storeUserSelections.visible_region, 'selected region state')
+    return storeUserSelections.getRegionState
+  
+  })
+  watch( setSelectedState , () => {
+    getRegionState()
+    
+  })
+
+
+
 			const select = (option) =>{
 			    placeholder.value = option;
 				console.log(option, 'selected option ')
@@ -59,6 +83,12 @@
 
 			}
 			// })
+			const getelementid = (event) => {
+            console.log(event.srcElement.id, 'cliked_id')
+			element_id.value = event.srcElement.id
+
+          }
+          
 			
 		
 
@@ -79,10 +109,11 @@
   top: -2vh;
   left:-0.52vw;
 	margin: 20px auto;
+	/* background-color: #e61db3; */
 }
 		.selector {
 			border: 1px  #ccc solid;
-			background: #fff;
+			/* background: #d63d3d; */
 			position: relative;
 			left: 1vw;
 			z-index: 1;
@@ -90,6 +121,7 @@
   width: 120px;
   border-radius: 30px;
   cursor: pointer;
+  z-index: 500;
         }
 			.arrow {
 				position: absolute;

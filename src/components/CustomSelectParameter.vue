@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-  import { ref} from 'vue'
+  import { ref, computed, watch} from 'vue'
   import {useCounterStore } from '../stores/counter';
   const storeUserSelections = useCounterStore()
 
@@ -30,12 +30,31 @@
         //   let list = ['2019', '2020', '2021', '2022']
         //   console.log(list, 'regions list')
           let visible = ref(false)
+          	let parameter_state = ref(null)
   
       
           const toggle = () => {
               visible.value = !visible.value;
               storeUserSelections.fetchParameterList()
+              storeUserSelections.visible_parameter = visible.value
           }
+
+
+          		const getParameterState = () => {
+    var selectedState = storeUserSelections.getParameterState
+    parameter_state.value = selectedState
+    console.log(parameter_state.value , 'changed state parameter')
+  
+  }
+  const setSelectedState = computed ( () => {
+    console.log(storeUserSelections.visible_parameter, 'selected parameter state')
+    return storeUserSelections.getParameterState
+  
+  })
+  watch( setSelectedState , () => {
+    getParameterState()
+    
+  })
           const select = (option) =>{
               placeholder.value = option;
           }

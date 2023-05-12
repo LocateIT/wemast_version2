@@ -6,7 +6,8 @@
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div>  :data-list="list"-->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
-          <div :class="{ hidden : !visible, visible ,hide_dropdown : storeUserSelections.visible_year === true}">
+          <div :class="{ hidden : !visible, visible, hide_dropdown : storeUserSelections.visible_year === true
+          || storeUserSelections.visible_parameter === true}">
               <ul>
   
                   <li :class="{ current : item === sub_indicator_placeholder }"
@@ -21,7 +22,7 @@
 </template>
 
 <script setup>
-  import { ref} from 'vue'
+  import { ref, watch, computed} from 'vue'
   import {useCounterStore } from '../stores/counter';
   const storeUserSelections = useCounterStore()
 
@@ -30,6 +31,7 @@
         //   let list = ['Land Cover', 'Vegetation Cover', "Wetland Inventory"]
         //   console.log(list, 'regions list')
           let visible = ref(false)
+          let sub_indicator_state = ref(null)
   
       
           const toggle = () => {
@@ -37,6 +39,27 @@
               storeUserSelections.visible_sub_indicator = visible.value
               storeUserSelections.fetchSubIndicatorList()
           }
+
+
+          const getSubIndicatorState = () => {
+    var selectedSubIndicatorState = storeUserSelections.getSubIndicatorState
+    sub_indicator_state.value = selectedSubIndicatorState
+  
+    console.log(sub_indicator_state.value , 'changed state sub indicator')
+  
+  }
+  const setselectedSubIndicatorState = computed ( () => {
+    console.log(storeUserSelections.visible_sub_indicator, 'selected sub indicator state')
+   
+    return storeUserSelections.getSubIndicatorState
+  
+  })
+  watch( setselectedSubIndicatorState , () => {
+    getSubIndicatorState()
+   
+    
+  })
+
           const select = (option) =>{
               placeholder.value = option;
           }

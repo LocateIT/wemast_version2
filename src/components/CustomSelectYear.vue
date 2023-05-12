@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-  import { ref} from 'vue'
+  import { ref, watch, computed} from 'vue'
   import {useCounterStore } from '../stores/counter';
   const storeUserSelections = useCounterStore()
 
@@ -32,16 +32,33 @@
         //   let list = ['2019', '2020', '2021', '2022']
         //   console.log(list, 'regions list')
           let visible = ref(false)
-  
+    let year_state = ref(null)
       
           const toggle = () => {
               visible.value = !visible.value;
               storeUserSelections.visible_year = visible.value
-              if(storeUserSelections.visible_sub_indicator = true){
-                storeUserSelections.visible_sub_indicator = false
-              }
+              
               storeUserSelections.fetchYearList()
           }
+
+              const getYearState = () => {
+    var selectedYearState = storeUserSelections.getYearState
+    year_state.value = selectedYearState
+  
+    console.log(year_state.value , 'changed state year ')
+  
+  }
+  const setselectedYearState = computed ( () => {
+    console.log(storeUserSelections.visible_year, 'selected year state')
+   
+    return storeUserSelections.getYearState
+  
+  })
+  watch( setselectedYearState , () => {
+    getYearState()
+   
+    
+  })
           const select = (option) =>{
               placeholder.value = option;
           }

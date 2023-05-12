@@ -6,7 +6,9 @@
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
-          <div :class="{ hidden : !visible, visible ,hide_dropdown : storeUserSelections.visible_sub_indicator === true }">
+          <div :class="{ hidden : !visible, visible ,hide_dropdown : storeUserSelections.visible_sub_indicator === true 
+          
+				 || storeUserSelections.visible_year === true}">
               <ul>
   
                   <li :class="{ current : item === storeUserSelections.indicator_placeholder }" 
@@ -52,22 +54,7 @@
 
 
 
-          const getRegionState = () => {
-    var selectedState = storeUserSelections.getRegionState
-    region_state.value = selectedState
-    console.log(region_state.value , 'changed state region')
-  
-  }
-  const setSelectedState = computed ( () => {
-    console.log(storeUserSelections.visible_region, 'selected region state')
-    return storeUserSelections.getRegionState
-  
-  })
-  watch( setSelectedState , () => {
-    getRegionState()
-    
-  })
-
+      
 
   const getIndicatorState = () => {
     var selectedIndicatorState = storeUserSelections.getIndicatorState
@@ -90,6 +77,11 @@
           
           const select = (option) =>{
               placeholder.value = option;
+          }
+
+          const getelementid = (clicked_id) => {
+            console.log(clicked_id, 'cliked_id')
+
           }
           
       

@@ -2749,9 +2749,9 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   });
   wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
-  wmsTimeseriesLayer.value.on('load', function (event) {
-    loading.value = false
-});
+//   wmsTimeseriesLayer.value.on('load', function (event) {
+//     loading.value = false
+// });
 
 
 
@@ -2941,7 +2941,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   
   const fetchWmsData = () => {
    
-    loading.value = true
+    // loading.value = true
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
@@ -2974,9 +2974,9 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   createIndices()
 
   //remove spinner when layer loads
-wmsLayer.value.on('load', function (event) {
-    loading.value = false
-});
+// wmsLayer.value.on('load', function (event) {
+//     loading.value = false
+// });
 
 
 

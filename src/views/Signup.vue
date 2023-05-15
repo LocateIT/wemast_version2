@@ -43,13 +43,13 @@
 
 
     <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
+        <Glasses width="20" height="20" color="#164b75" @click="revealPassword" />
+        <input id="password" placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
     </div>
 
     <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Confirm Password" class="input-field" type="password" @input="showConfirmPasswordInput">
+        <Glasses width="20" height="20" color="#164b75"  @click="revealConfirmPassword" />
+        <input id="confirm_password" placeholder="Confirm Password" class="input-field" type="password" @input="showConfirmPasswordInput">
     </div>
 
 
@@ -101,6 +101,33 @@
     submitForm()
 
   })
+
+  const revealPassword = () => {
+    var x = document.getElementById("password");
+    var y = document.getElementById("confirm_password");
+    // || "confirm_password"
+  if (x.type === "password" || y.type === "password") {
+    x.type = "text";
+    y.type = "text";
+  } else {
+    x.type = "password";
+    y.type = "password";
+  }
+
+  }
+  const revealConfirmPassword = () => {
+    // var x = document.getElementById("password");
+    var y = document.getElementById("confirm_password");
+    // || "confirm_password"
+  if ( y.type === "password") {
+    // x.type = "text";
+    y.type = "text";
+  } else {
+    // x.type = "password";
+    y.type = "password";
+  }
+
+  }
 
   const showUsernameInput = (e) => {
               username.value = e.target.value

@@ -31,7 +31,7 @@
             <div class="nav_icons">
                   <img src="/uiIcons/home-inactive.svg" alt="">
                   <img src="/uiIcons/dashboard-inactive.svg" @click="$router.push('/dashboard')" alt="">
-                  <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/about')"  >
+                  <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/signup')"  >
                   <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
                         <img src="/uiIcons/article-inactive.svg" alt="">
                   </a>

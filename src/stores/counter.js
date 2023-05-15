@@ -235,6 +235,7 @@ export const useCounterStore = defineStore({
     },
     fetchIndicatorList(){
       this.indicator_list = ['Exposure', 'Sensitivity','Resiliance']
+      return this.indicator_list.sort()
     },
     fetchSubIndicatorList(){
       

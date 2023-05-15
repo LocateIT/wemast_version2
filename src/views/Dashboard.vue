@@ -220,7 +220,7 @@
               <LulcBar   :class="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'|| 'Undulation' ? 'burnt_bar_chart' : 'lulc_bar_chart'"
             :height="200"
             :chartData=" compare_year ? compareUserSelections.lulcChartData : storeUserSelections.lulcChartData"
-            :options="sub_indicator === 'Vegetation Cover' ? veg_barchart_options : barchart_options"
+            :options="sub_indicator === 'Vegetation Cover' ? veg_barchart_options : sub_indicator === 'Precipitation Index' ? spi_barchart_options :  sub_indicator=== 'Soil Moisure Index' ? smi_barchart_options : barchart_options"
             />
 
            
@@ -741,7 +741,7 @@ let barchart_options= {
                     display: true,
                     fontStyle: "bold",
                     fontFamily: "Helvetica",
-                    labelString: 'Area in Hectares (Ha)'
+                    labelString: sub_indicator === 'Precipitation Index' ? 'Values' : 'Area in Hectares (Ha)'
                 },
                    barPercentage: 0.95,
                  
@@ -793,6 +793,109 @@ let barchart_options= {
                     display: true,
                     fontStyle: "bold",
                     labelString: 'NDVI Values'
+                },
+                   barPercentage: 0.95,
+                 
+               ticks: {
+                  beginAtZero: true,
+                   
+                 // fontColor: '#2FA036',
+                 fontSize: 10,
+              },
+              gridLines: {
+                 display: true,
+                 color: '#d9dcd6'
+                 
+              }
+           }]
+        },
+ 
+       legend: {
+           display: false,
+       
+        },
+        
+        responsive: true,
+        maintainAspectRatio: false,
+      
+     }
+     let spi_barchart_options= {
+        scales: {
+           xAxes: [{
+            //   stacked: true,
+         
+              
+              
+              ticks: {
+                 beginAtZero: true,
+               
+                 fontColor: '#000',
+              },
+              gridLines: {
+                 display: false,
+                  color: '#eee',
+                  // padding: 2
+              }
+           }],
+           yAxes: [{
+            //   stacked: true,
+            // stepSize: 10000,
+            scaleLabel: {
+                    display: true,
+                    fontStyle: "bold",
+                    labelString: 'SPI Values'
+                },
+                   barPercentage: 0.95,
+                 
+               ticks: {
+                  beginAtZero: true,
+                   
+                 // fontColor: '#2FA036',
+                 fontSize: 10,
+              },
+              gridLines: {
+                 display: true,
+                 color: '#d9dcd6'
+                 
+              }
+           }]
+        },
+ 
+       legend: {
+           display: false,
+       
+        },
+        
+        responsive: true,
+        maintainAspectRatio: false,
+      
+     }
+
+     let smi_barchart_options= {
+        scales: {
+           xAxes: [{
+            //   stacked: true,
+         
+              
+              
+              ticks: {
+                 beginAtZero: true,
+               
+                 fontColor: '#000',
+              },
+              gridLines: {
+                 display: false,
+                  color: '#eee',
+                  // padding: 2
+              }
+           }],
+           yAxes: [{
+            //   stacked: true,
+            // stepSize: 10000,
+            scaleLabel: {
+                    display: true,
+                    fontStyle: "bold",
+                    labelString: 'SMI Values'
                 },
                    barPercentage: 0.95,
                  

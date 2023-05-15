@@ -12,6 +12,13 @@
     </RouterLink>
     <RouterView />
 
+    <RouterLink to="/dashboard">
+
+        
+<button class="goto_dashboard">Go To Dashboard</button>
+</RouterLink>
+<RouterView />
+
     </div>
 
     <div class="register">
@@ -202,7 +209,7 @@
 .welcome_text{
     font-size: xx-large;
     margin-left: 7em;
-    margin-top: 5em;
+    margin-top: 3.5em;
 }
 .already{
     font-size: x-large;
@@ -211,6 +218,22 @@
 }
 .login{
     margin-left: 18em;
+    margin-top: 2em;
+    padding: 1em;
+  padding-left: 4.3em;
+  padding-right: 4.3em;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  transition: .4s ease-in-out;
+  background-color: rgb(22, 75, 117);
+  color: white;
+  margin-bottom: 1.5rem;
+  cursor: pointer;
+}
+
+.goto_dashboard{
+    margin-left: 16em;
     margin-top: 3em;
     padding: 1em;
   padding-left: 4.3em;

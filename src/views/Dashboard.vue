@@ -829,11 +829,13 @@ let barchart_options= {
   
   const show_advanced_filter = () =>{
     advanced_filter.value = true
+    compare.value = false
     // console.log('clicked advanced filter')
     // alert('clicked advanced filter')
   }
   const show_compare = () =>{
     compare.value = true
+    advanced_filter.value = false
   }
   const close_advanced_filter = () =>{
     advanced_filter.value = false

@@ -220,7 +220,8 @@ export const useCounterStore = defineStore({
       username: '',
       email: '',
       password: '',
-      confirm_password: ''
+      confirm_password: '',
+      latlon:null,
   }),
  
   actions: {
@@ -1213,7 +1214,8 @@ export const useCounterStore = defineStore({
     getEmailInput:(state) => state.email,
     getPasswordInput:(state)=> state.password,
     getConfirmPassword:(state) => state.confirm_password,
-    getZambeziStats:(state) => state.lulcChartData
+    getZambeziStats:(state) => state.lulcChartData,
+    getLatLon: state => state.latlon,
 
   
     

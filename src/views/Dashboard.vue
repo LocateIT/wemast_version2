@@ -595,6 +595,9 @@ import * as wkt from 'wkt'
   let default_zambezi_region = ref({})
   let default_stats = ref({})
   let show_zambezi_stats = ref(true)
+  let latlon = ref(null)
+  let group = ref(null)
+  let marker = ref(null)
 
 
   //advanced filter variables
@@ -2206,6 +2209,11 @@ changeOpacity()
         storeUserSelections.lineChartData.datasets[0].data = band_values
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 
+
+
+        storeUserSelections.latlon = [latlng.lat, latlng.lng]
+        console.log(storeUserSelections.latlon, 'updated store lat lon')
+
         
 
       
@@ -2226,6 +2234,23 @@ changeOpacity()
     },
     
   }); //end of L.extend
+
+
+  const getClickedLatLon = () => {
+  latlon.value = storeUserSelections.latlon
+   if(group.value !== null)group.value.clearLayers()
+  //  if(search_marker.value !== null)search_marker.value.clearLayers()
+  group.value = L.layerGroup().addTo(map);
+  marker.value = L.icon({
+                                                iconUrl: "/mapIcons/point.svg",
+                                                iconSize: [30, 30],
+                                                iconAnchor: [15,15]
+                                              });
+                                          
+            var mark =  L.marker(latlon.value , {icon: marker.value}).bindPopup('Hey')
+                .addTo(group.value)
+                return mark
+}
   
   
   
@@ -2233,6 +2258,13 @@ changeOpacity()
   L.tileLayer.betterWms = function (url, options) {
     return new L.TileLayer.BetterWMS(url, options);  
   };
+
+  const setLatLon = computed( () => {
+  return storeUserSelections.getLatLon
+})
+watch( setLatLon, () => {
+   getClickedLatLon ()
+})
 
  }
   

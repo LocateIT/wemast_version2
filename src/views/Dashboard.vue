@@ -1444,7 +1444,7 @@ const help = () => {
 
 const screenshot =  () => {
   
-  loading.value = true;
+  // loading.value = true;
       //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
         
       //   saveAs(blob, `${basin.value}.png`);
@@ -1468,7 +1468,7 @@ const screenshot =  () => {
         document.body.appendChild(link); // Required for FF
         link.click();
         document.body.removeChild(link);
-       loading.value = false
+      //  loading.value = false
       }, 1500);
 
     }
@@ -1698,7 +1698,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         .addEventListener("click", (e) => {
           console.log("click ");
           
-          screenshot2();
+          screenshot();
         });
   
         document
@@ -3106,23 +3106,29 @@ geoposition.value = `${lat}, ${lon}`
   show_mobile_data.value = false
   }
 
-  const fetchMobileData = async () => {
+  const fetchMobileData =  () => {
     try {
             
-              const resp = await axios.get('http://wemast.glenwell.com/fieldtableData.geojson'
-              );
+              // const resp = await axios.get('http://wemast.glenwell.com/fieldtableData.geojson'
+              // );
               
 
-              // this.current_geojson = resp.data
+              // // this.current_geojson = resp.data
               
-              console.log(resp.data, 'mobile geojson');
-              // var object = resp.data.features.map( (item) => {
-              //   console.log(item, 'object items')
-              //   return item
-              // })
+              // console.log(resp.data, 'mobile geojson');
+              // // var object = resp.data.features.map( (item) => {
+              // //   console.log(item, 'object items')
+              // //   return item
+              // // })
               
              
-              return resp.data
+              // return resp.data
+
+              var request = new XMLHttpRequest();
+request.open('GET', 'http://wemast.glenwell.com/fieldtableData.geojson', /* async = */ true);
+request.send();
+console.log('response head: ' + request.responseText.substring(0, 15) + '...');
+
           } catch (err) {
               // Handle Error Here
               console.error('an error occured'+ err);
@@ -4774,6 +4780,8 @@ changeOpacity()
   const getAdvancedCountry = async () => {
 
     if(current_geojson.value)map.removeLayer(current_geojson.value)
+    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    
     var selectedCountry = advancedUserSelections.getSelectedRegion
   //  geometry = selecteRegion

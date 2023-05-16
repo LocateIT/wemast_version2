@@ -152,17 +152,36 @@
             }
             console.log(formInputsData , 'formInputsData target')
 
-            const headers = {
-              'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': 'http://45.32.233.93'
-              // 'Authorization': 'JWT fefege...'
-            }
+            // const headers = {
+            //   'Content-Type': 'application/json',
+            //   'Access-Control-Allow-Origin': '*'
+            //   // 'Authorization': 'JWT fefege...'
+            // }
             try {
-              const response = await axios.post('http://wemast.glenwell.com/wemast_gen.php', formInputsData, {
-                headers: headers
-              });
-              console.log(response, 'response')
+              // const response = await axios.post('http://wemast.glenwell.com/wemast_gen.php', formInputsData
+              // // , formInputsData,
+              // // {
+              // //   statusCode: 200,
+  
+              // // headers: {
+              // //   "access-control-allow-origin": "*",
+              // //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+              // //   'Access-Control-Allow-Methods': '*',
+              // // },
+
+              // // }
+              // // , {
+              // //   headers: headers,
+              // //   withCredentials: false,
+              // // }
+              // );
+              // console.log(response, 'response')
               
+              var request = new XMLHttpRequest();
+request.open('POST', 'http://wemast.glenwell.com/fieldtableData.geojson', /* async = */ true);
+request.send(formInputsData);
+request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
+console.log(request.response);
             } catch (error) {
               console.log(error, 'error')
               

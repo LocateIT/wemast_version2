@@ -57,6 +57,7 @@ export const useCompareStore = defineStore({
     actions: {
       fetchIndicatorList(){
         this.indicator_list = ['Exposure', 'Sensitivity','Resiliance']
+        return this.indicator_list.sort()
       },
       fetchSubIndicatorList(){
         

@@ -458,7 +458,7 @@ export const useCounterStore = defineStore({
       //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
     
   
-          const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:2010&outputFormat=application/json&CQL_FILTER=Name=%27Zambezi%27'
+          const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:2016&outputFormat=application/json&CQL_FILTER=Name=%27Zambezi%27'
           );
           console.log(response.data.features[0].properties,'stats response')
           var obj = response.data.features[0].properties

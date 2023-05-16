@@ -1603,7 +1603,7 @@ const screenshot =  () => {
 
 wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
      pane: 'pane400', 
-     layers: `LULC:2010`,
+     layers: `LULC:2017`,
      crs:L.CRS.EPSG4326,
      styles:'zambezi_lulc',
      format: 'image/png',
@@ -2247,7 +2247,8 @@ changeOpacity()
                                                 iconAnchor: [15,15]
                                               });
                                           
-            var mark =  L.marker(latlon.value , {icon: marker.value}).bindPopup('Hey')
+            var mark =  L.marker(latlon.value , {icon: marker.value})
+            // .bindPopup('Hey')
                 .addTo(group.value)
                 return mark
 }
@@ -2522,6 +2523,9 @@ watch( setLatLon, () => {
         storeUserSelections.lineChartData.datasets[0].data = band_values
         console.log(storeUserSelections.lineChartData, 'store linechart data')
 
+        storeUserSelections.latlon = [latlng.lat, latlng.lng]
+        console.log(storeUserSelections.latlon, 'updated store lat lon')
+
           return  
           // console.log(latlng, 'lat long');
         
@@ -2539,11 +2543,38 @@ watch( setLatLon, () => {
     },
     
   }); //end of L.extend
+
+
+   const getClickedLatLon = () => {
+  latlon.value = storeUserSelections.latlon
+   if(group.value !== null)group.value.clearLayers()
+  //  if(search_marker.value !== null)search_marker.value.clearLayers()
+  group.value = L.layerGroup().addTo(map);
+  marker.value = L.icon({
+                                                iconUrl: "/mapIcons/point.svg",
+                                                iconSize: [30, 30],
+                                                iconAnchor: [15,15]
+                                              });
+                                          
+            var mark =  L.marker(latlon.value , {icon: marker.value})
+            // .bindPopup('Hey')
+                .addTo(group.value)
+                return mark
+}
+  
   
  
   L.tileLayer.betterWms = function (url, options) {
     return new L.TileLayer.BetterWMS(url, options);  
   };
+
+    const setLatLon = computed( () => {
+  return storeUserSelections.getLatLon
+})
+watch( setLatLon, () => {
+   getClickedLatLon ()
+})
+
 
 
 wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
@@ -3335,7 +3366,7 @@ console.log('response head: ' + request.responseText.substring(0, 15) + '...');
             div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${year.value}</p>`;
 
           } else{
-            div.innerHTML += `<p>Zambezi LULC 2010</p>`;
+            div.innerHTML += `<p>Zambezi LULC 2017</p>`;
 
           }
             for (var i = 0; i < colors.length; i++) {

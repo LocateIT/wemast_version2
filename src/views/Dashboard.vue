@@ -598,6 +598,7 @@ import * as wkt from 'wkt'
   let latlon = ref(null)
   let group = ref(null)
   let marker = ref(null)
+  let cmd_= ref('')
 
 
   //advanced filter variables
@@ -954,6 +955,7 @@ let barchart_options= {
   const toggle_nav = (e)  => {
         console.log(" toggle_nav ", e.target.id);
         const cmd = e.target.id;
+        cmd_.value = e.target.id;
         if(cmd === "close") return closeNav();
           // document.querySelector("#download_tiff").style.backgroundColor = "absolute"
           document.querySelector("#download_tiff").style.left = "-2vw"
@@ -1772,7 +1774,9 @@ default_stats.value =  storeUserSelections.getDefaultStats()
       //function to get regions 
   
       const getRegion = () => {  
-   
+        
+  //  close_nav()
+ 
    if(current_geojson.value)map.removeLayer(current_geojson.value)
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
@@ -1806,7 +1810,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
                            }); 
 
                           
-
+                           if(cmd_.value === 'open')return closeNav()
 
 
                            

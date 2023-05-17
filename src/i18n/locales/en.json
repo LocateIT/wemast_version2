@@ -1,0 +1,55 @@
+{
+    "locale": {
+        "en": "English",
+        "fr": "French",
+        "pt": "Portuguese"
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About"
+    },
+    "home": {
+        "wemast_title": "WETLAND MONITORING AND ASSESSMENT SERVICE FOR TRANSBOUNDARY  BASINS IN SOUTHERN AFRICA ",
+        "wemast_subtitle":"SOUTHERN AFRICA ",
+        "wemast_bracket":"(WeMAST)",
+        "wemast_change_language":"Change Language",
+        "wemast_select_region":"Select Region",
+        "region_label":"region",
+        "wemast_select_indicator":"Select Indicator",
+        "indicator_label":"Indicator",
+        "wemast_select_subindicator":"Select  Sub-Indicator",
+        "subindicator_label":"Sub-Indicator",
+        "wemast_select_year":"Select  Year",
+        "year_label":"Year",
+        "wemast_select_season":"Select  Season",
+        "wemast_select_satellite": "Select Satellite",
+        "request": "REQUEST",
+        "search":"Search Location",
+        "season_label":"Season",
+        "dryseason":"Dry",
+        "wetseason": "Wet",
+        "exposure":"Exposure",
+        "sensitivity":"Sensitivity",
+        "resiliance":"Resiliance",
+        "air_quality":"Air Quality",
+        "land_cover":"Land Cover",
+        "wetland_inventory": "Wetland Inventory",
+        "water_quality":"Water Quality",
+        "soil_moisture_index":"Soil Moisture Index",
+        
+        "nitrogen_dioxide":"Nitrogen Dioxide",
+        "carbon_monoxide":"Carbon Monoxide",
+        "water_extent":"Water Extent",
+        "burnt_area":"Burnt Area",
+        "flooding":"Flooding",
+        "compare":"Compare",
+        "advanced":"Advanced",
+        "filter": "Filter",
+        "parameters":"Parameters",
+        "time":"Time",
+        "wemast_select_parameter":"Select  parameter",
+        "opacity": "Opacity",
+        "slide1":"Wetland Monitoring and Assessment Service for Transboundary regions"
+    }
+    
+}

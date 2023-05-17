@@ -1,0 +1,50 @@
+{
+    "locale": {
+        "en": "English",
+        "fr": "Francês",
+        "pt": "Português"
+    },
+    "nav": {
+        "home": "lar",
+        "about": "sobre"
+    },
+    "home": {
+        "wemast_title":"SERVIÇO DE MONITORAMENTO E AVALIAÇÃO DE TERRAS HÚMIDAS PARA BACIAS TRANSBOUNDÁRIAS NA ÁFRICA DO SUL",
+        "wemast_change_language":"Mudar idioma",
+        "wemast_select_region":"   a bacia",
+        "region_label":"Bacia",
+        "wemast_select_indicator":"   o indicador",
+        "indicator_label":"Indicador",
+        "wemast_select_subindicator":"Seleccionar Sub-Indicador",
+        "subindicator_label":"Sub-Indicador",
+        "wemast_select_year":"Seleccionar ano",
+        "year_label":"Ano",
+        "wemast_select_season":"Seleccione Época",
+        "wemast_select_satellite": "Satellite",
+        "request": "SOLICITAR",
+        "search":"Local de pesquisa",
+        "season_label":"Época",
+        "dryseason":"Época seca",
+        "wetseason": "Época húmida",
+        "exposure":"Exposição",
+        "sensitivity":"Sensibilidade",
+        "resiliance":"Resiliência",
+        "land_cover":"Cobertura do terreno",
+        "wetland_inventory": "Inventário de zonas húmidas",
+        "water_quality":"qualidade da água",
+        "soil_moisture_index":"Índice de Humidade do Solo",
+        "water_extent":"Extensão da água",
+        "burnt_area":"Área ardida",
+        "flooding":"Inundações",
+        "compare":"Comparar",
+        "advanced":"Avançado",
+        "filter":"Filtro",
+        "parameters":"Parâmetros",
+        "time":"Hora",
+        "wemast_select_parameter":"Seleccionar parâmetro",
+        "opacity": "Opacide",
+        "slide1":"Serviço de Monitorização e Avaliação de Bacias Hidrográficas Transfronteiriças"
+    }
+   
+
+}

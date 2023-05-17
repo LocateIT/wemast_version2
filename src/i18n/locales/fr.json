@@ -1,0 +1,50 @@
+{
+    "locale": {
+        "en": "English",
+        "fr": "Français",
+        "pt": "Portugais"
+    },
+    "nav": {
+        "home": "Maison",
+        "about": "À propos"
+    },
+    "home": {
+        "wemast_title":"SERVICE DE SURVEILLANCE ET D ÉVALUATION DES TERRES HUMIDES POUR LES BASSINS TRANSFRONTALIERS EN AFRIQUE DU SUD",
+        "wemast_change_language": "Changer de langue",
+        "wemast_select_region":"  un bassin",
+        "region_label":"Bassin",
+        "wemast_select_indicator" : "  l indicateur",
+        "indicator_label":"Indicateur",
+        "wemast_select_subindicator":"  le sous-indicateur",
+        "subindicator_label":"Sous-indicateur",
+        "wemast_select_year":"  l année" ,
+        "year_label":"Année",
+        "wemast_select_season":"  la saison",
+        "wemast_select_satellite":"Satélite",
+        "request": "DEMANDE",
+        "search":"Emplacement de recherche",
+        "season_label":"Saison",
+        "dryseason":"Saison sèche",
+        "wetseason": "Saison humide",
+        "exposure":"Exposition",
+        "sensitivity":"Sensibilité",
+        "resiliance":"Résilience",
+        "land_cover":"Couverture du sol",
+        "wetland_inventory": "Inventaire des zones humides",
+        "water_quality":"la qualité de leau",
+        "soil_moisture_index":"Indice d  humidité du sol",
+        "water_extent":"Étendue de l eau",
+        "burnt_area":"Zone brûlée",
+        "flooding":"Inondations",
+        "compare":"Comparez",
+        "advanced":"Avancé",
+        "filter": "Filtre",
+        "parameters":"Paramètres",
+        "time":"Temps",
+        "wemast_select_parameter":"    le paramètre",
+        "opacity": "Opacité",
+        "slide1":"Service de surveillance et d évaluation des zones humides dans les bassins transfrontaliers"
+    }
+   
+
+}

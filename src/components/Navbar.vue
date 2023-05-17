@@ -5,8 +5,8 @@
       
         <div class="project_title">
 
-           <span class="project_title1">WETLAND MONITORING AND ASSESSMENT SERVICE FOR TRANSBOUNDARY  BASINS IN
-SOUTHERN AFRICA</span> 
+           <span class="project_title1">{{ $t("home.wemast_title") }}
+</span> 
           <br>
           <span class="wemast_span" style="color:steelblue;font-weight:bold">(WeMAST)</span>
         </div>
@@ -21,6 +21,7 @@ SOUTHERN AFRICA</span>
         <div class="languages">
           
           <!-- <CustomLanguage/> -->
+          <LanguageSwitch />
         </div>
         
 
@@ -36,7 +37,8 @@ SOUTHERN AFRICA</span>
   // import i18n from '../i18n.js';
 // import Languages from './Languages.vue'
 
-import CustomLanguage from './CustomLanguage.vue';
+// import CustomLanguage from './CustomLanguage.vue';
+import LanguageSwitch from './LanguageSwitch.vue';
 // const { t } = useI18n({
 //             inheritLocale: true,
 //             useScope: 'local'
@@ -62,7 +64,7 @@ import CustomLanguage from './CustomLanguage.vue';
 .project_title {
   margin-top: -6vh !important;
   position: relative;
-  left: 15vw;
+  left: 12vw;
   /* text-transform: uppercase; */
  
   
@@ -75,9 +77,9 @@ import CustomLanguage from './CustomLanguage.vue';
 
 .patners{
   position: absolute;
-  top: 2vh;
+  top: 1vh;
   z-index: 1000;
-  left: 72vw;
+  left: 64vw;
   
 }
 .WeMast_Dashboard_logos {
@@ -135,8 +137,8 @@ import CustomLanguage from './CustomLanguage.vue';
 
 .languages{
   position: absolute;
-    top: 2.7vh;
-    left:85vw;
+    top: 0vh;
+    left:90vw;
     z-index: 1000;
 
 }

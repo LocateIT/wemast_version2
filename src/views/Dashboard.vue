@@ -10,19 +10,19 @@
         @fetchData="fetchWmsData" 
         />
       
-      </div>
+      </div> 
 
       
      
       <div class="advanced_filter" @click="show_advanced_filter" >
         <img class="filter_icon" src=" /mapIcons/filter.svg" alt="">
             <img class="filter_open" src=" /mapIcons/right.svg" alt="">
-        <p>Advanced <br> Filter</p> </div>
+        <p>{{ $t("home.advanced") }}<br>{{ $t("home.filter") }}</p> </div>
       <div class="compare"  @click="show_compare"> 
   
         <img class="compare_icon" src=" /mapIcons/compare.svg" alt="">
         <img class="compare_open" src=" /mapIcons/compare_right.svg" alt="">
-        <p>Compare</p>
+        <p>{{ $t("home.compare") }}</p>
       </div>
   
       <!-- <button class="request" type="button" @click="getRegion2" >REQUEST</button> -->
@@ -43,7 +43,7 @@
         <button @click="clip_custom">clip custom</button>
       </div> -->
         <div class="opacity" v-if="wmsLayer != null"  :class="{mainopen: sidenavigationbar}">
-          <span id="opacity">Opacity:</span>
+          <span id="opacity">{{ $t("home.opacity") }}:</span>
           <span id="image-opacity"> </span>
           <input type="range" id="sldOpacity" min="0" max="1" step="0.1" value="1" />
          </div>

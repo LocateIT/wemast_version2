@@ -1,6 +1,6 @@
 <template>
     <div class="selections">
-        <p class="select_country">Select Region</p>
+        <p class="select_country">{{ $t("home.wemast_select_region") }}</p>
         <!-- <select name="" id="region_selection">
             <option value=""></option>
         </select> -->
@@ -12,12 +12,12 @@
 
       
 
-        <p class="select_cause">Select Indicator</p>
+        <p class="select_cause">{{ $t("home.wemast_select_indicator") }}</p>
         <div id="cause_selection"  @click="clickedMe">
           <CustomSelectIndicator />
         </div>
 
-        <p class="select_sub-indicator">Select Sub-Indicator</p>
+        <p class="select_sub-indicator">{{ $t("home.wemast_select_subindicator") }}</p>
         <div id="sub_indicator_selection">
             <CustomSelectSubIndicator />
         </div>
@@ -25,7 +25,7 @@
         <p  v-if="storeUserSelections.selected_sub_indicator !== 'Undulation'" :class="{'select_year2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
         'select_year3':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status' ),
-         'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">Select Year</p>
+         'select_year':(storeUserSelections.selected_sub_indicator !== 'Water Quality')} ">{{ $t("home.wemast_select_year") }}</p>
         <div v-if="storeUserSelections.selected_sub_indicator !== 'Undulation'" :class="{'year_selection2':(storeUserSelections.selected_sub_indicator === 'Water Quality' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
         'year_selection3':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status' ), 
@@ -44,7 +44,7 @@
         // || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
          || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
          || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'
-        || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Season</p>
+        || storeUserSelections.selected_parameter === 'Wetland Status' ">{{ $t("home.wemast_select_season") }}</p>
 
         <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'
@@ -63,7 +63,7 @@
 
         <p class="select_parameter" 
         v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' ||
-        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">Select Parameter</p>
+        storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">{{ $t("home.wemast_select_parameter") }}</p>
         <div id="parameter_selection" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">
           <CustomSelectParameter />
         </div>
@@ -71,7 +71,7 @@
         <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
          'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
          'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index')}"
-         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">Select Satellite</p>
+         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">{{ $t("home.wemast_select_satellite") }}</p>
         <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index')}" 
@@ -94,9 +94,9 @@
          storeUserSelections.selected_sub_indicator === 'Burnt Area MODIS' ||storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ),
          
          'flood_request':(storeUserSelections.selected_sub_indicator === 'Undulation')
-         } " type="button" @click="$emit('fetchData')">REQUEST</button>
+         } " type="button" @click="$emit('fetchData')">{{ $t("home.request") }}</button>
 
-         <p class="search_location" v-if="storeUserSelections.selected_basin != ''">Search Location</p>
+         <p class="search_location" v-if="storeUserSelections.selected_basin != ''">{{ $t("home.search") }}</p>
          <div id="location_search">
           
          </div>

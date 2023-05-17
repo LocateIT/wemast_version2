@@ -33,8 +33,12 @@
           </div>
   
       <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
+      
+        <div id="map">  </div>
+
+   
   
-      <div id="map">  </div>
+      
       <!-- <div class="clip" style="position: absolute; left: 67vw; top: 10vh;">
         <button @click="clip_custom">clip custom</button>
       </div> -->
@@ -140,7 +144,7 @@
             
             <div class="charts_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2010</div>
+            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2016</div>
             <div v-if=" basin && sub_indicator && year" class="chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <img src="/mapIcons/download_map.svg" alt="" 
             title="Download Png"
@@ -190,7 +194,7 @@
             <div class="charts2_sidebar"  >
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
 
-            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2010</div>
+            <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2016</div>
             <div  v-if=" basin && sub_indicator && year"  class="chart_dynamic_titles">
               <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <div  v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">{{ `${basin} ${parameter}-${year}` }}</div>
@@ -455,6 +459,7 @@
   import "leaflet";
   import L from "leaflet";
   import "leaflet/dist/leaflet.css";
+  import "leaflet.browser.print/dist/leaflet.browser.print"
   import "leaflet-sidebar-v2";
   import "leaflet/dist/leaflet.css";
   import "leaflet-draw/dist/leaflet.draw-src.css";
@@ -484,6 +489,7 @@ import * as wkt from 'wkt'
   // import "leaflet.draw-extension/leaflet.draw-shapefile.css"
   import "../CustomMapControls/measure/measure.css";
   import "../CustomMapControls/measure/MeasureTool.js";
+  import "leaflet-easyprint"
 
  
   import SideBarView from "./SideBarView.vue"
@@ -599,6 +605,7 @@ import * as wkt from 'wkt'
   let group = ref(null)
   let marker = ref(null)
   let cmd_= ref('')
+  let printPlugin = ref(null)
 
 
   //advanced filter variables
@@ -1445,9 +1452,60 @@ const help = () => {
         a.setAttribute("target", '_blank');
         a.click();      
 }
+
+const manualPrint =  () => {
+			// printPlugin.value.printMap('CurrentSize', 'MyManualPrint')
+
+//       const saveAsImage = async () => {
+// 	return await domtoimage.toPng(document.body)
+//         .then(function (dataUrl) {
+//             var link = document.createElement('a');
+//             link.download = map.printControl.options.documentTitle || "exportedMap" + '.png';
+//             link.href = dataUrl;
+//             link.click();
+//         });
+// };
+//       var options = {
+//     documentTitle: 'Map printed using leaflet.browser.print plugin',
+//     // printLayer: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
+//     //                 attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+//     //                 subdomains: 'abcd',
+//     //                 minZoom: 1,
+//     //                 maxZoom: 16,
+//     //                 ext: 'png'
+//     //             }),
+//     closePopupsOnPrint: false,
+//     printFunction: saveAsImage,
+//     manualMode: true
+// };
+// var browserPrint = L.browserPrint(map, options, 
+// // {
+// //   printFunction: saveAsImage
+// // }
+// );
+// browserPrint.print(L.BrowserPrint.Mode.Auto())
+// var saveAsImage = async function () {
+// 	return await domtoimage.toPng(document.getElementById("map"))
+//         .then(function (dataUrl) {
+//             var link = document.createElement('a');
+//             link.download = map.printControl.options.documentTitle || "exportedMap" + '.png';
+//             link.href = dataUrl;
+//             link.click();
+//         });
+// };
+
+// L.control.browserPrint({
+//     documentTitle: "printImage",
+//     printModes: [
+//         L.BrowserPrint.Mode.Auto("Download PNG"),
+//     ],
+//     printFunction: saveAsImage
+// })
+// .addTo(map);
+		}
        
 
-const screenshot =  () => {
+const screenshot = async () => {
   
   // loading.value = true;
       //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
@@ -1458,23 +1516,41 @@ const screenshot =  () => {
  
 
       let mapElement = document.getElementById("map");
+      let printelement = document.createElement("canvas")
       
-      setTimeout(async () => {
-        const dataURL = await domtoimage.toPng(mapElement
-        // , {
-        //   // width: mapElement.width,
-        //   // height: mapElement.height
-        // }
-        );
+      let map_printer = printelement.appendChild(mapElement)
+      // setTimeout( () => {
+        const dataURL = await domtoimage.toPng(map_printer, {
+          width: mapElement.width,
+          height: mapElement.height
+        });
 
         let link = document.createElement("a");
         link.setAttribute("href", dataURL);
+
         link.setAttribute("download", `${basin.value}.png`);
         document.body.appendChild(link); // Required for FF
         link.click();
         document.body.removeChild(link);
       //  loading.value = false
-      }, 1500);
+      // }, 1500);
+
+//       var node = document.getElementById('map');
+
+// domtoimage.toPng(node)
+//     .then (function (dataUrl) {
+//         var img = new Image();
+//         img.src = dataUrl;
+//         document.appendChild(img);
+//     })
+//     .catch(function (error) {
+//         console.error('oops, something went wrong!', error);
+//     });
+
+
+// printPlugin.printMap('A4Portrait', 'MyFileName');
+// printPlugin.value.printMap('A4Portrait', 'MyFileName');
+
 
     }
 
@@ -1557,6 +1633,22 @@ const screenshot =  () => {
         // layerControl[0].style.visibility = "hidden";
   
       current_top_base_layer.value = "MapBoxSatellite";
+
+//        var printer = L.easyPrint({
+// 	// title: 'My awesome print button',
+//   tileLayer: mapboxSatellite,
+// 	position: 'bottomright',
+// 	sizeModes: ['A4Portrait', 'A4Landscape'],
+//   filename: 'mymap',
+//   exportOnly: true,
+//       		hideControlContainer: true
+// }).addTo(map);
+// printPlugin.value = printer
+
+
+// printPlugin.value.printMap('A4Portrait', 'MyFileName');
+
+
       }
       
   //hooks
@@ -1781,6 +1873,8 @@ default_stats.value =  storeUserSelections.getDefaultStats()
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
    if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
+   if(group.value !== null)group.value.clearLayers()
+   if(lulc_legend.value)map.removeControl(lulc_legend.value)
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
 
   removeDefaultStats()

@@ -1578,7 +1578,7 @@ const screenshot = async () => {
         let osm = L.tileLayer(
           "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
           {
-            maxZoom: 19,
+            maxZoom: 10,
             attribution:
               '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
           }
@@ -1600,7 +1600,7 @@ const screenshot = async () => {
          {
            attribution:
              'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
-           // maxZoom: 18,
+           maxZoom: 10,
            id: "mapbox/streets-v11",
            accessToken:
              "pk.eyJ1IjoiY2hyaXNiYXJ0IiwiYSI6ImNrZTFtb3Z2bDAweTMyem1zcmthMGY0ejQifQ.3PzoCgSiG-1-sV1qJvO9Og",
@@ -1892,6 +1892,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
              fillOpacity:0,
              weight: 4
            },
+           crs:L.CRS.EPSG4326,
            pane: 'pane1000'
             })
    
@@ -1899,9 +1900,19 @@ default_stats.value =  storeUserSelections.getDefaultStats()
    current_geojson.value.addTo(map)
   
   
-             map.fitBounds(current_geojson.value.getBounds(), {
-                             padding: [50, 50],
-                           }); 
+            //  map.fitBounds(current_geojson.value.getBounds(), {
+            //                  padding: [50, 50],
+            //                }); 
+            // console.log('bounds',current_geojson.value.getBounds())
+            // map.flyToBounds(current_geojson.value.getBounds())
+            if(current_top_base_layer.value === 'MapBoxSatellite'){
+              map.flyToBounds(current_geojson.value.getBounds())
+            } else{
+              map.setView(current_geojson.value.getBounds().getCenter());
+
+            }
+            
+         
 
                           
                            if(cmd_.value === 'open')return closeNav()

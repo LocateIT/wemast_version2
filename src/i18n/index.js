@@ -1,7 +1,8 @@
 import { createI18n } from "vue-i18n";
 import en from "./locales/en.json"
-import fr from "./locales/fr.json"
+
 import pt from "./locales/pt.json"
+import fr from "./locales/fr.json"
 
 
 
@@ -10,5 +11,5 @@ export default createI18n({
     fallbackLocale: import.meta.env.VITE_FALLBACK_LOCALE,
     legacy:false, //since we are using vue 3
     globalInjection: true,
-    messages:{ en, fr, pt}
+    messages:{ en, pt, fr}
 })

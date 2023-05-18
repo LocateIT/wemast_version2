@@ -1,8 +1,9 @@
 {
     "locale": {
         "en": "English",
-        "fr": "French",
-        "pt": "Portuguese"
+        "pt": "Portuguese",
+        "fr": "French"
+        
     },
     "nav": {
         "home": "Home",

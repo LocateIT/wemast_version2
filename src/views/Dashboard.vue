@@ -1923,7 +1923,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
 search_marker.value = {
     // optional: L.Marker    - default L.Icon.Default
     icon: new L.icon({
-      iconUrl: "/src/assets/plant.svg",
+      iconUrl: "/mapIcons/point.svg",
       iconSize: [40, 40],
       iconAnchor: [15,15]
     }),
@@ -1935,7 +1935,7 @@ search_marker.value = {
 const searchControl = new GeoSearchControl({
   provider: provider,
   stle: 'bar',
-  // marker: search_marker.value,
+  marker: search_marker.value,
   popupFormat: ({ query, result }) => result.label,
   resultFormat: ({ result}) => result.label
   //  console.log(result, 'result')

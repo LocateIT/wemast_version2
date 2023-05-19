@@ -9,13 +9,14 @@
                             : ''
                         "
                         style="cursor: pointer;">
-        <img src=" /uiIcons/radio.svg"  class="satellite" @click="handleSatelliteSwap()"   :class="
+        <img  v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' "
+         src=" /uiIcons/radio.svg"  class="satellite" @click="handleSatelliteSwap()"   :class="
                           radio_selection === 'satellite'
                             ? 'radio_swap'
                             : ''
                         "
                         style="cursor: pointer;">
-       <img src=" /uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
+       <img  src=" /uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
                           radio_selection === 'time'
                             ? 'radio_swap'
                             : ''
@@ -25,7 +26,9 @@
    </div>
    <div class="radio_labels">
        <label for="" class="parameters1">Parameters</label>
-       <label for="" class="satellite1">Satellite</label>
+       <label  v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
+       || storeUserSelections.selected_parameter === 'Wetland Status' " 
+       for="" class="satellite1">Satellite</label>
        <label for="" class="time1">Time</label>
    </div>
     </div>
@@ -76,6 +79,8 @@
     // import CompareSatelliteSelect from './CompareSatelliteSelect.vue';
     import CompareSatelliteSelect from './CompareSatelliteSelect.vue';
     import { ref } from 'vue'
+    import {useCounterStore } from '../stores/counter';
+  const storeUserSelections = useCounterStore()
 
     let radio_selection = ref("parameters") 
 
@@ -131,6 +136,7 @@
         height: 20px;
         z-index: 1500;
     }
+    
     .compare_layers{
         height: 250px;
         width: 300px;

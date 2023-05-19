@@ -2721,6 +2721,26 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
 wmsTimeseriesLayer.value.addTo(map).bringToFront();
 
 
+const getDefaultLatLon = () => {
+ 
+   if(group.value !== null)group.value.clearLayers()
+  //  if(search_marker.value !== null)search_marker.value.clearLayers()
+  group.value = L.layerGroup().addTo(map);
+  marker.value = L.icon({
+                                                iconUrl: "/mapIcons/point.svg",
+                                                iconSize: [30, 30],
+                                                iconAnchor: [15,15]
+                                              });
+                                          
+            var mark =  L.marker([-18.852976338898927,16.092944688071 ] , {icon: marker.value})
+            // .bindPopup('Hey')
+                .addTo(group.value)
+                return mark
+}
+
+getDefaultLatLon()
+
+
 
 
 // console.log(wmsLayer.value, 'wms')

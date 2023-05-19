@@ -180,8 +180,8 @@
               var request = new XMLHttpRequest();
 request.open('POST', 'http://wemast.glenwell.com/fieldtableData.geojson', /* async = */ true);
 request.send(formInputsData);
-request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
-console.log(request.response);
+// request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
+console.log('REQUEST',request);
             } catch (error) {
               console.log(error, 'error')
               

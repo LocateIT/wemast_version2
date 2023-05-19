@@ -254,7 +254,7 @@
               <table style="width:100%">
                   <tr>
                     <th>Title</th>
-                    <td> {{`${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`}}</td>
+                    <td> {{ storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || 'Water Quality' ? `${storeUserSelections.selected_parameter}` : `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`}}</td>
                     
                   </tr>
                   <tr>
@@ -439,7 +439,7 @@
               <img src="/uiIcons/loader_white.svg" alt="">
           </div>
           <div class="mobile_filter" v-if="show_mobile_data">
-            <button @click="fetchMobileData" class="fetch_mobile">Fetch Data</button>
+            <button @click="ajaxCall" class="fetch_mobile">Fetch Data</button>
             <img style="cursor:pointer; position: absolute; top: 0.5vh; right:0.5vw;" @click="close_mobile_panel" src="/uiIcons/close.png"/>
 
           </div>
@@ -503,6 +503,7 @@ import * as wkt from 'wkt'
   import Compare from '../components/Compare.vue';
   import sideNavigationbar from '../components/sidenavigationbar.vue'
   import axios from 'axios'
+  
   import LulcPie from '../components/Charts/LulcPie.vue'
   import LulcBar from '../components/Charts/LulcBar.vue'
   import LulcLine from '../components/Charts/LulcLine.vue'
@@ -3296,10 +3297,7 @@ geoposition.value = `${lat}, ${lon}`
              
               // return resp.data
 
-              var request = new XMLHttpRequest();
-request.open('GET', 'http://wemast.glenwell.com/fieldtableData.geojson', /* async = */ true);
-request.send();
-console.log('response head: ' + request.responseText.substring(0, 15) + '...');
+             
 
           } catch (err) {
               // Handle Error Here
@@ -3307,7 +3305,37 @@ console.log('response head: ' + request.responseText.substring(0, 15) + '...');
           }
 
 
+
+      
+
+
   }
+
+
+  const loadXMLDoc = () => {
+  var xhttp = new XMLHttpRequest();
+  
+  xhttp.open("GET", "http://wemast.glenwell.com/fieldtableData.geojson", true);
+  xhttp.send();
+  xhttp.onreadystatechange = () => {
+    if(xhttp.readyState === 4) {
+      console.log('XHTTP RESPONSE', xhttp.responseText)
+
+    }
+  }
+
+
+}
+
+const ajaxCall = () => {
+  $.get("http://wemast.glenwell.com/fieldtableData.geojson", function(data, status){
+    console.log("Data: " + data + "\nStatus: " + status);
+  });
+
+}
+
+
+
 
  const downloadcsv = () => {
  

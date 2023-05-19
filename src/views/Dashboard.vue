@@ -253,7 +253,7 @@
               <table style="width:100%">
                   <tr>
                     <th>Title</th>
-                    <td> {{ storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || 'Water Quality' ? `${storeUserSelections.selected_parameter}` : `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`}}</td>
+                    <td> {{ storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || 'Water Quality' ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`  : `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`}}</td>
                     
                   </tr>
                   <tr>
@@ -1873,7 +1873,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
    if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
-   if(group.value !== null)group.value.clearLayers()
+   if(group.value)group.value.clearLayers()
    if(lulc_legend.value)map.removeControl(lulc_legend.value)
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
 
@@ -4155,7 +4155,7 @@ const comparePrecLegend = () => {
         if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
         if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
   
-        var legend = L.control({ position: "bottomright" });
+        var legend = L.control({ position: "bottomleft" });
         flood_legend.value = legend
         var colors = colors_array
         var labels = label_array

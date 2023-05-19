@@ -1,11 +1,11 @@
 <template>
    
     <p class="select_language"> Select Language</p>
-    <select
+    <select class="lang"
     @change="switchLanguage"
     
     >
-    <option 
+    <option  class="lang_options"
     v-for="sLocale in supportedLocales"
     :key="`locale-${sLocale}`"
     :value="sLocale">
@@ -40,5 +40,13 @@ await Tr.switchLanguage(newLocale)
     /* font-weight: 600; */
     line-height: 0.5rem;
 }
+.lang{
+    outline: none;
+    border: none;
+}
+.lang_options{
+    border-bottom: 1px;
+    padding: 5px;
 
+}
 </style>

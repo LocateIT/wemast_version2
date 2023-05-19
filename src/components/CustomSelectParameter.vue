@@ -6,7 +6,7 @@
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
-          <div :class="{ hidden : !visible, visible }">
+          <div :class="{ hidden : !visible, visible, hide_dropdown : storeUserSelections.visible_year === true }">
               <ul>
   
                   <li :class="{ current : item === storeUserSelections.parameter_placeholder }" 
@@ -138,6 +138,9 @@ cursor: pointer;
       .hidden {
           visibility: hidden;
       }
+      .hide_dropdown{
+  display: none;
+}
       .visible {
           visibility: visible;
       }

@@ -6,7 +6,7 @@
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> :data-list="list"-->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
-          <div :class="{ hidden : !visible, visible }">
+          <div :class="{ hidden : !visible, visible, hide_dropdown : storeUserSelections.visible_parameter === true }">
               <ul>
   
                   <li :class="{ current : item === storeUserSelections.year_placeholder }" 

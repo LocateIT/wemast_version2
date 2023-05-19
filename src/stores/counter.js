@@ -117,11 +117,11 @@ export const useCounterStore = defineStore({
     },
 
     lineChartData : {
-      labels: [],
+      labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022'],
       datasets: [
         {
           // label: 'NDVI Time Series',
-          data: [],
+          data: [-0.01447658333927393, 0.04884440824389458, 0.11220075935125351, -0.004881010390818119, 0.02153138257563114, 0.02472458779811859, 0.01138385757803917],
           fill: false,
           borderColor: '#1eb301',
           backgroundColor: '#ffbb33',

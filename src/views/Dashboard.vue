@@ -161,9 +161,8 @@
             <!--  v-if="sub_indicator != 'Precipitation Index'" -->
             <div id="chart_pie" v-if="sub_indicator === 'Land Cover' || sub_indicator === 'Wetland Inventory' 
             || sub_indicator === 'Burnt Area FIRMS' ||  sub_indicator === 'Undulation'  ">
-              <LulcPie class="lulc_chart"
-            :height="200"
-            :width="300"
+              <LulcPie :class=" sub_indicator === 'Undulation' ? 'flood_chart' : 'lulc_chart'"
+           
             :chartData=" compare_year ? compareUserSelections.lulcChartData : storeUserSelections.lulcChartData"
             :options="options"
             />
@@ -173,8 +172,7 @@
             
             <div id="chart_pie" v-if=" show_zambezi_stats === true ">
               <LulcPie class="lulc_chart"
-            :height="200"
-            :width="300"
+            
             :chartData=" storeUserSelections.lulcChartData "
             :options="options"
             />
@@ -243,7 +241,8 @@
             
             />
 
-           
+
+  
           </div>
           
           </div>

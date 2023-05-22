@@ -489,6 +489,8 @@ import * as wkt from 'wkt'
   import "../CustomMapControls/measure/measure.css";
   import "../CustomMapControls/measure/MeasureTool.js";
   import "leaflet-easyprint"
+  import html2canvas from "html2canvas/dist/html2canvas.min.js"
+  import "leaflet.export/leaflet_export.js"
 
  
   import SideBarView from "./SideBarView.vue"
@@ -509,6 +511,7 @@ import * as wkt from 'wkt'
   import { downloadCSV } from '../Downloads/CSV'
   import PrecBar from '../components/Charts/PrecBar.vue';
   
+
 
   
   //refs go here
@@ -618,6 +621,9 @@ import * as wkt from 'wkt'
   // console.log(storeUserSelections.fetchCountriesList)
   
   console.log(storeUserSelections.getLoadingState, 'getLoadingState')
+
+
+  window.html2canvas = html2canvas;
   
 
   let lineChartData = {
@@ -1573,6 +1579,35 @@ const screenshot = async () => {
        
    
      } 
+
+
+     const afterRender = (result) => {
+      return result;
+    }
+
+   const afterExport = (result) => {
+      return result;
+    }
+     const  downloadMap = (caption) => {
+      var downloadOptions = {
+        container: map._container,
+        caption: {
+          text: caption,
+          font: '30px Arial',
+          fillStyle: 'black',
+          position: [100, 200]
+        },
+        exclude: ['.leaflet-control-zoom', '.leaflet-control-attribution'],
+        format: 'image/png',
+        fileName: 'Map.png',
+        afterRender: afterRender,
+        afterExport: afterExport
+      };
+      var promise = map.downloadExport(downloadOptions);
+      var data = promise.then(function (result) {
+        return result;
+      });
+    }
       const setLeafletMap = () => {
 
         let osm = L.tileLayer(
@@ -1795,7 +1830,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         .addEventListener("click", (e) => {
           console.log("click ");
           
-          screenshot();
+          downloadMap('My leaflet map');
         });
   
         document

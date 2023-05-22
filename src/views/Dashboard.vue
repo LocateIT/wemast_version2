@@ -2303,7 +2303,7 @@ changeOpacity()
                 return mark
 }
   
-  
+
   
   
   L.tileLayer.betterWms = function (url, options) {
@@ -2365,6 +2365,26 @@ watch( setLatLon, () => {
   });
   wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
+  const getDefaultLatLon = () => {
+ 
+ if(group.value !== null)group.value.clearLayers()
+//  if(search_marker.value !== null)search_marker.value.clearLayers()
+group.value = L.layerGroup().addTo(map);
+marker.value = L.icon({
+                                              iconUrl: "/mapIcons/point.svg",
+                                              iconSize: [30, 30],
+                                              iconAnchor: [15,15]
+                                            });
+                                        
+          var mark =  L.marker( basin.value === 'Cuvelai'? [-18.852976338898927,16.092944688071 ] : basin.value === 'Limpopo' ? [-23.361704477797623, 29.067713023209976]
+           : basin.value === 'Okavango' ? [-19.971381658947745, 21.81442486792866] :[-14.70984684783236, 28.0764983010178] , {icon: marker.value})
+          // .bindPopup('Hey')
+              .addTo(group.value)
+              return mark
+}
+
+getDefaultLatLon()
+
   wmsTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
 });
@@ -2418,6 +2438,26 @@ watch( setLatLon, () => {
     
   });
   wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  const getDefaultLatLon = () => {
+ 
+ if(group.value !== null)group.value.clearLayers()
+//  if(search_marker.value !== null)search_marker.value.clearLayers()
+group.value = L.layerGroup().addTo(map);
+marker.value = L.icon({
+                                              iconUrl: "/mapIcons/point.svg",
+                                              iconSize: [30, 30],
+                                              iconAnchor: [15,15]
+                                            });
+                                        
+          var mark =  L.marker( basin.value === 'Cuvelai'? [-18.852976338898927,16.092944688071 ] : basin.value === 'Limpopo' ? [-23.361704477797623, 29.067713023209976]
+           : basin.value === 'Okavango' ? [-19.971381658947745, 21.81442486792866] :[-14.70984684783236, 28.0764983010178] , {icon: marker.value})
+          // .bindPopup('Hey')
+              .addTo(group.value)
+              return mark
+}
+
+getDefaultLatLon()
 
   wmsTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
@@ -2990,6 +3030,26 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
 //     loading.value = false
 // });
 
+const getDefaultLatLon = () => {
+ 
+ if(group.value !== null)group.value.clearLayers()
+//  if(search_marker.value !== null)search_marker.value.clearLayers()
+group.value = L.layerGroup().addTo(map);
+marker.value = L.icon({
+                                              iconUrl: "/mapIcons/point.svg",
+                                              iconSize: [30, 30],
+                                              iconAnchor: [15,15]
+                                            });
+                                        
+          var mark =  L.marker( basin.value === 'Cuvelai'? [-18.852976338898927,16.092944688071 ] : basin.value === 'Limpopo' ? [-23.361704477797623, 29.067713023209976]
+           : basin.value === 'Okavango' ? [-19.971381658947745, 21.81442486792866] :[-14.70984684783236, 28.0764983010178] , {icon: marker.value})
+          // .bindPopup('Hey')
+              .addTo(group.value)
+              return mark
+}
+
+getDefaultLatLon()
+
 
 
 
@@ -3092,6 +3152,26 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   });
   wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
+  const getDefaultLatLon = () => {
+ 
+ if(group.value !== null)group.value.clearLayers()
+//  if(search_marker.value !== null)search_marker.value.clearLayers()
+group.value = L.layerGroup().addTo(map);
+marker.value = L.icon({
+                                              iconUrl: "/mapIcons/point.svg",
+                                              iconSize: [30, 30],
+                                              iconAnchor: [15,15]
+                                            });
+                                        
+          var mark =  L.marker( basin.value === 'Cuvelai'? [-18.852976338898927,16.092944688071 ] : basin.value === 'Limpopo' ? [-23.361704477797623, 29.067713023209976]
+           : basin.value === 'Okavango' ? [-19.971381658947745, 21.81442486792866] :[-14.70984684783236, 28.0764983010178] , {icon: marker.value})
+          // .bindPopup('Hey')
+              .addTo(group.value)
+              return mark
+}
+
+getDefaultLatLon()
+
   wmsTimeseriesLayer.value.on('load', function (event) {
     console.log('sus sediments loaded')
     loading.value = false
@@ -3159,6 +3239,26 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
     
   });
   wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  const getDefaultLatLon = () => {
+ 
+ if(group.value !== null)group.value.clearLayers()
+//  if(search_marker.value !== null)search_marker.value.clearLayers()
+group.value = L.layerGroup().addTo(map);
+marker.value = L.icon({
+                                              iconUrl: "/mapIcons/point.svg",
+                                              iconSize: [30, 30],
+                                              iconAnchor: [15,15]
+                                            });
+                                        
+          var mark =  L.marker( basin.value === 'Cuvelai'? [-18.852976338898927,16.092944688071 ] : basin.value === 'Limpopo' ? [-23.361704477797623, 29.067713023209976]
+           : basin.value === 'Okavango' ? [-19.971381658947745, 21.81442486792866] :[-14.70984684783236, 28.0764983010178] , {icon: marker.value})
+          // .bindPopup('Hey')
+              .addTo(group.value)
+              return mark
+}
+
+getDefaultLatLon()
 
   wmsTimeseriesLayer.value.on('load', function (event) {
     console.log('sus sediments loaded')

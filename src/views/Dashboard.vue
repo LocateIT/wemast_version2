@@ -1459,128 +1459,6 @@ const help = () => {
         a.click();      
 }
 
-const manualPrint =  () => {
-			// printPlugin.value.printMap('CurrentSize', 'MyManualPrint')
-
-//       const saveAsImage = async () => {
-// 	return await domtoimage.toPng(document.body)
-//         .then(function (dataUrl) {
-//             var link = document.createElement('a');
-//             link.download = map.printControl.options.documentTitle || "exportedMap" + '.png';
-//             link.href = dataUrl;
-//             link.click();
-//         });
-// };
-//       var options = {
-//     documentTitle: 'Map printed using leaflet.browser.print plugin',
-//     // printLayer: L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}', {
-//     //                 attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-//     //                 subdomains: 'abcd',
-//     //                 minZoom: 1,
-//     //                 maxZoom: 16,
-//     //                 ext: 'png'
-//     //             }),
-//     closePopupsOnPrint: false,
-//     printFunction: saveAsImage,
-//     manualMode: true
-// };
-// var browserPrint = L.browserPrint(map, options, 
-// // {
-// //   printFunction: saveAsImage
-// // }
-// );
-// browserPrint.print(L.BrowserPrint.Mode.Auto())
-// var saveAsImage = async function () {
-// 	return await domtoimage.toPng(document.getElementById("map"))
-//         .then(function (dataUrl) {
-//             var link = document.createElement('a');
-//             link.download = map.printControl.options.documentTitle || "exportedMap" + '.png';
-//             link.href = dataUrl;
-//             link.click();
-//         });
-// };
-
-// L.control.browserPrint({
-//     documentTitle: "printImage",
-//     printModes: [
-//         L.BrowserPrint.Mode.Auto("Download PNG"),
-//     ],
-//     printFunction: saveAsImage
-// })
-// .addTo(map);
-		}
-       
-
-const screenshot = async () => {
-  
-  // loading.value = true;
-      //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
-        
-      //   saveAs(blob, `${basin.value}.png`);
-
-      // });
- 
-
-      let mapElement = document.getElementById("map");
-      let printelement = document.createElement("canvas")
-      
-      let map_printer = printelement.appendChild(mapElement)
-      // setTimeout( () => {
-        const dataURL = await domtoimage.toPng(map_printer, {
-          width: mapElement.width,
-          height: mapElement.height
-        });
-
-        let link = document.createElement("a");
-        link.setAttribute("href", dataURL);
-
-        link.setAttribute("download", `${basin.value}.png`);
-        document.body.appendChild(link); // Required for FF
-        link.click();
-        document.body.removeChild(link);
-      //  loading.value = false
-      // }, 1500);
-
-//       var node = document.getElementById('map');
-
-// domtoimage.toPng(node)
-//     .then (function (dataUrl) {
-//         var img = new Image();
-//         img.src = dataUrl;
-//         document.appendChild(img);
-//     })
-//     .catch(function (error) {
-//         console.error('oops, something went wrong!', error);
-//     });
-
-
-// printPlugin.printMap('A4Portrait', 'MyFileName');
-// printPlugin.value.printMap('A4Portrait', 'MyFileName');
-
-
-    }
-
-   const screenshot2 = async () =>  {
-   
-   await domtoimage.toBlob(document.getElementById('map'))
-       .then(function (blob) {
-           saveAs(blob, 'map.png');
-       });
-
-      //  try {
-      //   await domtoimage.toBlob(document.getElementById('map'))
-      //   function (blob) {
-      //      saveAs(blob, 'map.png');
-      //  }
-        
-      //  } catch (error) {
-        
-      //  }
-       
-   
-     } 
-
-
      const afterRender = (result) => {
       return result;
     }
@@ -1599,7 +1477,7 @@ const screenshot = async () => {
         },
         exclude: ['.leaflet-control-zoom', '.leaflet-control-attribution'],
         format: 'image/png',
-        fileName: 'Map.png',
+        fileName: `${basin.value} ${sub_indicator.value} Map.png`,
         afterRender: afterRender,
         afterExport: afterExport
       };
@@ -1721,6 +1599,26 @@ const screenshot = async () => {
 
     fetchZambezi()
 
+
+
+    const changeDefaultOpacity = () => {
+    $('#sldOpacity').on('change', function(){
+                                    //   $('#image-opacity').html(this.value); //i might revesit
+                                      console.log(this.value, 'opacity value')
+                                     
+                                        wmsLayer.value.setOpacity(this.value)
+                                      
+                                    
+                                     
+                                    
+                    
+                                  });
+  }
+
+
+
+  
+
     //loadd lulc
     const addLulcLayer = () => {
   
@@ -1746,6 +1644,10 @@ wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?",
 
 wmsLayer.value.addTo(map);
 
+wmsLayer.value.on('load', function (event) {
+  changeDefaultOpacity()
+});
+
 
 
 
@@ -1755,12 +1657,16 @@ wmsLayer.value.addTo(map);
 // addLulcLegend()
 lulclegendContent()
 
-changeOpacity()
+
+
 
 
  }
 
  addLulcLayer()
+
+ 
+ 
 
  //load stats for zambezi ndwi
 
@@ -3304,9 +3210,11 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
   createIndices()
 
   //remove spinner when layer loads
-// wmsLayer.value.on('load', function (event) {
-//     loading.value = false
-// });
+wmsLayer.value.on('load', function (event) {
+ 
+  changeOpacity()
+
+});
 
 
 
@@ -4523,7 +4431,9 @@ smi_compare_legend.value.addTo(map);
                                       if(wmsLayer.value){
                                         wmsLayer.value.setOpacity(this.value)
                                       }
-                                      if(wmsCompareLayer) wmsCompareLayer.value.setOpacity(this.value)
+                                      if(wmsCompareLayer){
+                                        wmsCompareLayer.value.setOpacity(this.value)
+                                      }
                                     
                                      
                                     
@@ -5056,9 +4966,18 @@ changeOpacity()
    current_geojson.value.addTo(map)
   
   
-             map.fitBounds(current_geojson.value.getBounds(), {
-                             padding: [50, 50],
-                           }); 
+            //  map.fitBounds(current_geojson.value.getBounds(), {
+            //                  padding: [50, 50],
+            //                }); 
+
+
+                           if(current_top_base_layer.value === 'MapBoxSatellite'){
+              map.fitBounds(current_geojson.value.getBounds())
+            } else{
+              map.setView(current_geojson.value.getBounds().getCenter());
+
+            }
+            
 
   }
 

@@ -116,22 +116,7 @@ export const useCounterStore = defineStore({
       ],
     },
 
-    lineChartData : {
-      labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022'],
-      datasets: [
-        {
-          // label: 'NDVI Time Series',
-          data: [-0.01447658333927393, 0.04884440824389458, 0.11220075935125351, -0.004881010390818119, 0.02153138257563114, 0.02472458779811859, 0.01138385757803917],
-          fill: false,
-          borderColor: '#1eb301',
-          backgroundColor: '#ffbb33',
-          borderWidth: 3
-          
-       
-       
-        },
-      ],
-    },
+    
      
       //spinner loader
       loading:false,
@@ -176,6 +161,26 @@ export const useCounterStore = defineStore({
         custom: true,
         geojson: {}
       },
+
+
+      lineChartData : {
+      labels: ['2016', '2017', '2018', '2019', '2020', '2021', '2022'],
+      datasets: [
+        {
+          // label: 'NDVI Time Series', cuvelai
+          data: [],
+          fill: false,
+          borderColor: '#1eb301',
+          backgroundColor: '#ffbb33',
+          borderWidth: 3
+          
+       
+       
+        },
+      ],
+    },
+
+
       //visibility for custom selects
       visible_region: null,
       visible_indicator: null,
@@ -347,6 +352,12 @@ export const useCounterStore = defineStore({
       // console.log(data, 'stats basin')
       // console.log(year, 'stats year')
       this.getstats()
+
+      this.selected_basin === 'Cuvelai' ? this.lineChartData.datasets[0].data =
+       [-0.01447658333927393, 0.04884440824389458, 0.11220075935125351, -0.004881010390818119, 0.02153138257563114, 0.02472458779811859, 0.01138385757803917]
+          : this.selected_basin === 'Limpopo' ? this.lineChartData.datasets[0].data = [0.2372409850358963, 0.30510950088500977, 0.3155345320701599, 0.2692449986934662, 0.32692646980285645, 0.37108713388442993, 0.24783077836036682]
+          :this.selected_basin === 'Okavango' ? this.lineChartData.datasets[0].data = [-0.5741702721432697, -0.30794540324063047, -0.5810454036349894, -0.518540560396056, -0.14411158922629183, 0.8932529695404121, -0.31515224199000985, 0.16157562486632776]
+          :this.lineChartData.datasets[0].data = [-0.599117890703655, -0.19328715689221673, -0.19734816369571978, -0.5869670754638522, -0.5477375598878034, 0.9004630741378122, -0.49087602572904104, -0.4299607755230201] 
 
  
      

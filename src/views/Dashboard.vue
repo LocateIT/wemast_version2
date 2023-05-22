@@ -2673,7 +2673,8 @@ const getDefaultLatLon = () => {
                                                 iconAnchor: [15,15]
                                               });
                                           
-            var mark =  L.marker([-18.852976338898927,16.092944688071 ] , {icon: marker.value})
+            var mark =  L.marker( basin.value === 'Cuvelai'? [-18.852976338898927,16.092944688071 ] : basin.value === 'Limpopo' ? [-23.361704477797623, 29.067713023209976]
+             : basin.value === 'Okavango' ? [-19.971381658947745, 21.81442486792866] :[-14.70984684783236, 28.0764983010178] , {icon: marker.value})
             // .bindPopup('Hey')
                 .addTo(group.value)
                 return mark

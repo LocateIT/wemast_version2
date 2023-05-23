@@ -253,7 +253,25 @@
               <table style="width:100%">
                   <tr>
                     <th>Title</th>
-                    <td> {{ storeUserSelections.selected_sub_indicator === 'Wetland Inventory' || 'Water Quality' ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`  : `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`}}</td>
+                    <td> {{ 
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Extent' ?
+                      `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
+                      storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
+                      `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`:
+                      storeUserSelections.selected_sub_indicator === 'Water Quality' &&  storeUserSelections.selected_parameter === 'Turbidity' ?
+                      `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`:
+
+                      storeUserSelections.selected_sub_indicator === 'Water Quality' &&  storeUserSelections.selected_parameter === 'Sus Sediments' ?
+                      `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`:
+                   sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
+                     'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
+                    `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`:
+                  //  sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
+                  //    'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
+                  // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
+                  //     `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
+                       ''
+                       }}</td>
                     
                   </tr>
                   <tr>
@@ -3391,7 +3409,7 @@ geoposition.value = `${lat}, ${lon}`
 }
 
 const ajaxCall = () => {
-  $.get("http://wemast.glenwell.com/fieldtableData.geojson", function(data, status){
+  $.get("https://wemast.glenwell.com/fieldtableData.geojson", function(data, status){
     console.log("Data: " + data + "\nStatus: " + status);
   });
 
@@ -5047,6 +5065,8 @@ changeOpacity()
     if(current_geojson.value)map.removeLayer(current_geojson.value)
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    if(lulc_legend.value)map.removeControl(lulc_legend.value)
+ 
    
     var selectedCountry = advancedUserSelections.getSelectedRegion
   //  geometry = selecteRegion

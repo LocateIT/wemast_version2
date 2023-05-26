@@ -3363,7 +3363,7 @@ geoposition.value = `${lat}, ${lon}`
   const fetchMobileData =  () => {
     try {
             
-              // const resp = await axios.get('http://wemast.glenwell.com/fieldtableData.geojson'
+              // const resp = await axios.get('                                                                                                                                                    '
               // );
               
 
@@ -5066,6 +5066,7 @@ changeOpacity()
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(lulc_legend.value)map.removeControl(lulc_legend.value)
+    if(group.value)group.value.clearLayers()
  
    
     var selectedCountry = advancedUserSelections.getSelectedRegion

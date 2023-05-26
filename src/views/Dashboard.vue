@@ -5067,6 +5067,19 @@ changeOpacity()
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(lulc_legend.value)map.removeControl(lulc_legend.value)
     if(group.value)group.value.clearLayers()
+
+        if(lulc_compare_legend.value )map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value || firms_legend.value )map.removeControl(firms_compare_legend.value || firms_legend.value)
+        if(smi_compare_legend.value || smi_legend.value)map.removeControl(smi_compare_legend.value || smi_legend.value)
+     
+        if(flood_compare_legend.value || flood_legend.value)map.removeControl(flood_compare_legend.value || flood_legend.value)
+        if(status_compare_legend.value || status_legend.value )map.removeControl(status_compare_legend.value  || status_legend.value)
+        if(ndvi_compare_legend.value || ndvi_legend.value )map.removeControl(ndvi_compare_legend.value || ndvi_legend.value)
+        if(ndwi_compare_legend.value || ndwi_legend.value )map.removeControl(ndwi_compare_legend.value || ndwi_legend.value)
+        if(prec_compare_legend.value || prec_legend.value)map.removeControl(prec_compare_legend.value || prec_legend.value)
+
+
+
  
    
     var selectedCountry = advancedUserSelections.getSelectedRegion

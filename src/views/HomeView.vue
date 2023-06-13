@@ -72,7 +72,7 @@
             <div class="image_icons">
                   <img src="/uiIcons/challenge_hightlight.svg" alt="">
                   <img src="/uiIcons/watch.svg" alt="">
-                  <img class="manuals" src="/uiIcons/article.svg" alt="">
+                  <img class="manuals" src="/uiIcons/article.svg" alt="" id="docs_icon">
                   <img class="analytics_bulb" src="/uiIcons/challenge_hightlight.svg" alt="">
             </div>
             <div class="image_text">
@@ -213,7 +213,7 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
 
                   </div>
 
-                  <div class="contact" id="contact">
+                  <div class="contact_list" id="contact_flex">
                         <p id="coord">WeMAST Project Coordination Team</p>
                         <p>SASSCAL Regional Secretariat</p>
                         <p>28 Robert Mugabe Avenue, (c/o Robert Mugabe and Newton street)</p>
@@ -367,6 +367,396 @@ const scrollToOkavangoBasin = () => {
        margin-left: 8vw;
 
 }
+
+@media screen  and (max-width: 1400px) {
+      .nav_icons{
+      position: absolute;
+      top: 1vh;
+      left: 54vw;
+      display: flex;
+      flex-direction: row;
+      gap: 4.5rem;
+}
+
+.nav_labels{
+      position: absolute;
+      top: 5vh;
+      left: 54vw;
+      display: flex;
+      flex-direction: row;
+      gap: 3.5rem;
+
+}
+.nav_contact{
+      position: absolute;
+      left: 33.5vw;
+}
+
+.title{
+      /* font-family: Roboto; */
+      width: 1150px !important;
+  font-size: 48px;
+  margin: 51.6px 0 19px 53.6px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  margin-left: 8vw;
+  margin-top: -6vh;
+}
+.image_icons{
+      position: absolute;
+      top:62vh ;
+      left: 3.5vw;
+      display: flex;
+     flex-direction: row;
+     gap: 18rem !important;
+}  
+
+.image_text{
+      position: absolute;
+      top:60.5vh ;
+      left: 5vw;
+      display: flex;
+     flex-direction: row;
+     gap: 18rem !important;
+  /* font-family: Montserrat; */
+  font-size: 17px;
+  font-weight: bold;
+  /* font-stretch: normal; */
+  font-style: normal;
+  /* line-height: 1.18; */
+  letter-spacing: normal;
+
+  color: #2e3192;
+}
+
+.geodata{
+      position: absolute;
+      white-space: nowrap;
+      left: 5vw;   
+}
+.timeseries{
+      position: absolute;
+     white-space: nowrap;
+  /* background-color: #a82121; */
+      margin-left: -0.5vw;   
+}
+.documentation{
+      position: absolute;
+     white-space: nowrap;
+  /* background-color: #a82121; */
+      margin-left: -3.5vw;   
+}
+#docs_icon{
+      margin-left: -2.5vw;     
+}
+p.analytics{
+      position: relative;
+      white-space: nowrap;
+      left: -15vw;   
+}
+
+.screenshot_carosel{
+      position: absolute;
+      top:68vh ;
+      left: 3.5vw;
+      width: 50vw;
+      display: flex;
+     flex-direction: row;
+     gap: 0.2rem;
+}
+
+.hightlight-item {
+     
+     width: 150px;
+     height: 150px !important;
+     object-fit: fill;
+   }
+   .geodata_subtext{
+      position: relative;
+      left: 1.8vw;  
+      /* background-color: #f89999;  */
+      width: 500px;
+      font-size: 13px;
+}
+
+
+  p.timeseries_subtext{
+      position: relative;
+      margin-left: -16.5vw; 
+      /* background-color: #f89999;  */
+      width: 500px;
+      font-size: 13px;
+}
+
+.documentation_subtext{
+      position: relative;
+      margin-left: -19.5vw; 
+      /* background-color: #f89999;  */
+      width: 500px;
+      font-size: 13px;
+}
+
+.analytics_subtext{
+      position: relative;
+      margin-left: -17.3vw;  
+      /* background-color: #f89999;  */
+      width: 400px;
+      font-size: 13px;
+}
+/* .wetlands{
+  
+      overflow-wrap: break-word !important;
+      padding: 5px;
+     
+      background-color: #f89999;
+} */
+
+.sadc-text {
+  /* font-family: Roboto; */
+  position: absolute;
+      top:1070px ;
+      left: 3.5vw;
+      right: 2vw !important;
+       width: 90% !important;
+      /* word-break: break-word; */
+  font-size: 24px !important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.3;
+  letter-spacing: normal;
+  text-align: left;
+  color: #707070;
+}
+
+.sadc_images{
+      position: absolute;
+      top:1270px ;
+      left: 3.5vw;
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+}
+.sadc-img {
+  width: 45% !important;
+
+  object-fit: contain;
+  
+}
+.caption_icons{
+      position: absolute;
+      top: 1660px!important;;
+      left: 3.5vw;
+      display: flex;
+      flex-direction: row;
+      gap: 37rem !important;
+
+     
+
+}
+.captions{
+      position: absolute;
+      top:1660px !important;
+      left: 3.5vw;
+      display: flex;
+      flex-direction: row;
+      gap: 37rem !important;
+      font-size: 16px;
+  margin-bottom: 2px;
+}
+.caption1{
+      position: relative;
+      top:-1.5vh;
+      left: 2vw !important;
+
+}
+.caption2{
+      position: relative;
+      top:-1.5vh;
+      left: -14.5vw !important;
+
+}
+
+
+#river_basins{
+   position: absolute;
+   top: 1700px !important;
+   left: 3.5vw;
+}
+
+.basins{
+      position: absolute;
+   top: 250px;
+ 
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+
+
+
+}
+
+.basin {
+  background-color: rgb(214, 217, 219);
+  color: white;
+  padding: 1rem;
+  height: 37rem;
+  width: 38rem !important;
+}
+/* @media (min-width: 900px) {
+  .basins { grid-template-columns: repeat(2, 1fr) !important;
+}
+} */
+
+#flamingo{
+      background-image: url('/images/sadc2.png');
+      background-repeat: no-repeat ;
+      background-size: 42rem 39rem !important;
+   
+}
+
+.cuvelai_basin{
+      position: relative;
+      top: -4vh;
+      font-size: 40px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  text-align: left;
+  color: #323690;
+  margin-top: 20px;
+  padding: 20px 0px 0px 20px !important;
+}
+
+.cuvelai_text{
+      position: relative;
+      top: -9vh !important;
+     width: 500px;
+      font-size: 19.5px !important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  text-align: left;
+  color: #707995;
+  padding: 20px !important;
+}
+.limpopo_text {
+  /* font-family: Roboto; */
+  position: relative;
+      top: -10vh !important;
+  font-size: 22px !important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  padding: 30px;
+}
+#hippo{
+      background-image: url('/images/hippo.png');
+      background-repeat: no-repeat ;
+      background-size: 40rem 52rem !important;
+      height: 50rem;
+
+}
+
+.okavango_text{
+      position: relative;
+      top: 2vh !important;
+     width: 500px;
+      font-size: 22px !important;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  text-align: left;
+  color: #707995;
+  padding: 20px !important;
+}
+
+.zambezi_text{
+      position: relative;
+      top: -4vh;
+      font-size: 23px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.22;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  padding: 30px;
+}
+
+.footer{
+      position: absolute;
+      top: 5200px !important;
+      left: 3.5vw;   
+      display: flex;
+      flex-direction: row !important;
+      gap: 20rem !important;
+}
+.partner-logos {
+  height: 93.8px;
+  object-fit: contain;
+}
+.project_info{
+      position: absolute;
+      top: 15vh;
+      left: -.5vw;   
+      display: flex;
+      flex-direction: row;
+      gap: 22rem !important;
+      height: 35vh;
+      width: 92.5vw;
+      background-color: #151548;
+
+}
+#contact_flex{
+      height: 290px !important;
+      width: 350px;
+      /* background-color: #d35454; */
+}
+.contact_list{
+      position: relative;
+      left: 12vw;
+      display: flex;
+      flex-direction: column;
+      gap: -2.5rem !important;
+      color: #ffffff;
+      font-size: 12px;
+}
+
+.final_footer{
+      position: absolute; 
+      top: 460px;
+      left: -.5vw; 
+      height: 15vh;
+      width: 92.5vw;
+      background-color: #05051f;
+      display: flex;
+      flex-direction: row;
+      gap: 22rem !important;
+}
+
+
+
+}
+
+
+
 .bulb{
       margin-top: 2vh;
 }
@@ -853,7 +1243,7 @@ const scrollToOkavangoBasin = () => {
   margin: 1.7px 3.6px 0 0;
   border: solid 1px #ffffff;
 }
-.contact{
+.contact_list{
       position: relative;
       left: 12vw;
       display: flex;
@@ -905,4 +1295,5 @@ const scrollToOkavangoBasin = () => {
   letter-spacing: normal;
   text-align: left;
 }
+
 </style>

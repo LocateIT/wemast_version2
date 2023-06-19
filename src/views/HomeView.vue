@@ -209,11 +209,11 @@
             </div>
 
             <div class="final_footer">
-                  <div class="rights">Copyright All Rights Reserved @2021</div>
+                  <div class="rights">{{ $t("home.copyright") }}</div>
 
                   <div class="policy_terms">
-                        <div class="policy">Privacy Policy</div>
-                        <div class="terms">Terms of Use</div>
+                        <div class="policy">{{ $t("home.privacy") }}</div>
+                        <div class="terms">{{ $t("home.terms") }}</div>
                   </div>
 
             </div>

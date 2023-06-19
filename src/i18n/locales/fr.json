@@ -74,7 +74,10 @@
         "analytics_text":"Visualisation statistique des données géospatiales",
         "project_name":"nom du projet",
         "coord_team":"Équipe de coordination du projet WeMAST",
-        "secretariat":"Secrétariat Régional SASSCAL"
+        "secretariat":"Secrétariat Régional SASSCAL",
+        "copyright":"Copyright Tous droits réservés @2021",
+        "privacy":"politique de confidentialité",
+        "terms":"Terms of Use"
        
     }
     

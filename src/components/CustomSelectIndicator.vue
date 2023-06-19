@@ -1,8 +1,10 @@
 <template>
     <div class="aselect" :data-value="placeholder" :data-list="indicator_list">
-      <div class="selector" @click="toggle()" >
+      <div :class="{'selector' : (storeUserSelections.selected_indicator != 'Basin Vulnerability Index'),
+    'bvi_selector' : (storeUserSelections.selected_indicator === 'Basin Vulnerability Index')}" @click="toggle()" >
           <div class="label">
-                  <span>{{ storeUserSelections.indicator_placeholder }}</span>
+                  <span :class="{'selected_item' : (storeUserSelections.selected_indicator === 'Basin Vulnerability Index')}">
+                    {{ storeUserSelections.indicator_placeholder }}</span>
           </div>
           <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
@@ -95,7 +97,7 @@
 .aselect {
   position: absolute;
 top: -2vh;
-left:-0.52vw;
+left:-1.52vw;
  
   margin: 20px auto;
 }
@@ -108,6 +110,18 @@ left:-0.52vw;
 width: 125px;
 border-radius: 30px;
 cursor: pointer;
+
+      }
+      .bvi_selector {
+        border: 1px  #ccc solid;
+          background: #F8F8F8;
+          position: relative;
+          z-index: 1;
+          height: 35px;
+width: 200px;
+border-radius: 30px;
+cursor: pointer;
+
       }
           .arrow {
               position: absolute;
@@ -151,7 +165,12 @@ cursor: pointer;
           padding: 12px;
           color: white;
     border-top: white 1px solid;
+ 
   
+}
+.selected_item{
+  font-size: 14.3px;
+  margin-left: -5px;
 }
 .border_bottom{
   padding-right: 20px;

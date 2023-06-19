@@ -12,13 +12,13 @@
 
       
 
-        <p class="select_cause">{{ $t("home.wemast_select_indicator") }}</p>
+        <p  class="select_cause">{{ $t("home.wemast_select_indicator") }}</p>
         <div id="cause_selection"  @click="clickedMe">
           <CustomSelectIndicator />
         </div>
 
-        <p class="select_sub-indicator">{{ $t("home.wemast_select_subindicator") }}</p>
-        <div id="sub_indicator_selection">
+        <p class="select_sub-indicator" v-if="storeUserSelections.selected_indicator !='Basin Vulnerability Index'">{{ $t("home.wemast_select_subindicator") }}</p>
+        <div class="sub_indicator_selection" v-if="storeUserSelections.selected_indicator !='Basin Vulnerability Index'">
             <CustomSelectSubIndicator />
         </div>
 
@@ -39,24 +39,30 @@
         // || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
         || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ), 
         'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover'),
+        'bvi_label':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index')
+        
+        }" 
         v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
         // || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
          || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
          || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'
-        || storeUserSelections.selected_parameter === 'Wetland Status' ">{{ $t("home.wemast_select_season") }}</p>
+        || storeUserSelections.selected_parameter === 'Wetland Status'
+        || storeUserSelections.selected_indicator ==='Basin Vulnerability Index' ">{{ $t("home.wemast_select_season") }}</p>
 
         <div :class="{'season_satellite_selection ':storeUserSelections.selected_sub_indicator === 'Vegetation Cover', 
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Precipitation Index'
         //  || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
          || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'),
         'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
+        'bvi_select':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
           v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
           // || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
           || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'
           || storeUserSelections.selected_sub_indicator === 'Vegetation Cover' 
-          || storeUserSelections.selected_parameter === 'Wetland Status'">
+          || storeUserSelections.selected_parameter === 'Wetland Status'
+          || storeUserSelections.selected_indicator ==='Basin Vulnerability Index'">
           <CustomSelectSeason />
         </div>
 
@@ -180,7 +186,7 @@ const clickedMe = () => {
 .select_cause{ 
   position: absolute;
   top: 0.1vh;
-  left: 10vw;
+  left: 9.5vw;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 500;
 }
@@ -194,6 +200,7 @@ const clickedMe = () => {
   border-radius: 30px;
   cursor: pointer;
   z-index: 1200;
+  
 }
 
 .select_sub-indicator{ 
@@ -204,10 +211,30 @@ const clickedMe = () => {
   font-weight: 500;
 }
 
-#sub_indicator_selection{
+.sub_indicator_selection{
   position: absolute;
   top: 4vh;
   left: 18vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+
+
+.bvi_label{
+  position: absolute;
+  top: 0.1vh;
+  left: 20vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.bvi_select{
+  position: absolute;
+  top: 4vh;
+  left: 20vw;
   height: 35px;
   width: 140px;
   border-radius: 30px;

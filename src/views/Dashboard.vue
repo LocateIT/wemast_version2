@@ -494,16 +494,7 @@
 import { saveAs } from "file-saver";
 import * as wkt from 'wkt'
 
-  // import "leaflet-draw/dist/leaflet.draw";
-  
-  //trial custom shapefile upload
-  // import "leaflet.draw-extension"
-  // import "leaflet.draw-extension/lib/leaflet-src"
-  // import "leaflet.draw-extension/lib/leaflet.draw-src"
-  // import "leaflet.draw-extension/lib/leaflet.shapefile/shp"
-  // import "leaflet.draw-extension/lib/leaflet.shapefile/leaflet.shapefile"
-  // import "leaflet.draw-extension/leaflet.draw-shapefile"
-  // import "leaflet.draw-extension/leaflet.draw-shapefile.css"
+
   import "../CustomMapControls/measure/measure.css";
   import "../CustomMapControls/measure/MeasureTool.js";
   import "leaflet-easyprint"
@@ -632,7 +623,7 @@ import * as wkt from 'wkt'
   //advanced filter variables
   let country = ref(null)
     //variables
-    const storeUserSelections = useCounterStore()
+  const storeUserSelections = useCounterStore()
   const compareUserSelections = useCompareStore()
   const advancedUserSelections = useAdvancedStore()
   
@@ -2079,6 +2070,41 @@ map.addControl(search_control.value );
   })
 
  
+  const addBVILayer = () => {
+  if(indicator.value === 'Basin Vulnerability Index') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/BVI_${season.value}/wms?`, {
+     pane: 'pane400', 
+     layers: `BVI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+// console.log(wmsLayer.value, 'wms')
+
+
+// addLulcLegend()
+// lulclegendContent()
+
+changeOpacity()
+
+}
+ }
 
  const addLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {
@@ -3314,7 +3340,7 @@ getDefaultLatLon()
    
   
   addLulcLayer()
-  
+  addBVILayer()
   addPrecIndexWet()
   addPrecIndexDry()
   addWetlandExtent()
@@ -3410,7 +3436,7 @@ geoposition.value = `${lat}, ${lon}`
 }
 
 const ajaxCall = () => {
-  $.get("https://wemast.glenwell.com/fieldtableData.geojson", function(data, status){
+  $.get("http://wemast.glenwell.com/fieldtableData.geojson", function(data, status){
     console.log("Data: " + data + "\nStatus: " + status);
   });
 

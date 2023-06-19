@@ -240,7 +240,7 @@ export const useCounterStore = defineStore({
 
     },
     fetchIndicatorList(){
-      this.indicator_list = ['Exposure', 'Sensitivity','Resiliance']
+      this.indicator_list = ['Basin Vulnerability Index','Exposure', 'Sensitivity','Resiliance']
       return this.indicator_list.sort()
     },
     fetchSubIndicatorList(){
@@ -256,6 +256,9 @@ export const useCounterStore = defineStore({
       }
     },
     fetchYearList(){
+      if(this.selected_indicator === 'Basin Vulnerability Index' ) {
+        this.year_list = ["2000", "2005", "2010", "2015", "2022"]
+      }
       if(this.selected_sub_indicator === 'Precipitation Index' 
        || this.selected_sub_indicator === 'Soil Moisure Index'){
         this.year_list = ["2000","2001","2002","2003","2004","2005","2006",

@@ -1,6 +1,6 @@
 <template>
 
-     <div class="home">
+     <div class="home" id="homepage">
 
       
       <!-- <RouterLink to="/">home</RouterLink>
@@ -282,8 +282,13 @@ const scrollToOkavangoBasin = () => {
 
 <style scoped>
 .home{
+      
       font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
+#homepage{
+      overflow: hidden;
+}
+
 .nav{
       height: 10vh;
       width: 100vw;

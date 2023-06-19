@@ -28,6 +28,10 @@
 
             </div>
 
+            <div class="languages">
+                  <LanguageSwitch />
+            </div>
+
             <div class="nav_icons">
                   <img src="/uiIcons/home-inactive.svg" alt="">
                   <img src="/uiIcons/dashboard-inactive.svg" @click="$router.push('/dashboard')" alt="">
@@ -43,11 +47,11 @@
             </div>
             <RouterView />
             <div class="nav_labels">
-                  <p >Home</p>
-                  <p >Dashboard</p>
-                  <p>Profile</p>
-                  <p>Documentation</p>
-                  <p class="nav_contact">Contact</p>
+                  <p >{{ $t("home.home") }}</p>
+                  <p >{{ $t("home.dashboard") }}</p>
+                  <p>{{ $t("home.profile") }}</p>
+                  <p>{{ $t("home.documentation") }}</p>
+                  <p class="nav_contact">{{ $t("home.contact") }}</p>
             </div>
             <RouterView />
       </div>
@@ -55,12 +59,11 @@
       <div class="banner">
             <img class="bulb" src="/uiIcons/challenge.svg" alt="">
             <div class="title">
-                  WETLAND MONITORING AND ASSESSMENT SERVICE <br> FOR TRANSBOUNDARY
-                BASINS IN SOUTHERN AFRICA <span class="abbreviation">(WeMAST)</span>
+                  {{ $t("home.wemast_title") }} <span class="abbreviation">(WeMAST)</span>
             </div>
             <!-- @click="$router.push('/dashboard')" -->
             <RouterLink to="/dashboard"> 
-                  <button class="visit"  >Visit Geo-Portal</button>
+                  <button class="visit"  >{{ $t("home.visit_portal") }}</button>
             </RouterLink>
            <RouterView />
            
@@ -76,17 +79,17 @@
                   <img class="analytics_bulb" src="/uiIcons/challenge_hightlight.svg" alt="">
             </div>
             <div class="image_text">
-                  <p class="geodata">Geo-Data</p>
-                  <p class="timeseries">Time-Series</p>
-                  <p class="documentation">Documenatation & Manuals</p>
-                  <p class="analytics">Analytics</p>
+                  <p class="geodata">{{ $t("home.geodata") }}</p>
+                  <p class="timeseries">{{ $t("home.timeseries") }}</p>
+                  <p class="documentation">{{ $t("home.docs_manuals") }}</p>
+                  <p class="analytics">{{ $t("home.analytics") }}</p>
             </div>
 
             <div class="img_subtext">
-                  <p class="geodata_subtext">Geo-Spatial data covering the River Basins</p>
-                  <p class="timeseries_subtext">Historical analytics of Geo- Spatial data</p>
-                  <p class="documentation_subtext">Chronological instructions & processing chains</p>
-                  <p class="analytics_subtext">Statistical visualisation of Geo- Spatial data</p>
+                  <p class="geodata_subtext">{{ $t("home.geodata_text") }}</p>
+                  <p class="timeseries_subtext">{{ $t("home.timeseries_text") }}</p>
+                  <p class="documentation_subtext">{{ $t("home.manual_text") }}</p>
+                  <p class="analytics_subtext">{{ $t("home.analytics_text") }}</p>
             </div>
             <div class="screenshot_carosel">
                   <img src="/images/geodata.png" alt="" class="hightlight-item">
@@ -97,9 +100,9 @@
 
       </div>
       <div class="wetlands">
-            <p class="wetlands_sadc">Wetlands in SADC</p>
-            <p class="eo_products">Earth Observation Products and Services for Sustainable Wetland Management</p>
-            <p class="sadc-text">Earth Observation Products and Services for Sustainable Wetland Management The Wetland Monitoring and Assessment Service for Transboundary Basins (WeMAST) Project in Southern African Development Community (SADC) Project was developed and implemented with Earth Observation (EO) data to supports Sustainable Wetland Assessment and Monitoring Services, in order to support policy implementation and management practices in the region</p>
+            <p class="wetlands_sadc">{{ $t("home.wetlands_sadc") }}</p>
+            <p class="eo_products">{{ $t("home.eo_products") }}</p>
+            <p class="sadc-text">{{ $t("home.sadc_text") }}</p>
             <div class="sadc_images">
                   <img class="sadc-img" src="/images/sadc1.png" alt="">
                   <img class="sadc-img" src="/images/sadc2.png" alt="">
@@ -109,61 +112,40 @@
                   <img src="/uiIcons/sadc_arrow_left.svg" alt="">
             </div>
             <div class="captions">
-                  <p  class="caption1">Wetland coverage & status analytics</p>
-                  <p class="caption2" > Wetland coverage & status analytics</p>
+                  <p  class="caption1">{{ $t("home.status_analytics") }}</p>
+                  <p class="caption2" > {{ $t("home.status_analytics") }}</p>
             </div>
       </div>
       <div id="river_basins">
-            <p class="river_basins_title">RIVER BASINS</p>
-            <p class="river_basins_infographics">River Basins infographics</p>
+            <p class="river_basins_title">{{ $t("home.river") }}</p>
+            <p class="river_basins_infographics">{{ $t("home.infographics") }}</p>
             <div class="basins">
                   <div class="basin" id="flamingo">
                          <!-- <img class="basin_img1" src="images/sadc2.png" alt=""> -->
                   </div>
                   <div class="basin" ref="Cuvelai" id="cuvelai_basin_id">
-                        <p class="cuvelai_basin">The Cuvelai Basin</p>
-                        <p class="cuvelai_text">The Cuvelai drainage system channels runoff from Angola’s summer rainfall through a complex system of ephemeral river channels,
-                               referred to as the Oshanas.
-                                When the system floods, the runoff flows through the shallow channels in a southerly direction to the Etosha pan in Namibia. <br>
-                                 <br>
-                                    During the wet season, the Oshanas of the Cuvelai drainage system are estimated to support 
-                                    around 30 to 40 % of Namibia’s population with subsistence farming and fishing on the seasonal wetlands. 
-                                    In addition, the flooded wetlands contain small fish, carried with the runoff from the North, which are joined by 
-                                    various pond fauna and draw various bird species, including flamingo, that will also breed in the Fischer’s Pan of the Etosha pan,
-                                    and the threatened blue crane. Most of the Etosha pan itself is contained in the Etosha National Park, which hosts a number of rare and
-                                    endangered mammals, including the black rhinoceros, and consequently contributes substantially to the local economy with tourism.
-                                    The Etosha pan and the Cuvelai drainage system in Namibia are a Ramsar site.
+                        <p class="cuvelai_basin">{{ $t("home.cuvelai_basin") }}</p>
+                        <p class="cuvelai_text">
+                              {{ $t("home.cuv_text") }}
 </p>
                   </div>
                   <div class="basin" id="limpopo">
-                        <p class="limpopo_basin" id="limpopo_basin_id">The Limpopo Basin</p>
+                        <p class="limpopo_basin" id="limpopo_basin_id">{{ $t("home.limpopo_basin") }}</p>
                         <p class="limpopo_text">
-                              The majority of wetlands along the Limpopo basin are located in Mozambique and along the Changane River. There are three Ramsar wetland sites in the Limpopo basin: The Makuleke Wetlands, the Nylsvley Nature Reserve and the Verloren Valei Nature Reserve. All three wetland sites have conservation status and therefore contribute to the local economies with tourism. Most of the Makuleke wetlands are situated within the Kruger National Park. The wetlands are of floodplain vlei type and are intermittently filled by floods and rain. They sustain riverine ecosystems, including wildlife, well into the dry season. The floodplains also serve to attenuate floods, thereby reducing flood damage downstream. <br>
-
-                              <br>
-                              The Nylsvley Nature Reserve serves as a breeding ground for eight red-listed waterbirds and hosts the endangered roan antelope. It is also the only site where wild rice is found in South Africa. The Verloren Valei Nature Reserve is hydrologically significant as it functions like a sponge in the upper catchment, ensuring the gradual release of water to downstream areas during and after the rainy season. The area provides a refuge for the Wattled Crane and further hosts various vulnerable and threatened plant and mammal species.
+                              {{ $t("home.lim_text") }}
                         </p>
                   </div>
                   <div class="basin" id="hippo"></div>
                   <div class="basin" id="waterfall"></div>
                   <div class="basin" id="okavango">
-                        <div class="okavango_basin" id="okavango_basin_id">The Okavango Basin</div>
+                        <div class="okavango_basin" id="okavango_basin_id">{{ $t("home.okavango_basin") }}</div>
                         <div class="okavango_text">
-                              The Okavango Basin’s main stream, the Okavango River, is southern Africa’s fourth longest river and is produced by seasonal flooding during the summer months. It begins as the Rio Cubango in Angola, flows south to form the border between Angola and Namibia and, in Botswana, it reaches the large swampy inland delta called the Okavango Delta, a UNESCO World Heritage Site.
-                              <br>
-                              <br>
-                              The Okavango River and the delta attract great concentrations of wildlife, including huge elephant and buffalo herds, and consequently fuel a lucrative tourism industry in Namibia and Botswana.
-                              <br>
-                              <br>
-                              Along all rivers and tributaries, the river-based communities rely on the perennial river for small-scale irrigation, subsistence farming and fishing.
+                              {{ $t("home.oka_text") }}
                         </div>
                   </div>
                   <div class="basin" id="zambezi">
-                        <p class="zambezi_basin" id="zambezi_basin_id">The Zambezi Basin</p>
-                        <p class="zambezi_text">The Zambezi basin is the fourth-largest river basin of Africa with a large area covered by wetlands. These include the Barotse Floodplains in Zambia, the Chobe Swamps in northeastern Namibia, the Linyanti Swamp in Botswana, the Busanga Swamps on the Lunga River, the Lukanga Swamps and the Kafue Flats on the Luangwa River, and the Elephant Marsh near the town of Chiromo in Malawi. These wetlands are used for fisheries, including commercial fisheries, agriculture, wildlife management and transportation services. Moreover, these wetlands are important habitats for fish, and its riverine woodlands supports support wildlife and birds, by providing vegetative cover and suitable breeding and feeding grounds, which drive tourism activities, that include photography, bird watching and hunting. Furthermore, the wetlands provide hydrological services by decreasing downstream flood risks. <br>
-
-                              <br>
-The construction of the Kariba and Cahora Bassa dams has decreased the size of the floodplain of the lower Zambezi, and consequently the wetlands, but flooding remains perennial</p>
+                        <p class="zambezi_basin" id="zambezi_basin_id">{{ $t("home.zambezi_basin") }}</p>
+                        <p class="zambezi_text">{{ $t("home.zam_text") }} </p>
                   </div>
                   <div class="basin" id="lion"></div>
 
@@ -194,28 +176,28 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
 
             </div>
             <div class="project">
-                  <p class="project_name">Project Name</p>
+                  <p class="project_name">{{ $t("home.project_name") }}</p>
                   <img class="project_logo" src="/images/project_logo.png" alt="">
             </div>
             <div class="project_info">
                   <div class="basin_list">
-                        <div class="cuv_basin" @click="scrollToCuvelaiBasin">The Cuvelai Basin</div>
+                        <div class="cuv_basin" @click="scrollToCuvelaiBasin">{{ $t("home.cuvelai_basin") }}</div>
                         <div class="basin_underline" ></div>
 
-                        <div class="lim_basin"  @click="scrollToLimpopoBasin">The Limpopo Basin</div>
+                        <div class="lim_basin"  @click="scrollToLimpopoBasin">{{ $t("home.limpopo_basin") }}</div>
                         <div class="basin_underline"></div>
 
-                        <div class="oka_basin"  @click="scrollToOkavangoBasin">The Okavango Basin</div>
+                        <div class="oka_basin"  @click="scrollToOkavangoBasin">{{ $t("home.okavango_basin") }}</div>
                         <div class="basin_underline"></div>
 
-                        <div class="zam_basin"  @click="scrollToZambeziBasin">The Zambezi Basin</div>
+                        <div class="zam_basin"  @click="scrollToZambeziBasin">{{ $t("home.zambezi_basin") }}</div>
                         <div class="basin_underline"></div>
 
                   </div>
 
                   <div class="contact_list" id="contact_flex">
-                        <p id="coord">WeMAST Project Coordination Team</p>
-                        <p>SASSCAL Regional Secretariat</p>
+                        <p id="coord">{{ $t("home.coord_team") }}</p>
+                        <p>{{ $t("home.secretariat") }}</p>
                         <p>28 Robert Mugabe Avenue, (c/o Robert Mugabe and Newton street)</p>
                         <p>Windhoek</p>
                         <p>Namibia</p>
@@ -248,6 +230,7 @@ The construction of the Kariba and Cahora Bassa dams has decreased the size of t
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue';
+import LanguageSwitch from '../components/LanguageSwitch.vue';
 // let cuv_ref = ref('Cuvelai')
 
 const scrollToElement = (refName) =>  {
@@ -296,6 +279,11 @@ const scrollToOkavangoBasin = () => {
       flex-direction: row;
       /* background-color: #eb9292; */
 
+}
+
+.languages{
+      margin-left: 2vw;
+      margin-top: -1vh;
 }
 .nav_icons{
       position: absolute;

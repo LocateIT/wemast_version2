@@ -43,8 +43,41 @@
         "time":"Temps",
         "wemast_select_parameter":"    le paramètre",
         "opacity": "Opacité",
-        "slide1":"Service de surveillance et d évaluation des zones humides dans les bassins transfrontaliers"
+        "slide1":"Service de surveillance et d évaluation des zones humides dans les bassins transfrontaliers",
+        "home":"Maison",
+        "dashboard":"Portail",
+        "profile":"Profil",
+        "documentation":"Documentation",
+        "contact":"Contact",
+        "wetlands_sadc":"Zones humides dans la SADC",
+        "eo_products":"Produits et services d'observation de la Terre pour la gestion durable des zones humides",
+        "sadc_text":"Produits et services d'observation de la Terre pour la gestion durable des zones humides Le projet de service de surveillance et d'évaluation des zones humides pour les bassins transfrontaliers (WeMAST) du projet de la Communauté de développement de l'Afrique australe (SADC) a été développé et mis en œuvre avec des données d'observation de la Terre (EO) pour soutenir les services d'évaluation et de surveillance durables des zones humides , afin de soutenir la mise en œuvre des politiques et les pratiques de gestion dans la région",
+        "status_analytics": "Couverture et analyse de l'état des zones humides",
+        "river":"BASSINS FLUVIAUX",
+        "infographics":"Infographie des bassins fluviaux",
+        "cuvelai_basin":"Le bassin de Cuvelai",
+        "limpopo_basin":"Le bassin du Limpopo",
+        "okavango_basin":"Le bassin de l'Okavango",
+        "zambezi_basin":"Le bassin du Zambèze",
+        "cuv_text":"Le système de drainage de Cuvelai canalise les eaux de ruissellement des pluies estivales de l'Angola à travers un système complexe de canaux fluviaux éphémères, appelés Oshanas. Lorsque le système est inondé, le ruissellement s'écoule à travers les canaux peu profonds en direction du sud jusqu'au plateau d'Etosha en Namibie.Pendant la saison des pluies, on estime que les Oshanas du système de drainage de Cuvelai font vivre environ 30 à 40 % de la population namibienne grâce à l'agriculture de subsistance et à la pêche dans les zones humides saisonnières. En outre, les zones humides inondées contiennent de petits poissons, transportés par le ruissellement du nord, auxquels se joignent diverses faunes de bassins et attirent diverses espèces d'oiseaux, dont le flamant rose, qui se reproduira également dans le bassin de Fischer du bassin d'Etosha, et l'espèce menacée grue bleue. La majeure partie de la casserole d'Etosha elle-même est contenue dans le parc national d'Etosha, qui abrite un certain nombre de mammifères rares et menacés, y compris le rhinocéros noir, et contribue par conséquent de manière substantielle à l'économie locale grâce au tourisme. Le bassin d'Etosha et le système de drainage de Cuvelai en Namibie sont un site Ramsar.",
+        "lim_text":"La majorité des zones humides le long du bassin du Limpopo sont situées au Mozambique et le long du fleuve Changane. Il existe trois sites de zones humides Ramsar dans le bassin du Limpopo : les zones humides de Makuleke, la réserve naturelle de Nylsvley et la réserve naturelle de Verloren Valei. Les trois sites de zones humides ont un statut de conservation et contribuent donc aux économies locales grâce au tourisme. La plupart des zones humides de Makuleke sont situées dans le parc national Kruger. Les zones humides sont de type vlei de plaine inondable et sont remplies par intermittence par les inondations et la pluie. Ils soutiennent les écosystèmes fluviaux, y compris la faune, jusque tard dans la saison sèche. Les plaines inondables servent également à atténuer les inondations, réduisant ainsi les dommages causés par les inondations en aval.La réserve naturelle de Nylsvley sert de lieu de reproduction pour huit oiseaux aquatiques inscrits sur la liste rouge et abrite l'antilope rouanne en voie de disparition. C'est aussi le seul site où l'on trouve du riz sauvage en Afrique du Sud. La réserve naturelle de Verloren Valei est importante sur le plan hydrologique car elle fonctionne comme une éponge dans le bassin versant supérieur, assurant la libération progressive de l'eau vers les zones en aval pendant et après la saison des pluies. La zone offre un refuge à la Grue caronculée et abrite en outre diverses espèces de plantes et de mammifères vulnérables et menacées.",
+        "oka_text":"Le cours d'eau principal du bassin de l'Okavango, le fleuve Okavango, est le quatrième plus long fleuve d'Afrique australe et est produit par des inondations saisonnières pendant les mois d'été. Il commence par le Rio Cubango en Angola, coule vers le sud pour former la frontière entre l'Angola et la Namibie et, au Botswana, il atteint le grand delta intérieur marécageux appelé le delta de l'Okavango, un site du patrimoine mondial de l'UNESCO.Le fleuve Okavango et le delta attirent de grandes concentrations d'animaux sauvages, y compris d'énormes troupeaux d'éléphants et de buffles, et alimentent par conséquent une industrie touristique lucrative en Namibie et au Botswana.Le long de tous les fleuves et affluents, les communautés riveraines dépendent du fleuve pérenne pour l'irrigation à petite échelle, l'agriculture de subsistance et la pêche.",
+        "zam_text":"recouvert de zones humides. Ceux-ci incluent les plaines inondables de Barotse en Zambie, les marais de Chobe dans le nord-est de la Namibie, le marais de Linyanti au Botswana, les marais de Busanga sur la rivière Lunga, les marais de Lukanga et les plaines de Kafue sur la rivière Luangwa, et le marais des éléphants près de la ville de Chiromo. au Malawi. Ces terres humides sont utilisées pour la pêche, y compris la pêche commerciale, l'agriculture, la gestion de la faune et les services de transport. De plus, ces zones humides sont des habitats importants pour les poissons, et leurs forêts riveraines soutiennent la faune et les oiseaux, en fournissant une couverture végétale et des aires de reproduction et d'alimentation appropriées, qui stimulent les activités touristiques, notamment la photographie, l'observation des oiseaux et la chasse. De plus, les zones humides fournissent des services hydrologiques en diminuant les risques d'inondation en aval.La construction des barrages de Kariba et Cahora Bassa a diminué la taille de la plaine inondable du bas Zambèze, et par conséquent les zones humides, mais les inondations restent pérennes",
+        "visit_portal":"Visiter le portail",
+        "geodata":"Géo-Données",
+        "timeseries":"chronologiques",
+        "docs_manuals":"et manuels",
+        "analytics":"Analytique",
+        "geodata_text":"Données géo-spatiales couvrant les bassins fluviaux",
+        "timeseries_text":"Analyse historique des données géospatiales",
+        "manual_text":"Instructions chronologiques & chaînes de traitement",
+        "analytics_text":"Visualisation statistique des données géospatiales",
+        "project_name":"nom du projet",
+        "coord_team":"Équipe de coordination du projet WeMAST",
+        "secretariat":"Secrétariat Régional SASSCAL"
+       
     }
+    
    
 
 }

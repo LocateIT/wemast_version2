@@ -79,7 +79,83 @@
         "privacy":"politique de confidentialité",
         "terms":"Terms of Use"
        
+    },
+    "summaries":{
+        "landcover":"The LULC is an ESA product. The integration of the biophysical and human factors plays a leading role in causing land cover changes and is used to explain the dynamics of land usage and trend that occur within an ecosystem.",
+        "vegcover":"Product derived from indexing the Near Infrared (NIR) band and the Red band from satellite image. Used to assess the difference in seasonal vegetation characteristics",
+        "wetland_extent":"NDWI is a satellite-derived product",
+        "wetland_status": "The WWPI uses a proxy data of seasonal vegetation (NDVI) to display the dry",
+        "burnt_firms":"Acquired from the normalization of the NBR band, an index derived from Indexing SWIR and NIR bands from satellite imagery. Used in assessing Fire intensity; energy released from organic matter and the burn severity as the degree an area is altered by fire.",
+        "prec_index":"SPI is the measure of standard deviation of the received rainfall from the long term observed rainfall. It is used to characterize the meteorological drought",
+        "undulation":"Flood mapping is computed through the analysis of the Topographical Wetness Index (TWI). The Index categorises the areas that are susceptible to flooding (severe) to the areas that are less susceptible to flooding (less sensitive). Since the data used i.e. SRTM (DEM) does not change frequently",
+        "turbidity": "NDTI is a satellite-derived product",
+        "susp_sediments": "NSSDI is a satellite-derived product"
+
+
+    },
+    "metadata":{
+        "title":"Title",
+        "lulc_title_text": "Land Cover for Cuvelai basin",
+        "description": "Description",
+        "lulc_desc": "The LULC is an ESA product. The integration of the biophysical and human factors plays a leading role in causing land cover changes and is used to explain the dynamics of land usage and trend that occur within an ecosystem.",
+        "extent": "Extent",
+        "west_lon": "Western-most Longitude",
+        "north_lat": "Northern-most Latitude",
+        "east_lon": "Eastern-most Longitude",
+        "south_lat": "Southern-most Latitude",
+        "resolution": "Resolution",
+        "meters": "Meters",
+        "crs": "CRS",
+        "crs_text": "EPSG:4326",
+        "date_created": "Date Created",
+        "region": "Region",
+        "tags": "Tags",
+        "season": "season",
+        "encoding": "Encoding",
+        "encoding_text": "UTF-8",
+        "encoding_format": "Format",
+        "tif": "image/tiff",
+        "data_type": "Data type",
+        "raster": "raster",
+        "position": "Geo Position",
+        "theme": "Theme",
+        "keyword": "Keyword",
+        "keyword_text": "season",
+        "vegcover_title_text": "Vegetation Cover for Cuvelai basin",
+        "vegcover_desc": "Product derived from indexing the Near Infrared (NIR) band and the Red band from satellite image. Used to assess the difference in seasonal vegetation characteristics",
+        "extent_title_text": "Wetland Extent for Cuvelai basin",
+        "extent_desc": "NDWI is a satellite-derived product",
+        "status_title_text": "Wetland Status for Cuvelai basin",
+        "status_desc": "The WWPI uses a proxy data of seasonal vegetation (NDVI) to display the dry",
+        "firms_title_text":"Burnt Area FIRMS for Cuvelai basin",
+        "firms_desc": "Acquired from the normalization of the NBR band, an index derived from Indexing SWIR and NIR bands from satellite imagery. Used in assessing Fire intensity; energy released from organic matter and the burn severity as the degree an area is altered by fire.",
+        "prec_title_text": "Precipitation Index for Cuvelai basin",
+        "prec_desc": "SPI is the measure of standard deviation of the received rainfall from the long term observed rainfall. It is used to characterize the meteorological drought",
+        "undulation_title_text": "Undulation for Cuvelai basin",
+        "undulation_desc": "Flood mapping is computed through the analysis of the Topographical Wetness Index (TWI). The Index categorises the areas that are susceptible to flooding (severe) to the areas that are less susceptible to flooding (less sensitive). Since the data used i.e. SRTM (DEM) does not change frequently",
+        "turb_title_text": "Turbidity for Cuvelai basin",
+        "turb_desc": "NDTI is a satellite-derived product",
+        "sus_title_text": "Sus Sediments for Cuvelai basin",
+         "sus_desc": "NSSDI is a satellite-derived product",
+        "smi_title_text": "Soil Moisure Index for Cuvelai basin",
+        "smi_desc": "NSSDI is a satellite-derived product",
+        "status_theme": "WWPI",
+        "lulc_theme": "LULC",
+        "veg_cover_theme": "NDVI",
+        "wetland_inventory_theme": "NDWI",
+        "prec_theme": "SPI"
+    },
+    "legend_classes":{
+        "lulc_classes": "Agriculture, Forest, Grassland, Wetland, Built-Up, Shubland, Bareland, Water",
+        "vegcover_classes": "Very Low Density Vegetation, Low Density, Moderate Density, High Density, Very High Density Vegetation",
+        "extent_classes": "No Data, Not Water, Seasonal Water, Permanent Water",
+        "status_classes": "Water Areas, Dry Areas, Wetness Areas",
+        "firms_classes": "January - March, April - June, July - September, October - December",
+        "prec_smi_classes": "Dry,Wet",
+        "undulation_classes": "Flooded Areas, Wetness, Moderate Wetness, Moderate Dryness, Dry Areas",
+        "sus_turb_classes": "No Data, Not Water, Seasonal Water, Permanent Water"
     }
+    
     
    
 

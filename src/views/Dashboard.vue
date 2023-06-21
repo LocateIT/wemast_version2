@@ -2600,7 +2600,7 @@ watch( setLatLon, () => {
      styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
-     opacity:0.9
+     opacity:0.1
      // CQL_FILTER: "Band1='1.0'"
      
     

@@ -7,19 +7,31 @@
     <div class="radio_labels_container">
         <div class="radio_selections">
        
-       <img src="/uiIcons/radio.svg" id="disabled"  class="parameters" @click="handleParameterSwap()"   
-                        >
+       <img src="/uiIcons/radio.svg" id="disabled"  class="parameters" @click="handleParameterSwap()" >
+      
        <img src="/uiIcons/radio.svg" class="time" @click="handleTimeSwap()"   :class="
                           radio_selection === 'wetland'
                             ? 'radio_swap'
-                            : ''
+                            
+                          : ''
                         "
                         style="cursor: pointer;">
+
+                        <!-- <img src="/uiIcons/radio.svg"   class="ancil" @click="handleAncilSwap()" 
+       :class="
+                          radio_selection === 'ancillary'
+                            ? 'radio_swap'
+                            
+                          : ''
+                        "
+       
+       > -->
       
    </div>
    <div class="radio_labels">
        <label for="" class="parameters1">Parameters</label>
        <label for="" class="time1">Wetland</label>
+       <!-- <label for="" class="ancil_data">Ancillary</label> -->
    </div>
     </div>
     
@@ -43,10 +55,34 @@
         <AdvancedPlatformSelect  />
     </div>
     </div>
+    </div>
+
+    <!-- <div class="filter_selections" v-if="radio_selection === 'ancillary'">
+        <p class="select_country">Select Country</p>
+    <div class="country_selection">
+        <AdvancedCountrySelect />
+    </div>
+
+    <div class="wetland_wrapper">
+        <p class="select_wetland">Select Ancil</p>
+    <div class="wetland_selection">
+        <AdvancedWetlandSelect />
+    </div>
+
+    </div>
+    
+    <div class="platform_wrapper">
+        <p class="select_platform">Select Platform</p>
+    <div class="platform_selection" >
+        <AdvancedPlatformSelect  />
+    </div>
+    </div>
+
+    </div> -->
     
 
     <button type="button" class="submit">SUBMIT</button>
-    </div>
+    
    
 
   </div>
@@ -70,6 +106,9 @@ const handleParameterSwap = () => {
 
 const handleTimeSwap = () => {
   radio_selection.value = 'wetland';
+} 
+const handleAncilSwap = () => {
+  radio_selection.value = 'ancillary';
 } 
 
 </script>
@@ -186,7 +225,7 @@ const handleTimeSwap = () => {
    
     .submit{
         position: absolute;
-        top: 32vh;
+        top: 37vh;
         left: 1vw;
         height: 35px;
         width: 200px;

@@ -125,15 +125,15 @@
             <p style="margin-top:40px " :class="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' || 'Undulation' ? 'burnt_summary': ''" >
               <label style="margin-top:40px; font-weight: 700; font-size:14px">Summary</label>
               <br>
-              {{ storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
-              storeUserSelections.selected_parameter === 'Wetland Extent' ? storeUserSelections.extent_summary: 
-               storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? storeUserSelections.burnt_summary: 
-               storeUserSelections.selected_sub_indicator === 'Undulation' ? storeUserSelections.undulation_summary:
-              storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? storeUserSelections.prec_summary: 
-              storeUserSelections.selected_parameter === 'Turbidity' ? storeUserSelections.turbidity_summary: 
-              storeUserSelections.selected_parameter === 'Sus Sediments' ? storeUserSelections.sus_summary: 
-                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc : 
-                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
+              {{ storeUserSelections.selected_parameter === 'Wetland Status' ? $t("summaries.wetland_status") : 
+              storeUserSelections.selected_parameter === 'Wetland Extent' ? $t("summaries.wetland_extent"): 
+               storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? $t("summaries.burnt_firms"): 
+               storeUserSelections.selected_sub_indicator === 'Undulation' ? $t("summaries.undulation"):
+              storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? $t("summaries.prec_index"): 
+              storeUserSelections.selected_parameter === 'Turbidity' ? $t("summaries.turbidity"): 
+              storeUserSelections.selected_parameter === 'Sus Sediments' ? $t("summaries.susp_sediments"): 
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("summaries.landcover") : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("summaries.vegcover"):
            
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : '' }}
             </p>
@@ -255,7 +255,7 @@
 
               <table style="width:100%">
                   <tr>
-                    <th>Title</th>
+                    <th>{{ $t("metadata.title") }}</th>
                     <td> {{ 
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Extent' ?
                       `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
@@ -278,18 +278,18 @@
                     
                   </tr>
                   <tr>
-                    <th>Description</th>
+                    <th>{{ $t("metadata.description") }}</th>
       
                     <td>{{
-                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? storeUserSelections.prec_summary:
-                     storeUserSelections.selected_parameter === 'Turbidity' ? storeUserSelections.turbidity_summary: 
-              storeUserSelections.selected_parameter === 'Sus Sediments' ? storeUserSelections.sus_summary: 
-              storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? storeUserSelections.burnt_summary:
-              storeUserSelections.selected_sub_indicator === 'Undulation' ? storeUserSelections.undulation_summary: 
-                     storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_desc: 
-                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_desc: 
-                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_desc:
-                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_desc:
+                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? $t("metadata.prec_desc"):
+                     storeUserSelections.selected_parameter === 'Turbidity' ? $t("metadata.turb_desc"): 
+              storeUserSelections.selected_parameter === 'Sus Sediments' ? $t("metadata.sus_desc"): 
+              storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? $t("metadata.firms_desc"):
+              storeUserSelections.selected_sub_indicator === 'Undulation' ? $t("metadata.undulation_desc"): 
+                     storeUserSelections.selected_parameter === 'Wetland Status' ? $t("metadata.status_desc"): 
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("metadata.lulc_desc"): 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("metadata.vegcover_desc"):
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? $t("metadata.extent_desc"):
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : ''
             
 
@@ -304,19 +304,19 @@
                     <td>
                       <table>
                         <tr>
-                          <th>Western-most Longitude</th>
+                          <th>{{ $t("metadata.west_lon") }}</th>
                           <td>{{storeUserSelections.western_lon +'°'}}</td>
                         </tr>
                         <tr>
-                          <th>Northern-most Latitude</th>
+                          <th>{{ $t("metadata.north_lat") }}</th>
                           <td>{{storeUserSelections.northern_lat +'°'}}</td>
                         </tr>
                         <tr>
-                          <th>Eastern-most Longitude</th>
+                          <th>{{ $t("metadata.east_lon") }}</th>
                           <td>{{storeUserSelections.eastern_lon +'°'}}</td>
                         </tr>
                         <tr>
-                          <th>Southern-most Latitude</th>
+                          <th>{{ $t("metadata.south_lat") }}</th>
                           <td>{{storeUserSelections.southern_lat +'°'}}</td>
                         </tr>
                       </table>
@@ -325,73 +325,73 @@
                     
                   </tr>
                   <tr>
-                    <th>Resolution</th>
+                    <th>{{ $t("metadata.resolution") }}</th>
                     <td>{{`${storeUserSelections.resolution} Meters`}}</td>
                     
                   </tr>
                   <tr>
-                    <th>CRS</th>
-                    <td> {{`EPSG:4326`}}</td>
+                    <th>{{ $t("metadata.crs") }}</th>
+                    <td> {{$t("metadata.crs_text")}}</td>
                     
                   </tr>
                   <tr>
-                    <th>Date Created</th>
+                    <th>{{ $t("metadata.date_created") }}</th>
       
                     <td>{{storeUserSelections.selected_year}}</td>
                   </tr>
                   <tr>
-                    <th>Region</th>
+                    <th>{{ $t("metadata.region") }}</th>
                     <td>{{storeUserSelections.selected_basin}}</td>
                     
                   </tr>
                   <tr>
-                    <th>Tags</th>
-                    <td> {{storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season  + ' ' +'season' : 
-                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_theme}, ${storeUserSelections.selected_season}  season`:
-                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
-                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
-                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season + ' ' +'season': ''}}</td>
+                    <th>{{ $t("metadata.tags") }}</th>
+                    <td> {{storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("metadata.lulc_theme") + ' '+ storeUserSelections.selected_season : 
+                     storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${ $t("metadata.prec_theme")}, ${storeUserSelections.selected_season} `:
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("metadata.veg_cover_theme") + ' '+ storeUserSelections.selected_season + ' ' :
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? $t("metadata.wetland_inventory_theme") + ' '+ storeUserSelections.selected_season + ' ':
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? $t("metadata.status_theme") + ' '+ storeUserSelections.selected_season + ' ' : ''}}</td>
                     
                   </tr>
                   <tr>
-                    <th>Encoding</th>
+                    <th>{{$t("metadata.encoding")}}</th>
       
-                    <td>{{`UTF-8`}}</td>
+                    <td>{{$t("metadata.encoding_text")}}</td>
                   </tr>
                   <tr>
-                    <th>Format</th>
+                    <th>{{$t("metadata.encoding_format")}}</th>
       
-                    <td>{{`image/tiff`}}</td>
+                    <td>{{$t("metadata.tif")}}</td>
                   </tr>
                   <tr>
-                    <th>Data type</th>
+                    <th>{{$t("metadata.data_type")}}</th>
       
-                    <td>{{`raster`}}</td>
+                    <td>{{$t("metadata.raster")}}</td>
                   </tr>
                   <tr>
-                    <th>Geo Position</th>
+                    <th>{{$t("metadata.position")}}</th>
       
                     <td>{{geoposition}}</td>
                   </tr>
                   <tr>
-                    <th>Theme</th>
+                    <th>{{$t("metadata.theme")}}</th>
       
                     <td>{{
-                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.status_theme:
-                   storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${storeUserSelections.prec_theme}_${storeUserSelections.selected_season} season`:
-                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme : 
-                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme:
-                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme:
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? $t("metadata.status_theme"):
+                   storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${$t("metadata.prec_theme")}_${$t("metadata.season")} season`:
+                   storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("metadata.lulc_theme") : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("metadata.veg_cover_theme") :
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? $t("metadata.wetland_inventory_theme"):
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : ''}}</td>
                   </tr>
                   
                   <tr>
-                    <th>Keyword</th>
+                    <th>{{ $t("metadata.keyword") }}</th>
       
-                    <td>{{storeUserSelections.selected_sub_indicator === 'Land Cover' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season  + ' ' +'season' : 
-                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? storeUserSelections.veg_cover_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
-                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? storeUserSelections.wetland_inventory_theme + ' '+ storeUserSelections.selected_season + ' ' +'season':
-                   storeUserSelections.selected_parameter === 'Wetland Status' ? storeUserSelections.lulc_theme + ' '+ storeUserSelections.selected_season + ' ' +'season': ''}}</td>
+                    <td>{{storeUserSelections.selected_sub_indicator === 'Land Cover' ?  $t("metadata.lulc_theme") + ' ' : 
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("metadata.veg_cover_theme") + ' '+ storeUserSelections.selected_season + ' ' +'season':
+                    storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? $t("metadata.veg_cover_theme") :
+                   storeUserSelections.selected_parameter === 'Wetland Status' ? $t("metadata.status_theme") + ' '+ storeUserSelections.selected_season + ' ' +'season': ''}}</td>
                   </tr>
                 </table>
           </div>

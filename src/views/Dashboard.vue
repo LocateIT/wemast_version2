@@ -127,6 +127,7 @@
               <br>
               {{ storeUserSelections.selected_parameter === 'Wetland Status' ? $t("summaries.wetland_status") : 
               storeUserSelections.selected_parameter === 'Wetland Extent' ? $t("summaries.wetland_extent"): 
+              storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? $t("summaries.smi_index"):
                storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? $t("summaries.burnt_firms"): 
                storeUserSelections.selected_sub_indicator === 'Undulation' ? $t("summaries.undulation"):
               storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? $t("summaries.prec_index"): 
@@ -134,6 +135,7 @@
               storeUserSelections.selected_parameter === 'Sus Sediments' ? $t("summaries.susp_sediments"): 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("summaries.landcover") : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("summaries.vegcover"):
+                    
            
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : '' }}
             </p>

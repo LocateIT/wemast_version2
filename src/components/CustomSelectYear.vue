@@ -28,7 +28,7 @@
  
 
 
-          let placeholder = ref('2019')
+          let placeholder = ref('2017')
         //   let list = ['2019', '2020', '2021', '2022']
         //   console.log(list, 'regions list')
           let visible = ref(false)

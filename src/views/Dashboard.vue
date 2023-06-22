@@ -17,7 +17,7 @@
       <div class="advanced_filter" @click="show_advanced_filter" >
         <img class="filter_icon" src=" /mapIcons/filter.svg" alt="">
             <img class="filter_open" src=" /mapIcons/right.svg" alt="">
-        <p>{{ $t("home.advanced") }}<br>{{ $t("home.filter") }}</p> </div>
+        <p style="display:flex; flex-direction: column;">{{ $t("home.advanced") }}<br>{{ $t("home.filter") }}</p> </div>
       <div class="compare"  @click="show_compare"> 
   
         <img class="compare_icon" src=" /mapIcons/compare.svg" alt="">
@@ -299,7 +299,7 @@
                   </tr>
 
                   <tr>
-                    <th>Extent
+                    <th>{{ $t("metadata.extent") }}
                       
                     </th>
                     
@@ -431,20 +431,20 @@
              
                 
                 <RouterLink to="/">
-                  <img class="home" src=" /uiIcons/home-landing.svg" alt="" title="home"  />
+                  <img class="home" src=" /uiIcons/home-landing.svg" alt="" title="Home"  />
                 </RouterLink>
            
-              <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="" title="dashboard">
+              <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="" title="Dashboard">
     
               <!-- <a href="http://169.1.31.169/bkeadmin/#/search" target="_blank" rel="noopener noreferrer"> -->
                 <RouterLink to="/signup">
-                <img class="person" src=" /uiIcons/person.svg" alt="" title="profile">
+                <img class="person" src=" /uiIcons/person.svg" alt="" title="Profile">
               </RouterLink>
               <!-- </a> -->
           
 
               <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
-                    <img class="search" src=" /uiIcons/search.svg" alt="" title="documentation">
+                    <img class="search" src=" /uiIcons/search.svg" alt="" title="Documentation">
               </a>
 
               <!-- <RouterLink to="/datacollection"> -->

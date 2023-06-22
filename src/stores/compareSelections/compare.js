@@ -56,7 +56,7 @@ export const useCompareStore = defineStore({
 
     actions: {
       fetchIndicatorList(){
-        this.indicator_list = ['Exposure', 'Sensitivity','Resiliance']
+        this.indicator_list = ['Basin Vulnerability Index','Exposure', 'Sensitivity','Resiliance']
         return this.indicator_list.sort()
       },
       fetchSubIndicatorList(){
@@ -72,6 +72,9 @@ export const useCompareStore = defineStore({
         }
       },
       fetchYearList(){
+        if(this.selected_indicator === 'Basin Vulnerability Index' ) {
+          this.year_list = ["2000", "2005", "2010", "2015", "2022"]
+        }
 
         if(this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments'){
           this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
@@ -129,7 +132,7 @@ export const useCompareStore = defineStore({
         if(this.selected_satellite === 'SENTINEL'){
           this.season_list = ['DRY']
         }else{
-          this.season_list = ['Wet', 'DRY']
+          this.season_list = ['WET', 'DRY']
         }
       },
       fetchParameterList(){

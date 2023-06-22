@@ -566,6 +566,7 @@ import * as wkt from 'wkt'
 
   let compare_year = ref(null)
   let compare_satellite = ref(null)
+  let compare_season = ref()
   let styles = ref(null)
   let band_1 = ref(null)
   let lulc_legend = ref(false)
@@ -586,6 +587,7 @@ import * as wkt from 'wkt'
   let status_compare_legend = ref(null)
   let flood_compare_legend = ref(null)
   let smi_compare_legend = ref(null)
+  let bvi_compare_legend = ref(null)
   let modis_compare_legend = ref(null)
   let firms_compare_legend = ref(null)
 
@@ -4871,6 +4873,48 @@ smi_compare_legend.value.addTo(map);
 
 
 }
+const compareBVIlegendContent = () => {
+
+if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+if(bvi_compare_legend.value)map.removeControl(bvi_compare_legend.value)
+if(modis_legend.value)map.removeControl(modis_legend.value)
+if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+
+
+if(wmsCompareLayer.value) {
+var legend = L.control({ position: "bottomright" });
+bvi_compare_legend.value = legend
+//       var colors = colors_array
+//       var labels = label_array
+
+bvi_compare_legend.value.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    
+    div.innerHTML += (`<p>${basin.value} BVI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+    
+   
+
+      let draggable = new L.Draggable(div); //the legend can be dragged around the div
+draggable.enable();
+
+return div;
+};
+
+bvi_compare_legend.value.addTo(map);
+}
+
+
+
+}
+
 
 
   
@@ -4956,7 +5000,7 @@ smi_compare_legend.value.addTo(map);
   })
   const getCompareSeason = () => {
     var selectedSeason = compareUserSelections.getSelectedSeason
-    season.value = selectedSeason
+    compare_season.value = selectedSeason
     console.log(season.value, 'selected season app')
   
   }
@@ -5044,7 +5088,47 @@ changeOpacity()
 
 }
  }
+ const addCompareBVILayer = () => {
+  if(indicator.value === 'Basin Vulnerability Index') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
 
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/BVI_${season.value}/wms?`, {
+     pane: 'pane800',
+     layers: `BVI_${compare_season.value}:${compare_year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsCompareLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsCompareLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+swipe_control.value = L.control.sideBySide(wmsLayer.value, wmsCompareLayer.value).addTo(map)
+
+// addLulcLegend()
+// lulclegendContent()
+// compareLulcLegend()
+compareBVIlegendContent()
+
+changeOpacity()
+
+}
+ }
 
 
   
@@ -5361,6 +5445,7 @@ changeOpacity()
     addCompareFirmsLayer()
     addCompareSMILayer()
     addCompareSusSediments()
+    addCompareBVILayer()
     changeOpacity()
     
 

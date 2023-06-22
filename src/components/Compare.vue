@@ -41,9 +41,14 @@
                 <CustomSelectIndicatorCompare />
         </div>
 
-        <p class="select_sub_indicator">Select Sub-Indicator</p>
-        <div class="sub_indicator_selection">
+        <p v-if="storeUserSelections.selected_indicator !='Basin Vulnerability Index'" class="select_sub_indicator">Select Sub-Indicator</p>
+        <div v-if="storeUserSelections.selected_indicator !='Basin Vulnerability Index'" class="sub_indicator_selection">
                 <CustomSelectSubIndicatorCompare />
+        </div>
+
+        <p v-if="storeUserSelections.selected_indicator ==='Basin Vulnerability Index'" class="select_sub_indicator">Select Season</p>
+        <div v-if="storeUserSelections.selected_indicator ==='Basin Vulnerability Index'" class="sub_indicator_selection">
+                <CustomSeasonCompare />
         </div>
     </div>
 
@@ -78,6 +83,7 @@
     import CustomSelectSubIndicatorCompare from '../components/CustomSelectSubIndicatorCompare.vue'
     // import CompareSatelliteSelect from './CompareSatelliteSelect.vue';
     import CompareSatelliteSelect from './CompareSatelliteSelect.vue';
+    import CustomSeasonCompare from './CustomSeasonCompare.vue'
     import { ref } from 'vue'
     import {useCounterStore } from '../stores/counter';
   const storeUserSelections = useCounterStore()

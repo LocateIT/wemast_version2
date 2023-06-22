@@ -980,6 +980,7 @@ let barchart_options= {
   }
   const close_compare = () =>{
     compare.value = false
+    if(swipe_control.value)map.removeControl(swipe_control.value)
   }
   
   //sidebar functionality

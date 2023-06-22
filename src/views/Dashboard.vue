@@ -981,6 +981,16 @@ let barchart_options= {
   const close_compare = () =>{
     compare.value = false
     if(swipe_control.value)map.removeControl(swipe_control.value)
+    if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+        if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+        if(modis_legend.value)map.removeControl(modis_legend.value)
+        if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+        if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+        if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+        if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+        if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+        if(bvi_compare_legend.value)map.removeControl(bvi_compare_legend.value)
   }
   
   //sidebar functionality
@@ -1184,10 +1194,10 @@ let barchart_options= {
       const draw_polygon = () => {
         if (!show_draw_control.value) {
           const draw_ctrl = document.getElementsByClassName("leaflet-draw");
-          draw_ctrl[0].style.visibility = "hidden";
+          draw_ctrl[0].style.visibility = "visible";
         } else {
           const draw_ctrl = document.getElementsByClassName("leaflet-draw");
-          draw_ctrl[0].style.visibility = "visible";
+          draw_ctrl[0].style.visibility = "hidden";
         }
         show_draw_control.value = !show_draw_control.value;
       }
@@ -1228,8 +1238,10 @@ let barchart_options= {
   
         map.on(L.Draw.Event.CREATED, (e) => {
 
-          if(custom_geojson.value)
-          editableLayers.value.removeLayer(custom_geojson.value)
+          if(custom_geojson.value !=null) {
+            editableLayers.value.removeLayer(custom_geojson.value)
+          }
+          
           
           const layer = e.layer;
           custom_geojson.value = layer.bringToFront()
@@ -1714,8 +1726,8 @@ default_stats.value =  storeUserSelections.getDefaultStats()
   
   document
         .getElementById("wemast_base_layers")
-        .addEventListener("mouseover", (e) => {
-          console.log("mouseover ");
+        .addEventListener("click", (e) => {
+          console.log("click ");
           show_base_layers.value = true;
           wemast_base_layers();
         })
@@ -3832,6 +3844,8 @@ if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
 if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
 if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
 if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+if(bvi_compare_legend.value)map.removeControl(bvi_compare_legend.value)
+
 
 if(wmsLayer.value){
 var legend = L.control({ position: "bottomleft" });
@@ -3899,6 +3913,7 @@ bvi_legend.value.addTo(map);
         if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
         if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
         if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+        if(bvi_compare_legend.value)map.removeControl(bvi_compare_legend.value)
 
   
         if(wmsLayer.value) {
@@ -3967,6 +3982,7 @@ bvi_legend.value.addTo(map);
         if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
         if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
         if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+        if(bvi_compare_legend.value)map.removeControl(bvi_compare_legend.value)
         
 
   
@@ -5096,7 +5112,7 @@ changeOpacity()
   map.createPane("pane800").style.zIndex = 200;
   
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/BVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/BVI_${compare_season.value}/wms?`, {
      pane: 'pane800',
      layers: `BVI_${compare_season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,

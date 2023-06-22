@@ -41,13 +41,13 @@
                 <CustomSelectIndicatorCompare />
         </div>
 
-        <p v-if="storeUserSelections.selected_indicator !='Basin Vulnerability Index'" class="select_sub_indicator">Select Sub-Indicator</p>
-        <div v-if="storeUserSelections.selected_indicator !='Basin Vulnerability Index'" class="sub_indicator_selection">
+        <p v-if="compareUserSelections.selected_indicator !='Basin Vulnerability Index'" class="select_sub_indicator">Select Sub-Indicator</p>
+        <div v-if="compareUserSelections.selected_indicator !='Basin Vulnerability Index'" class="sub_indicator_selection">
                 <CustomSelectSubIndicatorCompare />
         </div>
 
-        <p v-if="storeUserSelections.selected_indicator ==='Basin Vulnerability Index'" class="select_sub_indicator">Select Season</p>
-        <div v-if="storeUserSelections.selected_indicator ==='Basin Vulnerability Index'" class="sub_indicator_selection">
+        <p v-if="compareUserSelections.selected_indicator ==='Basin Vulnerability Index'" class="select_sub_indicator">Select Season</p>
+        <div v-if="compareUserSelections.selected_indicator ==='Basin Vulnerability Index'" class="sub_indicator_selection">
                 <CustomSeasonCompare />
         </div>
     </div>
@@ -86,7 +86,9 @@
     import CustomSeasonCompare from './CustomSeasonCompare.vue'
     import { ref } from 'vue'
     import {useCounterStore } from '../stores/counter';
+    import { useCompareStore } from '../stores/compareSelections/compare';
   const storeUserSelections = useCounterStore()
+  const compareUserSelections = useCompareStore()
 
     let radio_selection = ref("parameters") 
 

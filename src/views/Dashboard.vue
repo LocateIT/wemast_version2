@@ -1434,32 +1434,41 @@ const vegcover_style = () => {
 const status_style = () => {
   basin.value === 'Cuvelai' ? styles.value = 'cuvelai_status' :  basin.value === 'Zambezi' ?  styles.value ='zambezi_status':  basin.value === 'Limpopo' ? styles.value = 'limpopo_status': 'okavango_status'
 }
+const bvi_style = () => {
+  basin.value === 'Cuvelai' ? styles.value = 'cuvelai_bvi' :  basin.value === 'Zambezi' ? styles.value = 'zambezi_bvi':  basin.value === 'Limpopo' ? styles.value = 'limpopo_bvi': 'okavango_bvi'
+}
 
 const download_tiff = () => {
-  lulc_style()
-  prec_style()
-  wetland_extent_style()
-  vegcover_style()
-  status_style()
+  
+ 
+
+ 
   var url = ""
   if(sub_indicator.value === 'Land Cover' ) {
+    lulc_style()
     url = `http://66.42.65.87:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ){
+    prec_style()
     url = `http://66.42.65.87:8080/geoserver/SPI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ){
+    prec_style()
     url = `http://66.42.65.87:8080/geoserver/SPI_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent'){
+    wetland_extent_style()
     url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
 
   }
   if(sub_indicator.value === 'Vegetation Cover' ){
+    vegcover_style()
     url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
 
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
+     
+  status_style()
     url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Burnt Area FIRMS') {
@@ -1470,6 +1479,18 @@ const download_tiff = () => {
   }
   if(sub_indicator.value === 'Undulation') {
     url = `http://66.42.65.87:8080/geoserver/FLOOD/wms?service=WMS&version=1.1.0&request=GetMap&layers=FLOOD%3AFLOOD&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_flood&format=image%2Fgeotiff`
+  }
+  if(indicator.value === 'Basin Vulnerability Index') {
+    bvi_style()
+    url = `http://66.42.65.87:8080/geoserver/BVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=BVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+  }
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity'){
+    url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+
+  }
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments'){
+    url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+
   }
 
   var a = document.createElement("a");

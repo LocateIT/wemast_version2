@@ -577,6 +577,7 @@ import * as wkt from 'wkt'
   let smi_legend = ref(null)
   let modis_legend = ref(null)
   let firms_legend = ref(null)
+  let bvi_legend = ref(null)
 
   let lulc_compare_legend = ref(false)
   let prec_compare_legend = ref(false)
@@ -1678,6 +1679,7 @@ wmsLayer.value.on('load', function (event) {
 
 
 // addLulcLegend()
+
 lulclegendContent()
 
 
@@ -2120,6 +2122,7 @@ wmsLayer.value.addTo(map);
 
 // addLulcLegend()
 // lulclegendContent()
+BVIlegendContent()
 
 changeOpacity()
 
@@ -3801,6 +3804,59 @@ const ajaxCall = () => {
     loading.value = storeUserSelections.getLoadingState
     
   })
+
+  const BVIlegendContent = () => {
+
+if(firms_legend.value)map.removeControl(firms_legend.value)
+if(smi_legend.value)map.removeControl(smi_legend.value)
+if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+if(modis_legend.value)map.removeControl(modis_legend.value)
+if(flood_legend.value)map.removeControl(flood_legend.value)
+if(status_legend.value)map.removeControl(status_legend.value)
+if(ndvi_legend.value)map.removeControl(ndvi_legend.value)
+if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
+if(prec_legend.value)map.removeControl(prec_legend.value)
+if(lulc_legend.value)map.removeControl(lulc_legend.value)
+if(bvi_legend.value)map.removeControl(bvi_legend.value)
+
+
+if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
+if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
+if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+if(modis_legend.value)map.removeControl(modis_legend.value)
+if(flood_compare_legend.value)map.removeControl(flood_compare_legend.value)
+if(status_compare_legend.value)map.removeControl(status_compare_legend.value)
+if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
+if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
+if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+
+if(wmsLayer.value){
+var legend = L.control({ position: "bottomleft" });
+bvi_legend.value = legend
+//       var colors = colors_array
+//       var labels = label_array
+
+bvi_legend.value.onAdd = function(map) {
+    var div = L.DomUtil.create("div", "legend");
+    
+    div.innerHTML += (`<p>${basin.value} BVI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+
+    
+   
+
+      let draggable = new L.Draggable(div); //the legend can be dragged around the div
+draggable.enable();
+
+return div;
+};
+
+bvi_legend.value.addTo(map);
+}
+
+
+
+
+}
   
   
   const lulclegendContent = () => {
@@ -3829,6 +3885,7 @@ const ajaxCall = () => {
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
         if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
@@ -3907,6 +3964,7 @@ const ajaxCall = () => {
         if(ndvi_compare_legend.value)map.removeControl(ndvi_compare_legend.value)
         if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
         if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
+        
 
   
        
@@ -3955,6 +4013,7 @@ if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
 if(prec_legend.value)map.removeControl(prec_legend.value)
 if(lulc_legend.value)map.removeControl(lulc_legend.value)
 if(smi_compare_legend.value)map.removeControl(smi_compare_legend.value)
+if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
         if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
@@ -4059,6 +4118,7 @@ const comparePrecLegend = () => {
         if(ndwi_compare_legend.value)map.removeControl(ndwi_compare_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
@@ -4202,6 +4262,7 @@ const comparePrecLegend = () => {
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
@@ -4337,6 +4398,7 @@ const comparePrecLegend = () => {
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
@@ -4475,6 +4537,7 @@ const comparePrecLegend = () => {
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
         if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
@@ -4603,6 +4666,7 @@ const comparePrecLegend = () => {
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
@@ -4726,6 +4790,7 @@ const comparePrecLegend = () => {
         if(ndwi_legend.value)map.removeControl(ndwi_legend.value)
         if(prec_legend.value)map.removeControl(prec_legend.value)
         if(lulc_legend.value)map.removeControl(lulc_legend.value)
+        if(bvi_legend.value)map.removeControl(bvi_legend.value)
 
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)

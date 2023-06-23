@@ -443,9 +443,9 @@
               <!-- </a> -->
           
 
-              <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer">
-                    <img class="search" src=" /uiIcons/search.svg" alt="" title="Documentation">
-              </a>
+              <!-- <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer"> -->
+                    <img class="search" src=" /uiIcons/book.svg" alt="" title="Documentation" @click="show_docs_select">
+              <!-- </a> -->
 
               <!-- <RouterLink to="/datacollection"> -->
                   <img class="home" @click="show_mobile_panel" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection" style="margin-left: -5px;" />
@@ -455,6 +455,14 @@
           
           </div>
           <RouterView />
+
+          <div class="doc_select" v-if="documentation">
+            <CustomDocumentation
+            :options="['Mapographics', 'Documentation']"
+      :default="'Manuals'"
+      class="select"
+      @input="displayToKey($event)"/>
+          </div>
           
           
           <div  class="spinner"  v-if="loading">
@@ -524,11 +532,13 @@ import * as wkt from 'wkt'
   import LulcLine from '../components/Charts/LulcLine.vue'
   import { downloadCSV } from '../Downloads/CSV'
   import PrecBar from '../components/Charts/PrecBar.vue';
+ import CustomDocumentation from '../components/CustomDocumentation.vue'
   
 
 
   
   //refs go here
+  let documentation = ref(false)
   let advanced_filter = ref(false)
   let compare = ref(false)
   let map;
@@ -992,7 +1002,19 @@ let barchart_options= {
         if(prec_compare_legend.value)map.removeControl(prec_compare_legend.value)
         if(bvi_compare_legend.value)map.removeControl(bvi_compare_legend.value)
   }
+
+  const show_docs_select = () => {
+    documentation.value = true
+  }
   
+  const displayToKey = ($event) => {
+    // var selection = $event.target.value
+    console.log($event, 'documentation selection')
+    if($event === 'Documentation'){
+      window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki");
+    }
+
+  }
   //sidebar functionality
   const toggle_nav = (e)  => {
         console.log(" toggle_nav ", e.target.id);

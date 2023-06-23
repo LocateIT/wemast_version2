@@ -41,6 +41,7 @@
         'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
+       
         'bvi_label':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index')
         
         }" 
@@ -70,23 +71,33 @@
 
 
         <p class="select_parameter" 
+        :class="{'satellite_none':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index')}"
         v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' ||
         storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">{{ $t("home.wemast_select_parameter") }}</p>
-        <div id="parameter_selection" v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">
+        <div id="parameter_selection"
+        :class="{'satellite_none':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index')}"
+         v-if="storeUserSelections.selected_sub_indicator === 'Water Quality' || storeUserSelections.selected_sub_indicator === 'Wetland Inventory'">
           <CustomSelectParameter />
         </div>
 
         <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
+          'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
          'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
-         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
-         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Precipitation Index')}"
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' ),
+       
+         'satellite_none':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index' || storeUserSelections.selected_sub_indicator ==='Undulation'),
+
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS')}"
          v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">{{ $t("home.wemast_select_satellite") }}</p>
         <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Precipitation Index')}" 
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' ),
+       
+        'satellite_none':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index' ||storeUserSelections.selected_sub_indicator ==='Undulation'),
+        'satellite_none':(storeUserSelections.selected_indicator ==='Undulation'),
+
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Precipitation Index' ||storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' )}" 
         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">
             <CustomSelectSatellite />
         </div> 
@@ -502,7 +513,7 @@ const clickedMe = () => {
 
 }
 .satellite_none{
-  display: none;
+  display: none !important;
 }
 
 

@@ -403,6 +403,17 @@ table {
   border: #777;
 
 } */
+
+.doc_select{
+  position: absolute;
+  top: 49vh;
+  left:4vw;
+  /* background-color: #fff; */
+  height: 340px;
+  width: 200px;
+  z-index: 2000;
+  
+}
 #map_icons{
   height: 20px;
   width:20px;

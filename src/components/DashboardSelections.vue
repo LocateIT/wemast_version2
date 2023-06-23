@@ -40,6 +40,7 @@
         || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ), 
         'season_status':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover'),
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),
         'bvi_label':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index')
         
         }" 
@@ -56,7 +57,8 @@
          || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'),
         'season_status_selection':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
         'bvi_select':(storeUserSelections.selected_indicator ==='Basin Vulnerability Index'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover')}" 
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover'),
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),}" 
           v-if="storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
           // || storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'
           || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'
@@ -76,11 +78,13 @@
 
         <p :class="{'select_year':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'),
          'select_year2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index')}"
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
+         'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),}"
          v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">{{ $t("home.wemast_select_satellite") }}</p>
         <div :class="{'year_selection':(storeUserSelections.selected_sub_indicator === 'Vegetation Cover'), 
         'year_selection2':(storeUserSelections.selected_sub_indicator === 'Wetland Inventory' && storeUserSelections.selected_parameter === 'Wetland Status'),
-        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index')}" 
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Land Cover' || storeUserSelections.selected_sub_indicator === 'Precipitation Index'),
+        'satellite_none':(storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'),}" 
         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover' || storeUserSelections.selected_parameter === 'Wetland Status' ">
             <CustomSelectSatellite />
         </div> 

@@ -97,7 +97,8 @@
         "undulation":"Flood mapping is computed through the analysis of the Topographical Wetness Index (TWI). The Index categorises the areas that are susceptible to flooding (severe) to the areas that are less susceptible to flooding (less sensitive). Since the data used i.e. SRTM (DEM) does not change frequently",
         "turbidity": "NDTI is a satellite-derived product, achieved after indexing of the multi-spectral bands that assesses the turbidity (water clarity change overtime due to dissolved substances and suspended sediments).The high turbidity levels indicate the high presence of dissolved matter in water.",
         "susp_sediments": "NSSDI is a satellite-derived product. The results of SMI may be used to show areas with high moisture content that cansupport agricultural practices, while the very low values shows the areas withsevere drought conditions.",
-        "smi_index":"SMI is defined as the proportion of the difference between the current soil moisture, the permanent wilting point and theresidual soil moisture.The results of SMI may be used to show areas with high moisture content that cansupport agricultural practices, while the very low values shows the areas withsevere drought conditions."
+        "smi_index":"SMI is defined as the proportion of the difference between the current soil moisture, the permanent wilting point and theresidual soil moisture.The results of SMI may be used to show areas with high moisture content that cansupport agricultural practices, while the very low values shows the areas withsevere drought conditions.",
+        "bvi_index":"The Basin Vulnerability Index (BVI) is a crucial tool for assessing the vulnerability of hydrological basins to environmental changes. By considering multiple variables, including the NDVI, SPI, SMI, and Soil Organic Matter (SOM), the BVI provides insights into the susceptibility of wetland areas to potential risks and impacts."
         
 
 

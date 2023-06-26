@@ -135,6 +135,7 @@
               storeUserSelections.selected_parameter === 'Sus Sediments' ? $t("summaries.susp_sediments"): 
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("summaries.landcover") : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("summaries.vegcover"):
+                    storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? $t("summaries.bvi_index"):
                     
            
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : '' }}
@@ -1462,8 +1463,6 @@ const bvi_style = () => {
 
 const download_tiff = () => {
   
- 
-
  
   var url = ""
   if(sub_indicator.value === 'Land Cover' ) {

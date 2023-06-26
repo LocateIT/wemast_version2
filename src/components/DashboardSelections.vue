@@ -211,7 +211,7 @@ const clickedMe = () => {
 #cause_selection{ 
   position: absolute;
   top: 4vh;
-  left: 10vw;
+  left: 10.5vw;
   height: 35px;
   width: 140px;
   border-radius: 30px;

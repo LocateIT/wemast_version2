@@ -89,7 +89,8 @@
         "undulation": "A cartografia das inundações é calculada através da análise do Índice de Humidade Topográfica (TWI). O índice classifica as zonas susceptíveis de inundação (graves) e as zonas menos susceptíveis de inundação (menos sensíveis). Uma vez que os dados utilizados, ou seja, SRTM (DEM), não mudam frequentemente",
         "turbidity": "O NDTI é um produto derivado de satélite, obtido após a indexação das bandas multiespectrais que avaliam a turbidez (alteração da clareza da água ao longo do tempo devido a substâncias dissolvidas e sedimentos em suspensão).",
         "susp_sediments": "A NSSDI é um produto derivado de satélite. Os resultados do SMI podem ser usados para mostrar áreas com alto teor de humidade que podem suportar práticas agrícolas, enquanto os valores muito baixos mostram as áreas com condições de seca severa.",
-        "smi_index":"O SMI é definido como a proporção da diferença entre a humidade atual do solo, o ponto de murcha permanente e a humidade residual do solo. Os resultados do SMI podem ser usados para mostrar áreas com alto teor de humidade que podem apoiar as práticas agrícolas, enquanto os valores muito baixos mostram as áreas com condições de seca severa"
+        "smi_index":"O SMI é definido como a proporção da diferença entre a humidade atual do solo, o ponto de murcha permanente e a humidade residual do solo. Os resultados do SMI podem ser usados para mostrar áreas com alto teor de humidade que podem apoiar as práticas agrícolas, enquanto os valores muito baixos mostram as áreas com condições de seca severa",
+        "bvi_index":"O Índice de Vulnerabilidade da Bacia (BVI) é uma ferramenta crucial para avaliar a vulnerabilidade das bacias hidrológicas às alterações ambientais. Ao considerar múltiplas variáveis, incluindo o NDVI, o SPI, o SMI e a Matéria Orgânica do Solo (SOM), o IVB fornece informações sobre a suscetibilidade das zonas húmidas a potenciais riscos e impactos."
 
 
     },

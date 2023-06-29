@@ -1,11 +1,31 @@
 import { defineStore } from 'pinia'
+// import { usePinia } from 'pinia';
 import axios from 'axios'
+import { defineComponent } from 'vue'
+
+import { useI18n } from 'vue-i18n'
+
+import i18n from '../i18n'
 
 
 
+// export default defineComponent({
+//   setup() {
+//     const i18n = useI18n();
+//     return { i18n }
+//   }
+// })
 
+// export const { t } = useI18n()
 export const useCounterStore = defineStore({
   id: 'counter',
+  // setup(){
+  //   const { t } = useI18n();
+  //   return {
+  //    $t: { t }
+  //   }
+  // },
+  
   state: () => ({
     counter: 0,
     placeholder: 'select region',
@@ -240,7 +260,13 @@ export const useCounterStore = defineStore({
 
     },
     fetchIndicatorList(){
-      this.indicator_list = ['Basin Vulnerability Index','Exposure', 'Sensitivity','Resiliance']
+     
+      // const pinia = defineStore()
+      // pinia.$app.use(i18n)
+     
+      console.log(i18n, 'usei18n')
+      this.indicator_list = [i18n.global.t('indicators.bvi_index'),i18n.global.t('indicators.exposure'), 'Sensitivity','Resiliance']
+      // this.indicator_list = ['Basin Vulnerability Index','Exposure', 'Sensitivity','Resiliance']
       return this.indicator_list.sort()
     },
     fetchSubIndicatorList(){

@@ -445,7 +445,7 @@
           
 
               <!-- <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer"> -->
-                    <img class="search" src=" /uiIcons/book.svg" alt="" title="Documentation" @click="show_docs_select">
+                    <img class="search" src=" /uiIcons/book.svg" alt="" title="Documentation" @click="show_docs_select" >
               <!-- </a> -->
 
               <!-- <RouterLink to="/datacollection"> -->
@@ -1005,8 +1005,10 @@ let barchart_options= {
   }
 
   const show_docs_select = () => {
-    documentation.value = true
+    documentation.value = !documentation.value
   }
+
+  
   
   const displayToKey = ($event) => {
     // var selection = $event.target.value

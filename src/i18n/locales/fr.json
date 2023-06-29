@@ -158,6 +158,37 @@
         "undulation_classes":"Zones inondées, humidité, humidité modérée, sécheresse modérée, zones sèches",
         "sus_turb_classes":"Pas de données, Pas d'eau, Eau saisonnière, Eau permanente"
         
+    },
+    "indicators":{
+        "bvi_index":"Indice de vulnérabilité du bassin",
+        "exposure":"Exposition",
+        "sensitivity":"Sensibilité",
+        "resiliance":"Résilience"
+
+    },
+    "sub_indicators":{
+        "landcover":"Couverture végétale",
+        "vegcover":"Couverture végétale",
+        "wetland_inventory":"Inventaire des zones humides",
+        "water_quality":"Qualité de l'eau",
+        "soil_moisture_index":"Indice d'humidité du sol",
+        "burnt_area":"Zone brûlée FIRMS",
+        "prec_index":"Indice de précipitations",
+        "undulation":"Ondulation"
+    },
+    "parameters":{
+        "extent":"Étendue des zones humides",
+        "status":"Statut des zones humides",
+        "turbidity":"Turbidité",
+        "suspended":"Sédiments Sus"
+    },
+    "satellites":{
+        "landsat":"LANDSAT",
+        "sentinel":"SENTINEL"
+    },
+    "seasons":{
+        "wet":"HUMIDE",
+        "dry": "SEC"
     }
     
     

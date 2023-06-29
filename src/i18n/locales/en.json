@@ -164,6 +164,37 @@
         "prec_smi_classes": "Dry,Wet",
         "undulation_classes": "Flooded Areas, Wetness, Moderate Wetness, Moderate Dryness, Dry Areas",
         "sus_turb_classes": "No Data, Not Water, Seasonal Water, Permanent Water"
+    },
+    "indicators":{
+        "bvi_index":"Basin Vulnerability Index",
+        "exposure":"Exposure",
+        "sensitivity":"Sensitivity",
+        "resiliance":"Resiliance"
+
+    },
+    "sub_indicators":{
+        "landcover":"Land Cover",
+        "vegcover":"Vegetation Cover",
+        "wetland_inventory":"Wetland Inventory",
+        "water_quality":"Water Quality",
+        "soil_moisture_index":"Soil Moisure Index",
+        "burnt_area":"Burnt Area FIRMS",
+        "prec_index":"Precipitation Index",
+        "undulation":"Undulation"
+    },
+    "parameters":{
+        "extent":"Wetland Extent",
+        "status":"Wetland Status",
+        "turbidity":"Turbidity",
+        "suspended":"Sus Sediments"
+    },
+    "satellites":{
+        "landsat":"LANDSAT",
+        "sentinel":"SENTINEL"
+    },
+    "seasons":{
+        "wet":"WET",
+        "dry": "DRY"
     }
     
 }

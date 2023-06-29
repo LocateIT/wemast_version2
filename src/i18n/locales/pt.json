@@ -157,6 +157,37 @@
         "undulation_classes":"Áreas Inundadas, Húmidas, Húmidas Moderadas, Secas Moderadas, Áreas Secas",
         "sus_turb_classes":"Sem Dados, Sem Água, Água Sazonal, Água Permanente"
         
+    },
+    "indicators":{
+        "bvi_index":"Índice de Vulnerabilidade da Bacia",
+        "exposure":"Exposição",
+        "sensitivity":"Sensibilidade",
+        "resiliance":"Resiliência"
+
+    },
+    "sub_indicators":{
+        "landcover":"Cobertura do solo",
+        "vegcover":"Cobertura vegetal",
+        "wetland_inventory":"Inventário de zonas húmidas",
+        "water_quality":"Qualidade da água",
+        "soil_moisture_index":"Índice de humidade do solo",
+        "burnt_area":"Área queimada FIRMS",
+        "prec_index":"Índice de Precipitação",
+        "undulation":"Ondulação"
+    },
+    "parameters":{
+        "extent":"Extensão das zonas húmidas",
+        "status":"Estado das zonas húmidas",
+        "turbidity":"Turbidez",
+        "suspended":"Sedimentos Sus"
+    },
+    "satellites":{
+        "landsat":"LANDSAT",
+        "sentinel":"SENTINEL"
+    },
+    "seasons":{
+        "wet":"HÚMIDO",
+        "dry": "SECA"
     }
     
    

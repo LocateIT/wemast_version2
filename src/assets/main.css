@@ -1,4 +1,9 @@
-
+/* @media (-webkit-device-pixel-ratio: 1.25) {
+  * {
+    zoom: 0.99;
+    content:'10%'
+  }
+} */
 .app{
   height: 100vh;
   width: 100vw;

@@ -93,7 +93,7 @@
             </div>
             <div class="screenshot_carosel">
                   <img src="/images/geodata.png" alt="" class="hightlight-item">
-                  <img src="/images/timeseries_.JPG" alt="" class="hightlight-item">
+                  <img src="/images/timeseries2.png" alt="" class="hightlight-item">
                   <img src="/uiIcons/documents.png" alt="" class="hightlight-item">
                   <img src="/uiIcons/analytics.png" alt="" class="hightlight-item">
             </div>

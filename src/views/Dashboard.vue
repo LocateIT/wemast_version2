@@ -474,6 +474,8 @@
             <img style="cursor:pointer; position: absolute; top: 0.5vh; right:0.5vw;" @click="close_mobile_panel" src="/uiIcons/close.png"/>
 
           </div>
+
+          <!-- <button type="button" @click="change_zoom">zoom</button> -->
           
   
        
@@ -637,6 +639,7 @@ import * as wkt from 'wkt'
   let marker = ref(null)
   let cmd_= ref('')
   let printPlugin = ref(null)
+  let browserZoomLevel = ref()
 
 
   //advanced filter variables
@@ -1643,6 +1646,23 @@ const help = () => {
 
   onMounted( () => {
     setLeafletMap()
+//     console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
+//    var device_scale = window.devicePixelRatio
+//    browserZoomLevel.value = Math.round(window.devicePixelRatio * 100);
+//   //  alert(browserZoomLevel.value)
+//   //  console.log('browser zoom',browserZoomLevel)
+//    if(device_scale === 1.25){
+//     // document.body.style.zoom = "99%";
+//   //  alert(browserZoomLevel)
+//   // window.devicePixelRatio = 1
+// // browserZoomLevel.value = 80
+ 
+//  browserZoomLevel.value = Math.round(browserZoomLevel.value - 45)
+//  window.devicePixelRatio = 1
+//  alert(browserZoomLevel.value)
+
+
+//    }
 
     //load zambezi
     const fetchZambezi = async () => {
@@ -1885,7 +1905,43 @@ default_stats.value =  storeUserSelections.getDefaultStats()
 
 
   
-  
+  //change browser zoom on click
+//   const change_zoom = () => {
+//     // console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
+//    var device_scale = window.devicePixelRatio
+// //    browserZoomLevel.value = Math.round(window.devicePixelRatio * 100);
+// //   //  alert(browserZoomLevel.value)
+// // //   //  alert(browserZoomLevel.value)
+// // //   //  console.log('browser zoom',browserZoomLevel)
+// //    if(device_scale === 1.25){
+// //     document.body.style.zoom = "80%";
+// //     // document.body.style.zoom = "99%";
+// //   //  alert(browserZoomLevel.value)
+// //   // device_scale = 1
+// // // browserZoomLevel.value = 80
+ 
+// // //  browserZoomLevel.value = Math.round(browserZoomLevel.value - 45)
+// // //  window.devicePixelRatio = 1
+// // //  alert(browserZoomLevel.value)
+
+
+// //    }
+// var currFFZoom = 1;
+//     var currIEZoom = 100;
+
+//     if(device_scale === 1.25) {
+
+      
+//             var step = 10;
+//             currIEZoom -= step;
+//             $('body').css('zoom', ' ' + currIEZoom + '%');
+        
+
+//     }
+
+       
+ 
+//   }
 
 
   

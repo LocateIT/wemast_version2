@@ -1019,6 +1019,9 @@ let barchart_options= {
     if($event === 'Documentation'){
       window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki");
     }
+    if($event === 'Mapographics'){
+      window.open("https://drive.google.com/file/d/1pH1TgiyP1JpT3tl7U9ZOYDS2iLJ22Cw1/view?pli=1");
+    }
 
   }
   //sidebar functionality

@@ -191,7 +191,7 @@ export const useCounterStore = defineStore({
           data: [],
           fill: false,
           borderColor: '#1eb301',
-          backgroundColor: '#ffbb33',
+          // backgroundColor: '#ffbb33',
           borderWidth: 3
           
        

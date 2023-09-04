@@ -2507,183 +2507,169 @@ watch( setLatLon, () => {
 
  }
 
- //  const addTempTimeSeries = () => {
-//   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
+  const addPRECIPTimeSeries = () => {
+  L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
     
-//     onAdd: function (map) {
-//       // Triggered when the layer is added to a map.
-//       //   Register a click listener, then do all the upstream WMS things
-//       L.TileLayer.WMS.prototype.onAdd.call(this, map);
-//       map.on('click' , this.getFeatureInfo, this);
-//     },
+    onAdd: function (map) {
+      // Triggered when the layer is added to a map.
+      //   Register a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onAdd.call(this, map);
+      map.on('click' , this.getFeatureInfo, this);
+    },
     
-//     onRemove: function (map) {
-//       // Triggered when the layer is removed from a map.
-//       //   Unregister a click listener, then do all the upstream WMS things
-//       L.TileLayer.WMS.prototype.onRemove.call(this, map);
-//       map.off('click', this.getFeatureInfo, this);
-//     },
+    onRemove: function (map) {
+      // Triggered when the layer is removed from a map.
+      //   Unregister a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onRemove.call(this, map);
+      map.off('click', this.getFeatureInfo, this);
+    },
     
-//     getFeatureInfo: function (evt) {
-//       // Make an AJAX request to the server and hope for the best
-//       var url = this.getFeatureInfoUrl(evt.latlng),
-//           showResults = L.Util.bind(this.showGetFeatureInfo, this);
-//       $.ajax({
-//         url: url,
-//         success: function (data, status, xhr) {
-//           var err = typeof data === 'string' ? null : data;
-//           showResults(err, evt.latlng, data);
-//         },
-//         error: function (xhr, status, error) {
-//           showResults(error);  
-//         }
-//       });
-//     },
+    getFeatureInfo: function (evt) {
+      // Make an AJAX request to the server and hope for the best
+      var url = this.getFeatureInfoUrl(evt.latlng),
+          showResults = L.Util.bind(this.showGetFeatureInfo, this);
+      $.ajax({
+        url: url,
+        success: function (data, status, xhr) {
+          var err = typeof data === 'string' ? null : data;
+          showResults(err, evt.latlng, data);
+        },
+        error: function (xhr, status, error) {
+          showResults(error);  
+        }
+      });
+    },
     
-//     getFeatureInfoUrl: function (latlng) {
-//       // Construct a GetFeatureInfo request URL given a point
-//       var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
+    getFeatureInfoUrl: function (latlng) {
+      // Construct a GetFeatureInfo request URL given a point
+      var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
       
-//           size = this._map.getSize(),
+          size = this._map.getSize(),
           
-//           params = {
-//             request: 'GetFeatureInfo',
-//             service: 'WMS',
-//             srs: 'EPSG:4326',
-//             styles: this.wmsParams.styles,
-//             transparent: this.wmsParams.transparent,
-//             version: this.wmsParams.version,      
-//             format: this.wmsParams.format,
-//             bbox: this._map.getBounds().toBBoxString(),
-//             height: size.y,
-//             width: size.x,
-//             layers: this.wmsParams.layers,
-//             query_layers: this.wmsParams.layers,
-//             // X: point.x,
-//             // Y: point.y,
-//             info_format: 'application/json'
-//           };
+          params = {
+            request: 'GetFeatureInfo',
+            service: 'WMS',
+            srs: 'EPSG:4326',
+            styles: this.wmsParams.styles,
+            transparent: this.wmsParams.transparent,
+            version: this.wmsParams.version,      
+            format: this.wmsParams.format,
+            bbox: this._map.getBounds().toBBoxString(),
+            height: size.y,
+            width: size.x,
+            layers: this.wmsParams.layers,
+            query_layers: this.wmsParams.layers,
+            // X: point.x,
+            // Y: point.y,
+            info_format: 'application/json'
+          };
       
-//       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
-//       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-//       // console.log(point, 'point')
+      params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
+      params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+      // console.log(point, 'point')
     
-//       // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
-//       return this._url + L.Util.getParamString(params, this._url, true);
-//     },
+      return this._url + L.Util.getParamString(params, this._url, true);
+    },
     
-//     showGetFeatureInfo: function (err, latlng, content) {
-//       if (err) {
-//         // console.log(latlng, 'lat long')
+    showGetFeatureInfo: function (err, latlng, content) {
+      if (err) {
+        // console.log(latlng, 'lat long')
   
       
-//         ;
-//         // console.log(latlng, 'wms latlng')
-//         console.log(content.features[0].properties, "temp timeseries content")
+        ;
+        // console.log(latlng, 'wms latlng')
+        console.log(content.features[0].properties, "PRECIP timeseries content")
         
-//         // var bands = content.features[0].properties
+        var bands = content.features[0].properties
         
-//         // var band_names = Object.keys(bands)
-//         // console.log(band_names.slice(15,23), 'band names')
+        var band_names = Object.keys(bands)
+        console.log(band_names, 'PRECIP band names')
           
 
-//         // lineChartData.labels = band_names
+        lineChartData.labels = band_names
 
-//         // var band_values = Object.values(bands)
-//         // console.log(band_values.slice(15,23), 'band values')
-//         // lineChartData.datasets[0].data = band_values
+        var band_values = Object.values(bands)
+        console.log(band_values, 'PRECIP band values')
 
-//         // console.log(lineChartData, 'line chart data')
+        var renamed_band_names = band_names.map((band_item) => 
+          band_item.replace(/Band/, "pentad")
+        )
+        console.log(renamed_band_names)
+        lineChartData.datasets[0].data = band_values
 
-//         // storeUserSelections.lineChartData.labels = band_names.slice(15,22)
-//         // storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
-//         // console.log('band values', band_values )
-//         // storeUserSelections.lineChartData.datasets[0].data = band_values
-//         // console.log(storeUserSelections.lineChartData, 'store linechart data')
+        console.log(lineChartData, 'PRECIP line chart data')
+
+        storeUserSelections.lineChartData.labels = renamed_band_names
+        // .slice(15,22)
+        // storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022'] RENAME LATER
+        // console.log('band values', band_values )
+        storeUserSelections.lineChartData.datasets[0].data = band_values
+        // console.log(storeUserSelections.lineChartData, 'store linechart data')
 
 
 
-//         // storeUserSelections.latlon = [latlng.lat, latlng.lng]
-//         // console.log(storeUserSelections.latlon, 'updated store lat lon')
+        storeUserSelections.latlon = [latlng.lat, latlng.lng]
+        // console.log(storeUserSelections.latlon, 'updated store lat lon')
 
         
 
       
-//           return  
-//           // console.log(latlng, 'lat long');
+          return  
+          // console.log(latlng, 'lat long');
         
-//         } // do nothing if there's an error
+        } // do nothing if there's an error
      
         
-//       // Otherwise show the content in a popup, or something.
+      // Otherwise show the content in a popup, or something.
    
-//       // L.popup({ maxWidth: 800})
-//       //   .setLatLng(latlng)
-//       //   .setContent( content)
-//       //   .openOn(this._map);
+      // L.popup({ maxWidth: 800})
+      //   .setLatLng(latlng)
+      //   .setContent( content)
+      //   .openOn(this._map);
   
     
-//     },
+    },
     
-//   }); //end of L.extend
+  }); //end of L.extend
 
 
-// //   const getClickedLatLon = () => {
-// //   latlon.value = storeUserSelections.latlon
-// //    if(group.value !== null)group.value.clearLayers()
-// //   //  if(search_marker.value !== null)search_marker.value.clearLayers()
-// //   group.value = L.layerGroup().addTo(map);
-// //   marker.value = L.icon({
-// //                                                 iconUrl: "/mapIcons/point.svg",
-// //                                                 iconSize: [30, 30],
-// //                                                 iconAnchor: [15,15]
-// //                                               });
+//   const getClickedLatLon = () => {
+//   latlon.value = storeUserSelections.latlon
+//    if(group.value !== null)group.value.clearLayers()
+//   //  if(search_marker.value !== null)search_marker.value.clearLayers()
+//   group.value = L.layerGroup().addTo(map);
+//   marker.value = L.icon({
+//                                                 iconUrl: "/mapIcons/point.svg",
+//                                                 iconSize: [30, 30],
+//                                                 iconAnchor: [15,15]
+//                                               });
                                           
-// //             var mark =  L.marker(latlon.value , {icon: marker.value})
-// //             // .bindPopup('Hey')
-// //                 .addTo(group.value)
-// //                 return mark
-// // }
+//             var mark =  L.marker(latlon.value , {icon: marker.value})
+//             // .bindPopup('Hey')
+//                 .addTo(group.value)
+//                 return mark
+// }
   
 
   
   
-//   L.tileLayer.betterWms = function (url, options) {
-//     return new L.TileLayer.BetterWMS(url, options);  
-//   };
+  L.tileLayer.betterWms = function (url, options) {
+    return new L.TileLayer.BetterWMS(url, options);  
+  };
 
-//   const setLatLon = computed( () => {
-//   return storeUserSelections.getLatLon
-// })
-// watch( setLatLon, () => {
-//    getClickedLatLon ()
-// })
+  const setLatLon = computed( () => {
+  return storeUserSelections.getLatLon
+})
+watch( setLatLon, () => {
+   getClickedLatLon ()
+})
 
-//  }
+ }
 
 
-//  const addTemp = () => {
-//    //adding timeseries layer
-//   //  addPrecTimeSeries()
-//   // addTempTimeSeries()
-//   map.createPane("pane800").style.zIndex = 200;
- 
-//   wmsTimeseriesLayer.value =  L.tileLayer.wms('http://45.32.233.93:8085/geoserver/PRECIP/wms?', {
-//     pane: 'pane400', 
-//      layers: 'PRECIP:PRECIP',
-//      crs:L.CRS.EPSG4326,
-//     //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
-//      format: 'image/png',
-//      transparent: true,
-//      opacity:1.0
-     
-    
-//   });
-//   wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
-//  }
-  
  const addPrecIndexWet = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
   
@@ -2716,6 +2702,7 @@ watch( setLatLon, () => {
 
    //adding timeseries layer
    addPrecTimeSeries()
+  //  addTemp()
    wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `SPI_${season.value}:SPI`,
@@ -2732,19 +2719,22 @@ watch( setLatLon, () => {
 
 
 
-   
-  // wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://45.32.233.93:8085/geoserver/PRECIP/wms?', {
-  //   pane: 'pane400', 
-  //    layers: 'PRECIP:PRECIP',
-  //    crs:L.CRS.EPSG4326,
-  //   //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
-  //    format: 'image/png',
-  //    transparent: true,
-  //    opacity:1.0
+  //add precip time series
+
+  addPRECIPTimeSeries()
+
+  wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geoserver/PRECIP/wms?', {
+    pane: 'pane400', 
+     layers: 'PRECIP:PRECIP_2',
+     crs:L.CRS.EPSG4326,
+    //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+     format: 'image/png',
+     transparent: true,
+     opacity:0.5
      
     
-  // });
-  // wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  });
+  wmsTimeseriesLayer.value.addTo(map).bringToFront()
  
 
   const getDefaultLatLon = () => {

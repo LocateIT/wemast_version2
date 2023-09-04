@@ -960,6 +960,24 @@ title{
  
 
 }
+
+.ancillary_title{
+  position: relative;
+
+  top: -13vh;
+  left: 65%;
+  font-weight: 600;
+  display:flex;
+  flexdirection: row;
+  gap:0.5rem;
+  cursor:pointer;
+ 
+
+}
+
+.ancil_data{
+  margin-top:-0.5vh;
+}
 #line-chart{
   height: 250px !important;
 }

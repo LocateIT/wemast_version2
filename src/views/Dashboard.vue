@@ -237,6 +237,18 @@
              || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
              || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
               || storeUserSelections.selected_sub_indicator === 'Water Quality'"> Time Series </p>
+
+
+<div class="ancillary_title" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
+             || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
+             || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
+              || storeUserSelections.selected_sub_indicator === 'Water Quality'"> 
+             <p class="ancil_data"> Ancillary data </p>
+              
+              <CloudRain width="18" height="15"  color="#164b75" @click="addPRECIPTimeSeriesLayer" />
+              <ThermometerHalf width="18" height="15"  color="#164b75" />
+              </div>
+
             <LulcLine  class="lulc_line_chart" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
              || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
              || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
@@ -536,6 +548,8 @@ import * as wkt from 'wkt'
   import { downloadCSV } from '../Downloads/CSV'
   import PrecBar from '../components/Charts/PrecBar.vue';
  import CustomDocumentation from '../components/CustomDocumentation.vue'
+ import { CloudRain } from "@vicons/fa"
+ import { ThermometerHalf } from "@vicons/fa"
   
 
 
@@ -613,6 +627,7 @@ import * as wkt from 'wkt'
   let search_control = ref(null)
   let geoposition = ref(null)
   let wmsTimeseriesLayer = ref(null)
+  let wmsPrecTimeseriesLayer = ref(null)
 
   let customWmsLayer = ref(null)
   let year_2013 = ref(null)
@@ -1957,7 +1972,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
    if(current_geojson.value)map.removeLayer(current_geojson.value)
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
-   if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
+   if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsPrecTimeseriesLayer.value)
    if(group.value)group.value.clearLayers()
    if(lulc_legend.value)map.removeControl(lulc_legend.value)
   //  if(current_point_geojson.value)map.removeLayer(current_point_geojson.value)
@@ -2593,8 +2608,17 @@ watch( setLatLon, () => {
         var band_values = Object.values(bands)
         console.log(band_values, 'PRECIP band values')
 
+        var truncated_values = band_values.map((value_item) =>
+       {
+         parseInt(value_item).toFixed(2)
+        // console.log(typeof(value_item, 'type of value item'))
+      }
+        )
+
+        console.log(truncated_values, 'PRECIP truncated values')
+
         var renamed_band_names = band_names.map((band_item) => 
-          band_item.replace(/Band/, "pentad")
+          band_item.replace(/Band/, "Pentad")
         )
         console.log(renamed_band_names)
         lineChartData.datasets[0].data = band_values
@@ -2635,22 +2659,22 @@ watch( setLatLon, () => {
   }); //end of L.extend
 
 
-//   const getClickedLatLon = () => {
-//   latlon.value = storeUserSelections.latlon
-//    if(group.value !== null)group.value.clearLayers()
-//   //  if(search_marker.value !== null)search_marker.value.clearLayers()
-//   group.value = L.layerGroup().addTo(map);
-//   marker.value = L.icon({
-//                                                 iconUrl: "/mapIcons/point.svg",
-//                                                 iconSize: [30, 30],
-//                                                 iconAnchor: [15,15]
-//                                               });
+  const getClickedLatLon = () => {
+  latlon.value = storeUserSelections.latlon
+   if(group.value !== null)group.value.clearLayers()
+  //  if(search_marker.value !== null)search_marker.value.clearLayers()
+  group.value = L.layerGroup().addTo(map);
+  marker.value = L.icon({
+                                                iconUrl: "/mapIcons/point.svg",
+                                                iconSize: [30, 30],
+                                                iconAnchor: [15,15]
+                                              });
                                           
-//             var mark =  L.marker(latlon.value , {icon: marker.value})
-//             // .bindPopup('Hey')
-//                 .addTo(group.value)
-//                 return mark
-// }
+            var mark =  L.marker(latlon.value , {icon: marker.value})
+            // .bindPopup('Hey')
+                .addTo(group.value)
+                return mark
+}
   
 
   
@@ -2667,6 +2691,28 @@ watch( setLatLon, () => {
 })
 
  }
+
+ const addPRECIPTimeSeriesLayer = () => {
+  if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsPrecTimeseriesLayer.value)
+    //add precip time series
+    map.createPane("pane400").style.zIndex = 800;
+
+  addPRECIPTimeSeries()
+
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geoserver/PRECIP/wms?', {
+  pane: 'pane400', 
+   layers: 'PRECIP:PRECIP_2',
+   crs:L.CRS.EPSG4326,
+  //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+   format: 'image/png',
+   transparent: true,
+   opacity:0.1
+   
+  
+});
+wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  }
 
 
 
@@ -2703,7 +2749,7 @@ watch( setLatLon, () => {
    //adding timeseries layer
    addPrecTimeSeries()
   //  addTemp()
-   wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
+   wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `SPI_${season.value}:SPI`,
      crs:L.CRS.EPSG4326,
@@ -2715,26 +2761,16 @@ watch( setLatLon, () => {
      
     
   });
-  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  wmsPrecTimeseriesLayer.value.addTo(map).bringToFront()
 
 
 
-  //add precip time series
+  
 
-  addPRECIPTimeSeries()
 
-  wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geoserver/PRECIP/wms?', {
-    pane: 'pane400', 
-     layers: 'PRECIP:PRECIP_2',
-     crs:L.CRS.EPSG4326,
-    //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
-     format: 'image/png',
-     transparent: true,
-     opacity:0.5
-     
-    
-  });
-  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+
+  
  
 
   const getDefaultLatLon = () => {
@@ -2757,7 +2793,7 @@ marker.value = L.icon({
 
 getDefaultLatLon()
 
-  wmsTimeseriesLayer.value.on('load', function (event) {
+  wmsPrecTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
 });
   preclegendContent()

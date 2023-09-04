@@ -246,7 +246,7 @@
              <p class="ancil_data"> Ancillary data </p>
               
               <CloudRain width="18" height="15"  color="#164b75" @click="addPRECIPTimeSeriesLayer" />
-              <ThermometerHalf width="18" height="15"  color="#164b75" />
+              <ThermometerHalf width="18" height="15"  color="#164b75" @click="addTEMPTimeSeriesLayer" />
               </div>
 
             <LulcLine  class="lulc_line_chart" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
@@ -2692,6 +2692,177 @@ watch( setLatLon, () => {
 
  }
 
+ const addTEMPTimeSeries = () => {
+  L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
+    
+    onAdd: function (map) {
+      // Triggered when the layer is added to a map.
+      //   Register a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onAdd.call(this, map);
+      map.on('click' , this.getFeatureInfo, this);
+    },
+    
+    onRemove: function (map) {
+      // Triggered when the layer is removed from a map.
+      //   Unregister a click listener, then do all the upstream WMS things
+      L.TileLayer.WMS.prototype.onRemove.call(this, map);
+      map.off('click', this.getFeatureInfo, this);
+    },
+    
+    getFeatureInfo: function (evt) {
+      // Make an AJAX request to the server and hope for the best
+      var url = this.getFeatureInfoUrl(evt.latlng),
+          showResults = L.Util.bind(this.showGetFeatureInfo, this);
+      $.ajax({
+        url: url,
+        success: function (data, status, xhr) {
+          var err = typeof data === 'string' ? null : data;
+          showResults(err, evt.latlng, data);
+        },
+        error: function (xhr, status, error) {
+          showResults(error);  
+        }
+      });
+    },
+    
+    getFeatureInfoUrl: function (latlng) {
+      // Construct a GetFeatureInfo request URL given a point
+      var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
+      
+          size = this._map.getSize(),
+          
+          params = {
+            request: 'GetFeatureInfo',
+            service: 'WMS',
+            srs: 'EPSG:4326',
+            styles: this.wmsParams.styles,
+            transparent: this.wmsParams.transparent,
+            version: this.wmsParams.version,      
+            format: this.wmsParams.format,
+            bbox: this._map.getBounds().toBBoxString(),
+            height: size.y,
+            width: size.x,
+            layers: this.wmsParams.layers,
+            query_layers: this.wmsParams.layers,
+            // X: point.x,
+            // Y: point.y,
+            info_format: 'application/json'
+          };
+      
+      params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
+      params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
+      // console.log(point, 'point')
+    
+      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      
+      return this._url + L.Util.getParamString(params, this._url, true);
+    },
+    
+    showGetFeatureInfo: function (err, latlng, content) {
+      if (err) {
+        // console.log(latlng, 'lat long')
+  
+      
+        ;
+        // console.log(latlng, 'wms latlng')
+        console.log(content.features[0].properties, "TEMP timeseries content")
+        
+        var bands = content.features[0].properties
+        
+        var band_names = Object.keys(bands)
+        console.log(band_names, 'TEMP band names')
+          
+
+        lineChartData.labels = band_names
+
+        var band_values = Object.values(bands)
+        console.log(band_values, 'PRECIP band values')
+
+      //   var truncated_values = band_values.map((value_item) =>
+      //  {
+      //    parseInt(value_item).toFixed(2)
+      //   // console.log(typeof(value_item, 'type of value item'))
+      // }
+      //   )
+
+      //   console.log(truncated_values, 'PRECIP truncated values')
+
+      //   var renamed_band_names = band_names.map((band_item) => 
+      //     band_item.replace(/Band/, "Pentad")
+      //   )
+      //   console.log(renamed_band_names)
+        lineChartData.datasets[0].data = band_values
+
+        console.log(lineChartData, 'TEMP line chart data')
+
+        storeUserSelections.lineChartData.labels = band_names
+      //   // .slice(15,22)
+      //   // storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022'] RENAME LATER
+      //   // console.log('band values', band_values )
+        storeUserSelections.lineChartData.datasets[0].data = band_values
+      //   // console.log(storeUserSelections.lineChartData, 'store linechart data')
+
+
+
+        storeUserSelections.latlon = [latlng.lat, latlng.lng]
+        // console.log(storeUserSelections.latlon, 'updated store lat lon')
+
+        
+
+      
+          return  
+          // console.log(latlng, 'lat long');
+        
+        } // do nothing if there's an error
+     
+        
+      // Otherwise show the content in a popup, or something.
+   
+      // L.popup({ maxWidth: 800})
+      //   .setLatLng(latlng)
+      //   .setContent( content)
+      //   .openOn(this._map);
+  
+    
+    },
+    
+  }); //end of L.extend
+
+
+  const getClickedLatLon = () => {
+  latlon.value = storeUserSelections.latlon
+   if(group.value !== null)group.value.clearLayers()
+  //  if(search_marker.value !== null)search_marker.value.clearLayers()
+  group.value = L.layerGroup().addTo(map);
+  marker.value = L.icon({
+                                                iconUrl: "/mapIcons/point.svg",
+                                                iconSize: [30, 30],
+                                                iconAnchor: [15,15]
+                                              });
+                                          
+            var mark =  L.marker(latlon.value , {icon: marker.value})
+            // .bindPopup('Hey')
+                .addTo(group.value)
+                return mark
+}
+  
+
+  
+  
+  L.tileLayer.betterWms = function (url, options) {
+    return new L.TileLayer.BetterWMS(url, options);  
+  };
+
+  const setLatLon = computed( () => {
+  return storeUserSelections.getLatLon
+})
+watch( setLatLon, () => {
+   getClickedLatLon ()
+})
+
+ }
+
+
  const addPRECIPTimeSeriesLayer = () => {
   if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsPrecTimeseriesLayer.value)
     //add precip time series
@@ -2713,6 +2884,29 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geose
 wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
   }
+
+  const addTEMPTimeSeriesLayer = () => {
+  if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsPrecTimeseriesLayer.value)
+    //add TEMP time series
+    map.createPane("pane400").style.zIndex = 800;
+
+    addTEMPTimeSeries()
+
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geoserver/TEMP/wms?', {
+  pane: 'pane400', 
+   layers: 'TEMP:TEMP',
+   crs:L.CRS.EPSG4326,
+  //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+   format: 'image/png',
+   transparent: true,
+   opacity:0.1
+   
+  
+});
+wmsTimeseriesLayer.value.addTo(map).bringToFront()
+
+  }
+
 
 
 

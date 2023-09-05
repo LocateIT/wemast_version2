@@ -926,7 +926,7 @@ title{
 }
 #bar-chart{
   height:250px !important;
-  margin-top:22px
+  /* margin-top:15px */
 }
 .analysis_logos{
   width: 600px; position: relative; top: 7vh; left: -8vw;

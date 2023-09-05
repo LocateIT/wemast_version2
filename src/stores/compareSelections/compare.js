@@ -728,7 +728,72 @@ export const useCompareStore = defineStore({
           
           }
   
-         
+          if(this.selected_indicator === 'Basin Vulnerability Index'){
+            try {
+            
+              // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+           var basin =  storeUserSelections.selected_basin
+          //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+    
+    
+           var year = this.selected_year
+          //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+          var season = this.selected_season
+  
+          // console.log(season, 'season for stattttttttsssssss')
+        
+      
+              const response = await axios.get(`http://66.42.65.87:8080/geoserver/BVI_${season}_STATS/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=BVI_${season}_STATS%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=name_basin=%27${basin}%27`
+              );
+              console.log(response.data.features[0].properties,'BVI compare stats response')
+              var obj = response.data.features[0].properties
+              
+              const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('id')  && !key.includes('name_basin') 
+              && !key.includes('basin_pop') && !key.includes('shape_leng') && !key.includes('shape_area') && !key.includes('tot_pop') && !key.includes('nr_countr') && !key.includes('tot_area')
+              && !key.includes('perimeter') && !key.includes('area') && !key.includes('codBasin') && !key.includes('lc_count') && !key.includes('lc_sum') && !key.includes('lc_mean')
+              && !key.includes('lc_min') && !key.includes('lc_max') && !key.includes('No Data')))
+              console.log(newObj, 'NEW OBJECT')
+      
+              var labels = Object.keys(newObj)
+              console.log(labels, 'stats labels')
+              this.lulcChartData.labels = labels
+             
+            
+              var figures = Object.values(newObj)
+              console.log(figures, 'stats figures')
+              // var converted = figures.map( (item) => item/100)
+              // console.log(converted, 'converted figres')
+              this.lulcChartData.datasets[0].data = figures
+              this.lulcChartData.datasets[0].backgroundColor = ['#55ea53','#ffffc0','#d99321', '#e03e08', '#087308']
+              //['#087308', '#55ea53',  '#ffffc0', '#d99321', '#e03e08'] //['#55ea53','#ffffc0','#d99321', '#e03e08', '#087308']
+  
+  
+               //for new array
+               this.stats_array.labels = labels
+               this.stats_array.data_figures = figures
+  
+               //capture bbox
+               var bbox = response.data.features[0].bbox
+               console.log(bbox, 'BOUNDING BOX')
+                this.western_lon = bbox[0]
+                this.northern_lat = bbox[1]
+                this.eastern_lon = bbox[2]
+                this.southern_lat = bbox[3]
+                this.resolution = '300'
+              
+           
+              
+            } catch (error) {
+              console.error('an error occured'+error);
+              
+            }
+  
+          }
+
+
+
+          
+  
   
   
           } 

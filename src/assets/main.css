@@ -915,6 +915,7 @@ title{
   left: -1vw;
   font-weight: 700;
 }
+
 .lulc_bar_chart{
   position: relative;
   top: -1vh;
@@ -925,6 +926,7 @@ title{
 }
 #bar-chart{
   height:250px !important;
+  margin-top:22px
 }
 .analysis_logos{
   width: 600px; position: relative; top: 7vh; left: -8vw;

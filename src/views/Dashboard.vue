@@ -149,8 +149,9 @@
             <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
             <div v-if=" show_zambezi_stats === true " class="default_layer_title"> Zambezi LULC 2016</div>
             
-            <div v-if=" year" class="chart_title" :class="{'hide' : (compareUserSelections.selected_year != '' )}">{{ `${basin} ${sub_indicator}-${year}` }}</div>
+            <div v-if=" year && sub_indicator " class="chart_title" :class="{'hide' : (compareUserSelections.selected_year != '' )}">{{ `${basin} ${sub_indicator}-${year}` }}</div>
             <div v-if=" compareUserSelections.selected_year != ''" class="chart_title" >{{  `${basin} ${sub_indicator}-${compare_year}` }}</div>
+            <div v-if="indicator === 'Basin Vulnerability Index'" class="bar_chart_title">{{ `${basin} ${indicator}-${year}` }}</div>
             <img src="/mapIcons/download_map.svg" alt="" 
             title="Download Png"
             class="chart_download_png" 
@@ -164,7 +165,7 @@
             @click="downloadcsv"
             >
             <!--  v-if="sub_indicator != 'Precipitation Index'" -->
-            <div id="chart_pie" v-if="sub_indicator === 'Land Cover' || sub_indicator === 'Wetland Inventory' 
+            <div id="chart_pie" v-if="sub_indicator === 'Land Cover' || indicator === 'Basin Vulnerability Index' || sub_indicator === 'Wetland Inventory' 
             || sub_indicator === 'Burnt Area FIRMS' ||  sub_indicator === 'Undulation'  ">
               <LulcPie :class=" sub_indicator === 'Undulation' ? 'flood_chart' : 'lulc_chart'"
            
@@ -202,8 +203,8 @@
               <div  v-if="sub_indicator != 'Water Quality'" class="bar_chart_title" :class="{'hide' : (compareUserSelections.selected_year != '' )}">{{ `${basin} ${sub_indicator}-${year}` }}</div>
               <div v-if=" compareUserSelections.selected_year != ''" class="bar_chart_title" >{{  `${basin} ${sub_indicator}-${compare_year}` }}</div>
               <div  v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">{{ `${basin} ${parameter}-${year}` }}</div>
-
             </div>
+            <div  v-if="indicator === 'Basin Vulnerability Index' && year" class="bar_chart_title">{{ `${basin} ${indicator}-${year}` }}</div>
            
             <img src="/mapIcons/download_map.svg" alt="" title="Download Png"
             class="chart_download_png" style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
@@ -2797,7 +2798,20 @@ watch( setLatLon, () => {
 
         storeUserSelections.lineChartData.labels = band_names
       //   // .slice(15,22)
-      //   // storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022'] RENAME LATER
+        storeUserSelections.lineChartData.labels = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
       //   // console.log('band values', band_values )
         storeUserSelections.lineChartData.datasets[0].data = band_values
       //   // console.log(storeUserSelections.lineChartData, 'store linechart data')

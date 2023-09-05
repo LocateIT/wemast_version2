@@ -158,7 +158,7 @@
             class="chart_download_png" 
             style="position: absolute; top: -2.5vh; left: 28vw; height: 25px;"
             @click="chart_png"
-            >
+            > 
             <img id="chart_csv" src="/mapIcons/file_download-24px.svg" 
             alt="" class="chart_download_png" 
             title="Download CSV"
@@ -275,6 +275,8 @@
                   <tr>
                     <th>{{ $t("metadata.title") }}</th>
                     <td> {{ 
+                     storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ?
+                    `Basin Vulnerability Index for ${storeUserSelections.selected_basin} basin`:
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Extent' ?
                       `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
                       storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
@@ -287,6 +289,8 @@
                    sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
                      'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
                     `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`:
+                   
+                    
                   //  sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
                   //    'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
                   // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
@@ -299,6 +303,7 @@
                     <th>{{ $t("metadata.description") }}</th>
       
                     <td>{{
+                        storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? $t("indicators.bvi_index"):
                      storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? $t("metadata.prec_desc"):
                      storeUserSelections.selected_parameter === 'Turbidity' ? $t("metadata.turb_desc"): 
               storeUserSelections.selected_parameter === 'Sus Sediments' ? $t("metadata.sus_desc"): 
@@ -368,6 +373,7 @@
                      storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? `${ $t("metadata.prec_theme")}, ${storeUserSelections.selected_season} `:
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("metadata.veg_cover_theme") + ' '+ storeUserSelections.selected_season + ' ' :
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? $t("metadata.wetland_inventory_theme") + ' '+ storeUserSelections.selected_season + ' ':
+                    storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? $t("indicators.bvi_index") + ' '+ storeUserSelections.selected_season + ' ':
                    storeUserSelections.selected_parameter === 'Wetland Status' ? $t("metadata.status_theme") + ' '+ storeUserSelections.selected_season + ' ' : ''}}</td>
                     
                   </tr>
@@ -400,6 +406,7 @@
                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? $t("metadata.lulc_theme") : 
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? $t("metadata.veg_cover_theme") :
                     storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? $t("metadata.wetland_inventory_theme"):
+                    storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? $t("indicators.bvi_index") + ' '+ storeUserSelections.selected_season + ' ':
                    storeUserSelections.selected_sub_indicator === '' ? 'please select a parameter' : ''}}</td>
                   </tr>
                   

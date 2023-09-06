@@ -806,7 +806,7 @@ export const useCounterStore = defineStore({
         
         }
 
-        if(this.selected_sub_indicator === 'Vegetation Cover' ) {
+        if(this.selected_sub_indicator === 'Vegetation Cover' || this.selected_parameter === 'Wetland Status' ) {
           try {
           
            

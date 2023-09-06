@@ -678,7 +678,7 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
-              this.resolution = '300'
+              this.resolution = '100'
             
          
             
@@ -735,7 +735,7 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
-              this.resolution = '300'
+              this.resolution = '100'
             
          
             
@@ -750,7 +750,7 @@ export const useCounterStore = defineStore({
 
         if(this.selected_sub_indicator === 'Wetland Inventory' && this.selected_parameter === 'Wetland Extent'
          || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Sus Sediments')
-        || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Turbidity')) {
+         || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Turbidity')) {
           try {
           
             // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
@@ -795,7 +795,13 @@ export const useCounterStore = defineStore({
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
 
-              this.resolution = '300'
+              if(satellite === 'SENTINEL'){
+                this.resolution = '10'
+              }
+             
+              if(satellite === 'LANDSAT'){
+                this.resolution = '30'
+              }
             
          
             
@@ -888,11 +894,11 @@ export const useCounterStore = defineStore({
               this.southern_lat = bbox[3]
 
               if(satellite === 'SENTINEL'){
-                this.resolution = '100'
+                this.resolution = '10'
               }
              
               if(satellite === 'LANDSAT'){
-                this.resolution = '100'
+                this.resolution = '30'
               }
          
             
@@ -1069,7 +1075,7 @@ export const useCounterStore = defineStore({
             this.northern_lat = bbox[1]
             this.eastern_lon = bbox[2]
             this.southern_lat = bbox[3]
-            this.resolution = '300'
+            this.resolution = '100'
           
        
           
@@ -1180,7 +1186,8 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
-              this.resolution = '300'
+
+              this.resolution = '30'
             
          
             
@@ -1242,7 +1249,7 @@ export const useCounterStore = defineStore({
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
               this.southern_lat = bbox[3]
-              this.resolution = '300'
+              this.resolution = '100'
             
          
             

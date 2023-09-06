@@ -966,8 +966,21 @@ title{
 .ancillary_title{
   position: relative;
 
+  top: -12.5vh;
+  left: 55%;
+  font-weight: 600;
+  display:flex;
+  flexdirection: row;
+  gap:0.5rem;
+  cursor:pointer;
+ 
+
+}
+.ancillary_title2{
+  position: relative;
+
   top: -13vh;
-  left: 65%;
+  left: 69%;
   font-weight: 600;
   display:flex;
   flexdirection: row;
@@ -982,6 +995,7 @@ title{
 }
 #line-chart{
   height: 250px !important;
+  margin-top:-4.8vh;
 }
 
 .prec_bar{

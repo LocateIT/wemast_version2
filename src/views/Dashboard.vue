@@ -242,14 +242,14 @@
               || storeUserSelections.selected_sub_indicator === 'Water Quality'"> Time Series </p>
 
 
-<div class="ancillary_title" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
+<div :class="sub_indicator === 'Vegetation Cover' ?  'ancillary_title' : 'ancillary_title2'" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
              || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
              || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
               || storeUserSelections.selected_sub_indicator === 'Water Quality'"> 
              <p class="ancil_data"> Ancillary data </p>
               
-              <CloudRain width="18" height="15"  color="#164b75" @click="addPRECIPTimeSeriesLayer" />
-              <ThermometerHalf width="18" height="15"  color="#164b75" @click="addTEMPTimeSeriesLayer" />
+              <CloudRain width="18" height="18"  color="#164b75" @click="addPRECIPTimeSeriesLayer" />
+              <ThermometerHalf width="18" height="18"  color="#164b75" @click="addTEMPTimeSeriesLayer" />
               </div>
 
             <LulcLine  class="lulc_line_chart" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
@@ -2887,6 +2887,7 @@ watch( setLatLon, () => {
 
 
  const addPRECIPTimeSeriesLayer = () => {
+  if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
   if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsPrecTimeseriesLayer.value)
     //add precip time series
     map.createPane("pane400").style.zIndex = 800;
@@ -2900,7 +2901,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geose
   //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
    format: 'image/png',
    transparent: true,
-   opacity:0.1
+   opacity:0.05
    
   
 });
@@ -2909,6 +2910,7 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
   }
 
   const addTEMPTimeSeriesLayer = () => {
+    if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
   if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsPrecTimeseriesLayer.value)
     //add TEMP time series
     map.createPane("pane400").style.zIndex = 800;
@@ -2922,7 +2924,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geose
   //  styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
    format: 'image/png',
    transparent: true,
-   opacity:0.1
+   opacity:0.05
    
   
 });
@@ -3050,7 +3052,7 @@ getDefaultLatLon()
 
   //adding timeseries layer
   addPrecTimeSeries()
-  wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
+  wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SPI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `SPI_${season.value}:SPI`,
      crs:L.CRS.EPSG4326,
@@ -3062,7 +3064,7 @@ getDefaultLatLon()
      
     
   });
-  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  wmsPrecTimeseriesLayer.value.addTo(map).bringToFront()
 
   const getDefaultLatLon = () => {
  
@@ -3084,7 +3086,7 @@ marker.value = L.icon({
 
 getDefaultLatLon()
 
-  wmsTimeseriesLayer.value.on('load', function (event) {
+  wmsPrecTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
 });
   preclegendContent()
@@ -3312,7 +3314,7 @@ wmsLayer.value.addTo(map);
 
 
 
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDVI_${season.value}/wms?`, {
+wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDVI_${season.value}/wms?`, {
      pane: 'timeseries',
      layers: `NDVI_${season.value}:NDVI_${season.value}`,
      crs:L.CRS.EPSG4326,
@@ -3326,7 +3328,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
 });
 
 
-wmsTimeseriesLayer.value.addTo(map).bringToFront();
+wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
 
 const getDefaultLatLon = () => {
@@ -3358,7 +3360,7 @@ wmsLayer.value.on('load', function (event) {
     loading.value = false
 });
 
-wmsTimeseriesLayer.value.on('load', function (event) {
+wmsPrecTimeseriesLayer.value.on('load', function (event) {
     loading.value = false
 });
 
@@ -3639,7 +3641,7 @@ changeOpacity()
 //Add SMI Timeseries 
 
 addPrecTimeSeries()
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SMI_${season.value}/wms?`, {
+wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SMI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `SMI_${season.value}:SMI`,
      crs:L.CRS.EPSG4326,
@@ -3651,9 +3653,9 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      
     
   });
-  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  wmsPrecTimeseriesLayer.value.addTo(map).bringToFront()
 
-//   wmsTimeseriesLayer.value.on('load', function (event) {
+//   wmsPrecTimeseriesLayer.value.on('load', function (event) {
 //     loading.value = false
 // });
 
@@ -3765,7 +3767,7 @@ changeOpacity()
 
  //ADDTIMESERIES
   addPrecTimeSeries()
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDSSI/wms?`, {
+wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDSSI/wms?`, {
      pane: 'pane800',
      layers: `NDSSI:NDSSI_DRY`,
      crs:L.CRS.EPSG4326,
@@ -3777,7 +3779,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      
     
   });
-  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  wmsPrecTimeseriesLayer.value.addTo(map).bringToFront()
 
   const getDefaultLatLon = () => {
  
@@ -3799,7 +3801,7 @@ marker.value = L.icon({
 
 getDefaultLatLon()
 
-  wmsTimeseriesLayer.value.on('load', function (event) {
+  wmsPrecTimeseriesLayer.value.on('load', function (event) {
     console.log('sus sediments loaded')
     loading.value = false
 });
@@ -3853,7 +3855,7 @@ getDefaultLatLon()
 
  //ADDTIMESERIES
   addPrecTimeSeries()
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDTI/wms?`, {
+wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/NDTI/wms?`, {
      pane: 'pane800',
      layers: `NDTI:NDTI_DRY`,
      crs:L.CRS.EPSG4326,
@@ -3865,7 +3867,7 @@ wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geos
      
     
   });
-  wmsTimeseriesLayer.value.addTo(map).bringToFront()
+  wmsPrecTimeseriesLayer.value.addTo(map).bringToFront()
 
   const getDefaultLatLon = () => {
  
@@ -3887,7 +3889,7 @@ marker.value = L.icon({
 
 getDefaultLatLon()
 
-  wmsTimeseriesLayer.value.on('load', function (event) {
+  wmsPrecTimeseriesLayer.value.on('load', function (event) {
     console.log('sus sediments loaded')
     loading.value = false
 });
@@ -4086,7 +4088,7 @@ const ajaxCall = () => {
         csv_data.push({
           Class: data,
           // Color: `${chartData.value.datasets[i].backgroundColor.split("#")[1]}`,
-          "Area (Ha)": figures[i]
+          "Values": figures[i]
         });
       });
  

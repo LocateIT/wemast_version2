@@ -566,6 +566,7 @@ import * as wkt from 'wkt'
 
   
   //refs go here
+  let baseurl = 'http://66.42.65.87'
   let documentation = ref(false)
   let advanced_filter = ref(false)
   let compare = ref(false)
@@ -1501,50 +1502,50 @@ const download_tiff = () => {
   var url = ""
   if(sub_indicator.value === 'Land Cover' ) {
     lulc_style()
-    url = `http://66.42.65.87:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ){
     prec_style()
-    url = `http://66.42.65.87:8080/geoserver/SPI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/SPI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ){
     prec_style()
-    url = `http://66.42.65.87:8080/geoserver/SPI_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/SPI_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=SPI_WET%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent'){
     wetland_extent_style()
-    url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
 
   }
   if(sub_indicator.value === 'Vegetation Cover' ){
     vegcover_style()
-    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
 
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ){
      
   status_style()
-    url = `http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Burnt Area FIRMS') {
-    url = `http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Soil Moisure Index') {
-    url = `http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=SMI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_smi&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/SMI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=SMI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_smi&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Undulation') {
-    url = `http://66.42.65.87:8080/geoserver/FLOOD/wms?service=WMS&version=1.1.0&request=GetMap&layers=FLOOD%3AFLOOD&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_flood&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/FLOOD/wms?service=WMS&version=1.1.0&request=GetMap&layers=FLOOD%3AFLOOD&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_flood&format=image%2Fgeotiff`
   }
   if(indicator.value === 'Basin Vulnerability Index') {
     bvi_style()
-    url = `http://66.42.65.87:8080/geoserver/BVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=BVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/BVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=BVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
   }
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity'){
-    url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
 
   }
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments'){
-    url = `http://66.42.65.87:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
+    url = `${baseurl}:8080/geoserver/NDWI/wms?service=WMS&version=1.1.0&request=GetMap&layers=NDWI%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`
 
   }
 
@@ -1695,7 +1696,7 @@ const help = () => {
 
     //load zambezi
     const fetchZambezi = async () => {
-      const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/aoi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aoi%3AZambezi&maxFeatures=50&outputFormat=application%2Fjson`
+      const resp = await  axios.get(`${baseurl}:8080/geoserver/aoi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aoi%3AZambezi&maxFeatures=50&outputFormat=application%2Fjson`
               );
            var zambezi_region = resp.data
            default_zambezi_region.value =  resp.data
@@ -1757,7 +1758,7 @@ const help = () => {
 
 
 
-wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane400', 
      layers: `LULC:2017`,
      crs:L.CRS.EPSG4326,
@@ -2242,7 +2243,7 @@ map.addControl(search_control.value );
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/BVI_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}/wms?`, {
      pane: 'pane400', 
      layers: `BVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2293,7 +2294,7 @@ changeOpacity()
   
   
 
-wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane400', 
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -2349,7 +2350,7 @@ changeOpacity()
 
   
 
-// customWmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+// customWmsLayer.value =  L.tileLayer.wms("${baseurl}:8080/geoserver/LULC/wms?", {
 //      pane: 'pane400', 
 //      layers: `LULC:${year.value}`,
 //      crs:L.CRS.EPSG4326,
@@ -2895,7 +2896,7 @@ watch( setLatLon, () => {
 
   addPRECIPTimeSeries()
 
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geoserver/PRECIP/wms?', {
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`${baseurl}:8080/geoserver/PRECIP/wms?`, {
   pane: 'pane400', 
    layers: 'PRECIP:PRECIP_2',
    crs:L.CRS.EPSG4326,
@@ -2918,7 +2919,7 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
     addTEMPTimeSeries()
 
-wmsTimeseriesLayer.value =  L.tileLayer.betterWms('http://66.42.65.87:8080/geoserver/TEMP/wms?', {
+wmsTimeseriesLayer.value =  L.tileLayer.betterWms(`${baseurl}:8080/geoserver/TEMP/wms?`, {
   pane: 'pane400', 
    layers: 'TEMP:TEMP',
    crs:L.CRS.EPSG4326,
@@ -2942,7 +2943,7 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
      pane: 'pane800',
      layers: `SPI_WET:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3030,7 +3031,7 @@ getDefaultLatLon()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
      pane: 'pane800',
      layers: `SPI_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3103,7 +3104,7 @@ getDefaultLatLon()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3297,7 +3298,7 @@ watch( setLatLon, () => {
 
 
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3378,7 +3379,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3417,7 +3418,7 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/FIRE/wms?", {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRE/wms?`, {
      pane: 'pane400',
      layers: `FIRE:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3455,7 +3456,7 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wms?`, {
      pane: 'pane400',
      layers: `FIRMS_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3618,7 +3619,7 @@ changeOpacity()
  
   
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${season.value}/wms?`, {
      pane: 'pane400',
      layers: `SMI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3697,7 +3698,7 @@ getDefaultLatLon()
  
   
 
-wmsLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FLOOD/wms`, {
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FLOOD/wms`, {
      pane: 'pane400',
      layers: `FLOOD:FLOOD`,
      crs:L.CRS.EPSG4326,
@@ -3735,7 +3736,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -3823,7 +3824,7 @@ getDefaultLatLon()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
@@ -4021,7 +4022,7 @@ geoposition.value = `${lat}, ${lon}`
 }
 const addCQLFilter = () => {
   map.createPane("pane400").style.zIndex = 200;
-  wmsLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane400', 
      layers: `LULC:2017`,
      crs:L.CRS.EPSG4326,
@@ -4205,7 +4206,7 @@ bvi_legend.value = legend
 bvi_legend.value.onAdd = function(map) {
     var div = L.DomUtil.create("div", "legend");
     
-    div.innerHTML += (`<p>${basin.value} BVI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+    div.innerHTML += (`<p>${basin.value} BVI ${year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
     
    
@@ -4228,7 +4229,7 @@ bvi_legend.value.addTo(map);
   const lulclegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4306,7 +4307,7 @@ bvi_legend.value.addTo(map);
   const compareLulcLegend = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4401,7 +4402,7 @@ if(bvi_legend.value)map.removeControl(bvi_legend.value)
                   smi_legend.value.onAdd = function(map) {
                   var div = L.DomUtil.create("div", "legend");
                       
-                  div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+                  div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
                       
                   let draggable = new L.Draggable(div); //the legend can be dragged around the div
@@ -4442,7 +4443,7 @@ const comparePrecLegend = () => {
                   smi_compare_legend.value.onAdd = function(map) {
                   var div = L.DomUtil.create("div", "legend");
                       
-                  div.innerHTML += (`<p>${basin.value} SPI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+                  div.innerHTML += (`<p>${basin.value} SPI ${compare_year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
                       
                   let draggable = new L.Draggable(div); //the legend can be dragged around the div
@@ -4461,7 +4462,7 @@ const comparePrecLegend = () => {
   const NDWIlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4541,7 +4542,7 @@ const comparePrecLegend = () => {
   const compareNDWIlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get('http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180'
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4606,7 +4607,7 @@ const comparePrecLegend = () => {
   const NDVIlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4678,7 +4679,7 @@ const comparePrecLegend = () => {
   const compareNDVIlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4742,7 +4743,7 @@ const comparePrecLegend = () => {
   const statuslegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4816,7 +4817,7 @@ const comparePrecLegend = () => {
   const comparestatuslegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4882,7 +4883,7 @@ const comparePrecLegend = () => {
   const floodlegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FLOOD%3AFLOOD&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FLOOD%3AFLOOD&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -4950,7 +4951,7 @@ const comparePrecLegend = () => {
   const modislegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRE%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRE%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -5008,7 +5009,7 @@ const comparePrecLegend = () => {
   const firmslegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`${baseurl}:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -5083,7 +5084,7 @@ const comparePrecLegend = () => {
   const comparefirmslegendContent = () => {
     const getLegendContent = async () => {
       try {
-        const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        const response = await axios.get(`${baseurl}:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
@@ -5180,7 +5181,7 @@ const comparePrecLegend = () => {
         smi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
             
-            div.innerHTML += (`<p>${basin.value} SMI ${year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+            div.innerHTML += (`<p>${basin.value} SMI ${year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
             
            
@@ -5222,7 +5223,7 @@ smi_compare_legend.value = legend
 smi_compare_legend.value.onAdd = function(map) {
     var div = L.DomUtil.create("div", "legend");
     
-    div.innerHTML += (`<p>${basin.value} SMI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+    div.innerHTML += (`<p>${basin.value} SMI ${compare_year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
     
    
@@ -5263,7 +5264,7 @@ bvi_compare_legend.value = legend
 bvi_compare_legend.value.onAdd = function(map) {
     var div = L.DomUtil.create("div", "legend");
     
-    div.innerHTML += (`<p>${basin.value} BVI ${compare_year.value}</p>`) + '<img src="' + "http://66.42.65.87:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150" + '" />' ;
+    div.innerHTML += (`<p>${basin.value} BVI ${compare_year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
     
    
@@ -5421,7 +5422,7 @@ bvi_compare_legend.value.addTo(map);
   map.createPane("pane800").style.zIndex = 200;
   
 
-wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/LULC/wms?", {
+wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane800',
      layers: `LULC:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5461,7 +5462,7 @@ changeOpacity()
   map.createPane("pane800").style.zIndex = 200;
   
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/BVI_${compare_season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${compare_season.value}/wms?`, {
      pane: 'pane800',
      layers: `BVI_${compare_season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5504,7 +5505,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_WET/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
      pane: 'pane800',
      layers: `SPI_WET:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5540,7 +5541,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/SPI_DRY/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
      pane: 'pane800',
      layers: `SPI_DRY:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5572,7 +5573,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
-  wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+  wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
      pane: 'pane800',
      layers: `NDWI:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5613,7 +5614,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${compare_satellite.value}_NDVI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5651,7 +5652,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
      pane: 'pane800',
      layers: `${compare_satellite.value}_NDVI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5687,7 +5688,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/FIRMS_DRY/wms?`, {
+wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wms?`, {
      pane: 'pane400',
      layers: `FIRMS_DRY:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5724,7 +5725,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =   L.tileLayer.wms(`http://66.42.65.87:8080/geoserver/SMI_${season.value}/wms?`, {
+wmsCompareLayer.value =   L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${season.value}/wms?`, {
      pane: 'pane400',
      layers: `SMI_${season.value}:${compare_year.value}`,
      crs:L.CRS.EPSG4326,
@@ -5762,7 +5763,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
-wmsCompareLayer.value =  L.tileLayer.wms("http://66.42.65.87:8080/geoserver/NDWI/wms?", {
+wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
      pane: 'pane800',
      layers: `NDWI:${compare_year.value}`,
      crs:L.CRS.EPSG4326,

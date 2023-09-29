@@ -970,7 +970,7 @@ title{
   left: 55%;
   font-weight: 600;
   display:flex;
-  flexdirection: row;
+  flex-direction: row;
   gap:0.5rem;
   cursor:pointer;
  
@@ -983,7 +983,7 @@ title{
   left: 69%;
   font-weight: 600;
   display:flex;
-  flexdirection: row;
+  flex-direction: row;
   gap:0.5rem;
   cursor:pointer;
  

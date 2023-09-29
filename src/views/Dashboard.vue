@@ -242,7 +242,8 @@
               || storeUserSelections.selected_sub_indicator === 'Water Quality'"> Time Series </p>
 
 
-<div :class="sub_indicator === 'Vegetation Cover' ?  'ancillary_title' : 'ancillary_title2'" v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
+<div :class="sub_indicator === 'Vegetation Cover'   || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ?  'ancillary_title' : 'ancillary_title2'"
+         v-if="storeUserSelections.selected_sub_indicator === 'Vegetation Cover'
              || storeUserSelections.selected_sub_indicator === 'Precipitation Index' 
              || storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' 
               || storeUserSelections.selected_sub_indicator === 'Water Quality'"> 

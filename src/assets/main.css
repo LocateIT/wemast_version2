@@ -989,6 +989,19 @@ title{
  
 
 }
+.ancillary_title3{
+  position: relative;
+
+  top: -13vh;
+  left: 62%;
+  font-weight: 600;
+  display:flex;
+  flexdirection: row;
+  gap:0.5rem;
+  cursor:pointer;
+ 
+
+}
 
 .ancil_data{
   margin-top:-0.5vh;

@@ -1,6 +1,6 @@
 <template>
     <div class="register">
-        <form class="form" style="margin-left: 0%;  margin-top: 0%; ">
+        <form  @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
     <p id="heading">
         
         <PersonOutline width="250" height="100" color="#164b75" />
@@ -13,16 +13,21 @@
       <input autocomplete="off" placeholder="Username" class="input-field" type="text">
     </div> -->
 
-    <div class="field">
+    <!-- <div class="field">
     <Envelope width="18" height="15"  color="#164b75"/>
       <input autocomplete="off" placeholder="Email" class="input-field" type="text">
+    </div> -->
+
+    <div class="field">
+    <Envelope width="18" height="15"  color="#164b75"/>
+      <input autocomplete="off" placeholder="Phone number" class="input-field" type="number" @input="showPhoneInput">
     </div>
 
 
 
     <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password">
+        <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
     </div>
 
     <!-- <div class="field">
@@ -35,9 +40,9 @@
     <div class="btn">
 
     <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
-    <RouterLink to="/dashboard" >
+    <!-- <RouterLink to="/dashboard" > -->
     <button class="button2">Login</button>
-    </RouterLink>
+    <!-- </RouterLink> -->
 
     <RouterLink to="/forgot">
     <p class="forgot">Forgot Password?</p>
@@ -61,6 +66,122 @@ import { NButton, NSpace, NInput } from 'naive-ui'
   import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
   import { Envelope } from "@vicons/fa"
   import { CashOutline as CashIcon } from "@vicons/ionicons5";
+  import { ref } from 'vue'
+  import axios from 'axios'
+
+
+  let phone = ref(null)
+ let password = ref('')
+
+
+ const showPhoneInput = (e) => {
+              phone.value = e.target.value
+            }
+const showPasswordInput = (e) => {
+              password.value = e.target.value
+            }
+         
+
+ const submitForm =  () => {
+
+const formInputsData = [{
+          // username: username.value,
+          phone: phone.value,
+        //  email: email.value,
+         password: password.value,
+        //  confirm: confirm_password.value
+        }]
+        console.log(formInputsData , 'formInputsData target')
+
+        const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
+const data = formInputsData
+
+const postData = 'login_PostJSON='+ encodeURIComponent(JSON.stringify([{"_usertel":`${formInputsData[0].phone}`,"_userpwd":`${formInputsData[0].password}`}]))
+console.log(postData)
+const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+axios.post(apiUrl, postData, {headers})
+.then(response => {
+  console.log('Response:', response.data)
+})
+.catch(error => {
+  console.error('Error:', error)
+});
+
+// const xhr = new XMLHttpRequest();
+// xhr.open("POST", apiUrl, true);
+// xhr.setRequestHeader("Content-Type", "application/json");
+
+// xhr.onreadystatechange = function () {
+// if (xhr.readyState === 4 && xhr.status === 200) {
+// // Successful response
+// const response = xhr.responseText;
+// console.log(response, 'login response');
+// } else if (xhr.readyState === 4) {
+// // Request failed
+// console.error("Request failed with status: " + xhr.status);
+// }
+// };
+
+// // Convert the data to JSON and send it in the request body
+// xhr.send(JSON.stringify(data));
+// console.log(xhr.responseText, 'login response');
+
+
+        // const headers = {
+        //   'Content-Type': 'application/json',
+        //   'Access-Control-Allow-Origin': '*'
+        //   // 'Authorization': 'JWT fefege...'
+        // }
+//             try {
+//               const response = await axios.post('http://45.32.233.93:81/wemast/wemast_gen.php', formInputsData
+//               // , formInputsData,
+//               // {
+//               //   statusCode: 200,
+
+//               // headers: {
+//               //   "access-control-allow-origin": "*",
+//               //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+//               //   'Access-Control-Allow-Methods': '*',
+//               // },
+
+//               // }
+//               // , {
+//               //   headers: headers,
+//               //   withCredentials: false,
+//               // }
+//               );
+//               console.log(response, 'response')
+          
+// //               var request = new XMLHttpRequest();
+// // request.open('POST', 'http://45.32.233.93:81/wemast/wemast_gen.php', /* async = */ true);
+// // request.send(formInputsData);
+// // // request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
+// // console.log('REQUEST',request);
+//             } catch (error) {
+//               console.log(error, 'error')
+          
+//             }
+
+     
+   
+    // console.log(response.data.user_data.username, 'signup response')
+    // this.$router.push('/login')
+    // this.$emit("username", response.data.user_data.username)
+    // alert('check email to verify')
+    //  .then(response => {
+    
+    //      console.log(response, 'response')
+         
+    //  })
+    //  .catch(error => {
+    //      console.log(error, 'error')
+    //  })
+
+  
+
+        }
+
 
 </script>
 

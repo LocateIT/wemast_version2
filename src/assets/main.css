@@ -996,7 +996,7 @@ title{
   left: 62%;
   font-weight: 600;
   display:flex;
-  flexdirection: row;
+  flex-direction: row;
   gap:0.5rem;
   cursor:pointer;
  

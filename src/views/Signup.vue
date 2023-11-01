@@ -36,6 +36,12 @@
     </div>
 
     <div class="field">
+    <PhonePortraitOutline width="18" height="15"  color="#164b75"/>
+      <input autocomplete="off" placeholder="Phone number" class="input-field" type="number" @input="showPhoneInput">
+     
+    </div>
+
+    <div class="field">
     <Envelope width="18" height="15"  color="#164b75"/>
       <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
     </div>
@@ -83,6 +89,7 @@
   import { NButton, NSpace, NInput } from 'naive-ui'
   import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
   import { Envelope } from "@vicons/fa"
+  import { PhonePortraitOutline } from '@vicons/ionicons5';
   import { CashOutline as CashIcon } from "@vicons/ionicons5";
   import { onMounted, computed, watch, ref } from 'vue'
   import { useCounterStore } from '../stores/counter'
@@ -92,13 +99,14 @@
 
 
   let username = ref('')
+  let phone = ref(null)
   let email = ref('')
   let password = ref('')
   let confirm_password = ref('')
 
 
   onMounted( () => {
-    submitForm()
+    // submitForm()
 
   })
 
@@ -131,6 +139,10 @@
   const showUsernameInput = (e) => {
               username.value = e.target.value
             }
+
+            const showPhoneInput = (e) => {
+              phone.value = e.target.value
+            }
             const showEmailInput = (e) => {
             email.value = e.target.value
           }
@@ -142,50 +154,85 @@
               confirm_password.value = e.target.value 
             }
 
-  const submitForm = async () => {
+  const submitForm =  () => {
 
-    const formInputsData = {
+    const formInputsData = [{
               username: username.value,
+              phone: phone.value,
              email: email.value,
              password: password.value,
              confirm: confirm_password.value
-            }
+            }]
             console.log(formInputsData , 'formInputsData target')
+
+            const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
+const data = formInputsData
+
+const postData = 'regista_PostJSON='+ encodeURIComponent(JSON.stringify([{"_username":`${formInputsData[0].username}`,"_usertel":`${formInputsData[0].phone}`,"_usercntry":"Kenya","_useremail":`${formInputsData[0].email}`,"_userpwd":`${formInputsData[0].password}`,"_userlat":"0.0","_userlon":"0.0"}]))
+console.log(postData)
+const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+axios.post(apiUrl, postData, {headers})
+.then(response => {
+  console.log('Response:', response.data)
+})
+.catch(error => {
+  console.error('Error:', error)
+});
+// const xhr = new XMLHttpRequest();
+// xhr.open("POST", apiUrl, true);
+// xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+// xhr.onreadystatechange = function () {
+//   if (xhr.readyState === 4 && xhr.status === 200) {
+//     // Successful response
+//     const response = xhr.responseText;
+//     console.log(response, 'signup response');
+//   } else if (xhr.readyState === 4) {
+//     // Request failed
+//     console.error("Request failed with status: " + xhr.status);
+//   }
+// };
+
+// // Convert the data to JSON and send it in the request body
+// xhr.send(JSON.stringify(data));
+// console.log(xhr.responseText, 'signup response');
+
 
             // const headers = {
             //   'Content-Type': 'application/json',
             //   'Access-Control-Allow-Origin': '*'
             //   // 'Authorization': 'JWT fefege...'
             // }
-            try {
-              // const response = await axios.post('http://wemast.glenwell.com/wemast_gen.php', formInputsData
-              // // , formInputsData,
-              // // {
-              // //   statusCode: 200,
+//             try {
+//               const response = await axios.post('http://45.32.233.93:81/wemast/wemast_gen.php', formInputsData
+//               // , formInputsData,
+//               // {
+//               //   statusCode: 200,
   
-              // // headers: {
-              // //   "access-control-allow-origin": "*",
-              // //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-              // //   'Access-Control-Allow-Methods': '*',
-              // // },
+//               // headers: {
+//               //   "access-control-allow-origin": "*",
+//               //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+//               //   'Access-Control-Allow-Methods': '*',
+//               // },
 
-              // // }
-              // // , {
-              // //   headers: headers,
-              // //   withCredentials: false,
-              // // }
-              // );
-              // console.log(response, 'response')
+//               // }
+//               // , {
+//               //   headers: headers,
+//               //   withCredentials: false,
+//               // }
+//               );
+//               console.log(response, 'response')
               
-              var request = new XMLHttpRequest();
-request.open('POST', 'http://wemast.glenwell.com/fieldtableData.geojson', /* async = */ true);
-request.send(formInputsData);
-// request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
-console.log('REQUEST',request);
-            } catch (error) {
-              console.log(error, 'error')
+// //               var request = new XMLHttpRequest();
+// // request.open('POST', 'http://45.32.233.93:81/wemast/wemast_gen.php', /* async = */ true);
+// // request.send(formInputsData);
+// // // request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
+// // console.log('REQUEST',request);
+//             } catch (error) {
+//               console.log(error, 'error')
               
-            }
+//             }
 
          
        

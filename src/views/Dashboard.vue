@@ -493,7 +493,7 @@
               <img src="/uiIcons/loader_white.svg" alt="">
           </div>
           <div class="mobile_filter" v-if="show_mobile_data">
-            <button @click="ajaxCall" class="fetch_mobile">Fetch Data</button>
+            <button @click="fetchMobileData" class="fetch_mobile">Fetch Data</button>
             <img style="cursor:pointer; position: absolute; top: 0.5vh; right:0.5vw;" @click="close_mobile_panel" src="/uiIcons/close.png"/>
 
           </div>
@@ -530,8 +530,8 @@
   import domtoimage from "dom-to-image";
   import "dom-to-image/src/dom-to-image.js";
   import "dom-to-image/dist/dom-to-image.min.js"
-import { saveAs } from "file-saver";
-import * as wkt from 'wkt'
+  import { saveAs } from "file-saver";
+  import * as wkt from 'wkt'
 
 
   import "../CustomMapControls/measure/measure.css";
@@ -558,9 +558,9 @@ import * as wkt from 'wkt'
   import LulcLine from '../components/Charts/LulcLine.vue'
   import { downloadCSV } from '../Downloads/CSV'
   import PrecBar from '../components/Charts/PrecBar.vue';
- import CustomDocumentation from '../components/CustomDocumentation.vue'
- import { CloudRain } from "@vicons/fa"
- import { ThermometerHalf } from "@vicons/fa"
+  import CustomDocumentation from '../components/CustomDocumentation.vue'
+  import { CloudRain } from "@vicons/fa"
+  import { ThermometerHalf } from "@vicons/fa"
   
 
 
@@ -3973,16 +3973,15 @@ geoposition.value = `${lat}, ${lon}`
   show_mobile_data.value = false
   }
 
-  const fetchMobileData =  () => {
+  const fetchMobileData = async () => {
     try {
             
-              // const resp = await axios.get('                                                                                                                                                    '
-              // );
+              const resp = await axios.get('http://45.32.233.93:81/wemast/fieldtableData.geojson')
               
 
               // // this.current_geojson = resp.data
               
-              // console.log(resp.data, 'mobile geojson');
+              console.log(resp.data, 'mobile geojson');
               // // var object = resp.data.features.map( (item) => {
               // //   console.log(item, 'object items')
               // //   return item
@@ -4006,16 +4005,50 @@ geoposition.value = `${lat}, ${lon}`
   }
 
 
-  const loadXMLDoc = () => {
-  var xhttp = new XMLHttpRequest();
+  const loadXMLDoc = async () => {
+  // var xhttp = new XMLHttpRequest();
   
-  xhttp.open("GET", "http://wemast.glenwell.com/fieldtableData.geojson", true);
-  xhttp.send();
-  xhttp.onreadystatechange = () => {
-    if(xhttp.readyState === 4) {
-      console.log('XHTTP RESPONSE', xhttp.responseText)
+  // xhttp.open("GET", "http://45.32.233.93:81/wemast/fieldtableData.geojson", true);
+  // xhttp.send();
+  // xhttp.onreadystatechange = () => {
+  //   if(xhttp.readyState === 4) {
+  //     console.log('XHTTP RESPONSE', xhttp.responseText)
 
+  //   }
+  // }
+
+//   await fetch("http://45.32.233.93:81/wemast/fieldtableData.geojson", {
+//   method: "get", //put your method
+//   headers: {
+//     "Content-Type": "application/json",
+//     "X-Requested-With": "XMLHttpRequest",
+//     "Access-Control-Allow-Origin": "*"
+//   },
+//   mode: 'no-cors'
+// })
+// .then(response =>  response.json())
+//   .then(data => console.log(data, 'mobile data'))
+//   .catch(error => console.error('Fetch error:', error));;
+try {
+    const response = await fetch('http://45.32.233.93:81/wemast/fieldtableData.geojson' , {
+  method: "get", //put your method
+  headers: {
+    "Content-Type": "application/json",
+    "X-Requested-With": "XMLHttpRequest",
+    "Access-Control-Allow-Origin": "*"
+  },
+  mode: 'no-cors'
+})
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+      // console.log('Fetch error:', response);
     }
+
+    const data = await response.json();
+    console.log(data, 'mobile data');
+  } catch (error) {
+    console.error('Fetch error:', error);
   }
 
 
@@ -4044,8 +4077,8 @@ wmsLayer.value.addTo(map);
 }
 
 const ajaxCall = () => {
-  $.get("http://wemast.glenwell.com/fieldtableData.geojson", function(data, status){
-    console.log("Data: " + data + "\nStatus: " + status);
+  $.get("http://45.32.233.93:81/wemast/fieldtableData.geojson", function(data, status){
+    console.log("mobile Data: " + data + "\nStatus: " + status);
   });
   
 

@@ -1021,7 +1021,7 @@ title{
   z-index: 1500;
   background-color: #fff;
   width: 300px;
-  height: 220px;
+  height: 120px;
 }
 .fetch_mobile{
   background-color:steelblue;
@@ -1029,7 +1029,7 @@ title{
   height: 35px;
   width: 100px;
   margin-left: 100px;
-  margin-top: 90px;
+  margin-top: 50px;
   outline: none;
   border: none;
   padding: 10px;

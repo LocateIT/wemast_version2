@@ -3974,37 +3974,16 @@ geoposition.value = `${lat}, ${lon}`
   }
 
   const fetchMobileData = async () => {
-    // try {
-            
-    //           const resp = await axios.get('http://45.32.233.93:81/wemast/fieldtableData.geojson')
-              
+    
 
-    //           // // this.current_geojson = resp.data
-              
-    //           console.log(resp.data, 'mobile geojson');
-    //           // // var object = resp.data.features.map( (item) => {
-    //           // //   console.log(item, 'object items')
-    //           // //   return item
-    //           // // })
-              
-             
-    //           // return resp.data
-
-             
-
-    //       } catch (err) {
-    //           // Handle Error Here
-    //           console.error('an error occured'+ err);
-    //       }
-
-    const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
+const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
 
 
 const postData = 'data_GeoJSON='+ encodeURIComponent([{"_process":"_geojson"}])
 console.log(postData)
 const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
-axios.post(apiUrl, postData, {headers})
+await axios.post(apiUrl, postData, {headers})
 .then(response => {
   console.log('GeoJSON Response:', response.data[0].data)
  
@@ -4038,54 +4017,7 @@ const valid_geojson = JSON.parse(geojson_object);
   }
 
 
-  const loadXMLDoc = async () => {
-  // var xhttp = new XMLHttpRequest();
-  
-  // xhttp.open("GET", "http://45.32.233.93:81/wemast/fieldtableData.geojson", true);
-  // xhttp.send();
-  // xhttp.onreadystatechange = () => {
-  //   if(xhttp.readyState === 4) {
-  //     console.log('XHTTP RESPONSE', xhttp.responseText)
-
-  //   }
-  // }
-
-//   await fetch("http://45.32.233.93:81/wemast/fieldtableData.geojson", {
-//   method: "get", //put your method
-//   headers: {
-//     "Content-Type": "application/json",
-//     "X-Requested-With": "XMLHttpRequest",
-//     "Access-Control-Allow-Origin": "*"
-//   },
-//   mode: 'no-cors'
-// })
-// .then(response =>  response.json())
-//   .then(data => console.log(data, 'mobile data'))
-//   .catch(error => console.error('Fetch error:', error));;
-try {
-    const response = await fetch('http://45.32.233.93:81/wemast/fieldtableData.geojson' , {
-  method: "get", //put your method
-  headers: {
-    "Content-Type": "application/json",
-    "X-Requested-With": "XMLHttpRequest",
-    "Access-Control-Allow-Origin": "*"
-  },
-  mode: 'no-cors'
-})
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-      // console.log('Fetch error:', response);
-    }
-
-    const data = await response.json();
-    console.log(data, 'mobile data');
-  } catch (error) {
-    console.error('Fetch error:', error);
-  }
-
-
-}
+ 
 const addCQLFilter = () => {
   map.createPane("pane400").style.zIndex = 200;
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
@@ -4108,17 +4040,6 @@ wmsLayer.value.addTo(map);
 
 
 }
-
-const ajaxCall = () => {
-  $.get("http://45.32.233.93:81/wemast/fieldtableData.geojson", function(data, status){
-    console.log("mobile Data: " + data + "\nStatus: " + status);
-  });
-  
-
-
-}
-
-
 
 
  const downloadcsv = () => {

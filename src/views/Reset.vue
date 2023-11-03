@@ -1,6 +1,6 @@
 <template>
     <div class="register">
-        <form class="form" style="margin-left: 0%;  margin-top: 0%; ">
+        <form  @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
     <p id="heading">
         
         <PersonOutline width="250" height="100" color="#164b75" />
@@ -18,16 +18,19 @@
       <input autocomplete="off" placeholder="Email" class="input-field" type="text">
     </div> -->
 
-
-
     <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password">
+    <Envelope width="18" height="15"  color="#164b75"/>
+      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
     </div>
 
     <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Confirm Password" class="input-field" type="password">
+        <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
+    </div>
+
+    <div class="field">
+        <Glasses width="20" height="20" color="#164b75" />
+        <input placeholder="Confirm New Password" class="input-field" type="password" @input="showPasswordInput">
     </div>
 
 
@@ -59,6 +62,75 @@ import { NButton, NSpace, NInput } from 'naive-ui'
   import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
   import { Envelope } from "@vicons/fa"
   import { CashOutline as CashIcon } from "@vicons/ionicons5";
+  import { ref } from 'vue'
+  import { useRoute, useRouter } from 'vue-router';
+  import Toast, { POSITION } from "vue-toastification";
+  import { useToast } from "vue-toastification";
+  import axios from 'axios'
+
+  const router = useRouter();
+    const route = useRoute();
+    const toast = useToast();
+
+
+  let email = ref('')
+  let password = ref('')
+
+
+  const showEmailInput = (e) => {
+            email.value = e.target.value
+          }
+            const showPasswordInput = (e) => {
+              password.value = e.target.value
+            }
+
+            const submitForm =  () => {
+
+const formInputsData = [{
+          // username: username.value,
+          // phone: phone.value,
+         email: email.value,
+         password: password.value,
+         confirm: confirm_password.value
+        }]
+        console.log(formInputsData , 'formInputsData target')
+
+        const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
+const data = formInputsData
+
+const postData = 'login_forgotpassword_PostJSON='+ encodeURIComponent(JSON.stringify([{"_useremail":`${formInputsData[0].email}`,"_userpass":`${formInputsData[0].password}`}]))
+console.log(postData)
+const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+axios.post(apiUrl, postData, {headers})
+.then(response => {
+  console.log('Response:', response.data)
+  if(response.data[0].success === true) {
+    // this.$router.push('/dashboard')
+    toast.success("Reset Successful", {
+        timeout: 2000,
+        position: POSITION.TOP_CENTER
+      });
+    router.push('/login');
+  }
+  else{
+    // alert(response.data[0].error)
+    toast.error(response.data[0].error, {
+        timeout: 2000,
+        position: POSITION.TOP_CENTER
+      });
+  }
+})
+.catch(error => {
+  console.error('Error:', error)
+});
+
+
+  
+
+        }
+
+
 
 </script>
 

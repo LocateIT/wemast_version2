@@ -67,11 +67,17 @@ import { NButton, NSpace, NInput } from 'naive-ui'
   import { Envelope } from "@vicons/fa"
   import { CashOutline as CashIcon } from "@vicons/ionicons5";
   import { ref } from 'vue'
+  import { useRoute, useRouter } from 'vue-router';
+  import Toast, { POSITION } from "vue-toastification";
+  import { useToast } from "vue-toastification";
   import axios from 'axios'
 
 
   let phone = ref(null)
  let password = ref('')
+ const router = useRouter();
+    const route = useRoute();
+    const toast = useToast();
 
 
  const showPhoneInput = (e) => {
@@ -103,6 +109,21 @@ const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 axios.post(apiUrl, postData, {headers})
 .then(response => {
   console.log('Response:', response.data)
+  if(response.data[0].success === true) {
+    // this.$router.push('/dashboard')
+    toast.success("Login Successful", {
+        timeout: 2000,
+        position: POSITION.TOP_CENTER
+      });
+    router.push('/dashboard');
+  }
+  else{
+    // alert(response.data[0].error)
+    toast.error(response.data[0].error, {
+        timeout: 2000,
+        position: POSITION.TOP_CENTER
+      });
+  }
 })
 .catch(error => {
   console.error('Error:', error)

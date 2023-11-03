@@ -3974,30 +3974,63 @@ geoposition.value = `${lat}, ${lon}`
   }
 
   const fetchMobileData = async () => {
-    try {
+    // try {
             
-              const resp = await axios.get('http://45.32.233.93:81/wemast/fieldtableData.geojson')
+    //           const resp = await axios.get('http://45.32.233.93:81/wemast/fieldtableData.geojson')
               
 
-              // // this.current_geojson = resp.data
+    //           // // this.current_geojson = resp.data
               
-              console.log(resp.data, 'mobile geojson');
-              // // var object = resp.data.features.map( (item) => {
-              // //   console.log(item, 'object items')
-              // //   return item
-              // // })
+    //           console.log(resp.data, 'mobile geojson');
+    //           // // var object = resp.data.features.map( (item) => {
+    //           // //   console.log(item, 'object items')
+    //           // //   return item
+    //           // // })
               
              
-              // return resp.data
+    //           // return resp.data
 
              
 
-          } catch (err) {
-              // Handle Error Here
-              console.error('an error occured'+ err);
-          }
+    //       } catch (err) {
+    //           // Handle Error Here
+    //           console.error('an error occured'+ err);
+    //       }
+
+    const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
 
 
+const postData = 'data_GeoJSON='+ encodeURIComponent([{"_process":"_geojson"}])
+console.log(postData)
+const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+axios.post(apiUrl, postData, {headers})
+.then(response => {
+  console.log('GeoJSON Response:', response.data[0].data)
+ 
+  var geojson_object = response.data[0].data
+const valid_geojson = JSON.parse(geojson_object);
+
+
+
+ // load points
+  L.geoJSON(valid_geojson, {
+    pointToLayer: function (feature, latlng) { 
+      var studioicon = L.icon({
+          iconUrl: 'https://images.ctfassets.net/3prze68gbwl1/assetglossary-17su9wok1ui0z7w/c4c4bdcdf0d0f86447d3efc450d1d081/map-marker.png',// "/src/assets/marker.svg",
+          iconSize: [30, 30],
+          iconAnchor: [15, 15]
+        });
+
+        var marker = L.marker(latlng, { icon: studioicon }).bindPopup(`<b>STATUS</b> : ${feature.properties.status}`);
+        return marker;
+    }
+
+  }).addTo(map)
+})
+.catch(error => {
+  console.error('Error:', error)
+});
 
       
 

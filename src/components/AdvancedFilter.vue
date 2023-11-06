@@ -36,10 +36,10 @@
     </div>
     
     <div v-if="radio_selection ==='wetland'" class="filter_selections">
-        <p class="select_country">Select Country</p>
+        <!-- <p class="select_country">Select Country</p>
     <div class="country_selection">
         <AdvancedCountrySelect />
-    </div>
+    </div> -->
 
     <div class="wetland_wrapper">
         <p class="select_wetland">Select Wetland</p>
@@ -49,12 +49,12 @@
 
     </div>
     
-    <div class="platform_wrapper">
+    <!-- <div class="platform_wrapper">
         <p class="select_platform">Select Platform</p>
     <div class="platform_selection" >
         <AdvancedPlatformSelect  />
     </div>
-    </div>
+    </div> -->
     </div>
 
     <!-- <div class="filter_selections" v-if="radio_selection === 'ancillary'">
@@ -156,7 +156,7 @@ const handleAncilSwap = () => {
         z-index: 1500;
     }
     .filter{
-        height: 450px;
+        height: 380px;
         width: 300px;
         background-color: rgb(255, 255, 255);
         
@@ -164,7 +164,7 @@ const handleAncilSwap = () => {
     .filter_selections{
         position: absolute;
         left: 1vw;
-        top: 7vh;
+        top: 1vh;
         height: 400px;
         width: 250px;
 
@@ -225,7 +225,7 @@ const handleAncilSwap = () => {
    
     .submit{
         position: absolute;
-        top: 37vh;
+        top: 30vh;
         left: 1vw;
         height: 35px;
         width: 200px;

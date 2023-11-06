@@ -14,6 +14,8 @@ export const useAdvancedStore = defineStore({
       platform_placeholder: '',
       selected_platform:'',
       current_geojson:{},
+      current_wetland_geojson:{},
+      bounding_box:[]
 
 
 
@@ -71,6 +73,41 @@ export const useAdvancedStore = defineStore({
          
             this.selected_wetland =  option
             console.log(this.selected_wetland , 'changed selected wetland')
+
+            //load individual wetlands
+            var data = this.selected_wetland
+            if(data) {
+              const sendGetRequest = async () => {
+                try {
+                  // this.loading = true;
+                    const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/wetlands/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=wetlands%3Afinal_wetland_wemast&outputFormat=application%2Fjson&CQL_FILTER=WETLANDS=%27${data}%27`
+                    );
+                    
+      
+                    this.current_geojson = resp.data
+                    
+                    console.log(resp.data.features[0].bbox, 'advanced bbox');
+                    this.bounding_box = resp.data.features[0].bbox
+                    // var object = resp.data.features.map( (item) => {
+                    //   console.log(item, 'object items')
+                    //   return item
+                    // })
+                    
+                    // this.loading = false;
+                   
+                    return resp.data
+                } catch (err) {
+                    // Handle Error Here
+                    console.error('an error occured'+err);
+                }
+                // finally  { if (this.current_geojson)this.loading = false
+              
+                // }
+            };
+      
+            sendGetRequest();
+      
+            }
           },
           showSelectedPlatform(option) {
             this.platform_placeholder = option;
@@ -87,6 +124,8 @@ export const useAdvancedStore = defineStore({
     getters: {
       getSelectedCountry:(state) => state.selected_country,
       getSelectedRegion:(state) => state.current_geojson,
+      getSelectedWetland:(state) => state.selected_wetland,
+      getSelectedWetlandGeojson:(state)=> state.current_wetland_geojson
 
     }
 })

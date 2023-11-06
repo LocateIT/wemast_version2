@@ -5888,6 +5888,63 @@ changeOpacity()
 
   }
 
+
+  
+  const getAdvancedWetland = async () => {
+
+if(current_geojson.value)map.removeLayer(current_geojson.value)
+if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+if(lulc_legend.value)map.removeControl(lulc_legend.value)
+if(group.value)group.value.clearLayers()
+
+    if(lulc_compare_legend.value )map.removeControl(lulc_compare_legend.value)
+    if(firms_compare_legend.value || firms_legend.value )map.removeControl(firms_compare_legend.value || firms_legend.value)
+    if(smi_compare_legend.value || smi_legend.value)map.removeControl(smi_compare_legend.value || smi_legend.value)
+    if(flood_compare_legend.value || flood_legend.value)map.removeControl(flood_compare_legend.value || flood_legend.value)
+    if(status_compare_legend.value || status_legend.value )map.removeControl(status_compare_legend.value  || status_legend.value)
+    if(ndvi_compare_legend.value || ndvi_legend.value )map.removeControl(ndvi_compare_legend.value || ndvi_legend.value)
+    if(ndwi_compare_legend.value || ndwi_legend.value )map.removeControl(ndwi_compare_legend.value || ndwi_legend.value)
+    if(prec_compare_legend.value || prec_legend.value)map.removeControl(prec_compare_legend.value || prec_legend.value)
+
+
+
+
+
+var selectedWetland = advancedUserSelections.getSelectedWetlandGeojson
+//  geometry = selecteRegion
+console.log(selectedWetland, 'selected wetland app')
+
+map.createPane("pane1000").style.zIndex = 300;
+current_geojson.value = L.geoJSON(selectedWetland, {
+       style: {
+         color: "steelblue",
+         opacity: 1,
+         fillOpacity:0,
+         weight: 4
+       },
+       pane: 'pane1000'
+        })
+
+
+current_geojson.value.addTo(map)
+
+
+        //  map.fitBounds(current_geojson.value.getBounds(), {
+        //                  padding: [50, 50],
+        //                }); 
+
+
+                       if(current_top_base_layer.value === 'MapBoxSatellite'){
+          map.fitBounds(current_geojson.value.getBounds())
+        } else{
+          map.setView(current_geojson.value.getBounds().getCenter());
+
+        }
+        
+
+}
+
     //watch for changes
   
     const setSelectedAdvancedCountry = computed( () => {
@@ -5897,6 +5954,17 @@ changeOpacity()
   })
   watch( setSelectedAdvancedCountry , () => {
     getAdvancedCountry()
+    
+  })
+
+
+  const setSelectedAdvancedWetland = computed( () => {
+    console.log(advancedUserSelections.selected_wetland, 'selected_wetland app')
+    
+    return advancedUserSelections.getSelectedWetlandGeojson
+  })
+  watch( setSelectedAdvancedWetland , () => {
+    getAdvancedWetland()
     
   })
 

@@ -200,75 +200,6 @@ axios.post(apiUrl, postData, {headers})
 .catch(error => {
   console.error('Error:', error)
 });
-// const xhr = new XMLHttpRequest();
-// xhr.open("POST", apiUrl, true);
-// xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-// xhr.onreadystatechange = function () {
-//   if (xhr.readyState === 4 && xhr.status === 200) {
-//     // Successful response
-//     const response = xhr.responseText;
-//     console.log(response, 'signup response');
-//   } else if (xhr.readyState === 4) {
-//     // Request failed
-//     console.error("Request failed with status: " + xhr.status);
-//   }
-// };
-
-// // Convert the data to JSON and send it in the request body
-// xhr.send(JSON.stringify(data));
-// console.log(xhr.responseText, 'signup response');
-
-
-            // const headers = {
-            //   'Content-Type': 'application/json',
-            //   'Access-Control-Allow-Origin': '*'
-            //   // 'Authorization': 'JWT fefege...'
-            // }
-//             try {
-//               const response = await axios.post('http://45.32.233.93:81/wemast/wemast_gen.php', formInputsData
-//               // , formInputsData,
-//               // {
-//               //   statusCode: 200,
-  
-//               // headers: {
-//               //   "access-control-allow-origin": "*",
-//               //   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-//               //   'Access-Control-Allow-Methods': '*',
-//               // },
-
-//               // }
-//               // , {
-//               //   headers: headers,
-//               //   withCredentials: false,
-//               // }
-//               );
-//               console.log(response, 'response')
-              
-// //               var request = new XMLHttpRequest();
-// // request.open('POST', 'http://45.32.233.93:81/wemast/wemast_gen.php', /* async = */ true);
-// // request.send(formInputsData);
-// // // request.setRequestHeader( 'Access-Control-Allow-Origin', '*')
-// // console.log('REQUEST',request);
-//             } catch (error) {
-//               console.log(error, 'error')
-              
-//             }
-
-         
-       
-        // console.log(response.data.user_data.username, 'signup response')
-        // this.$router.push('/login')
-        // this.$emit("username", response.data.user_data.username)
-        // alert('check email to verify')
-        //  .then(response => {
-        
-        //      console.log(response, 'response')
-             
-        //  })
-        //  .catch(error => {
-        //      console.log(error, 'error')
-        //  })
 
       
 
@@ -278,25 +209,6 @@ axios.post(apiUrl, postData, {headers})
 
           
 
-  //           const getUserName = () => {
-  //   var username_input = storeUserSelections.getUsernameInput
-    
-  //  username.value = username_input
-  //   console.log(username_input, 'username_input')
-  
-  // }
-
-  // const setUsernameInput = computed ( () => {
-  //   console.log(storeUserSelections.username, 'username computed')
-  
-  //   return storeUserSelections.getUsernameInput
-  
-  // })
-  // watch( setUsernameInput , () => {
-  //   getUserName()
-    
-  // })
-       
 
   
 </script>

@@ -125,7 +125,8 @@ export const useAdvancedStore = defineStore({
       getSelectedCountry:(state) => state.selected_country,
       getSelectedRegion:(state) => state.current_geojson,
       getSelectedWetland:(state) => state.selected_wetland,
-      getSelectedWetlandGeojson:(state)=> state.current_wetland_geojson
+      getSelectedWetlandGeojson:(state)=> state.current_wetland_geojson,
+      getSelectedBoundingBox:(state) => state.bounding_box,
 
     }
 })

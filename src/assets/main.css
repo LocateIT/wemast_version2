@@ -234,7 +234,7 @@ cursor: pointer;
   margin-left: 25%;
 }
 }
-#mapContainer >>> .base_layer_list {
+#mapContainer  .base_layer_list {
 list-style: none;
 font-size: 15px;
 padding: 5px;
@@ -536,17 +536,17 @@ color: #000;
 /* #wemast_base_layers {
   margin-top: 0.9px;
 } */
-#map >>> .leaflet-control-layers {
+#map  .leaflet-control-layers {
   display: none;
   /* position: absolute;
   top:80;
   right:190px */
-}#map >>> .map_controls {
+}#map  .map_controls {
   font-size: 30px;
   position: sticky;
   top: 40%;
 }
-#map >>> .map_controls img {
+#map  .map_controls img {
   padding-right: 5px;
   padding-left: 5px;
   padding-top: 5px;

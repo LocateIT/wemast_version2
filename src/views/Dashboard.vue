@@ -439,7 +439,8 @@
     
       <div v-if="advanced_filter" class="advanced_filter_container">
         <img class="close_advanced_filter" src=" /uiIcons/close.png" alt="" @click="close_advanced_filter">
-        <AdvancedFilter />
+        <AdvancedFilter
+        @fetchAdvancedData="AddAdvancedBVILayer" />
       </div>
   
   
@@ -3644,7 +3645,7 @@ changeOpacity()
 
 addPrecTimeSeries()
 wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/geoserver/SMI_${season.value}/wms?`, {
-     pane: 'pane800',
+     pane: 'pane400',
      layers: `SMI_${season.value}:SMI`,
      crs:L.CRS.EPSG4326,
      styles: `${basin.value}_smi`,
@@ -3655,7 +3656,7 @@ wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/
      
     
   });
-  wmsPrecTimeseriesLayer.value.addTo(map).bringToFront()
+  wmsPrecTimeseriesLayer.value.addTo(map)
 
 //   wmsPrecTimeseriesLayer.value.on('load', function (event) {
 //     loading.value = false
@@ -5833,60 +5834,60 @@ changeOpacity()
   })
 
 
-  const getAdvancedCountry = async () => {
+  // const getAdvancedCountry = async () => {
 
-    if(current_geojson.value)map.removeLayer(current_geojson.value)
-    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
-    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-    if(lulc_legend.value)map.removeControl(lulc_legend.value)
-    if(group.value)group.value.clearLayers()
+  //   if(current_geojson.value)map.removeLayer(current_geojson.value)
+  //   if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+  //   if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+  //   if(lulc_legend.value)map.removeControl(lulc_legend.value)
+  //   if(group.value)group.value.clearLayers()
 
-        if(lulc_compare_legend.value )map.removeControl(lulc_compare_legend.value)
-        if(firms_compare_legend.value || firms_legend.value )map.removeControl(firms_compare_legend.value || firms_legend.value)
-        if(smi_compare_legend.value || smi_legend.value)map.removeControl(smi_compare_legend.value || smi_legend.value)
-        if(flood_compare_legend.value || flood_legend.value)map.removeControl(flood_compare_legend.value || flood_legend.value)
-        if(status_compare_legend.value || status_legend.value )map.removeControl(status_compare_legend.value  || status_legend.value)
-        if(ndvi_compare_legend.value || ndvi_legend.value )map.removeControl(ndvi_compare_legend.value || ndvi_legend.value)
-        if(ndwi_compare_legend.value || ndwi_legend.value )map.removeControl(ndwi_compare_legend.value || ndwi_legend.value)
-        if(prec_compare_legend.value || prec_legend.value)map.removeControl(prec_compare_legend.value || prec_legend.value)
+  //       if(lulc_compare_legend.value )map.removeControl(lulc_compare_legend.value)
+  //       if(firms_compare_legend.value || firms_legend.value )map.removeControl(firms_compare_legend.value || firms_legend.value)
+  //       if(smi_compare_legend.value || smi_legend.value)map.removeControl(smi_compare_legend.value || smi_legend.value)
+  //       if(flood_compare_legend.value || flood_legend.value)map.removeControl(flood_compare_legend.value || flood_legend.value)
+  //       if(status_compare_legend.value || status_legend.value )map.removeControl(status_compare_legend.value  || status_legend.value)
+  //       if(ndvi_compare_legend.value || ndvi_legend.value )map.removeControl(ndvi_compare_legend.value || ndvi_legend.value)
+  //       if(ndwi_compare_legend.value || ndwi_legend.value )map.removeControl(ndwi_compare_legend.value || ndwi_legend.value)
+  //       if(prec_compare_legend.value || prec_legend.value)map.removeControl(prec_compare_legend.value || prec_legend.value)
 
 
 
  
    
-    var selectedCountry = advancedUserSelections.getSelectedRegion
-  //  geometry = selecteRegion
-   console.log(selectedCountry, 'selected country app')
+  //   var selectedCountry = advancedUserSelections.getSelectedRegion
+  // //  geometry = selecteRegion
+  //  console.log(selectedCountry, 'selected country app')
   
-   map.createPane("pane1000").style.zIndex = 300;
-   current_geojson.value = L.geoJSON(selectedCountry, {
-           style: {
-             color: "steelblue",
-             opacity: 1,
-             fillOpacity:0,
-             weight: 4
-           },
-           pane: 'pane1000'
-            })
+  //  map.createPane("pane1000").style.zIndex = 300;
+  //  current_geojson.value = L.geoJSON(selectedCountry, {
+  //          style: {
+  //            color: "steelblue",
+  //            opacity: 1,
+  //            fillOpacity:0,
+  //            weight: 4
+  //          },
+  //          pane: 'pane1000'
+  //           })
    
   
-   current_geojson.value.addTo(map)
+  //  current_geojson.value.addTo(map)
   
   
-            //  map.fitBounds(current_geojson.value.getBounds(), {
-            //                  padding: [50, 50],
-            //                }); 
+  //           //  map.fitBounds(current_geojson.value.getBounds(), {
+  //           //                  padding: [50, 50],
+  //           //                }); 
 
 
-                           if(current_top_base_layer.value === 'MapBoxSatellite'){
-              map.fitBounds(current_geojson.value.getBounds())
-            } else{
-              map.setView(current_geojson.value.getBounds().getCenter());
+  //                          if(current_top_base_layer.value === 'MapBoxSatellite'){
+  //             map.fitBounds(current_geojson.value.getBounds())
+  //           } else{
+  //             map.setView(current_geojson.value.getBounds().getCenter());
 
-            }
+  //           }
             
 
-  }
+  // }
 
 
   
@@ -5928,6 +5929,7 @@ current_geojson.value = L.geoJSON(selectedWetland, {
 
 
 current_geojson.value.addTo(map)
+console.log('bounds', map.getBounds())
 
 
         //  map.fitBounds(current_geojson.value.getBounds(), {
@@ -5937,25 +5939,65 @@ current_geojson.value.addTo(map)
 
                        if(current_top_base_layer.value === 'MapBoxSatellite'){
           map.fitBounds(current_geojson.value.getBounds())
+          
         } else{
           map.setView(current_geojson.value.getBounds().getCenter());
 
         }
+//${season.value}:${year.value}
+
+    
         
 
 }
 
+const AddAdvancedBVILayer = () => {
+  map.createPane("pane400").style.zIndex = 400;
+
+// wmsCompareLayer.value.addTo(map);
+// wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}/wms?`, {
+//      pane: 'pane1000', 
+//      layers: `BVI_${season.value}:${year.value}`,
+//      crs:L.CRS.EPSG4326,
+//      styles: 'base7530158859', //basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+//      format: 'image/png',
+//      transparent: true,
+//     //  bbox: [22.0609,-16.3416,24.3887,-13.9489], // 'xmin,ymin,xmax,ymax'
+//     //  bounds: L.latLngBounds([[22.0609,-16.3416],[24.3887,-13.9489]]) ,
+//      opacity:1.0
+     
+     
+//      //http://66.42.65.87:8080/geoserver/BVI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=BVI_WET%3A2000&bbox=22.0609%2C-16.3416%2C24.3887%2C-13.9489&width=768&height=596&srs=EPSG%3A4326&format=image%2Fpng  
+// });
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
+     pane: 'pane400', 
+     layers: `LULC:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: 'baro',// basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     
+     
+    
+});
+wmsLayer.value.addTo(map);
+console.log('logging advanced data')
+
+        }
+        // AddAdvancedBVILayer()
+
     //watch for changes
   
-    const setSelectedAdvancedCountry = computed( () => {
-    console.log(advancedUserSelections.selected_country, 'selected_country app')
+  //   const setSelectedAdvancedCountry = computed( () => {
+  //   console.log(advancedUserSelections.selected_country, 'selected_country app') 
     
-    return advancedUserSelections.getSelectedRegion
-  })
-  watch( setSelectedAdvancedCountry , () => {
-    getAdvancedCountry()
+  //   return advancedUserSelections.getSelectedRegion
+  // })
+  // watch( setSelectedAdvancedCountry , () => {
+  //   getAdvancedCountry()
     
-  })
+  // })
 
 
   const setSelectedAdvancedWetland = computed( () => {
@@ -5967,6 +6009,13 @@ current_geojson.value.addTo(map)
     getAdvancedWetland()
     
   })
+
+  const setSelectedAdvancedBbox = computed( () => {
+    console.log(advancedUserSelections.bounding_box, 'bbox app')
+    
+    return advancedUserSelections.getSelectedBoundingBox
+  })
+  watch( setSelectedAdvancedBbox )
 
 
     

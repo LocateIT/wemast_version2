@@ -41,6 +41,9 @@
       options:{
          type: Object
       },
+      height:{
+         type: Number
+      },
     //   cause:{
     //      type:String
     //   },

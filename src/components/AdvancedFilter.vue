@@ -81,7 +81,7 @@
     </div> -->
     
 
-    <button type="button" class="submit">SUBMIT</button>
+    <button type="button" class="submit" @click="$emit('fetchAdvancedData')">SUBMIT</button>
     
    
 

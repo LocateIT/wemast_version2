@@ -119,7 +119,7 @@ axios.post(apiUrl, postData, {headers})
   }
   else{
     // alert(response.data[0].error)
-    toast.error(response.data[0].error, {
+    toast.error(response.data[0].error + ' '+ 'Please try again', {
         timeout: 2000,
         position: POSITION.TOP_CENTER
       });

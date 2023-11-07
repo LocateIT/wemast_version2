@@ -1,16 +1,16 @@
 
 <template>
-    <div class="aselect" :data-value="placeholder" :data-list="list">
+    <div class="aselect" :data-value="placeholder" >
       <div class="selector" @click="toggle()">
           <div class="label">
                   <span>{{ advancedFilterSelections.wetland_placeholder}}</span>
           </div>
-          <!-- <div class="arrow" :class="{ expanded : visible }"></div> -->
+          <!-- <div class="arrow" :class="{ expanded : visible }"></div> :data-list="list" -->
           <img src=" /uiIcons/arrow_drop_down_circle.svg" alt="" class="arrow" :class="{ expanded : visible }">
           <div :class="{ hidden : !visible, visible }">
               <ul>
   
-                  <li  :class="{ current : item === wetland_placeholder }"
+                  <li  :class="{ current : item === advancedFilterSelections.wetland_placeholder }"
                    v-for="item in  advancedFilterSelections.wetland_list" :key="item"  disabled
                    @click=" advancedFilterSelections.showSelectedWetland(item)">{{ item }}</li>
                   

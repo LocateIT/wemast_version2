@@ -668,6 +668,8 @@
   let cmd_= ref('')
   let printPlugin = ref(null)
   let browserZoomLevel = ref()
+  let layer_abbreviations = ref(null)
+  let advanced_post_data = ref({})
 
 
   //advanced filter variables
@@ -5834,60 +5836,60 @@ changeOpacity()
   })
 
 
-  // const getAdvancedCountry = async () => {
+  const getAdvancedCountry = async () => {
 
-  //   if(current_geojson.value)map.removeLayer(current_geojson.value)
-  //   if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
-  //   if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-  //   if(lulc_legend.value)map.removeControl(lulc_legend.value)
-  //   if(group.value)group.value.clearLayers()
+    if(current_geojson.value)map.removeLayer(current_geojson.value)
+    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+    if(lulc_legend.value)map.removeControl(lulc_legend.value)
+    if(group.value)group.value.clearLayers()
 
-  //       if(lulc_compare_legend.value )map.removeControl(lulc_compare_legend.value)
-  //       if(firms_compare_legend.value || firms_legend.value )map.removeControl(firms_compare_legend.value || firms_legend.value)
-  //       if(smi_compare_legend.value || smi_legend.value)map.removeControl(smi_compare_legend.value || smi_legend.value)
-  //       if(flood_compare_legend.value || flood_legend.value)map.removeControl(flood_compare_legend.value || flood_legend.value)
-  //       if(status_compare_legend.value || status_legend.value )map.removeControl(status_compare_legend.value  || status_legend.value)
-  //       if(ndvi_compare_legend.value || ndvi_legend.value )map.removeControl(ndvi_compare_legend.value || ndvi_legend.value)
-  //       if(ndwi_compare_legend.value || ndwi_legend.value )map.removeControl(ndwi_compare_legend.value || ndwi_legend.value)
-  //       if(prec_compare_legend.value || prec_legend.value)map.removeControl(prec_compare_legend.value || prec_legend.value)
+        if(lulc_compare_legend.value )map.removeControl(lulc_compare_legend.value)
+        if(firms_compare_legend.value || firms_legend.value )map.removeControl(firms_compare_legend.value || firms_legend.value)
+        if(smi_compare_legend.value || smi_legend.value)map.removeControl(smi_compare_legend.value || smi_legend.value)
+        if(flood_compare_legend.value || flood_legend.value)map.removeControl(flood_compare_legend.value || flood_legend.value)
+        if(status_compare_legend.value || status_legend.value )map.removeControl(status_compare_legend.value  || status_legend.value)
+        if(ndvi_compare_legend.value || ndvi_legend.value )map.removeControl(ndvi_compare_legend.value || ndvi_legend.value)
+        if(ndwi_compare_legend.value || ndwi_legend.value )map.removeControl(ndwi_compare_legend.value || ndwi_legend.value)
+        if(prec_compare_legend.value || prec_legend.value)map.removeControl(prec_compare_legend.value || prec_legend.value)
 
 
 
  
    
-  //   var selectedCountry = advancedUserSelections.getSelectedRegion
-  // //  geometry = selecteRegion
-  //  console.log(selectedCountry, 'selected country app')
+    var selectedCountry = advancedUserSelections.getSelectedRegion
+  //  geometry = selecteRegion
+   console.log(selectedCountry, 'selected country app')
   
-  //  map.createPane("pane1000").style.zIndex = 300;
-  //  current_geojson.value = L.geoJSON(selectedCountry, {
-  //          style: {
-  //            color: "steelblue",
-  //            opacity: 1,
-  //            fillOpacity:0,
-  //            weight: 4
-  //          },
-  //          pane: 'pane1000'
-  //           })
+   map.createPane("pane1000").style.zIndex = 300;
+   current_geojson.value = L.geoJSON(selectedCountry, {
+           style: {
+             color: "steelblue",
+             opacity: 1,
+             fillOpacity:0,
+             weight: 4
+           },
+           pane: 'pane1000'
+            })
    
   
-  //  current_geojson.value.addTo(map)
+   current_geojson.value.addTo(map)
   
   
-  //           //  map.fitBounds(current_geojson.value.getBounds(), {
-  //           //                  padding: [50, 50],
-  //           //                }); 
+            //  map.fitBounds(current_geojson.value.getBounds(), {
+            //                  padding: [50, 50],
+            //                }); 
 
 
-  //                          if(current_top_base_layer.value === 'MapBoxSatellite'){
-  //             map.fitBounds(current_geojson.value.getBounds())
-  //           } else{
-  //             map.setView(current_geojson.value.getBounds().getCenter());
+                           if(current_top_base_layer.value === 'MapBoxSatellite'){
+              map.fitBounds(current_geojson.value.getBounds())
+            } else{
+              map.setView(current_geojson.value.getBounds().getCenter());
 
-  //           }
+            }
             
 
-  // }
+  }
 
 
   
@@ -5914,7 +5916,7 @@ if(group.value)group.value.clearLayers()
 
 var selectedWetland = advancedUserSelections.getSelectedWetlandGeojson
 //  geometry = selecteRegion
-console.log(selectedWetland, 'selected wetland app')
+console.log(selectedWetland, 'selected wetland geojson app')
 
 map.createPane("pane1000").style.zIndex = 300;
 current_geojson.value = L.geoJSON(selectedWetland, {
@@ -5946,6 +5948,64 @@ console.log('bounds', map.getBounds())
         }
 //${season.value}:${year.value}
 
+//construct an object for post data
+// console.log('wetland name',advancedUserSelections.selected_wetland)
+// console.log('indicator', indicator.value )
+// console.log('subindicator', sub_indicator.value )
+if(indicator.value === 'Basin Vulnerability Index'){
+  layer_abbreviations.value = 'BVI'
+
+}
+if(sub_indicator.value === 'Land Cover'){
+  layer_abbreviations.value = 'LULC'
+
+}
+if(sub_indicator.value === 'Vegetation Cover'){
+  layer_abbreviations.value = 'NDVI'
+
+}
+if(parameter.value === 'Wetland Extent'){
+  layer_abbreviations.value = 'NDWI'
+
+}
+if(parameter.value === 'Wetland Status'){
+  layer_abbreviations.value = 'STATUS'
+
+}
+if(sub_indicator.value === 'Burnt Area FIRMS'){
+  layer_abbreviations.value = 'FIRE'
+
+}
+if(sub_indicator.value === 'Precipitation Index'){
+  layer_abbreviations.value = 'SPI'
+
+}
+if(sub_indicator.value === 'Undulation'){
+  layer_abbreviations.value = 'FLOOD'
+
+}
+if(sub_indicator.value === 'Soil Moisure Index'){
+  layer_abbreviations.value = 'SMI'
+
+}
+
+advanced_post_data.value = {
+  "wetland": { "name": advancedUserSelections.selected_wetland },
+  "indicator": { "name": layer_abbreviations.value}
+}
+if(parameter.value === 'Turbidity'){
+  layer_abbreviations.value = 'NDWI'
+
+}
+if(parameter.value === 'Sus Sediments'){
+  layer_abbreviations.value = 'NDWI'
+
+}
+console.log('post data',advanced_post_data.value)
+
+
+
+
     
         
 
@@ -5973,7 +6033,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane400', 
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: 'baro',// basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
+     styles: 'base2037052156',// basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -5989,15 +6049,15 @@ console.log('logging advanced data')
 
     //watch for changes
   
-  //   const setSelectedAdvancedCountry = computed( () => {
-  //   console.log(advancedUserSelections.selected_country, 'selected_country app') 
+    const setSelectedAdvancedCountry = computed( () => {
+    console.log(advancedUserSelections.selected_country, 'selected_country app') 
     
-  //   return advancedUserSelections.getSelectedRegion
-  // })
-  // watch( setSelectedAdvancedCountry , () => {
-  //   getAdvancedCountry()
+    return advancedUserSelections.getSelectedRegion
+  })
+  watch( setSelectedAdvancedCountry , () => {
+    getAdvancedCountry()
     
-  // })
+  })
 
 
   const setSelectedAdvancedWetland = computed( () => {

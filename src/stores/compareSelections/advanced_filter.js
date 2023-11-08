@@ -84,7 +84,7 @@ export const useAdvancedStore = defineStore({
                     );
                     
       
-                    this.current_geojson = resp.data
+                    this.current_wetland_geojson = resp.data
                     
                     console.log(resp.data.features[0].bbox, 'advanced bbox');
                     this.bounding_box = resp.data.features[0].bbox

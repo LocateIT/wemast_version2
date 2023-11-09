@@ -176,7 +176,349 @@ const clickedMe = () => {
 </script>
 
 <style scoped>
-    .selections{
+@media (min-width: 1366px) {
+  .selections{
+        background-color: #f6f6f6;
+        position: absolute; width: 88vw;
+          height: 40px; padding: 15px; top: 10vh; left: 15vw;
+           border-radius: 30px; padding-bottom: 20px;
+    }
+    .select_country{ 
+  position: absolute;
+  top: -0.7vh;
+  left: 1.3vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+#region_selection{ 
+  position: absolute;
+  top: 3.5vh;
+  left: 0.8vw;
+  height: 35px;
+  width: 120px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.select_cause{ 
+  position: absolute;
+  top: -0.5vh;
+  left: 11vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+#cause_selection{ 
+  position: absolute;
+  top: 3.5vh;
+  left: 12.5vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+  
+}
+
+.select_sub-indicator{ 
+  position: absolute;
+  top: -0.5vh;
+  left: 22vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+.sub_indicator_selection{
+  position: absolute;
+  top: 3.5vh;
+  left: 22vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.bvi_label{
+  position: absolute;
+  top: 0.1vh;
+  left: 20vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.bvi_select{
+  position: absolute;
+  top: 4vh;
+  left: 20vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.select_year{ 
+  position: absolute;
+  top: -0.5vh;
+  left: 37vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+.flood_request{
+  position: absolute;
+  top: 4vh;
+  left: 29vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+
+
+}
+
+.year_selection{
+  position: absolute;
+  top: 3.5vh;
+  left: 37vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.select_season{
+  position: absolute;
+  top: 0.1vh;
+  left: 38vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+#season_selection{
+  position: absolute;
+  top: 4vh;
+  left: 38vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.select_parameter{
+  position: absolute;
+  top: 0.1vh;
+  left: 28vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+#parameter_selection{
+  position: absolute;
+  top: 4vh;
+  left: 28vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+.request{
+    position: absolute;
+  top: 4vh;
+  left: 46vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+
+
+.burnt_request{
+    position: absolute;
+  top: 4vh;
+  left: 46vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+.request1{
+  position: absolute;
+  top: 4vh;
+  left: 49vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+
+}
+
+.select_year2{ 
+  position: absolute;
+  top: 0.1vh;
+  left: 38vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+
+.year_selection2{
+  position: absolute;
+  top: 4vh;
+  left: 38vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+
+.request2{
+    position: absolute;
+  top: 4vh;
+  left: 48vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+.select_season_satellite{
+  position: absolute;
+  top: 0.1vh;
+  left: 47vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.season_satellite_selection{
+  position: absolute;
+  top: 4vh;
+  left: 47vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.request_satellite{
+    position: absolute;
+  top: 4vh;
+  left: 58vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+.request_status{
+    position: absolute;
+  top: 4vh;
+  left: 62vw;
+  width: 140px;
+  height: 35px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  border-radius: 30px;
+  border: none;
+  color: #fff;
+  background-color: steelblue;
+  cursor: pointer;
+}
+
+
+.select_year3{ 
+  position: absolute;
+  top: 0.1vh;
+  left: 54vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.year_selection3{
+  position: absolute;
+  top: 4vh;
+  left: 54vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.season_status{
+  position: absolute;
+  top: 0.1vh;
+  left: 46vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+}
+.season_status_selection{
+  position: absolute;
+  top: 4vh;
+  left: 46vw;
+  height: 35px;
+  width: 140px;
+  border-radius: 30px;
+  cursor: pointer;
+  z-index: 1200;
+}
+.search_location{
+  position: absolute;
+  top: 0.1vh;
+  left: 74vw;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+
+}
+#location_search{
+  position: absolute;
+  top: 5vh;
+  left: 74vw;
+  height: 40px;
+  width: 300px;
+  z-index: 1000;
+  /* background-color: #fff; */
+
+}
+.satellite_none{
+  display: none !important;
+}
+
+
+
+}
+@media (min-width: 1920px) {
+  .selections{
         background-color: #f6f6f6;
         position: absolute; width: 89vw;
           height: 50px; padding: 15px; top: 12vh; left: 15vw;
@@ -517,6 +859,8 @@ const clickedMe = () => {
 }
 
 
+}
+    
 
 
 

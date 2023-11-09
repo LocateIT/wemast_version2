@@ -49,7 +49,61 @@ import LanguageSwitch from './LanguageSwitch.vue';
 </script>
 
 <style scoped>
-    .nav{
+   
+
+
+
+@media (min-width: 1366px) {
+  .nav{
+        width: 100vw;
+        height: 10vh;
+    }
+    .sasscal {
+      height: 50px;
+  margin-left: 5vw;
+  margin-right: 35px;
+  margin-top: 2vh;
+
+  
+}
+.project_title {
+  margin-top: -6vh !important;
+  position: relative;
+  left: 12vw;
+  /* text-transform: uppercase; */
+ 
+  
+}
+  .project_title1{
+  font-size: 13px;
+  font-weight: 500;
+  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+}
+.patners{
+  position: absolute;
+  top: 1vh;
+  z-index: 1000;
+  left: 59vw;
+  
+}
+.WeMast_Dashboard_logos {
+ 
+ height: 42px;
+/* width: 80px; */
+ margin: 2px;
+
+}
+.languages{
+  position: absolute;
+    top: 0vh;
+    left:86vw;
+    z-index: 1000;
+
+}
+  }
+
+@media (min-width: 1920px) {
+  .nav{
         width: 100vw;
         height: 10vh;
     }
@@ -140,6 +194,8 @@ import LanguageSwitch from './LanguageSwitch.vue';
     top: 0vh;
     left:90vw;
     z-index: 1000;
+
+}
 
 }
 

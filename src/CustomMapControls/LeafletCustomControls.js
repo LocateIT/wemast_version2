@@ -9,7 +9,7 @@ export const leaflet_custom_controls =
 left:  -12vw;  ">
  
 </div>
-<img title="" id="wemast_base_layers" src=" /mapIcons/layers-24px.svg" alt="" class="wemast_base_layers">
+<img title="Base maps" id="wemast_base_layers" src=" /mapIcons/layers-24px.svg" alt="" class="wemast_base_layers">
 <img title="Draw Polygon" id="draw_polygon" src=" /mapIcons/square.svg" alt="" class="draw_polygon">
 <img title="Zoom in" id="zoom_in" src=" /mapIcons/add-24px.svg" alt="" class="zoom_in" >
 <img title="Zoom out" id="zoom_out" src=" /mapIcons/remove-24px.svg" alt="" class="zoom_out" >

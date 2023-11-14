@@ -695,6 +695,7 @@
   let layer_abbreviations = ref(null)
   let advanced_post_data = ref({})
   let shp_geojson = ref(null)
+  let layer = ref(null)
 
 
   //advanced filter variables
@@ -771,10 +772,17 @@ const submit_shapefile = () => {
         }
 
         function convertToLayer(buffer){
+          if(layer.value)map.removeLayer(layer.value)
+          if(current_geojson.value)map.removeLayer(current_geojson.value)
+          if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+          if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
+          if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
+          if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
+          
           shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
             console.log(geojson, 'uploaded shapefile geojson')
             shp_geojson.value = geojson
-            var layer = L.shapefile(geojson, {
+            layer.value = L.shapefile(geojson, {
               style: {
                 color: "#000",
                 opacity: 1,
@@ -782,8 +790,12 @@ const submit_shapefile = () => {
                 weight: 4
               },
             })
-            .addTo(map);      //More info: https://github.com/calvinmetcalf/leaflet.shapefile
-            console.log(layer);
+            .addTo(map); //More info: https://github.com/calvinmetcalf/leaflet.shapefile
+
+                 map.fitBounds(layer.value.getBounds(), {
+                             padding: [50, 50],
+                           }); 
+              
           })
         }
 
@@ -1415,7 +1427,7 @@ let barchart_options= {
           console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
           // if (process.env.DEV)
           // 
-          var drawn_polygon_object = custom_geojson.value.toGeoJSON().geometry
+          var drawn_polygon_object = custom_geojson.value.toGeoJSON() //.geometry
           console.log('post object',drawn_polygon_object, )  
         });
   

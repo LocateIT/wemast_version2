@@ -761,6 +761,10 @@ const submit_shapefile = () => {
       });  	
             return;
           } else {
+            toast.success('Shapefile upload successful', {
+        timeout: 2000,
+        position: POSITION.BOTTOM_RIGHT
+      }); 
             document.getElementById('warning').innerHTML = ''; //clear warning message.
             handleZipFile(file);
           }
@@ -1211,6 +1215,10 @@ let barchart_options= {
          
           document.querySelector("#help").style.position = "absolute"
           document.querySelector("#help").style.left = "-2vw"
+
+          document.querySelector("#upload_custom_shapefile").style.position = "absolute"
+          document.querySelector("#upload_custom_shapefile").style.left = "-2vw"
+          
        
 
         
@@ -1248,6 +1256,9 @@ let barchart_options= {
          
           document.querySelector("#help").style.position = "absolute"
           document.querySelector("#help").style.left = "4vw"
+
+          document.querySelector("#upload_custom_shapefile").style.position = "absolute"
+          document.querySelector("#upload_custom_shapefile").style.left = "4vw"
 
 
           // if(wmsLayer != null){
@@ -1313,6 +1324,10 @@ let barchart_options= {
 
             document.querySelector("#help").style.position = "absolute"
             document.querySelector("#help").style.left = "-2vw"
+
+            
+          document.querySelector("#upload_custom_shapefile").style.position = "absolute"
+          document.querySelector("#upload_custom_shapefile").style.left = "-2vw"
 
 
 

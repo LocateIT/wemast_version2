@@ -33,6 +33,7 @@
     "mapbox-gl": "^2.13.0",
     "osmbuildings": "^0.2.0-b",
     "pinia": "^2.0.21",
+    "shpjs": "^4.0.4",
     "vue": "^3.2.38",
     "vue-chart-3": "^3.1.8",
     "vue-chartjs": "^3.5.1",

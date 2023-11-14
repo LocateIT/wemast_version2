@@ -19,6 +19,14 @@
         @opensettings="opendisplaysettings"/>
 
       </div>
+      <div class="upload_shapefile_container" v-if="upload_shapefile" 
+      style="z-index: 1000; position: absolute; top: 62vh;left: 77vw; height: 10vh; width: 12vw; background-color: #fff; 
+      display: flex; justify-content: center; align-items: center;flex-direction: column; padding: 20px; gap: .5rem;">
+      <span class="select_zipped" style="margin-top: .1vw; color: #4682b4; font-weight: 600;">Select a zipped shapefile</span>
+        <input type="file" id="file"   /> 
+        <input type="submit" id="submit" @click="submit_shapefile" class='submit_shapefile' style="margin-left: -10vw;" /> <span id="warning"></span>
+
+      </div>
      
 
       
@@ -572,6 +580,8 @@
   import { CloudRain } from "@vicons/fa"
   import { ThermometerHalf } from "@vicons/fa"
   import RescaleScreen from '../components/RescaleScreen.vue';
+  import shp from 'shpjs/dist/shp.js'
+  import '../upload_shp/leaflet.shpfile.js'
   
 
 
@@ -579,7 +589,7 @@
   //refs go here
   let baseurl = 'http://66.42.65.87'
   let scale_div = ref(window.devicePixelRatio !== 1 || window.innerWidth !== screen.width)
-
+  let upload_shapefile = ref(false)
 
 
   let documentation = ref(false)
@@ -684,6 +694,7 @@
   let browserZoomLevel = ref()
   let layer_abbreviations = ref(null)
   let advanced_post_data = ref({})
+  let shp_geojson = ref(null)
 
 
   //advanced filter variables
@@ -725,7 +736,56 @@ if (window.devicePixelRatio !== 1 || window.innerWidth !== screen.width) {
     alert("You can change your screen scale and layout settings later for a better experience.");
   }
 }
+const show_upload_shapefile = () => {
+  upload_shapefile.value = !upload_shapefile.value
+}
   
+const submit_shapefile = () => {
+          var files = document.getElementById('file').files;
+          if (files.length == 0) {
+            return; //do nothing if no file given yet
+          }
+          
+          var file = files[0];
+          
+          if (file.name.slice(-3) != 'zip'){ //Demo only tested for .zip. All others, return.
+            document.getElementById('warning').innerHTML = 'Select .zip file';  	
+            return;
+          } else {
+            document.getElementById('warning').innerHTML = ''; //clear warning message.
+            handleZipFile(file);
+          }
+        };
+        
+        //More info: https://developer.mozilla.org/en-US/docs/Web/API/FileReader
+        function handleZipFile(file){
+          var reader = new FileReader();
+          reader.onload = function() {
+            if (reader.readyState != 2 || reader.error){
+              return;
+            } else {
+              convertToLayer(reader.result);
+            }
+          }
+          reader.readAsArrayBuffer(file);
+        }
+
+        function convertToLayer(buffer){
+          shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
+            console.log(geojson, 'uploaded shapefile geojson')
+            shp_geojson.value = geojson
+            var layer = L.shapefile(geojson, {
+              style: {
+                color: "#000",
+                opacity: 1,
+                fillOpacity:0,
+                weight: 4
+              },
+            })
+            .addTo(map);      //More info: https://github.com/calvinmetcalf/leaflet.shapefile
+            console.log(layer);
+          })
+        }
 
   let lineChartData = {
       labels: [],
@@ -1354,7 +1414,9 @@ let barchart_options= {
           storeUserSelections.custom_geojson.geojson = custom_geojson.value.toGeoJSON().geometry
           console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
           // if (process.env.DEV)
-          //   
+          // 
+          var drawn_polygon_object = custom_geojson.value.toGeoJSON().geometry
+          console.log('post object',drawn_polygon_object, )  
         });
   
       map.on(L.Draw.Event.EDITSTOP, (e) => {
@@ -1908,6 +1970,14 @@ default_stats.value =  storeUserSelections.getDefaultStats()
           console.log("click ");
           
           help();
+        });
+
+        document
+        .getElementById("upload_custom_shapefile")
+        .addEventListener("click", (e) => {
+          console.log("click ");
+          
+          show_upload_shapefile();
         });
         document
         .getElementById("download_map")
@@ -6043,8 +6113,16 @@ if(parameter.value === 'Sus Sediments'){
 }
 console.log('post data', advanced_post_data.value)
 
-
-
+//start post request
+const apiUrl = "http://66.42.65.87:8000/generate_sld/";
+axios.post(apiUrl, advanced_post_data.value)
+.then(response => {
+  console.log('Wetland response:', response.data)
+  
+})
+.catch(error => {
+  console.error('Error:', error)
+});
 
     
         

@@ -397,6 +397,12 @@ table {
   left:-2vw
 
 }
+.upload{
+  position: absolute;
+  top: 37vh;
+  left:-2vw
+
+}
 /* #search1{
   position: absolute;
   top: 65vh;

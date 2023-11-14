@@ -14,6 +14,7 @@ left:  -12vw;  ">
 <img title="Zoom in" id="zoom_in" src=" /mapIcons/add-24px.svg" alt="" class="zoom_in" >
 <img title="Zoom out" id="zoom_out" src=" /mapIcons/remove-24px.svg" alt="" class="zoom_out" >
 <img title="Help" id="help" src=" /mapIcons/help.svg" alt="" class="help">
+<img title="Upload Shapefile" id="upload_custom_shapefile" src=" /mapIcons/upload.svg" alt="" class="upload">
 </div>`;
 
 /*

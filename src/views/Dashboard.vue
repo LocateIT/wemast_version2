@@ -20,11 +20,12 @@
 
       </div>
       <div class="upload_shapefile_container" v-if="upload_shapefile" 
-      style="z-index: 1000; position: absolute; top: 62vh;left: 77vw; height: 10vh; width: 12vw; background-color: #fff; 
+      style="z-index: 1000; position: absolute; top: 62vh;left: 77vw; height: 12vh; width: 12vw; background-color: #fff; 
       display: flex; justify-content: center; align-items: center;flex-direction: column; padding: 20px; gap: .5rem;">
-      <span class="select_zipped" style="margin-top: .1vw; color: #4682b4; font-weight: 600;">Select a zipped shapefile</span>
+      <span class="select_zipped" style="margin-top: .1vw; color: #073e81; font-weight: 600;">Select a zipped shapefile</span>
         <input type="file" id="file"   /> 
-        <input type="submit" id="submit" @click="submit_shapefile" class='submit_shapefile' style="margin-left: -10vw;" /> <span id="warning"></span>
+        <input type="submit" id="submit" @click="submit_shapefile" class='submit_shapefile' style="margin-left: -10vw;" />
+         <span  id="warning" style="position: relative; top:2vh; "></span>
 
       </div>
      
@@ -582,6 +583,8 @@
   import RescaleScreen from '../components/RescaleScreen.vue';
   import shp from 'shpjs/dist/shp.js'
   import '../upload_shp/leaflet.shpfile.js'
+  import Toast, { POSITION } from "vue-toastification";
+  import { useToast } from "vue-toastification";
   
 
 
@@ -704,6 +707,7 @@
   const storeUserSelections = useCounterStore()
   const compareUserSelections = useCompareStore()
   const advancedUserSelections = useAdvancedStore()
+  const toast = useToast();
   
   // console.log(storeUserSelections.fetchCountriesList)
   
@@ -750,7 +754,11 @@ const submit_shapefile = () => {
           var file = files[0];
           
           if (file.name.slice(-3) != 'zip'){ //Demo only tested for .zip. All others, return.
-            document.getElementById('warning').innerHTML = 'Select .zip file';  	
+            // document.getElementById('warning').innerHTML = 'Select .zip file';
+            toast.error('File must be a zipped folder', {
+        timeout: 2000,
+        position: POSITION.BOTTOM_RIGHT
+      });  	
             return;
           } else {
             document.getElementById('warning').innerHTML = ''; //clear warning message.
@@ -772,13 +780,14 @@ const submit_shapefile = () => {
         }
 
         function convertToLayer(buffer){
+          //remove previously loaded layers
           if(layer.value)map.removeLayer(layer.value)
           if(current_geojson.value)map.removeLayer(current_geojson.value)
           if(wmsLayer.value)map.removeLayer(wmsLayer.value)
           if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
           if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
           if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
-          
+
           shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
             console.log(geojson, 'uploaded shapefile geojson')
             shp_geojson.value = geojson

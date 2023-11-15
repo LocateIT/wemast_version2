@@ -140,8 +140,7 @@ export const useCounterStore = defineStore({
      
       //spinner loader
       loading:false,
-      kwale_geojson:{},
-      kwale_raster: null,
+      
       layers:[],
       selected_layer:'',
       selected_raster:null,

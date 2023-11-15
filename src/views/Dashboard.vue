@@ -699,6 +699,7 @@
   let advanced_post_data = ref({})
   let shp_geojson = ref(null)
   let layer = ref(null)
+  let drawn_layer = ref(null)
 
 
   //advanced filter variables
@@ -743,6 +744,7 @@ if (window.devicePixelRatio !== 1 || window.innerWidth !== screen.width) {
 }
 const show_upload_shapefile = () => {
   upload_shapefile.value = !upload_shapefile.value
+  // if(layer.value)map.removeLayer(layer.value)
 }
   
 const submit_shapefile = () => {
@@ -761,7 +763,7 @@ const submit_shapefile = () => {
       });  	
             return;
           } else {
-            toast.success('Shapefile upload successful', {
+            toast.success('Shapefile uploaded successfully', {
         timeout: 2000,
         position: POSITION.BOTTOM_RIGHT
       }); 
@@ -808,6 +810,8 @@ const submit_shapefile = () => {
                  map.fitBounds(layer.value.getBounds(), {
                              padding: [50, 50],
                            }); 
+
+                           if(layer.value  )storeUserSelections.region_placeholder = 'Custom'
               
           })
         }
@@ -1452,7 +1456,12 @@ let barchart_options= {
           // if (process.env.DEV)
           // 
           var drawn_polygon_object = custom_geojson.value.toGeoJSON() //.geometry
-          console.log('post object',drawn_polygon_object, )  
+            
+          //make drawn object global
+          drawn_layer.value = custom_geojson.value.toGeoJSON()
+          console.log('post object', drawn_layer.value, ) 
+          storeUserSelections.region_placeholder = 'Custom'
+          
         });
   
       map.on(L.Draw.Event.EDITSTOP, (e) => {
@@ -1701,6 +1710,7 @@ const download_tiff = () => {
 
 }
 const help = () => {
+
         var url = 'https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki'
         var a = document.createElement("a");
         a.setAttribute("href", url);

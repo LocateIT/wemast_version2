@@ -788,11 +788,12 @@ const submit_shapefile = () => {
         function convertToLayer(buffer){
           //remove previously loaded layers
           if(layer.value)map.removeLayer(layer.value)
+          if(lulc_legend.value)map.removeControl(lulc_legend.value)
           if(current_geojson.value)map.removeLayer(current_geojson.value)
           if(wmsLayer.value)map.removeLayer(wmsLayer.value)
           if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
           if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
-          if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
+          if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value) //lulc_legend.value
 
           shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
             console.log(geojson, 'uploaded shapefile geojson')
@@ -811,7 +812,9 @@ const submit_shapefile = () => {
                              padding: [50, 50],
                            }); 
 
-                           if(layer.value  )storeUserSelections.region_placeholder = 'Custom'
+                           if(layer.value)storeUserSelections.region_placeholder = 'Custom'
+                           if(layer.value)storeUserSelections.selected_basin = 'Custom'
+                          //  console.log(storeUserSelections.selected_basin);
               
           })
         }
@@ -1461,6 +1464,11 @@ let barchart_options= {
           drawn_layer.value = custom_geojson.value.toGeoJSON()
           console.log('post object', drawn_layer.value, ) 
           storeUserSelections.region_placeholder = 'Custom'
+          storeUserSelections.selected_basin = 'Custom'
+          //remove bigger layer
+          if(current_geojson.value)map.removeLayer(current_geojson.value)
+          if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+          //add function to add clipped layer to the map
           
         });
   
@@ -2139,7 +2147,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
       const getRegion = () => {  
         
   //  close_nav()
- 
+  if(layer.value)map.removeLayer(layer.value)
    if(current_geojson.value)map.removeLayer(current_geojson.value)
    if(wmsLayer.value)map.removeLayer(wmsLayer.value)
    if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
@@ -4072,7 +4080,7 @@ getDefaultLatLon()
     if(wmsLayer.value)map.removeLayer(wmsLayer.value)
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
-
+    if(layer.value)map.removeLayer(layer.value)
 
            
 
@@ -4114,10 +4122,6 @@ var center = map.getCenter()
 var lat = center.lat.toFixed(2)
 var lon = center.lng.toFixed(2)
 geoposition.value = `${lat}, ${lon}`
-
-
-
-
 
 
 // getStatistics()
@@ -5032,7 +5036,7 @@ const comparePrecLegend = () => {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FLOOD%3AFLOOD&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
         console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
-        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
+        var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries //response object does not have colormap.entries
        var label_array =  object_array.map( (item) => {
          console.log(item.label, 'labels items array') 
          return item.label

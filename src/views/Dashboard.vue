@@ -22,7 +22,7 @@
       <div class="upload_shapefile_container" v-if="upload_shapefile" 
       style="z-index: 1000; position: absolute; top: 62vh;left: 77vw; height: 12vh; width: 12vw; background-color: #fff; 
       display: flex; justify-content: center; align-items: center;flex-direction: column; padding: 20px; gap: .5rem;">
-      <span class="select_zipped" style="margin-top: .1vw; color: #073e81; font-weight: 600;">Select a zipped shapefile</span>
+      <span class="select_zipped" style="margin-top: .1vw; color: #073e81; font-weight: 600;">Upload a zipped shapefile</span>
         <input type="file" id="file"   /> 
         <input type="submit" id="submit" @click="submit_shapefile" class='submit_shapefile' style="margin-left: -10vw;" />
          <span  id="warning" style="position: relative; top:2vh; "></span>
@@ -458,7 +458,7 @@
       <div v-if="advanced_filter" class="advanced_filter_container">
         <img class="close_advanced_filter" src=" /uiIcons/close.png" alt="" @click="close_advanced_filter">
         <AdvancedFilter
-        @fetchAdvancedData="AddAdvancedBVILayer" />
+        @fetchAdvancedData="addAdvancedLayer" />
       </div>
   
   
@@ -700,6 +700,9 @@
   let shp_geojson = ref(null)
   let layer = ref(null)
   let drawn_layer = ref(null)
+  let wetland_geojson = ref(null)
+  let wetland_basin = ref(null)
+  let wetland_sld = ref("base843156399")
 
 
   //advanced filter variables
@@ -2414,7 +2417,8 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}
      pane: 'pane400', 
      layers: `BVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi': 
+      basin.value === 'Limpopo' ? 'limpopo_bvi': basin.value === 'Okavango' ? 'okavango_bvi': wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -2447,25 +2451,14 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
-  //create params object
-  // var lulc_params = {
-  //                       // ...lulc_params,
-  //                       geometry: geometry,
-  //                       //.geometry.coordinates[0] ,
-  //                       indicator: indicator.value,
-  //                      sub_indicator: sub_indicator.value,
-  //                       year: year.value,
-  //                     };
-  //                     console.log(lulc_params, 'LULC_PARAMETERS')
-
-  
-  
-
+ 
 wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane400', 
      layers: `LULC:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc'
+     : basin.value === 'Okavango'? 'okavango_lulc'
+     : wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3114,7 +3107,8 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
      pane: 'pane800',
      layers: `SPI_WET:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi':
+      basin.value === 'Okavango'? 'okavango_spi' : wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3202,7 +3196,8 @@ getDefaultLatLon()
      pane: 'pane800',
      layers: `SPI_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi'
+     : basin.value === 'Okavango' ? 'okavango_spi': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3275,7 +3270,8 @@ getDefaultLatLon()
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 
+     basin.value === 'Okavango' ? 'okavango_water': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3469,7 +3465,8 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi':
+     basin.value === 'Okavango'? 'okavango_ndvi': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3487,7 +3484,8 @@ wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/
      pane: 'timeseries',
      layers: `NDVI_${season.value}:NDVI_${season.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi': 'okavango_ndvi',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_ndvi' :  basin.value === 'Zambezi' ? 'zambezi_ndvi':  basin.value === 'Limpopo' ? 'limpopo_ndvi':
+     basin.value === 'Okavango'? 'okavango_ndvi': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:0.1
@@ -3550,7 +3548,8 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_
      pane: 'pane800',
      layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_status' :  basin.value === 'Zambezi' ? 'zambezi_status':  basin.value === 'Limpopo' ? 'limpopo_status': 'okavango_status',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_status' :  basin.value === 'Zambezi' ? 'zambezi_status':  basin.value === 'Limpopo' ? 'limpopo_status':
+     basin.value === 'Okavango'?  'okavango_status': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3589,7 +3588,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRE/wms?`, {
      pane: 'pane400',
      layers: `FIRE:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: `${basin.value}_fire`,
+     styles: basin.value ? `${basin.value}_fire`: wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3627,7 +3626,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wms?`, {
      pane: 'pane400',
      layers: `FIRMS_DRY:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: `${basin.value}_firms`,
+     styles: basin.value ? `${basin.value}_firms` : wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3790,7 +3789,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${season.value}
      pane: 'pane400',
      layers: `SMI_${season.value}:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: `${basin.value}_smi`,
+     styles: basin.value ? `${basin.value}_smi` : wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3869,7 +3868,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FLOOD/wms`, {
      pane: 'pane400',
      layers: `FLOOD:FLOOD`,
      crs:L.CRS.EPSG4326,
-     styles: `${basin.value}_flood`,
+     styles: basin.value ? `${basin.value}_flood`: wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3907,7 +3906,8 @@ changeOpacity()
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 
+     basin.value === 'Okavango' ?  'okavango_water': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -3995,7 +3995,8 @@ getDefaultLatLon()
      pane: 'pane800',
      layers: `NDWI:${year.value}`,
      crs:L.CRS.EPSG4326,
-     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',
+     styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 
+     basin.value === 'Okavango' ? 'okavango_water': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
      opacity:1.0
@@ -4082,15 +4083,7 @@ getDefaultLatLon()
     if(wmsTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value)
     if(layer.value)map.removeLayer(layer.value)
 
-           
-
-  // lulc_style()
-  // prec_style()
-  // wetland_inventory_style()
-  // ndvi_style()
-  // status_style()
-  // sus_style()
-   
+  
   
   addLulcLayer()
   addBVILayer()
@@ -4356,7 +4349,7 @@ bvi_legend.value = legend
 bvi_legend.value.onAdd = function(map) {
     var div = L.DomUtil.create("div", "legend");
     
-    div.innerHTML += (`<p>${basin.value} BVI ${year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
+    div.innerHTML += ( basin.value? `<p>${basin.value} BVI ${year.value}</p>`: wetland_basin.value? `<p>${wetland_basin.value} BVI ${year.value}</p>` :'') + '<img src="' + `${baseurl}:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
     
    
@@ -4426,6 +4419,10 @@ bvi_legend.value.addTo(map);
             var div = L.DomUtil.create("div", "legend");
           if(basin.value && sub_indicator.value && year.value) {
             div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${year.value}</p>`;
+
+          }
+          else if(wetland_basin.value && sub_indicator.value && year.value) {
+            div.innerHTML += `<p> ${wetland_basin.value} ${sub_indicator.value} ${year.value}</p>`;
 
           } else{
             div.innerHTML += `<p>Zambezi LULC 2017</p>`;
@@ -4552,7 +4549,7 @@ if(bvi_legend.value)map.removeControl(bvi_legend.value)
                   smi_legend.value.onAdd = function(map) {
                   var div = L.DomUtil.create("div", "legend");
                       
-                  div.innerHTML += (`<p>${basin.value} SPI ${year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
+                  div.innerHTML += (basin.value ? `<p>${basin.value} SPI ${year.value}</p>`: wetland_basin.value ? `<p>${wetland_basin.value} SPI ${year.value}</p>` : '' ) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
                       
                   let draggable = new L.Draggable(div); //the legend can be dragged around the div
@@ -4660,7 +4657,7 @@ const comparePrecLegend = () => {
         ndwi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
            
-              div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
+              div.innerHTML += (basin.value ? `<p>${basin.value} ${parameter.value} ${year.value}</p>`: wetland_basin.value ? `<p>${wetland_basin.value} ${parameter.value} ${year.value}</p>` : '');
              
 
             
@@ -4803,7 +4800,7 @@ const comparePrecLegend = () => {
   
         ndvi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${sub_indicator.value} ${year.value}</p>`;
+            div.innerHTML +=  ( basin.value ? `<p>${basin.value} ${sub_indicator.value} ${year.value}</p>` : wetland_basin.value ? `<p>${wetland_basin.value} ${sub_indicator.value} ${year.value}</p>` : '');
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -4938,7 +4935,7 @@ const comparePrecLegend = () => {
   
         status_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${parameter.value} ${year.value}</p>`;
+            div.innerHTML +=(basin.value ? `<p>${basin.value} ${parameter.value} ${year.value}</p>` : wetland_basin.value ? `<p>${wetland_basin.value} ${parameter.value} ${year.value}</p>` : '');
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -5075,7 +5072,7 @@ const comparePrecLegend = () => {
   
         flood_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
+            div.innerHTML += (basin.value ? `<p>${basin.value} ${sub_indicator.value}</p>`:wetland_basin.value ? `<p>${wetland_basin.value} ${sub_indicator.value}</p>` : '' )
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -5206,7 +5203,7 @@ const comparePrecLegend = () => {
   
         firms_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
-            div.innerHTML += `<p>${basin.value} FIRMS ${year.value}</p>`;
+            div.innerHTML += (basin.value?`<p>${basin.value} FIRMS ${year.value}</p>`: wetland_basin.value? `<p>${wetland_basin.value} FIRMS ${year.value}</p>` : '');
             for (var i = 0; i < colors.length; i++) {
                   div.innerHTML +=
                       ('<i style="background:'+ colors[i] + '" ></i>') + labels[i] +'<br>';
@@ -5331,7 +5328,7 @@ const comparePrecLegend = () => {
         smi_legend.value.onAdd = function(map) {
             var div = L.DomUtil.create("div", "legend");
             
-            div.innerHTML += (`<p>${basin.value} SMI ${year.value}</p>`) + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
+            div.innerHTML += (basin.value? `<p>${basin.value} SMI ${year.value}</p>` : wetland_basin.value? `<p>${wetland_basin.value} SMI ${year.value}</p>` : '') + '<img src="' + `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` + '" />' ;
 
             
            
@@ -6078,32 +6075,38 @@ var selectedWetland = advancedUserSelections.getSelectedWetlandGeojson
 //  geometry = selecteRegion
 console.log(selectedWetland, 'selected wetland geojson app')
 
+console.log('wetland basin',wetland_basin.value)
+storeUserSelections.region_placeholder = wetland_basin.value
+
+const sld = "base5538405065.sld"
+ var formatted = sld.split('.').join('')
+
 map.createPane("pane1000").style.zIndex = 300;
-current_geojson.value = L.geoJSON(selectedWetland, {
+wetland_geojson.value = L.geoJSON(selectedWetland, {
        style: {
          color: "steelblue",
          opacity: 1,
          fillOpacity:0,
          weight: 4
        },
-       pane: 'pane1000'
+      //  pane: 'pane1000'
         })
 
 
-current_geojson.value.addTo(map)
+wetland_geojson.value.addTo(map)
 console.log('bounds', map.getBounds())
 
 
-        //  map.fitBounds(current_geojson.value.getBounds(), {
+        //  map.fitBounds(wetland_geojson.value.getBounds(), {
         //                  padding: [50, 50],
         //                }); 
 
 
                        if(current_top_base_layer.value === 'MapBoxSatellite'){
-          map.fitBounds(current_geojson.value.getBounds())
+          map.fitBounds(wetland_geojson.value.getBounds())
           
         } else{
-          map.setView(current_geojson.value.getBounds().getCenter());
+          map.setView(wetland_geojson.value.getBounds().getCenter());
 
         }
 //${season.value}:${year.value}
@@ -6149,10 +6152,7 @@ if(sub_indicator.value === 'Soil Moisure Index'){
 
 }
 
-advanced_post_data.value = {
-  "wetland": { "name": advancedUserSelections.selected_wetland },
-  "indicator": { "name": layer_abbreviations.value}
-}
+
 if(parameter.value === 'Turbidity'){
   layer_abbreviations.value = 'NDWI'
 
@@ -6161,59 +6161,56 @@ if(parameter.value === 'Sus Sediments'){
   layer_abbreviations.value = 'NDWI'
 
 }
+
+advanced_post_data.value = {
+  "wetland": { "name": advancedUserSelections.selected_wetland },
+  "indicator": { "name": layer_abbreviations.value}
+}
 console.log('post data', advanced_post_data.value)
 
-//start post request
-const apiUrl = "http://66.42.65.87:8000/generate_sld/";
-axios.post(apiUrl, advanced_post_data.value)
-.then(response => {
-  console.log('Wetland response:', response.data)
-  
-})
-.catch(error => {
-  console.error('Error:', error)
-});
+
+
+addLulcLayer()
+// addBVILayer()
+addPrecIndexWet()
+  addPrecIndexDry()
+  addWetlandExtent()
+  addVegCover()
+  addWetlandStatus()
+  addBurntLayer()
+  addFirmsLayer()
+  addSMILayer()
+  addFloodLayer()
+  addSuspendedSediments()
+  addTurbidity()
+
 
     
         
 
 }
 
-const AddAdvancedBVILayer = () => {
+const addAdvancedLayer = () => {
   map.createPane("pane400").style.zIndex = 400;
 
-// wmsCompareLayer.value.addTo(map);
-// wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}/wms?`, {
-//      pane: 'pane1000', 
-//      layers: `BVI_${season.value}:${year.value}`,
-//      crs:L.CRS.EPSG4326,
-//      styles: 'base7530158859', //basin.value === 'Cuvelai' ? 'cuvelai_bvi' :  basin.value === 'Zambezi' ? 'zambezi_bvi':  basin.value === 'Limpopo' ? 'limpopo_bvi': 'okavango_bvi',
-//      format: 'image/png',
-//      transparent: true,
-//     //  bbox: [22.0609,-16.3416,24.3887,-13.9489], // 'xmin,ymin,xmax,ymax'
-//     //  bounds: L.latLngBounds([[22.0609,-16.3416],[24.3887,-13.9489]]) ,
-//      opacity:1.0
-     
-     
-//      //http://66.42.65.87:8080/geoserver/BVI_WET/wms?service=WMS&version=1.1.0&request=GetMap&layers=BVI_WET%3A2000&bbox=22.0609%2C-16.3416%2C24.3887%2C-13.9489&width=768&height=596&srs=EPSG%3A4326&format=image%2Fpng  
-// });
-wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
-     pane: 'pane400', 
-     layers: `LULC:${year.value}`,
-     crs:L.CRS.EPSG4326,
-     styles: 'base2037052156',// basin.value === 'Cuvelai' ? 'cuvelai_lulc' :  basin.value === 'Zambezi' ? 'zambezi_lulc':  basin.value === 'Limpopo' ? 'limpopo_lulc': 'okavango_lulc',
-     format: 'image/png',
-     transparent: true,
-     opacity:1.0
-     
-     
-    
+  //start post request
+const apiUrl = "https://wemast-sethnyawacha.koyeb.app/generate_sld/";
+// const headers = {'Content-Type': 'application/json'}
+// var postData = encodeURIComponent(advanced_post_data.value)
+// console.log(postData);
+axios.post(apiUrl, advanced_post_data.value)
+.then(response => {
+  console.log('Wetland response:', response.data)
+  
+})
+.catch(error => {
+  console.log('Error:', error) 
 });
-wmsLayer.value.addTo(map);
-console.log('logging advanced data')
+
+
 
         }
-        // AddAdvancedBVILayer()
+      
 
     //watch for changes
   
@@ -6230,6 +6227,7 @@ console.log('logging advanced data')
 
   const setSelectedAdvancedWetland = computed( () => {
     console.log(advancedUserSelections.selected_wetland, 'selected_wetland app')
+    wetland_basin.value = advancedUserSelections.selected_wetland
     
     return advancedUserSelections.getSelectedWetlandGeojson
   })

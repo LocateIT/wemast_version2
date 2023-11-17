@@ -156,7 +156,7 @@ const handleAncilSwap = () => {
         z-index: 1500;
     }
     .filter{
-        height: 380px;
+        height: 280px;
         width: 300px;
         background-color: rgb(255, 255, 255);
         
@@ -225,7 +225,7 @@ const handleAncilSwap = () => {
    
     .submit{
         position: absolute;
-        top: 30vh;
+        top: 22vh;
         left: 1vw;
         height: 35px;
         width: 200px;

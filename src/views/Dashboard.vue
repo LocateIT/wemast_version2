@@ -702,7 +702,7 @@
   let drawn_layer = ref(null)
   let wetland_geojson = ref(null)
   let wetland_basin = ref(null)
-  let wetland_sld = ref("base843156399")
+  let wetland_sld = ref('')
 
 
   //advanced filter variables
@@ -6053,6 +6053,7 @@ changeOpacity()
   const getAdvancedWetland = async () => {
 
 if(current_geojson.value)map.removeLayer(current_geojson.value)
+if(wetland_geojson.value)map.removeLayer(wetland_geojson.value)
 if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
 if(wmsLayer.value)map.removeLayer(wmsLayer.value)
 if(lulc_legend.value)map.removeControl(lulc_legend.value)
@@ -6170,8 +6171,31 @@ console.log('post data', advanced_post_data.value)
 
 
 
-addLulcLayer()
-// addBVILayer()
+        
+
+}
+
+const addAdvancedLayer = () => {
+  map.createPane("pane400").style.zIndex = 400;
+
+
+  //start post request
+const apiUrl = "http://45.32.233.93:8000/generate_sld/";      //"https://wemast-sethnyawacha.koyeb.app/generate_sld/";
+// const headers = {'Content-Type': 'application/json'}
+// var postData = encodeURIComponent(advanced_post_data.value)
+// console.log(postData);
+axios.post(apiUrl, advanced_post_data.value)
+.then(response => {
+  console.log('Wetland response:', response.data)
+
+  let stringWithSld = response.data.sld_file_path;
+let stringWithoutSld = stringWithSld.replace(".sld", "");
+console.log(stringWithoutSld)
+
+  wetland_sld.value = stringWithoutSld
+  console.log(wetland_sld.value)
+  addLulcLayer()
+  addBVILayer()
 addPrecIndexWet()
   addPrecIndexDry()
   addWetlandExtent()
@@ -6183,24 +6207,6 @@ addPrecIndexWet()
   addFloodLayer()
   addSuspendedSediments()
   addTurbidity()
-
-
-    
-        
-
-}
-
-const addAdvancedLayer = () => {
-  map.createPane("pane400").style.zIndex = 400;
-
-  //start post request
-const apiUrl = "https://wemast-sethnyawacha.koyeb.app/generate_sld/";
-// const headers = {'Content-Type': 'application/json'}
-// var postData = encodeURIComponent(advanced_post_data.value)
-// console.log(postData);
-axios.post(apiUrl, advanced_post_data.value)
-.then(response => {
-  console.log('Wetland response:', response.data)
   
 })
 .catch(error => {

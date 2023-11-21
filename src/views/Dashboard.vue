@@ -703,6 +703,8 @@
   let wetland_geojson = ref(null)
   let wetland_basin = ref(null)
   let wetland_sld = ref('')
+  let polygon_post_indicator = ref(null)
+  let polygon_sld = ref('')
 
 
   //advanced filter variables
@@ -1408,91 +1410,59 @@ let barchart_options= {
         }
         show_draw_control.value = !show_draw_control.value;
       }
-  
-     const addDrawCtrl = () => {
-        //we add the polygon draw feature to map as seen  below
-        editableLayers.value = new L.FeatureGroup();
-        map.addLayer(editableLayers.value);
-        let options = {
-          position: "bottomright",
-          draw: {
-            polyline: false,
-            polygon: {
-              allowIntersection: false, // Restricts shapes to simple polygons
-              showArea: true,
-              drawError: {
-                color: "#e1e100", // Color the shape will turn when intersects
-                message: "<strong>Oopsie!<strong> lines cannot intersect!", // Message that will show when intersect
-              },
-              shapeOptions: {
-                color: "black",
-                fillColor: "none",
-              },
-            },
-            circle: false, // Turns off this drawing tool
-            rectangle: false,
-            marker: false,
-            circlemarker: false,
-          },
-          edit: {
-            featureGroup: editableLayers.value, //REQUIRED!!
-            edit: {},
-            // delete:true
-          },
-        };
-        let drawControl = new L.Control.Draw(options);
-        map.addControl(drawControl);
-  
-        map.on(L.Draw.Event.CREATED, (e) => {
 
-          if(custom_geojson.value !=null) {
-            editableLayers.value.removeLayer(custom_geojson.value)
-          }
-          
-          
-          const layer = e.layer;
-          custom_geojson.value = layer.bringToFront()
-        
-          editableLayers.value.addLayer(custom_geojson.value);
-          console.log(JSON.stringify(custom_geojson.value.toGeoJSON().geometry), 'stringified custom drawn geojson');
-          //link custom geojson in store to this geojson
-          console.log(storeUserSelections.custom_geojson.custom, 'accessed store custom?') //true
-          storeUserSelections.custom_geojson.geojson = custom_geojson.value.toGeoJSON().geometry
-          console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
-          // if (process.env.DEV)
-          // 
-          var drawn_polygon_object = custom_geojson.value.toGeoJSON() //.geometry
-            
-          //make drawn object global
-          drawn_layer.value = custom_geojson.value.toGeoJSON()
-          console.log('post object', drawn_layer.value, ) 
-          storeUserSelections.region_placeholder = 'Custom'
-          storeUserSelections.selected_basin = 'Custom'
-          //remove bigger layer
-          if(current_geojson.value)map.removeLayer(current_geojson.value)
-          if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-          //add function to add clipped layer to the map
-          
-        });
-  
-      map.on(L.Draw.Event.EDITSTOP, (e) => {
-          // if (process.env.DEV) 
-          console.log("stop edit", e);
-        //   var layers = e.layers;
-        //  layers.eachLayer(function (layer) {
-        //      //do whatever you want; most likely save back to db
-        //      console.log(layer, 'edit mode')
-        //  });
-        });
-        map.on(L.Draw.Event.DELETED, (e) => {
-          // if (process.env.DEV) 
-          console.log(" deleted ", e);
-          //remove the control from map and remove focus on the draw icon by changing color
-          draw_polygon();
-          document.getElementById("draw_polygon").style.backgroundColor = "white";
-        });
+
+      const generate_layer_abbreviations = () => {
+        if(indicator.value === 'Basin Vulnerability Index'){
+  layer_abbreviations.value = 'BVI'
+
+}
+if(sub_indicator.value === 'Land Cover'){
+  layer_abbreviations.value = 'LULC'
+
+}
+if(sub_indicator.value === 'Vegetation Cover'){
+  layer_abbreviations.value = 'NDVI'
+
+}
+if(parameter.value === 'Wetland Extent'){
+  layer_abbreviations.value = 'NDWI'
+
+}
+if(parameter.value === 'Wetland Status'){
+  layer_abbreviations.value = 'STATUS'
+
+}
+if(sub_indicator.value === 'Burnt Area FIRMS'){
+  layer_abbreviations.value = 'FIRE'
+
+}
+if(sub_indicator.value === 'Precipitation Index'){
+  layer_abbreviations.value = 'SPI'
+
+}
+if(sub_indicator.value === 'Undulation'){
+  layer_abbreviations.value = 'FLOOD'
+
+}
+if(sub_indicator.value === 'Soil Moisure Index'){
+  layer_abbreviations.value = 'SMI'
+
+}
+
+
+if(parameter.value === 'Turbidity'){
+  layer_abbreviations.value = 'NDWI'
+
+}
+if(parameter.value === 'Sus Sediments'){
+  layer_abbreviations.value = 'NDWI'
+
+}
+
       }
   
+    
   //switch between base layers
      const wemast_base_layers = () => {
         if (!show_base_layers.value)
@@ -2451,6 +2421,7 @@ changeOpacity()
   // console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
+
  
 wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
      pane: 'pane400', 
@@ -2483,6 +2454,8 @@ changeOpacity()
 
 }
  }
+
+ 
 
 //  const clip_custom = () => {
   
@@ -3138,7 +3111,7 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
      styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
-     opacity:0.1
+      opacity:0
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -3223,7 +3196,7 @@ getDefaultLatLon()
      styles: basin.value === 'Cuvelai' ? 'cuvelai_spi' :  basin.value === 'Zambezi' ? 'zambezi_spi':  basin.value === 'Limpopo' ? 'limpopo_spi': 'okavango_spi',
      format: 'image/png',
      transparent: true,
-     opacity:0.1
+      opacity:0
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -3488,7 +3461,7 @@ wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/
      basin.value === 'Okavango'? 'okavango_ndvi': wetland_basin.value ? wetland_sld.value : wetland_sld.value,
      format: 'image/png',
      transparent: true,
-     opacity:0.1
+      opacity:0
      // CQL_FILTER: "Band1='1.0'"
      
     
@@ -3816,7 +3789,7 @@ wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/
      styles: `${basin.value}_smi`,
      format: 'image/png',
      transparent: true,
-     opacity:0.1
+      opacity:0
      
      
     
@@ -3943,7 +3916,7 @@ wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/
     //  styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',value,
      format: 'image/png',
      transparent: true,
-     opacity:0.1
+      opacity:0
      
      
     
@@ -4032,7 +4005,7 @@ wmsPrecTimeseriesLayer.value =  L.tileLayer.betterWms(`http://45.32.233.93:8085/
     //  styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',value,
      format: 'image/png',
      transparent: true,
-     opacity:0.1
+      opacity:0
      
      
     
@@ -6116,52 +6089,7 @@ console.log('bounds', map.getBounds())
 // console.log('wetland name',advancedUserSelections.selected_wetland)
 // console.log('indicator', indicator.value )
 // console.log('subindicator', sub_indicator.value )
-if(indicator.value === 'Basin Vulnerability Index'){
-  layer_abbreviations.value = 'BVI'
-
-}
-if(sub_indicator.value === 'Land Cover'){
-  layer_abbreviations.value = 'LULC'
-
-}
-if(sub_indicator.value === 'Vegetation Cover'){
-  layer_abbreviations.value = 'NDVI'
-
-}
-if(parameter.value === 'Wetland Extent'){
-  layer_abbreviations.value = 'NDWI'
-
-}
-if(parameter.value === 'Wetland Status'){
-  layer_abbreviations.value = 'STATUS'
-
-}
-if(sub_indicator.value === 'Burnt Area FIRMS'){
-  layer_abbreviations.value = 'FIRE'
-
-}
-if(sub_indicator.value === 'Precipitation Index'){
-  layer_abbreviations.value = 'SPI'
-
-}
-if(sub_indicator.value === 'Undulation'){
-  layer_abbreviations.value = 'FLOOD'
-
-}
-if(sub_indicator.value === 'Soil Moisure Index'){
-  layer_abbreviations.value = 'SMI'
-
-}
-
-
-if(parameter.value === 'Turbidity'){
-  layer_abbreviations.value = 'NDWI'
-
-}
-if(parameter.value === 'Sus Sediments'){
-  layer_abbreviations.value = 'NDWI'
-
-}
+generate_layer_abbreviations()
 
 advanced_post_data.value = {
   "wetland": { "name": advancedUserSelections.selected_wetland },
@@ -6187,6 +6115,7 @@ const apiUrl = "http://45.32.233.93:8000/generate_sld/";      //"https://wemast-
 axios.post(apiUrl, advanced_post_data.value)
 .then(response => {
   console.log('Wetland response:', response.data)
+  
 
   let stringWithSld = response.data.sld_file_path;
 let stringWithoutSld = stringWithSld.replace(".sld", "");
@@ -6249,6 +6178,580 @@ addPrecIndexWet()
   })
   watch( setSelectedAdvancedBbox )
 
+
+  const addDrawCtrl = () => {
+        //we add the polygon draw feature to map as seen  below
+        editableLayers.value = new L.FeatureGroup();
+        map.addLayer(editableLayers.value);
+        let options = {
+          position: "bottomright",
+          draw: {
+            polyline: false,
+            polygon: {
+              allowIntersection: false, // Restricts shapes to simple polygons
+              showArea: true,
+              drawError: {
+                color: "#e1e100", // Color the shape will turn when intersects
+                message: "<strong>Oopsie!<strong> lines cannot intersect!", // Message that will show when intersect
+              },
+              shapeOptions: {
+                color: "black",
+                fillColor: "none",
+              },
+            },
+            circle: false, // Turns off this drawing tool
+            rectangle: false,
+            marker: false,
+            circlemarker: false,
+          },
+          edit: {
+            featureGroup: editableLayers.value, //REQUIRED!!
+            edit: {},
+            // delete:true
+          },
+        };
+        let drawControl = new L.Control.Draw(options);
+        map.addControl(drawControl);
+  
+        map.on(L.Draw.Event.CREATED, (e) => {
+
+          if(custom_geojson.value !=null) {
+            editableLayers.value.removeLayer(custom_geojson.value)
+          }
+          
+          
+          const layer = e.layer;
+          custom_geojson.value = layer.bringToFront()
+        
+          editableLayers.value.addLayer(custom_geojson.value);
+          console.log(JSON.stringify(custom_geojson.value.toGeoJSON().geometry), 'stringified custom drawn geojson');
+          //link custom geojson in store to this geojson
+          console.log(storeUserSelections.custom_geojson.custom, 'accessed store custom?') //true
+          storeUserSelections.custom_geojson.geojson = custom_geojson.value.toGeoJSON().geometry
+          // console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
+          // if (process.env.DEV)
+          // 
+          var drawn_polygon_object = custom_geojson.value.toGeoJSON() //.geometry
+            
+          //make drawn object global
+          
+          drawn_layer.value = custom_geojson.value.toGeoJSON()
+          // custom_geojson.value.toGeoJSON().properties.name = indicator.value;
+
+          console.log('post object', drawn_layer.value, ) 
+          storeUserSelections.region_placeholder = 'Custom'
+          storeUserSelections.selected_basin = 'Custom'
+
+
+  //start post request
+  const apiUrl = "http://45.32.233.93:8000/custom_polygon/";      //"https://wemast-sethnyawacha.koyeb.app/generate_sld/";
+// const headers = {'Content-Type': 'application/json'}
+// var postData = encodeURIComponent(advanced_post_data.value)
+// console.log(postData);
+generate_layer_abbreviations()
+
+
+polygon_post_indicator.value = {
+  "indicator": { "name": layer_abbreviations.value }
+}
+console.log(polygon_post_indicator.value)
+
+let targetObject = {};
+let sourceObject1 = polygon_post_indicator.value;
+let sourceObject2 = drawn_layer.value;
+
+const merged = {...targetObject, ...sourceObject1, ...sourceObject2}
+console.log(merged);
+
+
+ axios.post(apiUrl, merged)
+.then(response => {
+  console.log('custom_polygon response:', response.data)
+  
+
+  let stringWithSld = response.data.sld_file_path;
+let stringWithoutSld = stringWithSld.replace(".sld", "");
+console.log(stringWithoutSld)
+
+  polygon_sld.value = stringWithoutSld
+  console.log(polygon_sld.value)
+
+
+
+
+  const addLulcLayer2 = () => {
+  if(sub_indicator.value === 'Land Cover' && drawn_layer.value != null) {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+
+ 
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
+     pane: 'pane400', 
+     layers: `LULC:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value, //'base8423407086',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+// console.log(wmsLayer.value, 'wms')
+
+
+// addLulcLegend()
+lulclegendContent()
+
+changeOpacity()
+
+}
+ }
+
+
+ const addPrecIndexWet2 = () => {
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
+     pane: 'pane800',
+     layers: `SPI_WET:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value, 
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+
+
+
+
+  wmsLayer.value.addTo(map);
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+
+
+  preclegendContent()
+  changeOpacity()
+  
+  
+  }
+  
+ }
+
+ const addPrecIndexDry = () => {
+  if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
+     pane: 'pane800',
+     layers: `SPI_DRY:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value, 
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+
+  preclegendContent()
+  changeOpacity()
+  
+  }
+ }
+
+ const addWetlandExtent2 = () => {
+  if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+  
+  
+    NDWIlegendContent()
+
+  
+  
+  
+  changeOpacity()
+  
+  
+  
+  
+  
+  }
+
+ }
+
+ const addVegCover2 = () => {
+  if(sub_indicator.value === 'Vegetation Cover' && drawn_layer.value != null ) { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  map.createPane("timeseries").style.zIndex = 300;
+
+
+
+
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+     pane: 'pane800',
+     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+
+NDVIlegendContent()
+changeOpacity()
+}
+
+ }
+
+ const addWetlandStatus2 = () => {
+  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+     pane: 'pane800',
+     layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+// console.log(wmsLayer.value, 'wms')
+//remove spinner when layer loads
+wmsLayer.value.on('load', function (event) {
+    loading.value = false
+});
+
+
+statuslegendContent()
+changeOpacity()
+}
+ }
+ const addFirmsLayer2 = () => {
+  if(sub_indicator.value === 'Burnt Area FIRMS') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wms?`, {
+     pane: 'pane400',
+     layers: `FIRMS_DRY:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+console.log(wmsLayer.value, 'wms')
+
+
+
+firmslegendContent()
+changeOpacity()
+
+}
+ }
+
+ const addSMILayer2 = () => {
+  if(sub_indicator.value === 'Soil Moisure Index') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${season.value}/wms?`, {
+     pane: 'pane400',
+     layers: `SMI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+SMIlegendContent()
+changeOpacity()
+
+
+
+
+
+}
+ }
+
+ const addFloodLayer2 = () => {
+  if(sub_indicator.value === 'Undulation') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+ 
+  
+
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FLOOD/wms`, {
+     pane: 'pane400',
+     layers: `FLOOD:FLOOD`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+});
+
+
+wmsLayer.value.addTo(map);
+
+
+
+
+console.log(wmsLayer.value, 'wms')
+
+
+
+floodlegendContent()
+changeOpacity()
+
+}
+ }
+
+ const addSuspendedSediments2 = () => {
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+
+
+ 
+
+
+  
+  NDWIlegendContent()
+  changeOpacity()
+
+
+  
+  }
+
+ }
+
+ const addTurbidity2 = () => {
+  if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity') {
+  
+  // console.log('just to see if request is accessed') //accessed
+  map.createPane("pane800").style.zIndex = 200;
+  
+  wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
+     pane: 'pane800',
+     layers: `NDWI:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value,
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     // CQL_FILTER: "Band1='1.0'"
+     
+    
+  });
+  
+  
+  wmsLayer.value.addTo(map);
+  
+  
+  // console.log(wmsLayer.value, 'wms')
+  //remove spinner when layer loads
+  wmsLayer.value.on('load', function (event) {
+    loading.value = false
+  });
+
+
+ 
+  NDWIlegendContent()
+  changeOpacity()
+
+  
+  
+  
+  }
+
+ }
+ 
+ //remove bigger layer
+ if(current_geojson.value)map.removeLayer(current_geojson.value)
+          if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+          //add function to add clipped layer to the map
+          addLulcLayer2()
+          addPrecIndexWet2()
+          addPrecIndexDry()
+          addWetlandExtent2()
+          addVegCover2()
+          addWetlandStatus2()
+          addFirmsLayer2()
+          addSMILayer2()
+          addFloodLayer2()
+          addSuspendedSediments2()
+          addTurbidity2()
+
+
+
+  
+})
+.catch(error => {
+  console.log('Error:', error) 
+});
+
+
+
+
+          
+          
+        });
+  
+      map.on(L.Draw.Event.EDITSTOP, (e) => {
+          // if (process.env.DEV) 
+          console.log("stop edit", e);
+          
+        //   var layers = e.layers;
+        //  layers.eachLayer(function (layer) {
+        //      //do whatever you want; most likely save back to db
+        //      console.log(layer, 'edit mode')
+        //  });
+        });
+        map.on(L.Draw.Event.DELETED, (e) => {
+          // if (process.env.DEV) 
+          console.log(" deleted ", e);
+          //remove the control from map and remove focus on the draw icon by changing color
+          draw_polygon();
+          document.getElementById("draw_polygon").style.backgroundColor = "white";
+        });
+      }
+  
 
     
 

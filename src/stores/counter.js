@@ -176,8 +176,8 @@ export const useCounterStore = defineStore({
       satellite_placeholder:'',
       selected_satellite:'',
       custom_geojson: {
-        label: 'AOI',
         custom: true,
+        name:'',
         geojson: {}
       },
 

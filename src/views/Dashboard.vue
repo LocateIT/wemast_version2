@@ -802,7 +802,7 @@ const submit_shapefile = () => {
 
           shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
             console.log(geojson, 'uploaded shapefile geojson')
-            shp_geojson.value = geojson
+            shp_geojson.value = geojson.features[0]
             layer.value = L.shapefile(geojson, {
               style: {
                 color: "#000",
@@ -820,6 +820,482 @@ const submit_shapefile = () => {
                            if(layer.value)storeUserSelections.region_placeholder = 'Custom'
                            if(layer.value)storeUserSelections.selected_basin = 'Custom'
                           //  console.log(storeUserSelections.selected_basin);
+
+
+                          const apiUrl = "http://45.32.233.93:8000/custom_polygon/"; 
+                          generate_layer_abbreviations()
+                          polygon_post_indicator.value = {
+                          "indicator": { "name": layer_abbreviations.value }
+                        }
+
+                        let targetObject = {};
+                        let sourceObject1 = polygon_post_indicator.value;
+                        let sourceObject2 = shp_geojson.value;
+                        const merged = {...targetObject, ...sourceObject1, ...sourceObject2}
+                        console.log(merged);
+
+                        axios.post(apiUrl, merged)
+                            .then(response => {
+                              console.log('custom_shapefile response:', response.data)
+                              
+
+                              let stringWithSld = response.data.sld_file_path;
+                            let stringWithoutSld = stringWithSld.replace(".sld", "");
+                            console.log(stringWithoutSld)
+
+                              polygon_sld.value = stringWithoutSld
+                              console.log(polygon_sld.value)
+
+
+
+
+                              const addLulcLayer2 = () => {
+                              if(sub_indicator.value === 'Land Cover' && shp_geojson.value != null) {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane400").style.zIndex = 200;
+
+
+                            
+                            wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
+                                pane: 'pane400', 
+                                layers: `LULC:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value, //'base8423407086',
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                
+                                
+                                
+                            });
+
+
+                            wmsLayer.value.addTo(map);
+
+
+
+
+                            // console.log(wmsLayer.value, 'wms')
+
+
+                            // addLulcLegend()
+                            lulclegendContent()
+
+                            changeOpacity()
+
+                            }
+                            }
+
+
+                            const addPrecIndexWet2 = () => {
+                              if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+                              
+                              wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
+                                pane: 'pane800',
+                                layers: `SPI_WET:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value, 
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                              });
+
+
+
+
+                              wmsLayer.value.addTo(map);
+                              // console.log(wmsLayer.value, 'wms')
+                              //remove spinner when layer loads
+                              wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                              });
+
+
+                              preclegendContent()
+                              changeOpacity()
+                              
+                              
+                              }
+                              
+                            }
+
+                            const addPrecIndexDry = () => {
+                              if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+                              
+                              wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
+                                pane: 'pane800',
+                                layers: `SPI_DRY:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value, 
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                
+                              });
+                              
+                              
+                              wmsLayer.value.addTo(map);
+                              // console.log(wmsLayer.value, 'wms')
+                              //remove spinner when layer loads
+                              wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                              });
+
+                              preclegendContent()
+                              changeOpacity()
+                              
+                              }
+                            }
+
+                            const addWetlandExtent2 = () => {
+                              if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+                              
+                              wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
+                                pane: 'pane800',
+                                layers: `NDWI:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                              });
+                              
+                              
+                              wmsLayer.value.addTo(map);
+                              
+                              
+                              // console.log(wmsLayer.value, 'wms')
+                              //remove spinner when layer loads
+                              wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                              });
+                              
+                              
+                                NDWIlegendContent()
+
+                              
+                              
+                              
+                              changeOpacity()
+                              
+                              
+                              
+                              
+                              
+                              }
+
+                            }
+
+                            const addVegCover2 = () => {
+                              if(sub_indicator.value === 'Vegetation Cover' && shp_geojson.value != null ) { //&& season.value === 'DRY'
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+                              map.createPane("timeseries").style.zIndex = 300;
+
+
+
+
+                            wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+                                pane: 'pane800',
+                                layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                            });
+
+
+                            wmsLayer.value.addTo(map);
+
+
+
+                            // console.log(wmsLayer.value, 'wms')
+                            //remove spinner when layer loads
+                            wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                            });
+
+
+                            NDVIlegendContent()
+                            changeOpacity()
+                            }
+
+                            }
+
+                            const addWetlandStatus2 = () => {
+                              // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+                              if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+
+                            wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
+                                pane: 'pane800',
+                                layers: `${satellite.value}_NDVI_${season.value}:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                            });
+
+
+                            wmsLayer.value.addTo(map);
+
+
+                            // console.log(wmsLayer.value, 'wms')
+                            //remove spinner when layer loads
+                            wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                            });
+
+
+                            statuslegendContent()
+                            changeOpacity()
+                            }
+                            }
+                            const addFirmsLayer2 = () => {
+                              if(sub_indicator.value === 'Burnt Area FIRMS') {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane400").style.zIndex = 200;
+
+                            
+                              
+
+                            wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wms?`, {
+                                pane: 'pane400',
+                                layers: `FIRMS_DRY:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                            });
+
+
+                            wmsLayer.value.addTo(map);
+
+
+
+
+                            console.log(wmsLayer.value, 'wms')
+
+
+
+                            firmslegendContent()
+                            changeOpacity()
+
+                            }
+                            }
+
+                            const addSMILayer2 = () => {
+                              if(sub_indicator.value === 'Soil Moisure Index') {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane400").style.zIndex = 200;
+
+                            
+                              
+
+                            wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${season.value}/wms?`, {
+                                pane: 'pane400',
+                                layers: `SMI_${season.value}:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                            });
+
+
+                            wmsLayer.value.addTo(map);
+                            SMIlegendContent()
+                            changeOpacity()
+
+
+
+
+
+                            }
+                            }
+
+                            const addFloodLayer2 = () => {
+                              if(sub_indicator.value === 'Undulation') {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane400").style.zIndex = 200;
+
+                            
+                              
+
+                            wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FLOOD/wms`, {
+                                pane: 'pane400',
+                                layers: `FLOOD:FLOOD`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                            });
+
+
+                            wmsLayer.value.addTo(map);
+
+
+
+
+                            console.log(wmsLayer.value, 'wms')
+
+
+
+                            floodlegendContent()
+                            changeOpacity()
+
+                            }
+                            }
+
+                            const addSuspendedSediments2 = () => {
+                              if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+                              
+                              wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
+                                pane: 'pane800',
+                                layers: `NDWI:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                              });
+                              
+                              
+                              wmsLayer.value.addTo(map);
+                              
+                              
+                              // console.log(wmsLayer.value, 'wms')
+                              //remove spinner when layer loads
+                              wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                              });
+
+
+                            
+
+
+                              
+                              NDWIlegendContent()
+                              changeOpacity()
+
+
+                              
+                              }
+
+                            }
+
+                            const addTurbidity2 = () => {
+                              if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity') {
+                              
+                              // console.log('just to see if request is accessed') //accessed
+                              map.createPane("pane800").style.zIndex = 200;
+                              
+                              wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
+                                pane: 'pane800',
+                                layers: `NDWI:${year.value}`,
+                                crs:L.CRS.EPSG4326,
+                                styles: polygon_sld.value,
+                                format: 'image/png',
+                                transparent: true,
+                                opacity:1.0
+                                // CQL_FILTER: "Band1='1.0'"
+                                
+                                
+                              });
+                              
+                              
+                              wmsLayer.value.addTo(map);
+                              
+                              
+                              // console.log(wmsLayer.value, 'wms')
+                              //remove spinner when layer loads
+                              wmsLayer.value.on('load', function (event) {
+                                loading.value = false
+                              });
+
+
+                            
+                              NDWIlegendContent()
+                              changeOpacity()
+
+                              
+                              
+                              
+                              }
+
+                            }
+                            
+                            //remove bigger layer
+                            if(current_geojson.value)map.removeLayer(current_geojson.value)
+                                      if(wmsLayer.value)map.removeLayer(wmsLayer.value)
+                                      //add function to add clipped layer to the map
+                                      addLulcLayer2()
+                                      addPrecIndexWet2()
+                                      addPrecIndexDry()
+                                      addWetlandExtent2()
+                                      addVegCover2()
+                                      addWetlandStatus2()
+                                      addFirmsLayer2()
+                                      addSMILayer2()
+                                      addFloodLayer2()
+                                      addSuspendedSediments2()
+                                      addTurbidity2()
+
+
+
+                              
+                            })
+                            .catch(error => {
+                              console.log('Error:', error) 
+                            });
+
               
           })
         }

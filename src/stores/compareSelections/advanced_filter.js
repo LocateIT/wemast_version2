@@ -28,7 +28,7 @@ export const useAdvancedStore = defineStore({
        async fetchWetlandsList(){
 
         const wetlandlist_response = await axios.get(`http://66.42.65.87:8080/geoserver/WEMAST/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WEMAST%3Angami&outputFormat=application%2Fjson`)
-        console.log(wetlandlist_response.data, 'wetlandlist')
+        //console.log(wetlandlist_response.data, 'wetlandlist')
         var wetland_list_2 = wetlandlist_response.data.features.map((item)=>{
           return ({
             value: item.properties.WETLANDS, label: item.properties.wetland
@@ -37,12 +37,12 @@ export const useAdvancedStore = defineStore({
           
          //return item.properties.wetland
         })
-        console.log(wetland_list_2, 'updated_wetland_list')
+        //console.log(wetland_list_2, 'updated_wetland_list')
 
         var anotherlist = wetland_list_2.map((item)=>{
           return item.value
         })
-        console.log(anotherlist, 'anotherlist')
+        //console.log(anotherlist, 'anotherlist')
         this.updated_wetland_list = anotherlist
 
             this.wetland_list = anotherlist  //['Nyslvlei','Modemolle', 'Intunjambili','Driefontein','Lake Ngami', 'Barotse','Morapeng','Makuleke']
@@ -52,7 +52,7 @@ export const useAdvancedStore = defineStore({
             this.country_placeholder = option;
          
             this.selected_country =  option
-            console.log(this.selected_country , 'changed selected country')
+            //console.log(this.selected_country , 'changed selected country')
 
             var data = this.selected_country
             if(data) {
@@ -65,9 +65,9 @@ export const useAdvancedStore = defineStore({
       
                     this.current_geojson = resp.data
                     
-                    console.log(resp.data.features, 'advanced countries geojson');
+                    //console.log(resp.data.features, 'advanced countries geojson');
                     // var object = resp.data.features.map( (item) => {
-                    //   console.log(item, 'object items')
+                    //   //console.log(item, 'object items')
                     //   return item
                     // })
                     
@@ -92,7 +92,7 @@ export const useAdvancedStore = defineStore({
             this.wetland_placeholder = option;
          
             this.selected_wetland =  option
-            console.log(this.selected_wetland , 'changed selected wetland')
+            //console.log(this.selected_wetland , 'changed selected wetland')
 
             //load individual wetlands
             var data = this.selected_wetland
@@ -108,10 +108,10 @@ export const useAdvancedStore = defineStore({
       
                     this.current_wetland_geojson = resp.data
                     
-                    console.log(resp.data.features[0].bbox, 'advanced bbox');
+                    //console.log(resp.data.features[0].bbox, 'advanced bbox');
                     this.bounding_box = resp.data.features[0].bbox
                     // var object = resp.data.features.map( (item) => {
-                    //   console.log(item, 'object items')
+                    //   //console.log(item, 'object items')
                     //   return item
                     // })
                     
@@ -135,7 +135,7 @@ export const useAdvancedStore = defineStore({
             this.platform_placeholder = option;
          
             this.selected_platform=  option
-            console.log(this.selected_platform , 'changed selected wetland')
+            //console.log(this.selected_platform , 'changed selected wetland')
           },
       
       

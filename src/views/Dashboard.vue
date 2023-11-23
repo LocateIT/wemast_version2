@@ -791,8 +791,11 @@ const submit_shapefile = () => {
         }
 
         function convertToLayer(buffer){`1                                                        `
-          //remove previously loaded layers
+          //remove previously loaded layers   drawn_layer.value  custom_geojson
           if(layer.value)map.removeLayer(layer.value)
+          if(drawn_layer.value)map.removeLayer(drawn_layer.value)
+          if(custom_geojson.value)map.removeLayer(custom_geojson.value)
+
           if(lulc_legend.value)map.removeControl(lulc_legend.value)
           if(current_geojson.value)map.removeLayer(current_geojson.value)
           if(wmsLayer.value)map.removeLayer(wmsLayer.value)

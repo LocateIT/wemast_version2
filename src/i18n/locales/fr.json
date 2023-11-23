@@ -9,6 +9,7 @@
         "about": "À propos"
     },
     "home": {
+        "upload_shapefile": "Téléchargez un fichier de formes compressé",
         "wemast_title":"SERVICE DE SURVEILLANCE ET D'ÉVALUATION DES TERRES HUMIDES POUR LES BASSINS TRANSFRONTALIERS EN AFRIQUE AUSTRALE",
         "wemast_change_language": "Changer de langue",
         "wemast_select_region":"bassin",

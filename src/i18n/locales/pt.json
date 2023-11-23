@@ -9,6 +9,7 @@
         "about": "sobre"
     },
     "home": {
+        "upload_shapefile": "Faça o upload de um arquivo shapefile compactado",
         "wemast_title":"SERVIÇO DE OBSERVAÇÃO E AVALIAÇÃO DAS ZONAS HÚMIDAS NAS BACIAS HIDROGRÁFICAS DA AFRICA AUSTRAL",
         "wemast_change_language":"Alterar Língua",
         "wemast_select_region":"bacia",

@@ -10,6 +10,7 @@
         "about": "About"
     },
     "home": {
+        "upload_shapefile": "Upload a zipped shapefile",
         "wemast_title": "WETLAND MONITORING AND ASSESSMENT SERVICE FOR TRANSBOUNDARY  BASINS IN SOUTHERN AFRICA ",
         "wemast_subtitle":"SOUTHERN AFRICA ",
         "wemast_bracket":"(WeMAST)",

@@ -22,7 +22,7 @@
       <div class="upload_shapefile_container" v-if="upload_shapefile" 
       style="z-index: 1000; position: absolute; top: 62vh;left: 77vw; height: 12vh; width: 12vw; background-color: #fff; 
       display: flex; justify-content: center; align-items: center;flex-direction: column; padding: 20px; gap: .5rem;">
-      <span class="select_zipped" style="margin-top: .1vw; color: #073e81; font-weight: 600;">Upload a zipped shapefile</span>
+      <span class="select_zipped" style="margin-top: .1vw; color: #073e81; font-weight: 600;">{{ $t("home.upload_shapefile") }}</span>
         <input type="file" id="file"   /> 
         <input type="submit" id="submit" @click="submit_shapefile" class='submit_shapefile' style="margin-left: -10vw;" />
          <span  id="warning" style="position: relative; top:2vh; "></span>

@@ -15,7 +15,8 @@ export const useAdvancedStore = defineStore({
       selected_platform:'',
       current_geojson:{},
       current_wetland_geojson:{},
-      bounding_box:[]
+      bounding_box:[],
+      updated_wetland_list:[]
 
 
 
@@ -24,8 +25,27 @@ export const useAdvancedStore = defineStore({
         fetchCountriesList(){
             this.country_list = ['South Africa','Tanzania', 'Zimbabwe', 'Malawi', 'Angola', 'Botswana', 'Mozambique', 'Namibia','Zambia']
         },
-        fetchWetlandsList(){
-            this.wetland_list = ['Nyslvlei','Modemolle', 'Intunjambili','Driefontein','Lake Ngami', 'Barotse','Morapeng','Makuleke']
+       async fetchWetlandsList(){
+
+        const wetlandlist_response = await axios.get(`http://66.42.65.87:8080/geoserver/WEMAST/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WEMAST%3Angami&outputFormat=application%2Fjson`)
+        console.log(wetlandlist_response.data, 'wetlandlist')
+        var wetland_list_2 = wetlandlist_response.data.features.map((item)=>{
+          return ({
+            value: item.properties.WETLANDS, label: item.properties.wetland
+    
+          })
+          
+         //return item.properties.wetland
+        })
+        console.log(wetland_list_2, 'updated_wetland_list')
+
+        var anotherlist = wetland_list_2.map((item)=>{
+          return item.value
+        })
+        console.log(anotherlist, 'anotherlist')
+        this.updated_wetland_list = anotherlist
+
+            this.wetland_list = anotherlist  //['Nyslvlei','Modemolle', 'Intunjambili','Driefontein','Lake Ngami', 'Barotse','Morapeng','Makuleke']
         },
 
         showSelectedCountry(option) {
@@ -80,7 +100,9 @@ export const useAdvancedStore = defineStore({
               const sendGetRequest = async () => {
                 try {
                   // this.loading = true;
-                    const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/wetlands/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=wetlands%3Afinal_wetland_wemast&outputFormat=application%2Fjson&CQL_FILTER=WETLANDS=%27${data}%27`
+
+                 
+                    const resp = await  axios.get(`http://66.42.65.87:8080/geoserver/WEMAST/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=WEMAST%3Awetlands&outputFormat=application%2Fjson&CQL_FILTER=WETLANDS=%27${data}%27`
                     );
                     
       

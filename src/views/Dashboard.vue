@@ -715,9 +715,9 @@
   const advancedUserSelections = useAdvancedStore()
   const toast = useToast();
   
-  // console.log(storeUserSelections.fetchCountriesList)
+  // //console.log(storeUserSelections.fetchCountriesList)
   
-  console.log(storeUserSelections.getLoadingState, 'getLoadingState')
+  //console.log(storeUserSelections.getLoadingState, 'getLoadingState')
 
 
   window.html2canvas = html2canvas;
@@ -790,7 +790,7 @@ const submit_shapefile = () => {
           reader.readAsArrayBuffer(file);
         }
 
-        function convertToLayer(buffer){
+        function convertToLayer(buffer){`1                                                        `
           //remove previously loaded layers
           if(layer.value)map.removeLayer(layer.value)
           if(lulc_legend.value)map.removeControl(lulc_legend.value)
@@ -801,7 +801,7 @@ const submit_shapefile = () => {
           if(wmsPrecTimeseriesLayer.value)map.removeLayer(wmsTimeseriesLayer.value) //lulc_legend.value
 
           shp(buffer).then(function(geojson){	//More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
-            console.log(geojson, 'uploaded shapefile geojson')
+            //console.log(geojson, 'uploaded shapefile geojson')
             shp_geojson.value = geojson.features[0]
             layer.value = L.shapefile(geojson, {
               style: {
@@ -819,7 +819,7 @@ const submit_shapefile = () => {
 
                            if(layer.value)storeUserSelections.region_placeholder = 'Custom'
                            if(layer.value)storeUserSelections.selected_basin = 'Custom'
-                          //  console.log(storeUserSelections.selected_basin);
+                          //  //console.log(storeUserSelections.selected_basin);
 
 
                           const apiUrl = "http://45.32.233.93:8000/custom_polygon/"; 
@@ -832,27 +832,62 @@ const submit_shapefile = () => {
                         let sourceObject1 = polygon_post_indicator.value;
                         let sourceObject2 = shp_geojson.value;
                         const merged = {...targetObject, ...sourceObject1, ...sourceObject2}
-                        console.log(merged);
+                        //console.log(merged);
 
                         axios.post(apiUrl, merged)
                             .then(response => {
-                              console.log('custom_shapefile response:', response.data)
+                              //console.log('custom_shapefile response:', response.data)
                               
 
                               let stringWithSld = response.data.sld_file_path;
                             let stringWithoutSld = stringWithSld.replace(".sld", "");
-                            console.log(stringWithoutSld)
+                            //console.log(stringWithoutSld)
 
                               polygon_sld.value = stringWithoutSld
-                              console.log(polygon_sld.value)
+                              //console.log(polygon_sld.value)
+
+                              const addBVILayer2 = () => {
+                                if(indicator.value === 'Basin Vulnerability Index') {
+                                
+                                // //console.log('just to see if request is accessed') //accessed
+                                map.createPane("pane400").style.zIndex = 200;
+
+                              wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}/wms?`, {
+                                  pane: 'pane400', 
+                                  layers: `BVI_${season.value}:${year.value}`,
+                                  crs:L.CRS.EPSG4326,
+                                  styles: polygon_sld.value, //'base8423407086',
+                                  format: 'image/png',
+                                  transparent: true,
+                                  opacity:1.0
+                                  
+                                  
+                                  
+                              });
 
 
+                              wmsLayer.value.addTo(map);
+
+
+
+
+                              // //console.log(wmsLayer.value, 'wms')
+
+
+                              // addLulcLegend()
+                              // lulclegendContent()
+                              BVIlegendContent()
+
+                              changeOpacity()
+
+                              }
+                              }
 
 
                               const addLulcLayer2 = () => {
                               if(sub_indicator.value === 'Land Cover' && shp_geojson.value != null) {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane400").style.zIndex = 200;
 
 
@@ -876,7 +911,7 @@ const submit_shapefile = () => {
 
 
 
-                            // console.log(wmsLayer.value, 'wms')
+                            // //console.log(wmsLayer.value, 'wms')
 
 
                             // addLulcLegend()
@@ -891,7 +926,7 @@ const submit_shapefile = () => {
                             const addPrecIndexWet2 = () => {
                               if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
                               
                               wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
@@ -911,7 +946,7 @@ const submit_shapefile = () => {
 
 
                               wmsLayer.value.addTo(map);
-                              // console.log(wmsLayer.value, 'wms')
+                              // //console.log(wmsLayer.value, 'wms')
                               //remove spinner when layer loads
                               wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -929,7 +964,7 @@ const submit_shapefile = () => {
                             const addPrecIndexDry = () => {
                               if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
                               
                               wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
@@ -945,7 +980,7 @@ const submit_shapefile = () => {
                               
                               
                               wmsLayer.value.addTo(map);
-                              // console.log(wmsLayer.value, 'wms')
+                              // //console.log(wmsLayer.value, 'wms')
                               //remove spinner when layer loads
                               wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -960,7 +995,7 @@ const submit_shapefile = () => {
                             const addWetlandExtent2 = () => {
                               if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
                               
                               wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -980,7 +1015,7 @@ const submit_shapefile = () => {
                               wmsLayer.value.addTo(map);
                               
                               
-                              // console.log(wmsLayer.value, 'wms')
+                              // //console.log(wmsLayer.value, 'wms')
                               //remove spinner when layer loads
                               wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -1005,7 +1040,7 @@ const submit_shapefile = () => {
                             const addVegCover2 = () => {
                               if(sub_indicator.value === 'Vegetation Cover' && shp_geojson.value != null ) { //&& season.value === 'DRY'
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
                               map.createPane("timeseries").style.zIndex = 300;
 
@@ -1030,7 +1065,7 @@ const submit_shapefile = () => {
 
 
 
-                            // console.log(wmsLayer.value, 'wms')
+                            // //console.log(wmsLayer.value, 'wms')
                             //remove spinner when layer loads
                             wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -1047,7 +1082,7 @@ const submit_shapefile = () => {
                               // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
                               if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
 
                             wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
@@ -1067,7 +1102,7 @@ const submit_shapefile = () => {
                             wmsLayer.value.addTo(map);
 
 
-                            // console.log(wmsLayer.value, 'wms')
+                            // //console.log(wmsLayer.value, 'wms')
                             //remove spinner when layer loads
                             wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -1081,7 +1116,7 @@ const submit_shapefile = () => {
                             const addFirmsLayer2 = () => {
                               if(sub_indicator.value === 'Burnt Area FIRMS') {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane400").style.zIndex = 200;
 
                             
@@ -1106,7 +1141,7 @@ const submit_shapefile = () => {
 
 
 
-                            console.log(wmsLayer.value, 'wms')
+                            //console.log(wmsLayer.value, 'wms')
 
 
 
@@ -1119,7 +1154,7 @@ const submit_shapefile = () => {
                             const addSMILayer2 = () => {
                               if(sub_indicator.value === 'Soil Moisure Index') {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane400").style.zIndex = 200;
 
                             
@@ -1153,7 +1188,7 @@ const submit_shapefile = () => {
                             const addFloodLayer2 = () => {
                               if(sub_indicator.value === 'Undulation') {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane400").style.zIndex = 200;
 
                             
@@ -1178,7 +1213,7 @@ const submit_shapefile = () => {
 
 
 
-                            console.log(wmsLayer.value, 'wms')
+                            //console.log(wmsLayer.value, 'wms')
 
 
 
@@ -1191,7 +1226,7 @@ const submit_shapefile = () => {
                             const addSuspendedSediments2 = () => {
                               if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
                               
                               wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -1211,7 +1246,7 @@ const submit_shapefile = () => {
                               wmsLayer.value.addTo(map);
                               
                               
-                              // console.log(wmsLayer.value, 'wms')
+                              // //console.log(wmsLayer.value, 'wms')
                               //remove spinner when layer loads
                               wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -1234,7 +1269,7 @@ const submit_shapefile = () => {
                             const addTurbidity2 = () => {
                               if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity') {
                               
-                              // console.log('just to see if request is accessed') //accessed
+                              // //console.log('just to see if request is accessed') //accessed
                               map.createPane("pane800").style.zIndex = 200;
                               
                               wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -1254,7 +1289,7 @@ const submit_shapefile = () => {
                               wmsLayer.value.addTo(map);
                               
                               
-                              // console.log(wmsLayer.value, 'wms')
+                              // //console.log(wmsLayer.value, 'wms')
                               //remove spinner when layer loads
                               wmsLayer.value.on('load', function (event) {
                                 loading.value = false
@@ -1271,11 +1306,19 @@ const submit_shapefile = () => {
                               }
 
                             }
+
+
+
+
+
+
+
                             
                             //remove bigger layer
                             if(current_geojson.value)map.removeLayer(current_geojson.value)
                                       if(wmsLayer.value)map.removeLayer(wmsLayer.value)
                                       //add function to add clipped layer to the map
+                                      addBVILayer2()
                                       addLulcLayer2()
                                       addPrecIndexWet2()
                                       addPrecIndexDry()
@@ -1293,7 +1336,7 @@ const submit_shapefile = () => {
                               
                             })
                             .catch(error => {
-                              console.log('Error:', error) 
+                              //console.log('Error:', error) 
                             });
 
               
@@ -1326,7 +1369,7 @@ const submit_shapefile = () => {
   if(sub_indicator.value === 'Precipitation Index'){
     indexx.value = 'SPI'
   }
-  console.log(indexx.value, 'indices')
+  //console.log(indexx.value, 'indices')
   return indexx.value
 
 
@@ -1625,7 +1668,7 @@ let barchart_options= {
   const show_advanced_filter = () =>{
     advanced_filter.value = true
     compare.value = false
-    // console.log('clicked advanced filter')
+    // //console.log('clicked advanced filter')
     // alert('clicked advanced filter')
   }
   const show_compare = () =>{
@@ -1658,7 +1701,7 @@ let barchart_options= {
   
   const displayToKey = ($event) => {
     // var selection = $event.target.value
-    console.log($event, 'documentation selection')
+    //console.log($event, 'documentation selection')
     if($event === 'Documentation'){
       window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki");
     }
@@ -1669,7 +1712,7 @@ let barchart_options= {
   }
   //sidebar functionality
   const toggle_nav = (e)  => {
-        console.log(" toggle_nav ", e.target.id);
+        //console.log(" toggle_nav ", e.target.id);
         const cmd = e.target.id;
         cmd_.value = e.target.id;
         if(cmd === "close") return closeNav();
@@ -1982,7 +2025,7 @@ if(parameter.value === 'Sus Sediments'){
         current_top_base_layer.value = id;
         const base_map = id.split("-")[1];
         current_top_base_layer.value = base_map;
-        console.log("change base map ", base_map);
+        //console.log("change base map ", base_map);
         const index = Object.keys(baseMaps.value).indexOf(base_map);
   
         let layerControlElement = document.getElementsByClassName(
@@ -1991,7 +2034,7 @@ if(parameter.value === 'Sus Sediments'){
         layerControlElement.getElementsByTagName("input")[index].click();
   
         map.eachLayer(function (layer) {
-          console.log("layer ", layer);
+          //console.log("layer ", layer);
         });
       }
   
@@ -2014,7 +2057,7 @@ if(parameter.value === 'Sus Sediments'){
         right_ctrls.addEventListener("click", (event) => {
           const id = event.target.id;
           event.stopPropagation();
-           console.log("target id ", id);
+           //console.log("target id ", id);
   
            if (id === "measure") {
             document
@@ -2060,7 +2103,7 @@ if(parameter.value === 'Sus Sediments'){
             ].includes(id) && show_sidenav == true
           ){
            
-            console.log('sidenav is open')
+            //console.log('sidenav is open')
 
           }
   
@@ -2284,11 +2327,11 @@ const help = () => {
 
   onMounted( () => {
     setLeafletMap()
-//     console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
+//     //console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
 //    var device_scale = window.devicePixelRatio
 //    browserZoomLevel.value = Math.round(window.devicePixelRatio * 100);
 //   //  alert(browserZoomLevel.value)
-//   //  console.log('browser zoom',browserZoomLevel)
+//   //  //console.log('browser zoom',browserZoomLevel)
 //    if(device_scale === 1.25){
 //     // document.body.style.zoom = "99%";
 //   //  alert(browserZoomLevel)
@@ -2338,7 +2381,7 @@ const help = () => {
     const changeDefaultOpacity = () => {
     $('#sldOpacity').on('change', function(){
                                     //   $('#image-opacity').html(this.value); //i might revesit
-                                      console.log(this.value, 'opacity value')
+                                      //console.log(this.value, 'opacity value')
                                      
                                         wmsLayer.value.setOpacity(this.value)
                                       
@@ -2357,7 +2400,7 @@ const help = () => {
     const addLulcLayer = () => {
   
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
 
@@ -2392,7 +2435,7 @@ wmsLayer.value.on('load', function (event) {
 
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 
 
 // addLulcLegend()
@@ -2429,7 +2472,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
   document
         .getElementById("wemast_base_layers")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           show_base_layers.value = true;
           wemast_base_layers();
         })
@@ -2437,7 +2480,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         document
         .getElementById("zoom_in")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           zoom_in();
         });
@@ -2445,7 +2488,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         document
         .getElementById("zoom_out")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           zoom_out();
         });
@@ -2453,7 +2496,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         document
         .getElementById("download_tiff")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           download_tiff();
         });
@@ -2463,14 +2506,14 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         // .addEventListener("click", (e) => {
         //  document.getElementsByClassName("leaflet-control-measure")[0]
         // //  .dispatchEvent(new Event("click"))
-        //   // console.log("click ");
+        //   // //console.log("click ");
           
         //   // download_tiff();
         // });
         document
         .getElementById("help")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           help();
         });
@@ -2478,14 +2521,14 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         document
         .getElementById("upload_custom_shapefile")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           show_upload_shapefile();
         });
         document
         .getElementById("download_map")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           downloadMap('My leaflet map');
         });
@@ -2493,7 +2536,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
         document
         .getElementById("draw_polygon")
         .addEventListener("click", (e) => {
-          console.log("click ");
+          //console.log("click ");
           
           addDrawCtrl();
           draw_polygon();
@@ -2505,7 +2548,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
       // draw_polygon(); //hides draw controls
   
       // map.on("baselayerchange", (e) => {
-      //   console.log("Layer in basechange ", current_raster_layer.value);
+      //   //console.log("Layer in basechange ", current_raster_layer.value);
       //   if (current_raster_layer.value) {
       //     current_raster_layer.value.bringToFront(); //current_raster can be tracked and brought to front
       //   }
@@ -2553,12 +2596,12 @@ default_stats.value =  storeUserSelections.getDefaultStats()
   
   //change browser zoom on click
 //   const change_zoom = () => {
-//     // console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
+//     // //console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
 //    var device_scale = window.devicePixelRatio
 // //    browserZoomLevel.value = Math.round(window.devicePixelRatio * 100);
 // //   //  alert(browserZoomLevel.value)
 // // //   //  alert(browserZoomLevel.value)
-// // //   //  console.log('browser zoom',browserZoomLevel)
+// // //   //  //console.log('browser zoom',browserZoomLevel)
 // //    if(device_scale === 1.25){
 // //     document.body.style.zoom = "80%";
 // //     // document.body.style.zoom = "99%";
@@ -2610,7 +2653,7 @@ default_stats.value =  storeUserSelections.getDefaultStats()
   
    var selecteRegion = storeUserSelections.getSelectedRegion
    geometry = selecteRegion
-   console.log(selecteRegion, 'selected region app')
+   //console.log(selecteRegion, 'selected region app')
   
    map.createPane("pane1000").style.zIndex = 300;
    current_geojson.value = L.geoJSON(selecteRegion, {
@@ -2628,16 +2671,16 @@ default_stats.value =  storeUserSelections.getDefaultStats()
    current_geojson.value.addTo(map)
 
    var drawn_polygon = selecteRegion
-  console.log(drawn_polygon.features[0].geometry, 'drawnpoly convert')
+  //console.log(drawn_polygon.features[0].geometry, 'drawnpoly convert')
   var object_geojson = drawn_polygon.features[0].geometry
   var str = wkt.stringify(object_geojson)
-  console.log(str, 'wkt custom str')
+  //console.log(str, 'wkt custom str')
   
   
             //  map.fitBounds(current_geojson.value.getBounds(), {
             //                  padding: [50, 50],
             //                }); 
-            // console.log('bounds',current_geojson.value.getBounds())
+            // //console.log('bounds',current_geojson.value.getBounds())
             // map.flyToBounds(current_geojson.value.getBounds())
             if(current_top_base_layer.value === 'MapBoxSatellite'){
               map.flyToBounds(current_geojson.value.getBounds())
@@ -2672,14 +2715,14 @@ const searchControl = new GeoSearchControl({
   marker: search_marker.value,
   popupFormat: ({ query, result }) => result.label,
   resultFormat: ({ result}) => result.label
-  //  console.log(result, 'result')
+  //  //console.log(result, 'result')
   
 });
 if(search_control.value)map.removeControl(search_control.value)
 
 
 const showResult = ({result}) => {
-      console.log(result, result)
+      //console.log(result, result)
       return result.label
 
     }
@@ -2699,7 +2742,7 @@ map.addControl(search_control.value );
   //watch for changes
   
   const setSelectedRegion = computed( () => {
-    console.log(storeUserSelections.selected_basin, 'selected_basin app')
+    //console.log(storeUserSelections.selected_basin, 'selected_basin app')
     
     return storeUserSelections.getSelectedRegion
   })
@@ -2719,7 +2762,7 @@ map.addControl(search_control.value );
     var selected_basin = storeUserSelections.getSelectedBasin
     
     basin.value = selected_basin
-    console.log(selected_basin, 'selected basin app')
+    //console.log(selected_basin, 'selected basin app')
 
 
   // show_zambezi_stats.value == false
@@ -2729,7 +2772,7 @@ map.addControl(search_control.value );
   
   
   const setSelectedBasin = computed ( () => {
-    console.log(storeUserSelections.selected_basin, 'selected basin app')
+    //console.log(storeUserSelections.selected_basin, 'selected basin app')
   
     return storeUserSelections.getSelectedBasin
   
@@ -2743,14 +2786,14 @@ map.addControl(search_control.value );
   //indicator 
   const getIndicator = () => {
     var selectedIndicator= storeUserSelections.getSelectedIndcator
-   console.log(selectedIndicator, 'selected indicator app')
+   //console.log(selectedIndicator, 'selected indicator app')
    indicator.value = selectedIndicator
   
   }
   
   
   const setSelectedIndicator = computed ( () => {
-    console.log(storeUserSelections.selected_indicator, 'selected_indicator app')
+    //console.log(storeUserSelections.selected_indicator, 'selected_indicator app')
     return storeUserSelections.getSelectedIndcator
   
   })
@@ -2763,7 +2806,7 @@ map.addControl(search_control.value );
   
   const getSubIndicator = () => {
     var selectedSubIndicator= storeUserSelections.getSelectedSubIndcator
-   console.log(selectedSubIndicator, 'selected sub indicator app')
+   //console.log(selectedSubIndicator, 'selected sub indicator app')
    sub_indicator.value = selectedSubIndicator
 
 
@@ -2773,7 +2816,7 @@ map.addControl(search_control.value );
   
   
   const setSelectedSubIndicator = computed ( () => {
-    console.log(storeUserSelections.selected_sub_indicator, 'selected sub_indicator app')
+    //console.log(storeUserSelections.selected_sub_indicator, 'selected sub_indicator app')
     return storeUserSelections.getSelectedSubIndcator
   
   })
@@ -2789,13 +2832,13 @@ map.addControl(search_control.value );
     var selectedYear= storeUserSelections.getSelectedYear
   
    year.value = selectedYear
-   console.log(year.value, 'selected year app')
+   //console.log(year.value, 'selected year app')
   
   }
   
   
   const setSelectedYear = computed ( () => {
-    console.log(storeUserSelections.selected_year, 'selected year app')
+    //console.log(storeUserSelections.selected_year, 'selected year app')
     return storeUserSelections.getSelectedYear
   
   })
@@ -2806,11 +2849,11 @@ map.addControl(search_control.value );
   const getSeason = () => {
     var selectedSeason = storeUserSelections.getSelectedSeason
     season.value = selectedSeason
-    console.log(season.value, 'selected season app')
+    //console.log(season.value, 'selected season app')
   
   }
   const setSelectedSeason = computed ( () => {
-    console.log(storeUserSelections.selected_season, 'selected season app')
+    //console.log(storeUserSelections.selected_season, 'selected season app')
     return storeUserSelections.getSelectedSeason
   
   })
@@ -2823,11 +2866,11 @@ map.addControl(search_control.value );
   const getParameter = () => {
     var selectedParameter = storeUserSelections.getSelectedParameter
     parameter.value = selectedParameter
-    console.log(parameter.value, 'selected parameter app')
+    //console.log(parameter.value, 'selected parameter app')
   
   }
   const setSelectedParameter = computed ( () => {
-    console.log(storeUserSelections.selected_parameter, 'selected parameter app')
+    //console.log(storeUserSelections.selected_parameter, 'selected parameter app')
     return storeUserSelections.getSelectedParameter
   
   })
@@ -2839,11 +2882,11 @@ map.addControl(search_control.value );
   const getSatellite = () => {
     var selectedSatellite = storeUserSelections.getSelectedSatellite
     satellite.value = selectedSatellite
-    console.log(satellite.value, 'selected satellite app')
+    //console.log(satellite.value, 'selected satellite app')
 
   }
   const setSelectedSatellite = computed ( () => {
-    console.log(storeUserSelections.selected_satellite, 'selected satellite app')
+    //console.log(storeUserSelections.selected_satellite, 'selected satellite app')
     return storeUserSelections.getSelectedSatellite
   
   })
@@ -2856,7 +2899,7 @@ map.addControl(search_control.value );
   const addBVILayer = () => {
   if(indicator.value === 'Basin Vulnerability Index') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
 wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}/wms?`, {
@@ -2879,7 +2922,7 @@ wmsLayer.value.addTo(map);
 
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 
 
 // addLulcLegend()
@@ -2894,7 +2937,7 @@ changeOpacity()
  const addLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
 
@@ -2920,7 +2963,7 @@ wmsLayer.value.addTo(map);
 
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 
 
 // addLulcLegend()
@@ -2937,14 +2980,14 @@ changeOpacity()
   
 //     // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
   
-//   // console.log('just to see if request is accessed') //accessed
+//   // //console.log('just to see if request is accessed') //accessed
 //   map.createPane("pane400").style.zIndex = 600;
 
 //   var drawn_polygon = storeUserSelections.custom_geojson.geojson.coordinates
-//   console.log(drawn_polygon, 'drawn polygon')
+//   //console.log(drawn_polygon, 'drawn polygon')
 //   //get bounds
 //   var custom_bounds = custom_geojson.value.getBounds()
-//   console.log(custom_bounds, 'custom bounds')
+//   //console.log(custom_bounds, 'custom bounds')
 //   var north_east = custom_bounds._northEast
 //   var south_west = custom_bounds._southWest
 
@@ -2955,7 +2998,7 @@ changeOpacity()
 
 
 //   // var str = wkt.stringify(drawn_polygon)
-//   // console.log(str, 'wkt custom str')
+//   // //console.log(str, 'wkt custom str')
 
   
 
@@ -2975,7 +3018,7 @@ changeOpacity()
 
 
 // customWmsLayer.value.addTo(map);
-// console.log(customWmsLayer.value, 'custom wms layer')
+// //console.log(customWmsLayer.value, 'custom wms layer')
 
 
 
@@ -3047,52 +3090,52 @@ changeOpacity()
       
       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-      // console.log(point, 'point')
+      // //console.log(point, 'point')
     
-      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      // //console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
       return this._url + L.Util.getParamString(params, this._url, true);
     },
     
     showGetFeatureInfo: function (err, latlng, content) {
       if (err) {
-        // console.log(latlng, 'lat long')
+        // //console.log(latlng, 'lat long')
   
       
         ;
-        // console.log(latlng, 'wms latlng')
-        console.log(content.features[0].properties, "ndvi wms content")
+        // //console.log(latlng, 'wms latlng')
+        //console.log(content.features[0].properties, "ndvi wms content")
         
         var bands = content.features[0].properties
         
         var band_names = Object.keys(bands)
-        console.log(band_names.slice(15,23), 'band names')
+        //console.log(band_names.slice(15,23), 'band names')
           
 
         lineChartData.labels = band_names
 
         var band_values = Object.values(bands)
-        console.log(band_values.slice(15,23), 'band values')
+        //console.log(band_values.slice(15,23), 'band values')
         lineChartData.datasets[0].data = band_values
 
-        console.log(lineChartData, 'line chart data')
+        //console.log(lineChartData, 'line chart data')
 
         storeUserSelections.lineChartData.labels = band_names.slice(15,22)
         storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
-        console.log('band values', band_values )
+        //console.log('band values', band_values )
         storeUserSelections.lineChartData.datasets[0].data = band_values
-        console.log(storeUserSelections.lineChartData, 'store linechart data')
+        //console.log(storeUserSelections.lineChartData, 'store linechart data')
 
 
 
         storeUserSelections.latlon = [latlng.lat, latlng.lng]
-        console.log(storeUserSelections.latlon, 'updated store lat lon')
+        //console.log(storeUserSelections.latlon, 'updated store lat lon')
 
         
 
       
           return  
-          // console.log(latlng, 'lat long');
+          // //console.log(latlng, 'lat long');
         
         } // do nothing if there's an error
      
@@ -3202,67 +3245,67 @@ watch( setLatLon, () => {
       
       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-      // console.log(point, 'point')
+      // //console.log(point, 'point')
     
-      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      // //console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
       return this._url + L.Util.getParamString(params, this._url, true);
     },
     
     showGetFeatureInfo: function (err, latlng, content) {
       if (err) {
-        // console.log(latlng, 'lat long')
+        // //console.log(latlng, 'lat long')
   
       
         ;
-        // console.log(latlng, 'wms latlng')
-        console.log(content.features[0].properties, "PRECIP timeseries content")
+        // //console.log(latlng, 'wms latlng')
+        //console.log(content.features[0].properties, "PRECIP timeseries content")
         
         var bands = content.features[0].properties
         
         var band_names = Object.keys(bands)
-        console.log(band_names, 'PRECIP band names')
+        //console.log(band_names, 'PRECIP band names')
           
 
         lineChartData.labels = band_names
 
         var band_values = Object.values(bands)
-        console.log(band_values, 'PRECIP band values')
+        //console.log(band_values, 'PRECIP band values')
 
         var truncated_values = band_values.map((value_item) =>
        {
          parseInt(value_item).toFixed(2)
-        // console.log(typeof(value_item, 'type of value item'))
+        // //console.log(typeof(value_item, 'type of value item'))
       }
         )
 
-        console.log(truncated_values, 'PRECIP truncated values')
+        //console.log(truncated_values, 'PRECIP truncated values')
 
         var renamed_band_names = band_names.map((band_item) => 
           band_item.replace(/Band/, "Pentad")
         )
-        console.log(renamed_band_names)
+        //console.log(renamed_band_names)
         lineChartData.datasets[0].data = band_values
 
-        console.log(lineChartData, 'PRECIP line chart data')
+        //console.log(lineChartData, 'PRECIP line chart data')
 
         storeUserSelections.lineChartData.labels = renamed_band_names
         // .slice(15,22)
         // storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022'] RENAME LATER
-        // console.log('band values', band_values )
+        // //console.log('band values', band_values )
         storeUserSelections.lineChartData.datasets[0].data = band_values
-        // console.log(storeUserSelections.lineChartData, 'store linechart data')
+        // //console.log(storeUserSelections.lineChartData, 'store linechart data')
 
 
 
         storeUserSelections.latlon = [latlng.lat, latlng.lng]
-        // console.log(storeUserSelections.latlon, 'updated store lat lon')
+        // //console.log(storeUserSelections.latlon, 'updated store lat lon')
 
         
 
       
           return  
-          // console.log(latlng, 'lat long');
+          // //console.log(latlng, 'lat long');
         
         } // do nothing if there's an error
      
@@ -3372,49 +3415,49 @@ watch( setLatLon, () => {
       
       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-      // console.log(point, 'point')
+      // //console.log(point, 'point')
     
-      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      // //console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
       return this._url + L.Util.getParamString(params, this._url, true);
     },
     
     showGetFeatureInfo: function (err, latlng, content) {
       if (err) {
-        // console.log(latlng, 'lat long')
+        // //console.log(latlng, 'lat long')
   
       
         ;
-        // console.log(latlng, 'wms latlng')
-        console.log(content.features[0].properties, "TEMP timeseries content")
+        // //console.log(latlng, 'wms latlng')
+        //console.log(content.features[0].properties, "TEMP timeseries content")
         
         var bands = content.features[0].properties
         
         var band_names = Object.keys(bands)
-        console.log(band_names, 'TEMP band names')
+        //console.log(band_names, 'TEMP band names')
           
 
         lineChartData.labels = band_names
 
         var band_values = Object.values(bands)
-        console.log(band_values, 'PRECIP band values')
+        //console.log(band_values, 'PRECIP band values')
 
       //   var truncated_values = band_values.map((value_item) =>
       //  {
       //    parseInt(value_item).toFixed(2)
-      //   // console.log(typeof(value_item, 'type of value item'))
+      //   // //console.log(typeof(value_item, 'type of value item'))
       // }
       //   )
 
-      //   console.log(truncated_values, 'PRECIP truncated values')
+      //   //console.log(truncated_values, 'PRECIP truncated values')
 
       //   var renamed_band_names = band_names.map((band_item) => 
       //     band_item.replace(/Band/, "Pentad")
       //   )
-      //   console.log(renamed_band_names)
+      //   //console.log(renamed_band_names)
         lineChartData.datasets[0].data = band_values
 
-        console.log(lineChartData, 'TEMP line chart data')
+        //console.log(lineChartData, 'TEMP line chart data')
 
         storeUserSelections.lineChartData.labels = band_names
       //   // .slice(15,22)
@@ -3432,20 +3475,20 @@ watch( setLatLon, () => {
   "November",
   "December"
 ];
-      //   // console.log('band values', band_values )
+      //   // //console.log('band values', band_values )
         storeUserSelections.lineChartData.datasets[0].data = band_values
-      //   // console.log(storeUserSelections.lineChartData, 'store linechart data')
+      //   // //console.log(storeUserSelections.lineChartData, 'store linechart data')
 
 
 
         storeUserSelections.latlon = [latlng.lat, latlng.lng]
-        // console.log(storeUserSelections.latlon, 'updated store lat lon')
+        // //console.log(storeUserSelections.latlon, 'updated store lat lon')
 
         
 
       
           return  
-          // console.log(latlng, 'lat long');
+          // //console.log(latlng, 'lat long');
         
         } // do nothing if there's an error
      
@@ -3549,7 +3592,7 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
  const addPrecIndexWet = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
@@ -3570,7 +3613,7 @@ wmsTimeseriesLayer.value.addTo(map).bringToFront()
 
 
   wmsLayer.value.addTo(map);
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -3638,7 +3681,7 @@ getDefaultLatLon()
  const addPrecIndexDry = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
@@ -3657,7 +3700,7 @@ getDefaultLatLon()
   
   
   wmsLayer.value.addTo(map);
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -3712,7 +3755,7 @@ getDefaultLatLon()
  const addWetlandExtent = () => {
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -3733,7 +3776,7 @@ getDefaultLatLon()
   wmsLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -3758,7 +3801,7 @@ getDefaultLatLon()
  const addVegCover = () => {
   if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   map.createPane("timeseries").style.zIndex = 300;
 
@@ -3822,45 +3865,45 @@ getDefaultLatLon()
       
       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-      // console.log(point, 'point')
+      // //console.log(point, 'point')
     
-      // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+      // //console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
       return this._url + L.Util.getParamString(params, this._url, true);
     },
     
     showGetFeatureInfo: function (err, latlng, content) {
       if (err) {
-        // console.log(latlng, 'lat long')
+        // //console.log(latlng, 'lat long')
   
       
         ;
-        // console.log(latlng, 'wms latlng')
-        console.log(content.features[0].properties, "ndvi wms content")
+        // //console.log(latlng, 'wms latlng')
+        //console.log(content.features[0].properties, "ndvi wms content")
         
         var bands = content.features[0].properties
         
         var band_names = Object.keys(bands)
-        console.log(band_names, 'band names')
+        //console.log(band_names, 'band names')
 
         lineChartData.labels = band_names
 
         var band_values = Object.values(bands)
-        console.log(band_values, 'band values')
+        //console.log(band_values, 'band values')
         lineChartData.datasets[0].data = band_values
 
-        console.log(lineChartData, 'line chart data')
+        //console.log(lineChartData, 'line chart data')
 
         storeUserSelections.lineChartData.labels = band_names
         storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
         storeUserSelections.lineChartData.datasets[0].data = band_values
-        console.log(storeUserSelections.lineChartData, 'store linechart data')
+        //console.log(storeUserSelections.lineChartData, 'store linechart data')
 
         storeUserSelections.latlon = [latlng.lat, latlng.lng]
-        console.log(storeUserSelections.latlon, 'updated store lat lon')
+        //console.log(storeUserSelections.latlon, 'updated store lat lon')
 
           return  
-          // console.log(latlng, 'lat long');
+          // //console.log(latlng, 'lat long');
         
         } // do nothing if there's an error
      
@@ -3970,7 +4013,7 @@ getDefaultLatLon()
 
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -3990,7 +4033,7 @@ changeOpacity()
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
@@ -4011,7 +4054,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_
 wmsLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -4027,7 +4070,7 @@ changeOpacity()
  const addBurntLayer = () => {
   if(sub_indicator.value === 'Burnt Area MODIS') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -4052,7 +4095,7 @@ wmsLayer.value.addTo(map);
 
 
 
-console.log(wmsLayer.value, 'wms')
+//console.log(wmsLayer.value, 'wms')
 
 
 modislegendContent()
@@ -4065,7 +4108,7 @@ changeOpacity()
  const addFirmsLayer = () => {
   if(sub_indicator.value === 'Burnt Area FIRMS') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -4090,7 +4133,7 @@ wmsLayer.value.addTo(map);
 
 
 
-console.log(wmsLayer.value, 'wms')
+//console.log(wmsLayer.value, 'wms')
 
 
 
@@ -4160,46 +4203,46 @@ changeOpacity()
       
 //       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
 //       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-//       // console.log(point, 'point')
+//       // //console.log(point, 'point')
     
-//       // console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
+//       // //console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
       
 //       return this._url + L.Util.getParamString(params, this._url, true);
 //     },
     
 //     showGetFeatureInfo: function (err, latlng, content) {
 //       if (err) {
-//         // console.log(latlng, 'lat long')
+//         // //console.log(latlng, 'lat long')
   
       
 //         ;
-//         // console.log(latlng, 'wms latlng')
-//         console.log(content.features[0].properties, "smi wms content")
+//         // //console.log(latlng, 'wms latlng')
+//         //console.log(content.features[0].properties, "smi wms content")
         
 //         var bands = content.features[0].properties
         
 //         var band_names = Object.keys(bands)
-//         console.log(band_names.slice(15,23), 'band names')
+//         //console.log(band_names.slice(15,23), 'band names')
           
 
 //         lineChartData.labels = band_names
 
 //         var band_values = Object.values(bands)
-//         console.log(band_values.slice(15,23), 'band values')
+//         //console.log(band_values.slice(15,23), 'band values')
 //         lineChartData.datasets[0].data = band_values
 
-//         console.log(lineChartData, 'line chart data')
+//         //console.log(lineChartData, 'line chart data')
 
 //         storeUserSelections.lineChartData.labels = band_names.slice(15,22)
 //         storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
 //         storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,22)
-//         console.log(storeUserSelections.lineChartData, 'store linechart data')
+//         //console.log(storeUserSelections.lineChartData, 'store linechart data')
 
         
 
       
 //           return  
-//           // console.log(latlng, 'lat long');
+//           // //console.log(latlng, 'lat long');
         
 //         } // do nothing if there's an error
      
@@ -4228,7 +4271,7 @@ changeOpacity()
  const addSMILayer = () => {
   if(sub_indicator.value === 'Soil Moisure Index') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -4307,7 +4350,7 @@ getDefaultLatLon()
  const addFloodLayer = () => {
   if(sub_indicator.value === 'Undulation') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -4332,7 +4375,7 @@ wmsLayer.value.addTo(map);
 
 
 
-console.log(wmsLayer.value, 'wms')
+//console.log(wmsLayer.value, 'wms')
 
 
 
@@ -4348,7 +4391,7 @@ changeOpacity()
  const addSuspendedSediments = () => {
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -4369,7 +4412,7 @@ changeOpacity()
   wmsLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -4420,7 +4463,7 @@ marker.value = L.icon({
 getDefaultLatLon()
 
   wmsPrecTimeseriesLayer.value.on('load', function (event) {
-    console.log('sus sediments loaded')
+    //console.log('sus sediments loaded')
     loading.value = false
 });
 
@@ -4437,7 +4480,7 @@ getDefaultLatLon()
  const addTurbidity = () => {
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -4458,7 +4501,7 @@ getDefaultLatLon()
   wmsLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -4509,7 +4552,7 @@ marker.value = L.icon({
 getDefaultLatLon()
 
   wmsPrecTimeseriesLayer.value.on('load', function (event) {
-    console.log('sus sediments loaded')
+    //console.log('sus sediments loaded')
     loading.value = false
 });
 
@@ -4559,7 +4602,7 @@ wmsLayer.value.on('load', function (event) {
 
 
 
-// console.log(map.getCenter(), 'center')
+// //console.log(map.getCenter(), 'center')
 var center = map.getCenter()
 var lat = center.lat.toFixed(2)
 var lon = center.lng.toFixed(2)
@@ -4585,12 +4628,12 @@ const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
 
 
 const postData = 'data_GeoJSON='+ encodeURIComponent([{"_process":"_geojson"}])
-console.log(postData)
+//console.log(postData)
 const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
 await axios.post(apiUrl, postData, {headers})
 .then(response => {
-  console.log('GeoJSON Response:', response.data[0].data)
+  //console.log('GeoJSON Response:', response.data[0].data)
  
   var geojson_object = response.data[0].data
 const valid_geojson = JSON.parse(geojson_object);
@@ -4653,17 +4696,17 @@ wmsLayer.value.addTo(map);
 
       const getChartData= () => {
     var selectedchartdata= storeUserSelections.getLulcChartData
-   console.log(selectedchartdata, 'chart data app')
+   //console.log(selectedchartdata, 'chart data app')
   // chartData.value = selectedchartdata
-  // console.log(chartData.value, 'chartData.value')
+  // //console.log(chartData.value, 'chartData.value')
   
   }
   
   
   const setChartdata = computed ( () => {
-    console.log(storeUserSelections.stats_array, 'lulc chart data app')
+    //console.log(storeUserSelections.stats_array, 'lulc chart data app')
     chartData.value = storeUserSelections.stats_array
-    console.log(chartData.value.labels, 'chart data value')
+    //console.log(chartData.value.labels, 'chart data value')
     return storeUserSelections.getStatsArray
   
   })
@@ -4671,11 +4714,11 @@ wmsLayer.value.addTo(map);
     getChartData()
     
   })
-      // console.log(storeUserSelections.lulcChartData.labels, 'chart data app')
+      // //console.log(storeUserSelections.lulcChartData.labels, 'chart data app')
       
-       console.log("downloadcsv ", chartData.value);
-      // console.log(chartData.value, 'chart data type')
-      console.log(chartData.value.data_figures, 'datafigures')
+       //console.log("downloadcsv ", chartData.value);
+      // //console.log(chartData.value, 'chart data type')
+      //console.log(chartData.value.data_figures, 'datafigures')
        var figures = chartData.value.data_figures
       chartData.value.labels.map((data, i) => {
        
@@ -4757,7 +4800,7 @@ wmsLayer.value.addTo(map);
   })
   
    watch( setLoadingState , () => {
-    console.log(storeUserSelections.getLoadingState, 'getLoadingState')
+    //console.log(storeUserSelections.getLoadingState, 'getLoadingState')
     loading.value = storeUserSelections.getLoadingState
     
   })
@@ -4823,18 +4866,18 @@ bvi_legend.value.addTo(map);
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
@@ -4893,7 +4936,7 @@ bvi_legend.value.addTo(map);
 
        
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -4905,18 +4948,18 @@ bvi_legend.value.addTo(map);
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=LULC:2010&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         
 
         if(lulc_compare_legend.value)map.removeControl(lulc_compare_legend.value)
@@ -4958,7 +5001,7 @@ bvi_legend.value.addTo(map);
         }
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5060,18 +5103,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
   
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
@@ -5129,7 +5172,7 @@ const comparePrecLegend = () => {
        
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5140,18 +5183,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=30&HEIGHT=30&LAYER=NDWI:1990&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:10;bgColor:0xFFFFEE;dpi:180`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
   
 
 
@@ -5193,7 +5236,7 @@ const comparePrecLegend = () => {
        }
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5205,18 +5248,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
@@ -5266,7 +5309,7 @@ const comparePrecLegend = () => {
 
   
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5277,18 +5320,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2021`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         
 
 
@@ -5329,7 +5372,7 @@ const comparePrecLegend = () => {
        }
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5341,18 +5384,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
@@ -5403,7 +5446,7 @@ const comparePrecLegend = () => {
        
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5415,18 +5458,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=SENTINEL_NDVI_WET%3A2022&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         
 
 
@@ -5467,7 +5510,7 @@ const comparePrecLegend = () => {
         }
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5481,18 +5524,18 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FLOOD%3AFLOOD&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries //response object does not have colormap.entries
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
@@ -5537,7 +5580,7 @@ const comparePrecLegend = () => {
   flood_legend.value.addTo(map);
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5549,20 +5592,20 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRE%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
 
         
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
         if(modis_legend.value)map.removeControl(modis_legend.value)
@@ -5596,7 +5639,7 @@ const comparePrecLegend = () => {
   modis_legend.value.addTo(map);
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5607,20 +5650,20 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
 
         
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
         if(firms_legend.value)map.removeControl(firms_legend.value)
         if(firms_compare_legend.value)map.removeControl(firms_compare_legend.value)
         if(smi_legend.value)map.removeControl(smi_legend.value)
@@ -5671,7 +5714,7 @@ const comparePrecLegend = () => {
 
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5682,20 +5725,20 @@ const comparePrecLegend = () => {
       try {
         const response = await axios.get(`${baseurl}:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
         )
-        console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
+        //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
         var object_array = response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries
 
         
        var label_array =  object_array.map( (item) => {
-         console.log(item.label, 'labels items array') 
+         //console.log(item.label, 'labels items array') 
          return item.label
         })
-        console.log(label_array, 'label array')
+        //console.log(label_array, 'label array')
   
         var colors_array = object_array.map( (item)=> {
          return item.color
         })
-        console.log(colors_array, 'colors array')
+        //console.log(colors_array, 'colors array')
       
 
 
@@ -5736,7 +5779,7 @@ const comparePrecLegend = () => {
         }
         
       } catch (error) {
-        console.log(error)
+        //console.log(error)
         
       }
     }
@@ -5887,7 +5930,7 @@ bvi_compare_legend.value.addTo(map);
   const changeOpacity = () => {
     $('#sldOpacity').on('change', function(){
                                     //   $('#image-opacity').html(this.value); //i might revesit
-                                      console.log(this.value, 'opacity value')
+                                      //console.log(this.value, 'opacity value')
                                       if(wmsLayer.value){
                                         wmsLayer.value.setOpacity(this.value)
                                       }
@@ -5904,14 +5947,14 @@ bvi_compare_legend.value.addTo(map);
   //get compare selections
   const getCompareIndicator = () => {
     var selectedIndicator= compareUserSelections.getSelectedIndcator
-   console.log(selectedIndicator, 'compare indicator app')
+   //console.log(selectedIndicator, 'compare indicator app')
    indicator.value = selectedIndicator
   
   }
   
   
   const setCompareIndicator = computed ( () => {
-    console.log(compareUserSelections.selected_indicator, 'compare indicator app')
+    //console.log(compareUserSelections.selected_indicator, 'compare indicator app')
     return compareUserSelections.getSelectedIndcator
   
   })
@@ -5924,14 +5967,14 @@ bvi_compare_legend.value.addTo(map);
   
   const getCompareSubIndicator = () => {
     var selectedSubIndicator = compareUserSelections.getSelectedSubIndcator
-   console.log(selectedSubIndicator, 'compare sub indicator app')
+   //console.log(selectedSubIndicator, 'compare sub indicator app')
    sub_indicator.value = selectedSubIndicator
   
   }
   
   
   const setCompareSubIndicator = computed ( () => {
-    console.log(compareUserSelections.selected_sub_indicator, 'selected sub_indicator app')
+    //console.log(compareUserSelections.selected_sub_indicator, 'selected sub_indicator app')
     return compareUserSelections.getSelectedSubIndcator
   
   })
@@ -5947,13 +5990,13 @@ bvi_compare_legend.value.addTo(map);
     var selectedYear= compareUserSelections.getSelectedYear
   
     compare_year.value = selectedYear
-   console.log(compare_year.value, 'compare year app')
+   //console.log(compare_year.value, 'compare year app')
   
   }
   
   
   const setCompareYear = computed ( () => {
-    console.log(compareUserSelections.selected_year, 'compare year app')
+    //console.log(compareUserSelections.selected_year, 'compare year app')
     return compareUserSelections.getSelectedYear
   
   })
@@ -5964,11 +6007,11 @@ bvi_compare_legend.value.addTo(map);
   const getCompareSeason = () => {
     var selectedSeason = compareUserSelections.getSelectedSeason
     compare_season.value = selectedSeason
-    console.log(season.value, 'selected season app')
+    //console.log(season.value, 'selected season app')
   
   }
   const setCompareSeason = computed ( () => {
-    console.log(compareUserSelections.selected_season, 'selected season app')
+    //console.log(compareUserSelections.selected_season, 'selected season app')
     return compareUserSelections.getSelectedSeason
   
   })
@@ -5981,11 +6024,11 @@ bvi_compare_legend.value.addTo(map);
   const getCompareParameter = () => {
     var selectedParameter = compareUserSelections.getSelectedParameter
     parameter.value = selectedParameter
-    console.log(parameter.value, 'compare parameter app')
+    //console.log(parameter.value, 'compare parameter app')
   
   }
   const setCompareParameter = computed ( () => {
-    console.log(compareUserSelections.selected_parameter, 'selected parameter app')
+    //console.log(compareUserSelections.selected_parameter, 'selected parameter app')
     return compareUserSelections.getSelectedParameter
   
   })
@@ -5997,11 +6040,11 @@ bvi_compare_legend.value.addTo(map);
   const getCompareSatellite = () => {
     var selectedSatellite = compareUserSelections.getSelectedSatellite
     compare_satellite.value = selectedSatellite
-    console.log(compare_satellite.value, 'compare satellite app')
+    //console.log(compare_satellite.value, 'compare satellite app')
 
   }
   const setCompareSatellite = computed ( () => {
-    console.log(compareUserSelections.selected_satellite, 'selected satellite app')
+    //console.log(compareUserSelections.selected_satellite, 'selected satellite app')
     return compareUserSelections.getSelectedSatellite
   
   })
@@ -6014,7 +6057,7 @@ bvi_compare_legend.value.addTo(map);
   const addCompareLulcLayer = () => {
   if(sub_indicator.value === 'Land Cover') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
 
@@ -6035,7 +6078,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, 
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6054,7 +6097,7 @@ changeOpacity()
  const addCompareBVILayer = () => { 
   if(indicator.value === 'Basin Vulnerability Index') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
 
@@ -6075,7 +6118,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${compar
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6098,7 +6141,7 @@ changeOpacity()
  const addComparePrecIndexWet = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
@@ -6116,7 +6159,7 @@ changeOpacity()
   
   
   wmsCompareLayer.value.addTo(map);
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6134,7 +6177,7 @@ changeOpacity()
  const addComparePrecIndexDry = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
@@ -6152,7 +6195,7 @@ changeOpacity()
   
   
   wmsCompareLayer.value.addTo(map);
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6166,7 +6209,7 @@ changeOpacity()
  const addCompareWetlandExtent = () => {
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -6186,7 +6229,7 @@ changeOpacity()
   wmsCompareLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6207,7 +6250,7 @@ changeOpacity()
  const addCompareVegCover = () => {
   if(sub_indicator.value === 'Vegetation Cover' ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
@@ -6227,7 +6270,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${compare_sa
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6245,7 +6288,7 @@ changeOpacity()
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`, {
@@ -6265,7 +6308,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${compare_sa
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6281,7 +6324,7 @@ changeOpacity()
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Burnt Area FIRMS' ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wms?`, {
@@ -6301,7 +6344,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRMS_DRY/wm
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6318,7 +6361,7 @@ changeOpacity()
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Soil Moisure Index') { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsCompareLayer.value =   L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${season.value}/wms?`, {
@@ -6338,7 +6381,7 @@ wmsCompareLayer.value =   L.tileLayer.wms(`${baseurl}:8080/geoserver/SMI_${seaso
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6356,7 +6399,7 @@ changeOpacity()
   
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -6376,7 +6419,7 @@ wmsCompareLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, 
 wmsCompareLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsCompareLayer.value.on('load', function (event) {
     loading.value = false
@@ -6388,7 +6431,7 @@ changeOpacity()
 }
  }
   const compareLayers = () => {
-    // console.log('compare!')
+    // //console.log('compare!')
     if(wmsCompareLayer.value)map.removeLayer(wmsCompareLayer.value)
     if(swipe_control.value)map.removeControl(swipe_control.value)
     
@@ -6426,12 +6469,12 @@ changeOpacity()
     var selected_country = advancedUserSelections.getSelectedCountry
     
     country.value = selected_country
-    // console.log(selected_country, 'selected country app')
+    // //console.log(selected_country, 'selected country app')
   
   }
   
   const setSelectedCountry = computed ( () => {
-    // console.log(advancedUserSelections.selected_country, 'selected country app')
+    // //console.log(advancedUserSelections.selected_country, 'selected country app')
   
     return advancedUserSelections.getSelectedCountry
   
@@ -6465,7 +6508,7 @@ changeOpacity()
    
     var selectedCountry = advancedUserSelections.getSelectedRegion
   //  geometry = selecteRegion
-   console.log(selectedCountry, 'selected country app')
+   //console.log(selectedCountry, 'selected country app')
   
    map.createPane("pane1000").style.zIndex = 300;
    current_geojson.value = L.geoJSON(selectedCountry, {
@@ -6523,9 +6566,9 @@ if(group.value)group.value.clearLayers()
 
 var selectedWetland = advancedUserSelections.getSelectedWetlandGeojson
 //  geometry = selecteRegion
-console.log(selectedWetland, 'selected wetland geojson app')
+//console.log(selectedWetland, 'selected wetland geojson app')
 
-console.log('wetland basin',wetland_basin.value)
+//console.log('wetland basin',wetland_basin.value)
 storeUserSelections.region_placeholder = wetland_basin.value
 
 const sld = "base5538405065.sld"
@@ -6544,7 +6587,7 @@ wetland_geojson.value = L.geoJSON(selectedWetland, {
 
 
 wetland_geojson.value.addTo(map)
-console.log('bounds', map.getBounds())
+//console.log('bounds', map.getBounds())
 
 
         //  map.fitBounds(wetland_geojson.value.getBounds(), {
@@ -6562,16 +6605,16 @@ console.log('bounds', map.getBounds())
 //${season.value}:${year.value}
 
 //construct an object for post data
-// console.log('wetland name',advancedUserSelections.selected_wetland)
-// console.log('indicator', indicator.value )
-// console.log('subindicator', sub_indicator.value )
+// //console.log('wetland name',advancedUserSelections.selected_wetland)
+// //console.log('indicator', indicator.value )
+// //console.log('subindicator', sub_indicator.value )
 generate_layer_abbreviations()
 
 advanced_post_data.value = {
   "wetland": { "name": advancedUserSelections.selected_wetland },
   "indicator": { "name": layer_abbreviations.value}
 }
-console.log('post data', advanced_post_data.value)
+//console.log('post data', advanced_post_data.value)
 
 
 
@@ -6587,18 +6630,18 @@ const addAdvancedLayer = () => {
 const apiUrl = "http://45.32.233.93:8000/generate_sld/";      //"https://wemast-sethnyawacha.koyeb.app/generate_sld/";
 // const headers = {'Content-Type': 'application/json'}
 // var postData = encodeURIComponent(advanced_post_data.value)
-// console.log(postData);
+// //console.log(postData);
 axios.post(apiUrl, advanced_post_data.value)
 .then(response => {
-  console.log('Wetland response:', response.data)
+  //console.log('Wetland response:', response.data)
   
 
   let stringWithSld = response.data.sld_file_path;
 let stringWithoutSld = stringWithSld.replace(".sld", "");
-console.log(stringWithoutSld)
+//console.log(stringWithoutSld)
 
   wetland_sld.value = stringWithoutSld
-  console.log(wetland_sld.value)
+  //console.log(wetland_sld.value)
   addLulcLayer()
   addBVILayer()
 addPrecIndexWet()
@@ -6615,7 +6658,7 @@ addPrecIndexWet()
   
 })
 .catch(error => {
-  console.log('Error:', error) 
+  //console.log('Error:', error) 
 });
 
 
@@ -6626,7 +6669,7 @@ addPrecIndexWet()
     //watch for changes
   
     const setSelectedAdvancedCountry = computed( () => {
-    console.log(advancedUserSelections.selected_country, 'selected_country app') 
+    //console.log(advancedUserSelections.selected_country, 'selected_country app') 
     
     return advancedUserSelections.getSelectedRegion
   })
@@ -6637,7 +6680,7 @@ addPrecIndexWet()
 
 
   const setSelectedAdvancedWetland = computed( () => {
-    console.log(advancedUserSelections.selected_wetland, 'selected_wetland app')
+    //console.log(advancedUserSelections.selected_wetland, 'selected_wetland app')
     wetland_basin.value = advancedUserSelections.selected_wetland
     
     return advancedUserSelections.getSelectedWetlandGeojson
@@ -6648,7 +6691,7 @@ addPrecIndexWet()
   })
 
   const setSelectedAdvancedBbox = computed( () => {
-    console.log(advancedUserSelections.bounding_box, 'bbox app')
+    //console.log(advancedUserSelections.bounding_box, 'bbox app')
     
     return advancedUserSelections.getSelectedBoundingBox
   })
@@ -6700,11 +6743,11 @@ addPrecIndexWet()
           custom_geojson.value = layer.bringToFront()
         
           editableLayers.value.addLayer(custom_geojson.value);
-          console.log(JSON.stringify(custom_geojson.value.toGeoJSON().geometry), 'stringified custom drawn geojson');
+          //console.log(JSON.stringify(custom_geojson.value.toGeoJSON().geometry), 'stringified custom drawn geojson');
           //link custom geojson in store to this geojson
-          console.log(storeUserSelections.custom_geojson.custom, 'accessed store custom?') //true
+          //console.log(storeUserSelections.custom_geojson.custom, 'accessed store custom?') //true
           storeUserSelections.custom_geojson.geojson = custom_geojson.value.toGeoJSON().geometry
-          // console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
+          // //console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
           // if (process.env.DEV)
           // 
           var drawn_polygon_object = custom_geojson.value.toGeoJSON() //.geometry
@@ -6714,7 +6757,7 @@ addPrecIndexWet()
           drawn_layer.value = custom_geojson.value.toGeoJSON()
           // custom_geojson.value.toGeoJSON().properties.name = indicator.value;
 
-          console.log('post object', drawn_layer.value, ) 
+          //console.log('post object', drawn_layer.value, ) 
           storeUserSelections.region_placeholder = 'Custom'
           storeUserSelections.selected_basin = 'Custom'
 
@@ -6723,42 +6766,77 @@ addPrecIndexWet()
   const apiUrl = "http://45.32.233.93:8000/custom_polygon/";      //"https://wemast-sethnyawacha.koyeb.app/generate_sld/";
 // const headers = {'Content-Type': 'application/json'}
 // var postData = encodeURIComponent(advanced_post_data.value)
-// console.log(postData);
+// //console.log(postData);
 generate_layer_abbreviations()
 
 
 polygon_post_indicator.value = {
   "indicator": { "name": layer_abbreviations.value }
 }
-console.log(polygon_post_indicator.value)
+//console.log(polygon_post_indicator.value)
 
 let targetObject = {};
 let sourceObject1 = polygon_post_indicator.value;
 let sourceObject2 = drawn_layer.value;
 
 const merged = {...targetObject, ...sourceObject1, ...sourceObject2}
-console.log(merged);
+//console.log(merged);
 
 
  axios.post(apiUrl, merged)
 .then(response => {
-  console.log('custom_polygon response:', response.data)
+  //console.log('custom_polygon response:', response.data)
   
 
   let stringWithSld = response.data.sld_file_path;
 let stringWithoutSld = stringWithSld.replace(".sld", "");
-console.log(stringWithoutSld)
+//console.log(stringWithoutSld)
 
   polygon_sld.value = stringWithoutSld
-  console.log(polygon_sld.value)
+  //console.log(polygon_sld.value)
+
+  const addBVILayer2 = () => {
+  if(indicator.value === 'Basin Vulnerability Index') {
+  
+  // //console.log('just to see if request is accessed') //accessed
+  map.createPane("pane400").style.zIndex = 200;
+
+wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/BVI_${season.value}/wms?`, {
+     pane: 'pane400', 
+     layers: `BVI_${season.value}:${year.value}`,
+     crs:L.CRS.EPSG4326,
+     styles: polygon_sld.value, //'base8423407086',
+     format: 'image/png',
+     transparent: true,
+     opacity:1.0
+     
+     
+    
+});
 
 
+wmsLayer.value.addTo(map);
+
+
+
+
+// //console.log(wmsLayer.value, 'wms')
+
+
+// addLulcLegend()
+// lulclegendContent()
+BVIlegendContent()
+
+changeOpacity()
+
+}
+ }
 
 
   const addLulcLayer2 = () => {
   if(sub_indicator.value === 'Land Cover' && drawn_layer.value != null) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
 
@@ -6782,7 +6860,7 @@ wmsLayer.value.addTo(map);
 
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 
 
 // addLulcLegend()
@@ -6797,7 +6875,7 @@ changeOpacity()
  const addPrecIndexWet2 = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'WET' ) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
@@ -6817,7 +6895,7 @@ changeOpacity()
 
 
   wmsLayer.value.addTo(map);
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -6835,7 +6913,7 @@ changeOpacity()
  const addPrecIndexDry = () => {
   if(sub_indicator.value === 'Precipitation Index' && season.value === 'DRY' ) {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
@@ -6851,7 +6929,7 @@ changeOpacity()
   
   
   wmsLayer.value.addTo(map);
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -6866,7 +6944,7 @@ changeOpacity()
  const addWetlandExtent2 = () => {
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Extent') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -6886,7 +6964,7 @@ changeOpacity()
   wmsLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -6911,7 +6989,7 @@ changeOpacity()
  const addVegCover2 = () => {
   if(sub_indicator.value === 'Vegetation Cover' && drawn_layer.value != null ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   map.createPane("timeseries").style.zIndex = 300;
 
@@ -6936,7 +7014,7 @@ wmsLayer.value.addTo(map);
 
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -6953,7 +7031,7 @@ changeOpacity()
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if(sub_indicator.value === 'Wetland Inventory' && parameter.value === 'Wetland Status' ) { //&& season.value === 'DRY'
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
 
 wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`, {
@@ -6973,7 +7051,7 @@ wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/${satellite.value}_
 wmsLayer.value.addTo(map);
 
 
-// console.log(wmsLayer.value, 'wms')
+// //console.log(wmsLayer.value, 'wms')
 //remove spinner when layer loads
 wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -6987,7 +7065,7 @@ changeOpacity()
  const addFirmsLayer2 = () => {
   if(sub_indicator.value === 'Burnt Area FIRMS') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -7012,7 +7090,7 @@ wmsLayer.value.addTo(map);
 
 
 
-console.log(wmsLayer.value, 'wms')
+//console.log(wmsLayer.value, 'wms')
 
 
 
@@ -7025,7 +7103,7 @@ changeOpacity()
  const addSMILayer2 = () => {
   if(sub_indicator.value === 'Soil Moisure Index') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -7059,7 +7137,7 @@ changeOpacity()
  const addFloodLayer2 = () => {
   if(sub_indicator.value === 'Undulation') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane400").style.zIndex = 200;
 
  
@@ -7084,7 +7162,7 @@ wmsLayer.value.addTo(map);
 
 
 
-console.log(wmsLayer.value, 'wms')
+//console.log(wmsLayer.value, 'wms')
 
 
 
@@ -7097,7 +7175,7 @@ changeOpacity()
  const addSuspendedSediments2 = () => {
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Sus Sediments') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -7117,7 +7195,7 @@ changeOpacity()
   wmsLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -7140,7 +7218,7 @@ changeOpacity()
  const addTurbidity2 = () => {
   if(sub_indicator.value === 'Water Quality' && parameter.value === 'Turbidity') {
   
-  // console.log('just to see if request is accessed') //accessed
+  // //console.log('just to see if request is accessed') //accessed
   map.createPane("pane800").style.zIndex = 200;
   
   wmsLayer.value =  L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -7160,7 +7238,7 @@ changeOpacity()
   wmsLayer.value.addTo(map);
   
   
-  // console.log(wmsLayer.value, 'wms')
+  // //console.log(wmsLayer.value, 'wms')
   //remove spinner when layer loads
   wmsLayer.value.on('load', function (event) {
     loading.value = false
@@ -7182,6 +7260,7 @@ changeOpacity()
  if(current_geojson.value)map.removeLayer(current_geojson.value)
           if(wmsLayer.value)map.removeLayer(wmsLayer.value)
           //add function to add clipped layer to the map
+          addBVILayer2()
           addLulcLayer2()
           addPrecIndexWet2()
           addPrecIndexDry()
@@ -7199,7 +7278,7 @@ changeOpacity()
   
 })
 .catch(error => {
-  console.log('Error:', error) 
+  //console.log('Error:', error) 
 });
 
 
@@ -7211,17 +7290,17 @@ changeOpacity()
   
       map.on(L.Draw.Event.EDITSTOP, (e) => {
           // if (process.env.DEV) 
-          console.log("stop edit", e);
+          //console.log("stop edit", e);
           
         //   var layers = e.layers;
         //  layers.eachLayer(function (layer) {
         //      //do whatever you want; most likely save back to db
-        //      console.log(layer, 'edit mode')
+        //      //console.log(layer, 'edit mode')
         //  });
         });
         map.on(L.Draw.Event.DELETED, (e) => {
           // if (process.env.DEV) 
-          console.log(" deleted ", e);
+          //console.log(" deleted ", e);
           //remove the control from map and remove focus on the draw icon by changing color
           draw_polygon();
           document.getElementById("draw_polygon").style.backgroundColor = "white";

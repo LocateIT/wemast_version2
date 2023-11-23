@@ -32,13 +32,13 @@
 
           let placeholder = ref('Exposure')
         //   let list = ''
-        //   console.log(list, 'regions list')
+        //   //console.log(list, 'regions list')
           let visible = ref(false)
           let region_state = ref(null)
           let indicator_state = ref(null)
   
         var indicator_list = storeUserSelections.getIndicatorList
-        console.log(indicator_list, 'indicator list from store')
+        //console.log(indicator_list, 'indicator list from store')
 
           const toggle = () => {
               visible.value = !visible.value;
@@ -46,10 +46,10 @@
 
               storeUserSelections.visible_indicator = visible.value
               // // region_state.value = storeUserSelections.visible_region
-              // // console.log(region_state.value , 'visible region in indicator')
+              // // //console.log(region_state.value , 'visible region in indicator')
 
               // indicator_state.value = storeUserSelections.visible_indicator
-              // console.log(indicator_state.value , 'VISIBLE INDICATOR')
+              // //console.log(indicator_state.value , 'VISIBLE INDICATOR')
               
              
           }
@@ -62,11 +62,11 @@
     var selectedIndicatorState = storeUserSelections.getIndicatorState
     indicator_state.value = selectedIndicatorState
   
-    console.log(indicator_state.value , 'changed state indicator')
+    //console.log(indicator_state.value , 'changed state indicator')
   
   }
   const setSelectedIndicatorState = computed ( () => {
-    console.log(storeUserSelections.visible_indicator, 'selected indicator state')
+    //console.log(storeUserSelections.visible_indicator, 'selected indicator state')
    
     return storeUserSelections.getIndicatorState
   
@@ -82,7 +82,7 @@
           }
 
           const getelementid = (clicked_id) => {
-            console.log(clicked_id, 'cliked_id')
+            //console.log(clicked_id, 'cliked_id')
 
           }
           

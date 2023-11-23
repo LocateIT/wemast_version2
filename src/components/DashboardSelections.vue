@@ -159,16 +159,16 @@ const storeUserSelections = useCounterStore()
 
 
 // const fetchData = () => {
-//   console.log('fetch!')
+//   //////console.log('fetch!')
 
 // }
 const fetchRegion = () => {
-  console.log('fetched region')
+  //////console.log('fetched region')
 }
 // })
 
 const clickedMe = () => {
-  console.log('clicked indicator select')
+  //////console.log('clicked indicator select')
 
 
 }

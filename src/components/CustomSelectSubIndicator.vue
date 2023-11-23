@@ -29,7 +29,7 @@
 
           let placeholder = ref('Land Cover')
         //   let list = ['Land Cover', 'Vegetation Cover', "Wetland Inventory"]
-        //   console.log(list, 'regions list')
+        //   //console.log(list, 'regions list')
           let visible = ref(false)
           let sub_indicator_state = ref(null)
   
@@ -45,11 +45,11 @@
     var selectedSubIndicatorState = storeUserSelections.getSubIndicatorState
     sub_indicator_state.value = selectedSubIndicatorState
   
-    console.log(sub_indicator_state.value , 'changed state sub indicator')
+    //console.log(sub_indicator_state.value , 'changed state sub indicator')
   
   }
   const setselectedSubIndicatorState = computed ( () => {
-    console.log(storeUserSelections.visible_sub_indicator, 'selected sub indicator state')
+    //console.log(storeUserSelections.visible_sub_indicator, 'selected sub indicator state')
    
     return storeUserSelections.getSubIndicatorState
   

@@ -263,7 +263,7 @@ export const useCounterStore = defineStore({
       // const pinia = defineStore()
       // pinia.$app.use(i18n)
      
-      console.log(i18n, 'usei18n')
+      //console.log(i18n, 'usei18n')
       this.indicator_list = [i18n.global.t('indicators.bvi_index'),i18n.global.t('indicators.exposure'), 'Sensitivity','Resiliance']
       // this.indicator_list = ['Basin Vulnerability Index','Exposure', 'Sensitivity','Resiliance']
       return this.indicator_list.sort()
@@ -358,27 +358,27 @@ export const useCounterStore = defineStore({
     },
     showSelectedLanguage(option){
       this.language_placeholder = option;
-      // console.log(option, 'selected language ')
+      // //console.log(option, 'selected language ')
       this.selected_language=  option
-      // console.log(this.selected_language , 'changed selected language')
+      // //console.log(this.selected_language , 'changed selected language')
     },
 
    
     showSelectedCountry(option){
      this.region_placeholder = option;
-				console.log(option, 'selected basin ')
+				//console.log(option, 'selected basin ')
       // var selected_country = $event.target.value
-      // console.log(selected_country, 'selected country')
+      // //console.log(selected_country, 'selected country')
       // this.countries =  selected_country
       this.selected_basin =  option
-      console.log(this.selected_basin , 'changed selected basin')
+      //console.log(this.selected_basin , 'changed selected basin')
       // // return selected_country
       var data = this.selected_basin
       // this.showSelectedYear()
      
       // var year = this.selected_year
-      // console.log(data, 'stats basin')
-      // console.log(year, 'stats year')
+      // //console.log(data, 'stats basin')
+      // //console.log(year, 'stats year')
       this.getstats()
 
       this.selected_basin === 'Cuvelai' ? this.lineChartData.datasets[0].data =
@@ -401,9 +401,9 @@ export const useCounterStore = defineStore({
 
               this.current_geojson = resp.data
               
-              console.log(resp.data.features, 'geoserver geojson');
+              //console.log(resp.data.features, 'geoserver geojson');
               var object = resp.data.features.map( (item) => {
-                console.log(item, 'object items')
+                //console.log(item, 'object items')
                 return item
               })
               
@@ -426,34 +426,34 @@ export const useCounterStore = defineStore({
     },
     showSelectedIndicator(option) {
       this.indicator_placeholder = option;
-      console.log(option, 'selected indicator ')
+      //console.log(option, 'selected indicator ')
 
       this.selected_indicator =  option
-      console.log(this.selected_indicator , 'changed selected indicator')
+      //console.log(this.selected_indicator , 'changed selected indicator')
     },
 
     showSelectedSubIndicator(option) {
       this.sub_indicator_placeholder = option;
-      console.log(option, 'selected sub-indicator ')
+      //console.log(option, 'selected sub-indicator ')
 
       this.selected_sub_indicator =  option
-      console.log(this.selected_sub_indicator , 'changed selected sub-indicator')
+      //console.log(this.selected_sub_indicator , 'changed selected sub-indicator')
     },
     showSelectedYear(option) {
       this.year_placeholder = option;
-      console.log(option, 'selected year ')
+      //console.log(option, 'selected year ')
 
       this.selected_year=  option
-      console.log(this.selected_year , 'changed selected year')
+      //console.log(this.selected_year , 'changed selected year')
 
       this.getstats()
     },
     showSelectedSeason(option) {
       this.season_placeholder = option;
-      console.log(option, 'selected season ')
+      //console.log(option, 'selected season ')
 
       this.selected_season=  option
-      console.log(this.selected_season , 'changed selected season')
+      //console.log(this.selected_season , 'changed selected season')
 
       this.getstats()
 
@@ -463,19 +463,19 @@ export const useCounterStore = defineStore({
     showSelectedParameter(option) {
       this.parameter_placeholder = option;
       this.selected_parameter=  option
-      console.log(this.selected_parameter , 'changed selected parameter')
+      //console.log(this.selected_parameter , 'changed selected parameter')
     },
     showSelectedSatellite(option) {
       this.satellite_placeholder = option;
       this.selected_satellite=  option
-      console.log(this.selected_satellite , 'changed selected satellite')
+      //console.log(this.selected_satellite , 'changed selected satellite')
       this.getstats()
     },
 
     showUsernameInput() {
       this.username = option;
      
-      console.log(this.username , 'changed username')
+      //console.log(this.username , 'changed username')
       
     },
 
@@ -488,32 +488,32 @@ export const useCounterStore = defineStore({
       const getStatistics = async () => {
         try {
           
-          // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+          // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
        var basin = this.selected_basin
-      //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+      //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
 
 
        var year = this.selected_year
-      //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+      //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
     
   
           const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:2016&outputFormat=application/json&CQL_FILTER=Name=%27Zambezi%27'
           );
-          console.log(response.data.features[0].properties,'stats response')
+          //console.log(response.data.features[0].properties,'stats response')
           var obj = response.data.features[0].properties
           
           const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-          console.log(newObj, 'NEW OBJECT')
+          //console.log(newObj, 'NEW OBJECT')
   
           var labels = Object.keys(newObj)
-          console.log(labels, 'stats labels')
+          //console.log(labels, 'stats labels')
           this.lulcChartData.labels = labels
          
         
           var figures = Object.values(newObj)
-          console.log(figures, 'stats figures')
+          //console.log(figures, 'stats figures')
           // var converted = figures.map( (item) => item/100)
-          // console.log(converted, 'converted figres')
+          // //console.log(converted, 'converted figres')
           this.lulcChartData.datasets[0].data = figures
           this.lulcChartData.datasets[0].backgroundColor = [
             "#a8a800",
@@ -534,7 +534,7 @@ export const useCounterStore = defineStore({
 
           //capture bbox
           var bbox = response.data.features[0].bbox
-          console.log(bbox, 'BOUNDING BOX')
+          //console.log(bbox, 'BOUNDING BOX')
            this.western_lon = bbox[0]
            this.northern_lat = bbox[1]
            this.eastern_lon = bbox[2]
@@ -565,32 +565,32 @@ export const useCounterStore = defineStore({
         if(this.selected_sub_indicator === 'Land Cover' && this.selected_basin != '' && this.selected_year != '') {
           try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+            // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
          var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
       
     
             const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:'+year+'&outputFormat=application/json&CQL_FILTER=Name=%27'+basin+'%27'
             );
-            console.log(response.data.features[0].properties,'stats response')
+            //console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = [
               "#a8a800",
@@ -611,7 +611,7 @@ export const useCounterStore = defineStore({
 
             //capture bbox
             var bbox = response.data.features[0].bbox
-            console.log(bbox, 'BOUNDING BOX')
+            //console.log(bbox, 'BOUNDING BOX')
              this.western_lon = bbox[0]
              this.northern_lat = bbox[1]
              this.eastern_lon = bbox[2]
@@ -633,35 +633,35 @@ export const useCounterStore = defineStore({
         if(this.selected_sub_indicator === 'Precipitation Index' && this.selected_season === 'DRY') {
           try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+            // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
          var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
         var season = this.selected_season
 
-        // console.log(season, 'season for stattttttttsssssss')
+        // //console.log(season, 'season for stattttttttsssssss')
       
     
             const response = await axios.get(`http://66.42.65.87:8080/geoserver/SPI_MIN/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=SPI_MIN%3A${year}.shp&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=name=%27${basin}%27`
             );
-            console.log(response.data.features[0].properties,'stats response')
+            //console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('id') && !key.includes('geom') && !key.includes('name') && !key.includes('0')&& !key.includes('count')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147',  '#93be89']
 
@@ -672,7 +672,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
@@ -690,35 +690,35 @@ export const useCounterStore = defineStore({
         if(this.selected_sub_indicator === 'Precipitation Index' && this.selected_season === 'WET') {
           try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+            // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
          var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
         var season = this.selected_season
 
-        // console.log(season, 'season for stattttttttsssssss')
+        // //console.log(season, 'season for stattttttttsssssss')
       
     
             const response = await axios.get(`http://66.42.65.87:8080/geoserver/SPI_MAX/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=SPI_MAX%3A${year}.shp&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=name=%27${basin}%27`
             );
-            console.log(response.data.features[0].properties,'stats response')
+            //console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('id') && !key.includes('geom') && !key.includes('name') && !key.includes('0')&& !key.includes('count')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147',  '#93be89']
 
@@ -729,7 +729,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
@@ -752,33 +752,33 @@ export const useCounterStore = defineStore({
          || (this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Turbidity')) {
           try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+            // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
          var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
      
       
     
             const response = await axios.get(`http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=STATS_NDWI:${year}&outputFormat=application/json&CQL_FILTER=Name=%27${basin}%27`
             );
-            console.log(response.data.features[0].properties,'stats response')
+            //console.log(response.data.features[0].properties,'stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('255') && !key.includes('No Data') && !key.includes('Name') && !key.includes('0')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#b3b3cc','#c2fefe', '#2578fd']
 
@@ -788,7 +788,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
@@ -822,7 +822,7 @@ export const useCounterStore = defineStore({
     
             const response = await axios.get(`http://66.42.65.87:8080/geoserver/NDVI_${season}_ZONE2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=NDVI_${season}_ZONE2%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
             );
-            console.log(response.data.features, 'NEW NDVI STATS')
+            //console.log(response.data.features, 'NEW NDVI STATS')
           //   var ids_object = response.data.features
 
           //   for(let item of Object.keys(ids_object)) {
@@ -850,33 +850,33 @@ export const useCounterStore = defineStore({
           //       return item.id
           //     })
 
-          //     // console.log(names, 'names zambezi')
+          //     // //console.log(names, 'names zambezi')
               
              
               
 
           // }
-          // console.log(ids_object)
+          // //console.log(ids_object)
            
        
            
         
-            console.log(response.data.features[0].properties,'stats response')  
+            //console.log(response.data.features[0].properties,'stats response')  
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('255') && !key.includes('No Data') && !key.includes('Name') && !key.includes('count')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             // labels = ['Water Areas', 'Dry areas', 'Wetness area']
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#ffbb33','#1eb301', '#88ff4d']
 
@@ -886,7 +886,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
@@ -919,23 +919,23 @@ export const useCounterStore = defineStore({
       
           const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_STATS_DRY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRMS_STATS_DRY%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
           );
-          console.log(response.data.features[0].properties,'fire stats response')
+          //console.log(response.data.features[0].properties,'fire stats response')
           var obj = response.data.features[0].properties
           
           const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-          console.log(newObj, 'NEW OBJECT')
+          //console.log(newObj, 'NEW OBJECT')
   
           var labels = Object.keys(newObj)
-          console.log(labels, 'stats labels')
+          //console.log(labels, 'stats labels')
 
           this.lulcChartData.labels = labels
           this.lulcChartData.labels = ['Oct-Dec']
          
         
           var figures = Object.values(newObj)
-          console.log(figures, 'stats figures')
+          //console.log(figures, 'stats figures')
           // var converted = figures.map( (item) => item/100)
-          // console.log(converted, 'converted figres')
+          // //console.log(converted, 'converted figres')
           this.lulcChartData.datasets[0].data = figures
           this.lulcChartData.datasets[0].backgroundColor = ['#55ff00', '#f36f21', '#fcde8b', '#ff0000']
 
@@ -946,7 +946,7 @@ export const useCounterStore = defineStore({
 
            //capture bbox
            var bbox = response.data.features[0].bbox
-           console.log(bbox, 'BOUNDING BOX')
+           //console.log(bbox, 'BOUNDING BOX')
             this.western_lon = bbox[0]
             this.northern_lat = bbox[1]
             this.eastern_lon = bbox[2]
@@ -964,7 +964,7 @@ export const useCounterStore = defineStore({
           try {
           
          var basin = this.selected_basin
-         console.log(basin, 'basin flood')
+         //console.log(basin, 'basin flood')
         //  var year = this.selected_year
         //  var season = this.selected_season
 
@@ -973,22 +973,22 @@ export const useCounterStore = defineStore({
     
             const response = await axios.get('http://66.42.65.87:8080/geoserver/FLOOD_STATS/ows?service=WFS&version=1.0.0&request=GetFeature&CQL_FILTER=Name=%27'+basin+'%27&typeName=FLOOD_STATS%3A2022&maxFeatures=50&outputFormat=application%2Fjson'
             );
-            console.log(response.data.features[0].properties,'Floods stats response')
+            //console.log(response.data.features[0].properties,'Floods stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('0.0') && !key.includes('Basin_Name') && !key.includes('Name')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
             this.lulcChartData.labels = ["Flooded Areas", "Wetness", "Moderate Wetness", "Moderate Dryness", "Dry Areas"]
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#ff0000', '#e6ac93', '#f0eec7', '#d8dc5c', '#6acb75']
 
@@ -999,7 +999,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
@@ -1018,35 +1018,35 @@ export const useCounterStore = defineStore({
         if(this.selected_sub_indicator === 'Soil Moisure Index' && this.selected_season != '' && this.selected_basin != '' && this.selected_year != '') {
           try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+            // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
          var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
         var season = this.selected_season
 
-        // console.log(season, 'season for stattttttttsssssss')
+        // //console.log(season, 'season for stattttttttsssssss')
       
     
             const response = await axios.get(`http://66.42.65.87:8080/geoserver/SMI_${season}_STATS2/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=SMI_${season}_STATS2%3A${year}&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
             );
-            console.log(response.data.features[0].properties,'SMI stats response')
+            //console.log(response.data.features[0].properties,'SMI stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('count')  && !key.includes('Name') && !key.includes('0')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#6aff4e', '#13a147',  '#93be89']
 
@@ -1057,7 +1057,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]
@@ -1077,38 +1077,38 @@ export const useCounterStore = defineStore({
         if(this.selected_indicator === 'Basin Vulnerability Index' && this.selected_season != '' && this.selected_basin != '' && this.selected_year != ''){
           try {
           
-            // console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+            // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
   
   
          var year = this.selected_year
-        //  console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
         var season = this.selected_season
 
-        // console.log(season, 'season for stattttttttsssssss')
+        // //console.log(season, 'season for stattttttttsssssss')
       
     
             const response = await axios.get(`http://66.42.65.87:8080/geoserver/BVI_${season}_STATS/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=BVI_${season}_STATS%3A${year}&outputFormat=application%2Fjson&CQL_FILTER=name_basin=%27${basin}%27`
             );
-            console.log(response.data.features[0].properties,'BVI stats response')
+            //console.log(response.data.features[0].properties,'BVI stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('id')  && !key.includes('name_basin') 
             && !key.includes('basin_pop') && !key.includes('shape_leng') && !key.includes('shape_area') && !key.includes('tot_pop') && !key.includes('nr_countr') && !key.includes('tot_area')
             && !key.includes('perimeter') && !key.includes('area') && !key.includes('codBasin') && !key.includes('lc_count') && !key.includes('lc_sum') && !key.includes('lc_mean')
             && !key.includes('lc_min') && !key.includes('lc_max') && !key.includes('No Data')))
-            console.log(newObj, 'NEW OBJECT')
+            //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            //console.log(labels, 'stats labels')
             this.lulcChartData.labels = labels
            
           
             var figures = Object.values(newObj)
-            console.log(figures, 'stats figures')
+            //console.log(figures, 'stats figures')
             // var converted = figures.map( (item) => item/100)
-            // console.log(converted, 'converted figres')
+            // //console.log(converted, 'converted figres')
             this.lulcChartData.datasets[0].data = figures
             this.lulcChartData.datasets[0].backgroundColor = ['#55ea53','#ffffc0','#d99321', '#e03e08', '#087308']
             //['#087308', '#55ea53',  '#ffffc0', '#d99321', '#e03e08'] //['#55ea53','#ffffc0','#d99321', '#e03e08', '#087308']
@@ -1120,7 +1120,7 @@ export const useCounterStore = defineStore({
 
              //capture bbox
              var bbox = response.data.features[0].bbox
-             console.log(bbox, 'BOUNDING BOX')
+             //console.log(bbox, 'BOUNDING BOX')
               this.western_lon = bbox[0]
               this.northern_lat = bbox[1]
               this.eastern_lon = bbox[2]

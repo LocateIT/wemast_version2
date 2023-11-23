@@ -30,7 +30,7 @@
 
           let placeholder = ref('2017')
         //   let list = ['2019', '2020', '2021', '2022']
-        //   console.log(list, 'regions list')
+        //   //console.log(list, 'regions list')
           let visible = ref(false)
     let year_state = ref(null)
       
@@ -45,11 +45,11 @@
     var selectedYearState = storeUserSelections.getYearState
     year_state.value = selectedYearState
   
-    console.log(year_state.value , 'changed state year ')
+    //console.log(year_state.value , 'changed state year ')
   
   }
   const setselectedYearState = computed ( () => {
-    console.log(storeUserSelections.visible_year, 'selected year state')
+    //console.log(storeUserSelections.visible_year, 'selected year state')
    
     return storeUserSelections.getYearState
   

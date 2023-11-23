@@ -39,7 +39,7 @@
 			// onMounted( ()=> {
 				let placeholder = ref('Cuvelai')
 			// let list = ["Limpopo","Cuvelai","Zambezi", "Okavango", 'pogba']
-            // console.log(list, 'regions list')
+            // //console.log(list, 'regions list')
 			let counties = ref([])
             let visible = ref(false)
 			let region_state = ref(null)
@@ -52,7 +52,7 @@
 				storeUserSelections.fetchCountriesList()
 				
 				storeUserSelections.visible_region = visible.value
-				// console.log(storeUserSelections.visible_region, 'visible region')
+				// //console.log(storeUserSelections.visible_region, 'visible region')
 				
             }
 
@@ -60,11 +60,11 @@
 			const getRegionState = () => {
     var selectedState = storeUserSelections.getRegionState
     region_state.value = selectedState
-    console.log(region_state.value , 'changed state region')
+    //console.log(region_state.value , 'changed state region')
   
   }
   const setSelectedState = computed ( () => {
-    console.log(storeUserSelections.visible_region, 'selected region state')
+    //console.log(storeUserSelections.visible_region, 'selected region state')
     return storeUserSelections.getRegionState
   
   })
@@ -77,14 +77,14 @@
 
 			const select = (option) =>{
 			    placeholder.value = option;
-				console.log(option, 'selected option ')
+				//console.log(option, 'selected option ')
 				// storeUserSelections.showSelectedCountry
 
 
 			}
 			// })
 			const getelementid = (event) => {
-            console.log(event.srcElement.id, 'cliked_id')
+            //console.log(event.srcElement.id, 'cliked_id')
 			element_id.value = event.srcElement.id
 
           }

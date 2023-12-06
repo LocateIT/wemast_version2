@@ -4689,8 +4689,18 @@ const fetchMobileData = async () => {
             iconAnchor: [15, 15],
           });
 
+
+          console.log(feature.properties)
+          var valid_survey_resuult = JSON.parse(feature.properties.survey_result)
+          console.log(valid_survey_resuult)
+
           var marker = L.marker(latlng, { icon: studioicon }).bindPopup(
-            `<b>STATUS</b> : ${feature.properties.status}`
+            `<b>Basin</b> : ${valid_survey_resuult[3]} <br>
+            <b>Wetland</b> : ${valid_survey_resuult[5]} <br>
+            <b>Sub-Indicator</b> : ${valid_survey_resuult[2]} <br>
+            <b>Area</b> : ${feature.properties['map_area']} <br>
+            <img src="http://45.32.233.93:81/wemast/ges/2_10_2_2023_05_12_13_27_41.jpg" alt="Feature Image" style="max-width: 100%; height: auto;">
+            `
           );
           return marker;
         },
@@ -7309,6 +7319,9 @@ const addDrawCtrl = () => {
   });
 
   });
+
+  
+
   map.on(L.Draw.Event.DELETED, (e) => {
     // if (process.env.DEV)
     //console.log(" deleted ", e);

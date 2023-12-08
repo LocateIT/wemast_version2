@@ -4685,17 +4685,7 @@ const fetchMobileData = async () => {
       console.log(valid_geojson)
       point_layergroup.value = new L.LayerGroup();
 
-      //try filter lulc only
 
-      // var filtered_geojson = valid_geojson.features.filter((item) => {
-      // var valid_survey_resuult = valid_geojson.features.map((item)=> item.properties.survey_result)
-      // // console.log(JSON.parse(valid_survey_resuult))
-      // valid_survey_resuult.find(['']) remove the first [' character and last '] characters
-      // console.log(valid_survey_resuult)
-      //   // return item.properties
-      //   // === "Land Use Land Cover (LULC)"
-      // })
-      // console.log(filtered_geojson)
 
       // load points
       point_geojson.value =  L.geoJSON(valid_geojson, {
@@ -4717,7 +4707,7 @@ const fetchMobileData = async () => {
             <b>Wetland</b> : ${valid_survey_resuult[5]} <br>
             <b>Sub-Indicator</b> : ${valid_survey_resuult[2]} <br>
             <b>Area</b> : ${feature.properties['map_area']} <br>
-            <img src="http://45.32.233.93:81/wemast/ges/2_10_2_2023_05_12_13_27_41.jpg" alt="Feature Image" style="max-width: 100%; height: auto;">
+            <img src="http://45.32.233.93:81/wemast/ges/${feature.properties.pic_path_name}" alt="Feature Image" style="max-width: 100%; height: auto;">
             `
           );
           return marker;

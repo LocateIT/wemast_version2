@@ -11,17 +11,23 @@
     <div class="field">
     <Person width="20" height="16" color="#164b75" />
       <input autocomplete="off" placeholder="Username" class="input-field" type="text">
-    </div> -->
 
-    <!-- <div class="field">
-    <Envelope width="18" height="15"  color="#164b75"/>
-      <input autocomplete="off" placeholder="Email" class="input-field" type="text">
-    </div> -->
 
-    <div class="field">
+<div class="field">
     <Envelope width="18" height="15"  color="#164b75"/>
       <input autocomplete="off" placeholder="Phone number" class="input-field" type="number" @input="showPhoneInput">
     </div>
+
+
+
+    </div> -->
+
+     <div class="field">
+    <Envelope width="18" height="15"  color="#164b75"/>
+      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @click="showEmailInput">
+    </div> 
+
+    
 
 
 
@@ -75,6 +81,7 @@ import { NButton, NSpace, NInput } from 'naive-ui'
 
   let phone = ref(null)
  let password = ref('')
+ let email = ref('')
  const router = useRouter();
     const route = useRoute();
     const toast = useToast();
@@ -87,13 +94,16 @@ const showPasswordInput = (e) => {
               password.value = e.target.value
             }
          
+            const showEmailInput = (e) => {
+              email.value = e.target.value
+            }
 
  const submitForm =  () => {
 
 const formInputsData = [{
           // username: username.value,
-          phone: phone.value,
-        //  email: email.value,
+          // phone: phone.value,
+         email: email.value,
          password: password.value,
         //  confirm: confirm_password.value
         }]
@@ -102,7 +112,7 @@ const formInputsData = [{
         const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
 const data = formInputsData
 
-const postData = 'login_PostJSON='+ encodeURIComponent(JSON.stringify([{"_usertel":`${formInputsData[0].phone}`,"_userpwd":`${formInputsData[0].password}`}]))
+const postData = 'login_PostJSON_2='+ encodeURIComponent(JSON.stringify([{"_useremail":`${formInputsData[0].email}`,"_userpwd":`${formInputsData[0].password}`}]))
 console.log(postData)
 const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 

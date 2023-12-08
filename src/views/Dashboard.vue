@@ -1077,6 +1077,8 @@ let wetland_sld = ref("");
 let polygon_post_indicator = ref(null);
 let polygon_sld = ref("");
 
+let point_layergroup = ref(null);
+let point_geojson = ref(null);
 //advanced filter variables
 let country = ref(null);
 //variables
@@ -4661,6 +4663,8 @@ const show_mobile_panel = () => {
 };
 const close_mobile_panel = () => {
   show_mobile_data.value = false;
+  if(point_layergroup.value) point_layergroup.value.clearLayers();
+  
 };
 
 const fetchMobileData = async () => {
@@ -4674,13 +4678,27 @@ const fetchMobileData = async () => {
   await axios
     .post(apiUrl, postData, { headers })
     .then((response) => {
-      //console.log('GeoJSON Response:', response.data[0].data)
+      // console.log('GeoJSON Response:', response.data[0].data)
 
       var geojson_object = response.data[0].data;
       const valid_geojson = JSON.parse(geojson_object);
+      console.log(valid_geojson)
+      point_layergroup.value = new L.LayerGroup();
+
+      //try filter lulc only
+
+      // var filtered_geojson = valid_geojson.features.filter((item) => {
+      // var valid_survey_resuult = valid_geojson.features.map((item)=> item.properties.survey_result)
+      // // console.log(JSON.parse(valid_survey_resuult))
+      // valid_survey_resuult.find(['']) remove the first [' character and last '] characters
+      // console.log(valid_survey_resuult)
+      //   // return item.properties
+      //   // === "Land Use Land Cover (LULC)"
+      // })
+      // console.log(filtered_geojson)
 
       // load points
-      L.geoJSON(valid_geojson, {
+      point_geojson.value =  L.geoJSON(valid_geojson, {
         pointToLayer: function (feature, latlng) {
           var studioicon = L.icon({
             iconUrl:
@@ -4704,7 +4722,9 @@ const fetchMobileData = async () => {
           );
           return marker;
         },
-      }).addTo(map);
+      })
+      point_geojson.value.addTo(point_layergroup.value);
+      point_layergroup.value.addTo(map)
     })
     .catch((error) => {
       console.error("Error:", error);

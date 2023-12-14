@@ -11,10 +11,12 @@ import './assets/main.css'
 // import VueNotification from 'vue-notification';
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+
 const app = createApp(App)
 // .use(i18n)
 app.use(router)
 app.use(createPinia())
 app.use(i18n)
 app.use(Toast)
+
 app.mount('#app')

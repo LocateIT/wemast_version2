@@ -889,7 +889,15 @@
       <img src="/uiIcons/loader_white.svg" alt="" />
     </div>
     <div class="mobile_filter" v-if="show_mobile_data">
-      <button @click="fetchMobileData" class="fetch_mobile">Fetch Data</button>
+      <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
+      <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
+      <button @click="fetchUserMobile" class="fetch_mobile_user">Filter by user</button>
+      <div class="mypanel" style="display: flex; flex-direction: row; gap: 5px;" @click="fetchUserMobile">
+        <List width="15" height="15"  color="#164b75" style="margin-top: 10px;" />
+      <span style="margin-top: 7px; font-weight: 600;">View Panel</span>
+
+      </div>
+      
       <img
         style="cursor: pointer; position: absolute; top: 0.5vh; right: 0.5vw"
         @click="close_mobile_panel"
@@ -953,11 +961,13 @@ import PrecBar from "../components/Charts/PrecBar.vue";
 import CustomDocumentation from "../components/CustomDocumentation.vue";
 import { CloudRain } from "@vicons/fa";
 import { ThermometerHalf } from "@vicons/fa";
+import  List  from "@vicons/fa/List"
 import RescaleScreen from "../components/RescaleScreen.vue";
 import shp from "shpjs/dist/shp.js";
 import "../upload_shp/leaflet.shpfile.js";
 import Toast, { POSITION } from "vue-toastification";
 import { useToast } from "vue-toastification";
+import { useRoute, useRouter } from 'vue-router';
 
 //refs go here
 let baseurl = "http://66.42.65.87";
@@ -1086,6 +1096,8 @@ const storeUserSelections = useCounterStore();
 const compareUserSelections = useCompareStore();
 const advancedUserSelections = useAdvancedStore();
 const toast = useToast();
+const router = useRouter();
+
 
 // //console.log(storeUserSelections.fetchCountriesList)
 
@@ -4720,6 +4732,9 @@ const fetchMobileData = async () => {
       console.error("Error:", error);
     });
 };
+const fetchUserMobile = (user) => {
+  router.push('/management');
+}
 
 const addCQLFilter = () => {
   map.createPane("pane400").style.zIndex = 200;

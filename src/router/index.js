@@ -9,6 +9,7 @@ import Signup from "@/views/Signup.vue"
 import Login from "@/views/Login.vue"
 import Forgot from "@/views/Forgot.vue"
 import Reset from "@/views/Reset.vue"
+import ManagementPanel from "@/views/ManagementPanel.vue"
 
 
 const routes = [
@@ -52,6 +53,11 @@ const routes = [
     path: "/reset",
     name: "Reset",
     component: Reset,
+  },
+  {
+    path: "/management",
+    name: "Management",
+    component: ManagementPanel,
   },
   
   // {

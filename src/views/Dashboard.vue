@@ -968,6 +968,10 @@ import "../upload_shp/leaflet.shpfile.js";
 import Toast, { POSITION } from "vue-toastification";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from 'vue-router';
+import * as turf from '@turf/helpers'
+import center from '@turf/center'
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
+import { write } from 'shp-write'
 
 //refs go here
 let baseurl = "http://66.42.65.87";

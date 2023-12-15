@@ -1,5 +1,5 @@
 <template>
-   <div >
+   <div class="management" >
     <Navbar style="margin-left: -5vw;" />
 
     <div style="background-color: #fff; height: 90vh; position: absolute; width: 100vw; padding: 20px;">
@@ -33,7 +33,7 @@
             <!-- Actions (e.g., buttons) for each user -->
             <!-- <button @click="editUser(user)" class="btn btn-primary btn-sm">Edit</button>
             <button @click="deleteUser(user.id)" class="btn btn-danger btn-sm">Delete</button> -->
-            <DownloadOutline width="40" height="20"  color="#164b75" style="cursor: pointer;" />
+            <DownloadOutline width="40" height="20"  color="#164b75" style="cursor: pointer;"  @click="downloadShapefile"/>
             
           </td>
         </tr>
@@ -55,6 +55,15 @@ import Navbar from "../components/Navbar.vue"
 import { UserCircle } from "@vicons/fa";
 // import Download  from "@vicons/fa/Download";
 import  DownloadOutline  from "@vicons/ionicons5/DownloadOutline";
+import * as turf from '@turf/helpers'
+import center from '@turf/center'
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
+import shpwrite from '@mapbox/shp-write'
+// import  shpwrite from 'shp-write'
+import { featureCollection } from '@turf/helpers';    
+// import { create } from 'shp-write';
+import JSZip from 'jszip';
+
 
 let users= [
         {
@@ -71,6 +80,13 @@ let users= [
           role: 'User',
           id: 2,
         },
+        {
+          name: 'John Doe',
+          email: 'john@example.com',
+          status: 'Active',
+          role: 'Admin',
+          id: 3, // Sample ID for each user
+        },
         // Add more user objects as needed
       ]
 
@@ -83,9 +99,245 @@ let users= [
     //   console.log('Deleting user with ID:', userId);
     // }
 
+    
+//       const options = {
+//   folder: "my_internal_shapes_folder",
+//   filename: "my_zip_filename",
+//   outputType: "blob",
+//   compression: "DEFLATE",
+//   types: {
+//     point: "mypoints",
+//     polygon: "mypolygons",
+//     polyline: "mylines",
+//   },
+// };
+
+// a GeoJSON bridge for features
+// const zipData = shpwrite.zip(
+//   {
+//     type: "FeatureCollection",
+//     features: [
+//       {
+//         type: "Feature",
+//         geometry: {
+//           type: "Point",
+//           coordinates: [
+//           36.5152457883251,
+//           -0.4912572719726569
+//         ],
+//         },
+//         properties: {
+//           name: "Foo",
+//         },
+//       },
+//       {
+//         type: "Feature",
+//         geometry: {
+//           type: "Point",
+//           coordinates: [
+//           37.68758878690309,
+//           -0.3224056022858832
+//         ],
+//         },
+//         properties: {
+//           name: "Bar",
+//         },
+//       },
+//     ],
+//   },
+//   options
+// );
+
+
+    
+  
+const downloadShapefile = () => {
+
+  // console.log('download shp')
+//   const featureCollection1 = {  
+//   "type": "FeatureCollection",
+//   "features": [
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           36.5152457883251,
+//           -0.4912572719726569
+//         ],
+//         "type": "Point"
+//       }
+//     },
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           37.68758878690309,
+//           -0.3224056022858832
+//         ],
+//         "type": "Point"
+//       }
+//     },
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           38.69107579803108,
+//           -0.8144744636909564
+//         ],
+//         "type": "Point"
+//       }
+//     },
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           37.383648009493214,
+//           -1.4463520978251978
+//         ],
+//         "type": "Point"
+//       }
+//     },
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           38.64765568697254,
+//           -2.174476524260484
+//         ],
+//         "type": "Point"
+//       }
+//     },
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           37.25338767631911,
+//           0.4205552646543822
+//         ],
+//         "type": "Point"
+//       }
+//     },
+//     {
+//       "type": "Feature",
+//       "properties": {},
+//       "geometry": {
+//         "coordinates": [
+//           39.03361222971523,
+//           -1.0170756614406287
+//         ],
+//         "type": "Point"
+//       }
+//     }
+//   ]
+
+// }
+
+// // const turfFeatureCollection = featureCollection(featureCollection1.features);
+
+// // // Create shapefile
+// const shapefileContent = shpwrite.zip(featureCollection1) //create(turfFeatureCollection);
+
+
+
+
+const options = {
+  folder: "C:\Users\Locate04\Downloads",
+  filename: "my_zip_folder",
+  outputType: "blob",
+  compression: "DEFLATE",
+  types: {
+    point: "mypoints",
+    // polygon: "mypolygons",
+    // polyline: "mylines",
+  },
+};
+
+
+
+// Convert the GeoJSON Feature Collection to a Turf FeatureCollection
+const geoJsonToShp =  {
+    type: "FeatureCollection",
+    features: [
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates:  [
+          36.896170506729135,
+          -0.4485754857087869
+        ],
+        },
+        properties: {
+          name: "Foo",
+        },
+      },
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [
+          38.58635451163451,
+          -1.4596433562075504
+        ],
+        },
+        properties: {
+          name: "Bar",
+        },
+      },
+      {
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates:  [
+          38.00772281794906,
+          1.0658909765227094
+        ],
+        },
+        properties: {
+          name: "another",
+        },
+      },
+    ],
+  }
+const turfFeatureCollection = featureCollection(geoJsonToShp.features);
+
+// Convert the GeoJSON to shapefile components
+const features = turfFeatureCollection.features.map((feature) => ({
+  type: 'Feature',
+  geometry: feature.geometry,
+  properties: feature.properties || {},
+}));
+
+const shapes = {
+  type: 'FeatureCollection',
+  features,
+};
+
+const shapefileContent = shpwrite.zip(shapes);
+console.log(shapefileContent)
+shpwrite.download(shapes, options)
+
+
+  
+}
+
 
 </script>
 
-<style>
+<style scoped>
+.management{
+  overflow: hidden !important;
+  font-family: sans-serif;
+}
+.table{
+  width: 80vw;
+}
+
 
 </style>

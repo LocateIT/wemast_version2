@@ -10,7 +10,7 @@
         <span style="font-size:20px; font-weight: 600; margin-top: 20px; color: #297EAE;">Please Log in to view your data</span>
 
     </div>
-    
+
 
       <div v-if="storeUserSelections.isLoggedIn == true" style="display: flex; flex-direction: row; gap: 1rem; margin-top: 50px;">
         <UserCircle width="100" height="100"  color="#164b75" />
@@ -18,11 +18,18 @@
 
     </div>
 
+
+    <div class="features" style="position: relative; top:4vh">
+      <span  style="font-size:20px; font-weight: 600; margin-top: 50px; color: #297EAE;">Total GeoFeatures: {{ storeUserSelections.user_features }}</span>
+
+    </div>
+   
+
    <div class="container">
     <!-- <h1>User Table</h1> -->
     <table class="table">
       <thead>
-        <tr>
+        <tr style="color:#297EAE">
           <th>Name</th>
           <th>Email</th>
           <th>Status</th>
@@ -72,6 +79,7 @@ import shpwrite from '@mapbox/shp-write'
 import { featureCollection } from '@turf/helpers';    
 // import { create } from 'shp-write';
 import JSZip from 'jszip';
+import { ref } from 'vue'
 
 import { useCounterStore} from '../stores/counter'
 
@@ -84,6 +92,7 @@ console.log(login_cred)
 console.log(storeUserSelections.user_details)
 
 let users = storeUserSelections.user_details
+let user_geofeatures = storeUserSelections.user_features
 
 
 
@@ -241,6 +250,7 @@ const geoJsonToShp =  {
     ],
   }
 const turfFeatureCollection = featureCollection(geoJsonToShp.features);
+
 
 // Convert the GeoJSON to shapefile components
 const features = turfFeatureCollection.features.map((feature) => ({

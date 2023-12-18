@@ -4,9 +4,17 @@
 
     <div style="background-color: #fff; height: 90vh; position: absolute; width: 100vw; padding: 20px;">
 
-      <div style="display: flex; flex-direction: row; gap: 1rem; margin-top: 50px;">
+      
+      <div v-if="storeUserSelections.isLoggedIn == false" style="display: flex; flex-direction: row; gap: 1rem; margin-top: 50px;">
         <UserCircle width="100" height="100"  color="#164b75" />
-        <span style="font-size:40px; font-weight: 600; margin-top: 20px; color: #297EAE;">Risper</span>
+        <span style="font-size:20px; font-weight: 600; margin-top: 20px; color: #297EAE;">Please Log in to view your data</span>
+
+    </div>
+    
+
+      <div v-if="storeUserSelections.isLoggedIn == true" style="display: flex; flex-direction: row; gap: 1rem; margin-top: 50px;">
+        <UserCircle width="100" height="100"  color="#164b75" />
+        <span  style="font-size:40px; font-weight: 600; margin-top: 20px; color: #297EAE;">{{ storeUserSelections.user_details[0]._username }}</span>
 
     </div>
 
@@ -19,21 +27,22 @@
           <th>Email</th>
           <th>Status</th>
           <th>Role</th>
-          <th>Actions</th>
+          <th>Export data</th>
         </tr>
       </thead>
       <tbody>
         <!-- Sample data to populate the table -->
         <tr v-for="(user, index) in users" :key="index">
-          <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.status }}</td>
-          <td>{{ user.role }}</td>
+          <td>{{ user._username }}</td>
+          <td>{{  user._useremail }}</td>
+          <td>{{ user._userstatus }}</td>
+          <td>{{ user._userrole}}</td>
           <td>
             <!-- Actions (e.g., buttons) for each user -->
             <!-- <button @click="editUser(user)" class="btn btn-primary btn-sm">Edit</button>
             <button @click="deleteUser(user.id)" class="btn btn-danger btn-sm">Delete</button> -->
-            <DownloadOutline width="40" height="20"  color="#164b75" style="cursor: pointer;"  @click="downloadShapefile"/>
+            <!-- <DownloadOutline width="40" height="20"  color="#164b75" style="cursor: pointer;"  @click="downloadShapefile"/> -->
+            <img src="../../public/mapIcons/download_tif.svg" alt="download shapefile" style="cursor: pointer;"  @click="downloadShapefile" title="download shapefile">
             
           </td>
         </tr>
@@ -64,89 +73,18 @@ import { featureCollection } from '@turf/helpers';
 // import { create } from 'shp-write';
 import JSZip from 'jszip';
 
+import { useCounterStore} from '../stores/counter'
 
-let users= [
-        {
-          name: 'John Doe',
-          email: 'john@example.com',
-          status: 'Active',
-          role: 'Admin',
-          id: 1, // Sample ID for each user
-        },
-        {
-          name: 'Jane Smith',
-          email: 'jane@example.com',
-          status: 'Inactive',
-          role: 'User',
-          id: 2,
-        },
-        {
-          name: 'John Doe',
-          email: 'john@example.com',
-          status: 'Active',
-          role: 'Admin',
-          id: 3, // Sample ID for each user
-        },
-        // Add more user objects as needed
-      ]
+const storeUserSelections = useCounterStore();
 
-    //   const editUser = (user) => {
-    //   // Implement your edit functionality
-    //   console.log('Editing user:', user);
-    // }
-    // const deleteUser = (userId) => {
-    //   // Implement your delete functionality
-    //   console.log('Deleting user with ID:', userId);
-    // }
+//access login cred from store
 
-    
-//       const options = {
-//   folder: "my_internal_shapes_folder",
-//   filename: "my_zip_filename",
-//   outputType: "blob",
-//   compression: "DEFLATE",
-//   types: {
-//     point: "mypoints",
-//     polygon: "mypolygons",
-//     polyline: "mylines",
-//   },
-// };
+let login_cred = { "mail": { "name": storeUserSelections.user_email }, "passwd": { "name": storeUserSelections.user_password } }
+console.log(login_cred)
+console.log(storeUserSelections.user_details)
 
-// a GeoJSON bridge for features
-// const zipData = shpwrite.zip(
-//   {
-//     type: "FeatureCollection",
-//     features: [
-//       {
-//         type: "Feature",
-//         geometry: {
-//           type: "Point",
-//           coordinates: [
-//           36.5152457883251,
-//           -0.4912572719726569
-//         ],
-//         },
-//         properties: {
-//           name: "Foo",
-//         },
-//       },
-//       {
-//         type: "Feature",
-//         geometry: {
-//           type: "Point",
-//           coordinates: [
-//           37.68758878690309,
-//           -0.3224056022858832
-//         ],
-//         },
-//         properties: {
-//           name: "Bar",
-//         },
-//       },
-//     ],
-//   },
-//   options
-// );
+let users = storeUserSelections.user_details
+
 
 
     
@@ -243,11 +181,8 @@ const downloadShapefile = () => {
 // // // Create shapefile
 // const shapefileContent = shpwrite.zip(featureCollection1) //create(turfFeatureCollection);
 
-
-
-
 const options = {
-  folder: "C:\Users\Locate04\Downloads",
+  // folder: "C:\Users\Locate04\Downloads",
   filename: "my_zip_folder",
   outputType: "blob",
   compression: "DEFLATE",

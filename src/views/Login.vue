@@ -24,7 +24,7 @@
 
      <div class="field">
     <Envelope width="18" height="15"  color="#164b75"/>
-      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @click="showEmailInput">
+      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
     </div> 
 
     
@@ -33,7 +33,7 @@
 
     <div class="field">
         <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
+        <input placeholder="Password" class="input-field" type="password"  @input="showPasswordInput">
     </div>
 
     <!-- <div class="field">
@@ -77,6 +77,10 @@ import { NButton, NSpace, NInput } from 'naive-ui'
   import Toast, { POSITION } from "vue-toastification";
   import { useToast } from "vue-toastification";
   import axios from 'axios'
+  import { onMounted, watch, computed } from "@vue/runtime-core";
+  import { useCounterStore} from '../stores/counter'
+
+  const storeUserSelections = useCounterStore();
 
 
   let phone = ref(null)
@@ -92,11 +96,53 @@ import { NButton, NSpace, NInput } from 'naive-ui'
             }
 const showPasswordInput = (e) => {
               password.value = e.target.value
+
+              // var password_input = storeUserSelections.getPasswordInput
+              storeUserSelections.setPassword(e.target.value)
+              
             }
          
             const showEmailInput = (e) => {
               email.value = e.target.value
+
+              // var email_input = storeUserSelections.getEmailInput
+              storeUserSelections.setEmail(e.target.value)
+              
             }
+
+
+            //advanced filter functionalities
+// const getUserEmail = () => {
+//   var email_input = storeUserSelections.getEmailInput
+
+//   email.value = email_input;
+//   // //console.log(selected_country, 'selected country app')
+// };
+
+// const setEmail = computed(() => {
+//   // //console.log(advancedUserSelections.selected_country, 'selected country app')
+
+//   return storeUserSelections.getEmailInput;
+// });
+// watch(setEmail, () => {
+//   showEmailInput();
+// });
+
+// const getUserPassword = () => {
+//   var password_input = storeUserSelections.getPasswordInput
+
+//   password.value = password_input;
+//   // //console.log(selected_country, 'selected country app')
+// };
+
+// const setPassword = computed(() => {
+//   // //console.log(advancedUserSelections.selected_country, 'selected country app')
+
+//   return storeUserSelections.getPasswordInput;
+// });
+// watch(setPassword, () => {
+//   showPasswordInput();
+// });
 
  const submitForm =  () => {
 
@@ -119,8 +165,13 @@ const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 axios.post(apiUrl, postData, {headers})
 .then(response => {
   console.log('Response:', response.data)
+  var valid_object = JSON.parse(response.data[0].data)
+  console.log(valid_object)
+  storeUserSelections.setUserDetails(valid_object)
+
   if(response.data[0].success === true) {
     // this.$router.push('/dashboard')
+    storeUserSelections.setIsLoggedIn(true)
     toast.success("Login Successful", {
         timeout: 2000,
         position: POSITION.TOP_CENTER

@@ -15,7 +15,7 @@
     <RouterLink to="/dashboard">
 
         
-<button class="goto_dashboard">Go To Dashboard</button>
+<!-- <button class="goto_dashboard">Go To Dashboard</button> -->
 </RouterLink>
 <RouterView />
 

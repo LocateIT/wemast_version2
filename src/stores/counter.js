@@ -246,6 +246,11 @@ export const useCounterStore = defineStore({
       password: '',
       confirm_password: '',
       latlon:null,
+      user_email:'',
+      user_password:'',
+      user_details: null,
+      user_features:null,
+      isLoggedIn:false
   }),
  
   actions: {
@@ -1146,7 +1151,22 @@ export const useCounterStore = defineStore({
 
     
      
+    setEmail(email) {
+      this.user_email = email;
+    },
+    setPassword(password) {
+      this.user_password = password;
+    },
+    setUserDetails(details) {
+      this.user_details = details
+    },
+    setUserFeatures(userfeatures){
+      this.user_features = userfeatures
 
+    },
+    setIsLoggedIn(loggedin){
+      this.isLoggedIn = loggedin
+    }
 
     
 
@@ -1196,8 +1216,8 @@ export const useCounterStore = defineStore({
     getBand2022: (state) => state.band_2022,
     //user management
     getUsernameInput:(state) => state.username,
-    getEmailInput:(state) => state.email,
-    getPasswordInput:(state)=> state.password,
+    getEmailInput:(state) => state.user_email,
+    getPasswordInput:(state)=> state.user_password,
     getConfirmPassword:(state) => state.confirm_password,
     getZambeziStats:(state) => state.lulcChartData,
     getLatLon: state => state.latlon,

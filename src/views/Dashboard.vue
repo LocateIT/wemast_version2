@@ -2014,7 +2014,8 @@ const displayToKey = ($event) => {
   }
   if ($event === "Mapographics") {
     window.open(
-      "https://drive.google.com/file/d/1pH1TgiyP1JpT3tl7U9ZOYDS2iLJ22Cw1/view?pli=1"
+      "https://drive.google.com/file/d/1n8QMjQO5zSu_k57MQuI4I3QsIeHLlzbH/view"
+      // "https://drive.google.com/file/d/1pH1TgiyP1JpT3tl7U9ZOYDS2iLJ22Cw1/view?pli=1"
     );
   }
 };
@@ -4761,40 +4762,40 @@ await axios
 
     var geojson_object = response.data;
     const valid_geojson = JSON.parse(geojson_object);
-    // console.log(typeof(valid_geojson))
+    console.log(valid_geojson)
     storeUserSelections.setUserFeatures(valid_geojson)
     // point_layergroup.value = new L.LayerGroup();
 
 
 
     // // load points
-    // point_geojson.value =  L.geoJSON(valid_geojson, {
-    //   pointToLayer: function (feature, latlng) {
-    //     var studioicon = L.icon({
-    //       iconUrl:
-    //         "https://images.ctfassets.net/3prze68gbwl1/assetglossary-17su9wok1ui0z7w/c4c4bdcdf0d0f86447d3efc450d1d081/map-marker.png", // "/src/assets/marker.svg",
-    //       iconSize: [30, 30],
-    //       iconAnchor: [15, 15],
-    //     });
+    point_geojson.value =  L.geoJSON(valid_geojson, {
+      pointToLayer: function (feature, latlng) {
+        var studioicon = L.icon({
+          iconUrl:
+            "https://images.ctfassets.net/3prze68gbwl1/assetglossary-17su9wok1ui0z7w/c4c4bdcdf0d0f86447d3efc450d1d081/map-marker.png", // "/src/assets/marker.svg",
+          iconSize: [30, 30],
+          iconAnchor: [15, 15],
+        });
 
 
-    //     console.log(feature.properties)
-    //     var valid_survey_resuult = JSON.parse(feature.properties.survey_result)
-    //     console.log(valid_survey_resuult)
+        console.log(feature.properties)
+        var valid_survey_resuult = JSON.parse(feature.properties.survey_result)
+        console.log(valid_survey_resuult)
 
-    //     var marker = L.marker(latlng, { icon: studioicon }).bindPopup(
-    //       `<b>Basin</b> : ${valid_survey_resuult[3]} <br>
-    //       <b>Wetland</b> : ${valid_survey_resuult[5]} <br>
-    //       <b>Sub-Indicator</b> : ${valid_survey_resuult[2]} <br>
-    //       <b>Area</b> : ${feature.properties['map_area']} <br>
-    //       <img src="http://45.32.233.93:81/wemast/ges/${feature.properties.pic_path_name}" alt="Feature Image" style="max-width: 100%; height: auto;">
-    //       `
-    //     );
-    //     return marker;
-    //   },
-    // })
-    // point_geojson.value.addTo(point_layergroup.value);
-    // point_layergroup.value.addTo(map)
+        var marker = L.marker(latlng, { icon: studioicon }).bindPopup(
+          `<b>Basin</b> : ${valid_survey_resuult[3]} <br>
+          <b>Wetland</b> : ${valid_survey_resuult[5]} <br>
+          <b>Sub-Indicator</b> : ${valid_survey_resuult[2]} <br>
+          <b>Area</b> : ${feature.properties['map_area']} <br>
+          <img src="http://45.32.233.93:81/wemast/ges/${feature.properties.pic_path_name}" alt="Feature Image" style="max-width: 100%; height: auto;">
+          `
+        );
+        return marker;
+      },
+    })
+    point_geojson.value.addTo(point_layergroup.value);
+    point_layergroup.value.addTo(map)
   })
   .catch((error) => {
     console.error("Error:", error);

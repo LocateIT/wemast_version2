@@ -203,52 +203,53 @@ const options = {
   },
 };
 
-
+var geojson_features = storeUserSelections.user_features
 
 // Convert the GeoJSON Feature Collection to a Turf FeatureCollection
 const geoJsonToShp =  {
     type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates:  [
-          36.896170506729135,
-          -0.4485754857087869
-        ],
-        },
-        properties: {
-          name: "Foo",
-        },
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [
-          38.58635451163451,
-          -1.4596433562075504
-        ],
-        },
-        properties: {
-          name: "Bar",
-        },
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates:  [
-          38.00772281794906,
-          1.0658909765227094
-        ],
-        },
-        properties: {
-          name: "another",
-        },
-      },
-    ],
+    // features: [
+    //   {
+    //     type: "Feature",
+    //     geometry: {
+    //       type: "Point",
+    //       coordinates:  [
+    //       36.896170506729135,
+    //       -0.4485754857087869
+    //     ],
+    //     },
+    //     properties: {
+    //       name: "Foo",
+    //     },
+    //   },
+    //   {
+    //     type: "Feature",
+    //     geometry: {
+    //       type: "Point",
+    //       coordinates: [
+    //       38.58635451163451,
+    //       -1.4596433562075504
+    //     ],
+    //     },
+    //     properties: {
+    //       name: "Bar",
+    //     },
+    //   },
+    //   {
+    //     type: "Feature",
+    //     geometry: {
+    //       type: "Point",
+    //       coordinates:  [
+    //       38.00772281794906,
+    //       1.0658909765227094
+    //     ],
+    //     },
+    //     properties: {
+    //       name: "another",
+    //     },
+    //   },
+    // ],
+    features: geojson_features
   }
 const turfFeatureCollection = featureCollection(geoJsonToShp.features);
 

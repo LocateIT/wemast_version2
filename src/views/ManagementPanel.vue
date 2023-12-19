@@ -1,13 +1,14 @@
 <template>
    <div class="management" >
     <Navbar style="margin-left: -5vw;" />
+    <!-- <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/signup')"  > -->
 
     <div style="background-color: #fff; height: 90vh; position: absolute; width: 100vw; padding: 20px;">
 
       
       <div v-if="storeUserSelections.isLoggedIn == false" style="display: flex; flex-direction: row; gap: 1rem; margin-top: 50px;">
         <UserCircle width="100" height="100"  color="#164b75" />
-        <span style="font-size:20px; font-weight: 600; margin-top: 20px; color: #297EAE;">Please Log in to view your data</span>
+        <span @click="$router.push('/signup')" style="font-size:20px; font-weight: 600; margin-top: 30px; color: #297EAE;">Please <span style="text-decoration: underline; cursor: pointer;">Log in </span>to view your data</span>
 
     </div>
 
@@ -20,7 +21,7 @@
 
 
     <div class="features" style="position: relative; top:4vh">
-      <span  style="font-size:20px; font-weight: 600; margin-top: 50px; color: #297EAE;">Total GeoFeatures: {{ storeUserSelections.user_features }}</span>
+      <span  style="font-size:20px; font-weight: 600; margin-top: 50px; color: #297EAE;">Total GeoFeatures: {{ storeUserSelections.user_features?.length }}</span>
 
     </div>
    

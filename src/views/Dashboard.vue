@@ -891,13 +891,18 @@
     <div class="mobile_filter" v-if="show_mobile_data">
       <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
       <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
-      <button @click="fetchUserMobile" class="fetch_mobile_user">Filter by user</button>
 
-      <div class="mypanel" style="display: flex; flex-direction: row; gap: 5px;" @click=" router.push('/management');">
+      <div class="mypanel" style="display: flex; flex-direction: row; gap: 10px;">
+        <button @click="fetchUserMobile" class="fetch_mobile_user">My Data</button>
+
+      <div v-if="show_mypanel" class="mypanel" style="display: flex; flex-direction: row; gap: 5px; cursor: pointer;" @click=" router.push('/management');">
         <List width="15" height="15"  color="#164b75" style="margin-top: 10px;" />
       <span style="margin-top: 7px; font-weight: 600;">View Panel</span>
 
       </div>
+
+      </div>
+      
       
       <img
         style="cursor: pointer; position: absolute; top: 0.5vh; right: 0.5vw"
@@ -1072,6 +1077,7 @@ let chartData = ref([]);
 let stats = ref({});
 let indexx = ref("");
 let show_mobile_data = ref(false);
+let show_mypanel = ref(false);
 let default_zambezi_region = ref({});
 let default_stats = ref({});
 let show_zambezi_stats = ref(true);
@@ -4684,6 +4690,7 @@ const close_mobile_panel = () => {
   
 };
 
+
 const fetchMobileData = async () => {
   const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
 
@@ -4738,6 +4745,7 @@ const fetchMobileData = async () => {
     });
 };
 const fetchUserMobile = async () => {
+  show_mypanel.value = true;
   const apiUrl = "http://66.42.65.87:8000/mobile_data/";
 
   let login_cred = { "mail": { "name": storeUserSelections.user_email }, "passwd": { "name": storeUserSelections.user_password } }
@@ -4749,11 +4757,12 @@ await axios
   .post(apiUrl, login_cred )
   .then((response) => {
     console.log('GeoJSON Response:', response.data)
-    storeUserSelections.setUserFeatures(response.data)
+   
 
-    // var geojson_object = response.data[0].data;
-    // const valid_geojson = JSON.parse(geojson_object);
-    // console.log(valid_geojson)
+    var geojson_object = response.data;
+    const valid_geojson = JSON.parse(geojson_object);
+    // console.log(typeof(valid_geojson))
+    storeUserSelections.setUserFeatures(valid_geojson)
     // point_layergroup.value = new L.LayerGroup();
 
 

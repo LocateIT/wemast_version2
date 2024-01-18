@@ -892,7 +892,7 @@
       <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
       <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
 
-      <div class="mypanel" style="display: flex; flex-direction: row; gap: 10px;">
+      <div class="mypanel" style="display: flex; flex-direction: row; gap: 1.5em;">
         <button @click="fetchUserMobile" class="fetch_mobile_user">My Data</button>
 
       <div v-if="show_mypanel" class="mypanel" style="display: flex; flex-direction: row; gap: 5px; cursor: pointer;" @click=" router.push('/management');">

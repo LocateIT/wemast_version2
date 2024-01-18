@@ -1009,7 +1009,7 @@ title{
 
 }
 
-.ancil_data{
+.ancil_data{ 
   margin-top:-0.5vh;
 }
 #line-chart{
@@ -1026,13 +1026,13 @@ title{
   left: 4.1vw;
   z-index: 1500;
   background-color: #fff;
-  width: 300px;
+  width: 250px;
   height: 180px;
  
-padding:20px;
+  padding: 1em 1em 1em 1.5em;
   display:flex;
   flex-direction: column;
-  gap:10px;
+  gap:1em;
 }
 .fetch_mobile{
   background-color:steelblue;

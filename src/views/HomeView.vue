@@ -56,6 +56,14 @@
             <RouterView />
       </div>
 
+      <div
+      class="scalediv"
+      style="z-index: 1000; position: absolute; top: 35vh; left: 25vw"
+      v-if="scale_div"
+    >
+      <RescaleScreen @opensettings="opendisplaysettings" />
+    </div>
+
       <div class="banner">
             <img class="bulb" src="/uiIcons/challenge.svg" alt="">
             <div class="title">
@@ -231,7 +239,44 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue';
 import LanguageSwitch from '../components/LanguageSwitch.vue';
+import RescaleScreen from '../components/RescaleScreen.vue';
+
+
+
+let scale_div = ref(
+  window.devicePixelRatio !== 1 || window.innerWidth !== screen.width
+);
+
 // let cuv_ref = ref('Cuvelai')
+const opendisplaysettings = () => {
+  var displaySettingsURI = "ms-settings:display";
+
+  // Open the display settings page
+  window.location.href = displaySettingsURI;
+};
+
+// Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected
+if (window.devicePixelRatio !== 1 || window.innerWidth !== screen.width) {
+  // Prompt the user to adjust their screen settings
+  if (
+    confirm(
+      "For the best experience, please change your screen scale and layout to 100%. Would you like to do it now?"
+    )
+  ) {
+    // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
+    // Example instructions:
+    // confirm("Follow the next instructions");
+    // opendisplaysettings()
+    // var displaySettingsURI = "ms-settings:display";
+    //         // Open the display settings page
+    //         window.location.href = displaySettingsURI;
+  } else {
+    // The user chose not to change their settings
+    alert(
+      "You can change your screen scale and layout settings later for a better experience."
+    );
+  }
+}
 
 const scrollToElement = (refName) =>  {
   const el = document.getElementById(ref[refName]);

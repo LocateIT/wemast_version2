@@ -56,13 +56,7 @@
             <RouterView />
       </div>
 
-      <div
-      class="scalediv"
-      style="z-index: 1000; position: absolute; top: 35vh; left: 25vw"
-      v-if="scale_div"
-    >
-      <RescaleScreen @opensettings="opendisplaysettings" />
-    </div>
+    
 
       <div class="banner">
             <img class="bulb" src="/uiIcons/challenge.svg" alt="">
@@ -260,9 +254,14 @@ if (window.devicePixelRatio !== 1 || window.innerWidth !== screen.width) {
   // Prompt the user to adjust their screen settings
   if (
     confirm(
-      "For the best experience, please change your screen scale and layout to 100%. Would you like to do it now?"
+      "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
     )
+
+   
+
+    
   ) {
+      opendisplaysettings()
     // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
     // Example instructions:
     // confirm("Follow the next instructions");

@@ -287,26 +287,26 @@ export const useCounterStore = defineStore({
     },
     fetchYearList(){
       if(this.selected_indicator === 'Basin Vulnerability Index' ) {
-        this.year_list = ["2000", "2005", "2010", "2015", "2022"]
+        this.year_list = ["2000", "2005", "2010", "2015", "2022"].reverse()
       }
       if(this.selected_sub_indicator === 'Precipitation Index' 
        || this.selected_sub_indicator === 'Soil Moisure Index'){ //removed 2000 since it lacks stats data
         this.year_list = ["2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
-          '2018','2019','2020', '2021', "2022"]
+          '2018','2019','2020', '2021', "2022"].reverse()
 
       }
       if(this.selected_sub_indicator === 'Land Cover') {
         this.year_list = ["1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006",
       "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
-       ] // removed'2018','2019','2020', '2021', "2022"
+       ].reverse() // removed'2018','2019','2020', '2021', "2022"
       }
       
       if(this.selected_sub_indicator === 'Burnt Area MODIS'
       || this.selected_sub_indicator === 'Burnt Area FIRMS') { //removed 2000 since it lacks stats data
         this.year_list = ["2001","2002","2003","2004","2005","2006",
       "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
-        '2018']
+        '2018'].reverse()
       }
       
       
@@ -317,22 +317,22 @@ export const useCounterStore = defineStore({
        ||this.selected_sub_indicator === 'Water Quality' && this.selected_parameter === 'Turbidity' ) {
         this.year_list = ["2000","2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
-          '2018','2019','2020', '2021']
+          '2018','2019','2020', '2021'].reverse()
         
       }
       if(this.selected_sub_indicator === 'Vegetation Cover' && this.selected_satellite === 'LANDSAT'){ //removed 2000 since it lacks stats data
         this.year_list = ["2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
-          '2018','2019','2020', '2021', "2022"]
+          '2018','2019','2020', '2021', "2022"].reverse()
 
       }
       if( this.selected_satellite === 'LANDSAT'){ //removed 2000 since it lacks stats data
         this.year_list = ["2001","2002","2003","2004","2005","2006",
         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
-          '2018','2019','2020', '2021', "2022"]
+          '2018','2019','2020', '2021', "2022"].reverse()
       }
       if( this.selected_satellite === 'SENTINEL') {
-        this.year_list = ["2016","2017", '2018','2019','2020', '2021', "2022"]
+        this.year_list = ["2016","2017", '2018','2019','2020', '2021', "2022"].reverse()
       }
      
     },

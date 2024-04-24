@@ -1,36 +1,35 @@
-/* @media (-webkit-device-pixel-ratio: 1.25) {
-  * {
-    zoom: 0.99;
-    content:'10%'
-  }
-} */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 .app{
   height: 100vh;
   width: 100vw;
   position: fixed;
-  z-index: 4000;
-  font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  /* font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; */
+  /* z-index: 4000; */
+  font-family:Poppins;
+  overflow-x: hidden;
+
 }
 .navbar{
-  position: absolute;
-  top: 3vh;
-  left: -0.3vw;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin: .5em .5em;
 }
 .selections{
   position: absolute;
-  top: 7vh;
-  left: 2vw;
-  z-index: 500;
+  top: 11vh;
+  left: 7vw;
+  z-index: 2500;
+
 }
 #map{
   position: absolute;
-  top: 24vh;
-  left:4vw;
+  top: 18vh;
+  left:7vw;
+  z-index:200;
   
 
-  height: 74%;
-    width: 90vw;
+  height: 80%;
+    width: 85%;
     border-top-left-radius: 28px;
     border-top-right-radius: 28px;
     padding-left: 10px;
@@ -83,14 +82,14 @@
     top: 0.1vh;
      font-size: 16px; 
      font-weight: bold;
-     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+     font-family:Poppins
 }
 .data_analysis_text{
   cursor: pointer;
    position: absolute;
 font-size: 16px; 
      font-weight: bold;
-     font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+     font-family:Poppins
 }
 .sidenav {
 height: 94vh;
@@ -105,17 +104,14 @@ background-color:#ffffff;
 }
 
 #close:active ~ .download_map{
-  /* position: absolute;
-  top: 5vh;
-  left: 40vw !important; */
+  
   background-color: #801113 !important;
 }
 
 
 #mySidenav {
 transition: width 0.3s;
-/* background-color: #f13737; */
-/* width: 0px; */
+
 
 }
 .sidenav_body {
@@ -158,25 +154,130 @@ border: 1px solid rgb(224, 213, 193); /* creates padding around scroll thumb */
     width: 45px;
     height: 45px;
     cursor: pointer;
-    /* background-color: #e01d1d; */
+   
   }
 }
-/* .protrusion {
-top: 110px;
-position: absolute;
-border-radius: 50%;
-width: 45px;
-height: 45px;
-cursor: pointer;
 
-} */
 
 .toggle_icon{
   position: absolute;
-  top: -2.5vh;
-  left: -1vw;
-  height: 50px;
-  width: 50px;
+  top: -8vh;
+  left: -1.7vw;
+  height: 40px;
+  width: 40px;
+ 
+}
+@media (-webkit-min-device-pixel-ratio: 1.25) {
+  /* Styles for devices with a minimum aspect ratio of 16:9 */
+  /* For example, widescreen monitors, laptops, some tablets */
+  .toggle_icon{
+    position: absolute;
+    top: -12vh;
+    left: -1.5vw;
+    height: 40px;
+    width: 40px;
+   
+  }
+
+  .swap{
+    z-index: 500;
+    position: absolute;
+    top: 20vh;
+    left:81vw !important;
+    cursor: pointer;
+    height: 1.5em;
+    width:1.5em;
+  background-color: #fff;
+  padding: 5px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  
+  }
+
+  #chart_pie{
+    position: absolute;
+    top: -10vh !important;
+    left: 0;
+    width: 35vw;
+    height: 30vh;
+   
+   
+  }
+  .charts2_sidebar{
+    position: absolute;
+    top: 63vh !important;
+    /* height: 240px; */
+    width: 99%;
+    background-color: #eee !important;
+    /* padding: 3em 2em; */
+  }
+  .lulc_chart{
+    position: relative;
+    top: -1vh;
+    left: 10% !important;
+    width: 18vw !important;
+    height: 14.5vh;
+    padding: 5px;
+    margin: 5px;
+  }
+  #bar-chart{
+    height: 100% !important;
+    width:100% !important;
+    margin-top:1vh;
+    margin-left:-3vh;
+  }
+
+  .vul_pie_chart_title{
+    position: relative;
+    top: -15vh !important;
+    left: -1vw;
+    font-weight: 700;
+  }
+
+  .ancil_data{ 
+    
+    margin-top: 2.5vw !important;
+    margin-left: -1vw !important;
+  }
+  .ancil_water{ 
+    
+    margin-top: 6.5vw !important;
+    margin-left: -7vw !important;
+  }
+
+  .time_series_title{
+    position: absolute;
+    top: -1vh;
+    left: 10% !important;
+    font-weight: 600;
+   
+  
+  }
+  .rain, .temp{
+    margin-top: 5.6vh !important;
+  }
+  .ancil_rain{ 
+    margin-top: 6.5vw !important;
+    
+  }
+
+  .lulc_line_chart{
+    left:-1vw !important;
+  }
+  .bar_chart_title{
+    display:none !important;
+  }
+  .logos_container{
+    margin-top: 40vh !important;
+    /* margin-left: 4vw; */
+    height: 10%;
+     width: 90%;
+     padding-top: 3em;
+   
+    
+  
+  }
  
 }
 
@@ -188,30 +289,31 @@ cursor: pointer;
 
 #close {
   margin-top: 6px;
-  margin-left: 45px;
-  background-color: #388de7;
-  border-radius: 50%;
+  margin-left: 0px;
+   width:1.8em;
+  height: 2em;
+  background-color: #fff;
+  /* border-radius: 50%; */
   padding: 5px;
   margin-right: 10px;
+  transform: rotate(180deg);
   
 
 }
 #open {
-  margin-top: 29px;
-  margin-left: -55px;
-  transform: rotate(180deg);
-  background-color: #4891e0;
-  border-radius: 50%;
+
+  position: absolute;
+  top:0vh;
+  left:-2.3vw;
+  /* transform: rotate(180deg); */
+  background-color: #fff;
+  width:1.9em;
+  height: 2em;
+ 
   padding: 5px;
 
 }
-/* .open_sidebar{
-  position: absolute;
-  top: 26vh;
-  right: 7vw;
-  background-color: #4891e0;
-  z-index: 2500;
-} */
+
 .sideview{
   position: absolute;
   top: 26vh;
@@ -221,19 +323,7 @@ cursor: pointer;
   transition: all 150ms ease-in 0s
 
 }
-@media screen and (max-height: 800px) {
-.logos_container {
-  margin-bottom: 25px;
-  margin-top: 10px;
-}
-}
-@media screen and (min-height: 901px) {
-.logos_container {
-  position: absolute;
-  bottom: 0;
-  margin-left: 25%;
-}
-}
+
 #mapContainer  .base_layer_list {
 list-style: none;
 font-size: 15px;
@@ -268,73 +358,6 @@ table {
   text-indent: initial;
   border-spacing: 2px;
 }
- /* .map_controls{
-  position: absolute;
-  z-index: 500;
-  top: 5vh;
-  left: 98vw;
- 
-  display: flex;
-  gap: 2rem;
-  flex-direction: column;
-} */
-/* #controls{
-  position: absolute;
-  right: -2vw !important;
-
-} */
-/* @media screen and (max-width: 1400px) {
-  .download_tiff{
-    position: absolute;
-    top: 5vh;
-  background-color: #e23c3c;
-    right: -4vw !important;
-  }
-  .download_map{
-    position: absolute;
-    top: 9vh;
-    left:  4vw;
-  }
-  
-  .measure{
-    position: absolute;
-    top: 13vh;
-    left:  4vw;
-  
-  }
-  .wemast_base_layers{
-    position: absolute;
-    top: 17vh;
-    left:  4vw;
-  }
-  .draw_polygon{
-    position: absolute;
-    top: 21vh;
-    left:  4vw;
-  
-  }
-  .zoom_in{
-    position: absolute;
-    top: 25vh;
-    left:  4vw;
-  
-  }
-  .zoom_out{
-    position: absolute;
-    top: 29vh;
-    left: 4vw;
-  
-  }
-  .help{
-    position: absolute;
-    top: 33vh;
-    left: 4vw
-  
-  }
-  } */
-
-
- 
 
   .download_tiff_2{
     position: absolute;
@@ -348,6 +371,12 @@ table {
     left:  4vw;
   }
 
+  .stats{
+    position: absolute;
+    top: 41vh;
+  
+    left: -2vw;
+  }
 .download_tiff{
   position: absolute;
   top: 5vh;
@@ -403,17 +432,7 @@ table {
   left:-2vw
 
 }
-/* #search1{
-  position: absolute;
-  top: 65vh;
-  right:7vw;
-  background-color: #fff;
-  height: 40px;
-  width: 200px;
-  z-index: 2000;
-  border: #777;
 
-} */
 
 .doc_select{
   position: absolute;
@@ -432,34 +451,35 @@ table {
   background-color: #fff;
   cursor: pointer;
 }
-/* wemast_base_layers
-draw_polygon
-zoom_in
-zoom_outmp
-help */
+
 .swap{
   z-index: 500;
   position: absolute;
-  top: 27vh;
+  top: 20vh;
   left:78vw;
   cursor: pointer;
-  height: 20px;
-  width:20px;
+  height: 1.5em;
+  width:1.5em;
 background-color: #fff;
-padding: 3px;
+padding: 5px;
+display:flex;
+justify-content: center;
+align-items: center;
 
 }
 .opacity{
+  display:flex;
+  flex-direction: row;
+  gap:5em;
   z-index: 500;
   position: absolute;
-  top: 27vh;
+  top: 20vh;
   left:67vw;
   cursor: pointer;
-  height: 25px;
-  width: 200px;
-  background-color: rgb(255, 255, 255);
-  /* border-radius: 10px; */
-  /* padding-left: 30px; */
+  height: 1.5em;
+  width: 12.5em;
+  background-color: #fff;
+  
 }
 #opacity{
   position: absolute;
@@ -477,18 +497,15 @@ color: #000;
   left:2.5vw;
   cursor: pointer;
   color: rgb(192, 20, 20);
-  /* background-color: #fff; */
+
 
 }
 #sldOpacity{
   z-index: 2500;
-  position: absolute;
-  top: 1vh;
-  left:3vw;
+  margin: 0.7em 5em;
   cursor: pointer;
-  height: 5px;
+  height: .5em;
  
-  background-color: #000;
   
 }
 #sldOpacity::-webkit-slider-thumb {
@@ -512,85 +529,50 @@ color: #000;
   padding: 5px;
   
 }
-/* .base_map_name {
-  font-size: 15px;
-  cursor: pointer;
-  border-bottom: #080808 solid 3px;
-}
-.base_map_name:hover {
-  background-color: #858585;
-} */
-/* .layers:hover{
-  color:#fff;
-  background-color:#333333;
 
-  -webkit-transform: translateX(20px); 
-  -moz-transform: translateX(20px); 
-  -ms-transform: translateX(20px); 
-  -o-transform: translateX(20px); 
-  transform: translateX(20px); .download_tiff, .download_map,
-} */
 .layers:hover ~ #opacity {
   background: #801113;
-  /* -webkit-transform: translateX(120px); 
-  -moz-transform: translateX(120px); 
-  -ms-transform: translateX(120px); 
-  -o-transform: translateX(120px); 
-  transform: translateX(120px);  */
+  
 }
 
-/* #wemast_base_layers {
-  margin-top: 0.9px;
-} */
 #map  .leaflet-control-layers {
   display: none;
-  /* position: absolute;
-  top:80;
-  right:190px */
+
 }#map  .map_controls {
   font-size: 30px;
   position: sticky;
-  top: 40%;
+  top: 45%;
+  
 }
 #map  .map_controls img {
   padding-right: 5px;
   padding-left: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
-  /* background-color: rgb(155, 34, 34); */
-  height: 20px;
-  width:20px;
-  /* padding: 3px; */
+  
+  height: 1em;
+  width:1em;
+  
   background-color: #fff;
   cursor: pointer;
+  display: flex;
+    flex-direction: column;
+    gap: 0.5em;
 }
 .base_layer_list{
   list-style-type: none;
-  /* margin-left: -50px; */
-  /* background-color: aqua; */
+  
   font-size: 14px;
-  /* background-color: #f59211; */
+  
   margin-top: 25px;
   height: 164.7px;
 }
 .base_map_name{
-  /* background-color: aqua; */
+
   margin-left: -30px;
   margin-top: -15px;
 }
-/* aka basemapnames */
-/* .vvv{
-  margin-right: -15px;
-  margin-top: -15px;
-} */
-/* #base_layer-MapBox, #base_layer-OpenStreetMap, #base_layer-MapBoxSatellite{
-color: rgb(212, 19, 230);
 
-}
-#checkbox-MapBox, #checkbox-OpenStreetMap, #checkbox-MapBoxSatellite{
-   margin-top: -15px;
-  
-  } */
 
 .col-xs-10.q-ml-sm {
   margin-top: -23px;
@@ -621,7 +603,7 @@ top: 18vh;
 left: 40vw;
 width: 140px;
 height: 35px;
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+font-family: Poppins;
 font-weight: bold;
 border-radius: 30px;
 border: none;
@@ -629,92 +611,67 @@ color: #fff;
 background-color: rgb(180, 28, 160);
 cursor: pointer;
 }
-.advanced_filter{
-  cursor: pointer;
- 
-  position: absolute;
-  
-  z-index: 2500;
 
-
-position: absolute;
-  top:69.8vh;
-  left: -0.2vw;
-  height: 135px;
-  width: 80px;
-  background-color: steelblue;
-
-}
-.advanced_filter p{
+/* .advanced_filter p{
   
   color: #fcfafa;
   position: relative;
   left: 0.5vw;
-  /* transform: rotate(270deg); */
+ 
   display: inline-block;
   top: 5px;
   font-size: 14px;
   white-space: nowrap;
   font-weight: 600;
-}
+} */
 .filter_icon{
-  position: relative;
+  /* position: relative;
   margin-top: 20px;
-  margin-left: 5px;
+  margin-left: 5px; */
+  height:2em
 }
 .filter_open{
-  position: absolute;
+  /* position: absolute;
   margin-top: 100px;
-  margin-left: 25px;
+  margin-left: 25px; */
+  height:2em;
 }
-.compare{
-  cursor: pointer;
-  position: absolute;
-  top:84.5vh;
-  left: -0.2vw;
-  height: 135px;
-  width: 80px;
-   background-color: #073e81;
-  ;
 
-
-}
 .compare p{
   
-  color: #fcfafa;
+  /* color: #fcfafa;
   position: relative;
   left: 0.7vw;
-  /* transform: rotate(270deg); */
+  
   display: inline-block;
   top: 5px;
   font-size: 14px;
   white-space: nowrap;
-  font-weight: 600;
+  font-weight: 600; */
 }
 .compare_icon{
-  position: relative;
+  /* position: relative;
   margin-top: 20px;
-  margin-left: 10px;
+  margin-left: 10px; */
+  height:2em;
 }
 .compare_open{
-  position: absolute;
+  /* position: absolute;
   margin-top: 100px;
   margin-left: 20px;
- 
+  */
 }
 
 .advanced_filter_container{
   position: absolute;
-  left:4.1vw;
+  left:7.1vw;
   z-index: 3500;
 top: 36.4vh;
 /* background-color: aqua; */
 }
 .close_advanced_filter{
   position: absolute;
-  /* background-color: #d31ae4; */
-  /* height: 50px;
-  width: 50px; */
+  
   top: 1vh;
   left: 14vw;
   cursor: pointer;
@@ -722,16 +679,14 @@ top: 36.4vh;
 }
 .compare_container{
   position: absolute;
-  left:4.1vw;
+  left:7.1vw;
   z-index: 2500;
   top: 36.4vh;
 /* background-color: aqua; */
 }
 .close_compare{
   position: absolute;
-  /* background-color: #d31ae4; */
-  /* height: 50px;
-  width: 50px; */
+ 
   top: 0.2vh;
   left: 14.5vw;
   cursor: pointer;
@@ -746,7 +701,7 @@ top: 36.4vh;
   top:25vh;
   left:1vw; 
   display: flex;
-  gap: 2em;
+  gap: 1.5em;
   flex-direction: column;
   cursor: pointer;
   /* margin: 20px; */
@@ -764,17 +719,12 @@ top: 36.4vh;
   padding: 6px 8px;
   font: 14px Arial, Helvetica, sans-serif;
   background: white;
-  /* background: rgba(255, 255, 255, 0.8); */
-  /*box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);*/
+
   border-radius: 10px;
   line-height: 24px;
   color: #555;
 }
-/* div.legend.leaflet-control{
-  position: absolute;
-  left: 90vw;
-  top: 45vh;
-} */
+
 .legend h4 {
   text-align: center;
   font-size: 16px;
@@ -813,32 +763,13 @@ top: 36.4vh;
  
   margin-left: 15px;
 }
-
-
-
-
-
-
-.side-bar-view{
+de-bar-view{
   background-color: rgb(202, 124, 124);
 }
 title{
   background-color: #000;
 }
-/* .leaflet-control-geosearch form input {
-  min-width: 200px;
-  width: 100%;
-  outline: none;
-  border: none;
-  
-  margin-top: -4vh;
-  padding: 0;
-  font-size: 12px;
-  height: 26px;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  text-indent: 8px;
-} */
+
 
 .leaflet-control-geosearch button.reset {
   color: black;
@@ -896,54 +827,71 @@ title{
   left: 0;
   width: 35vw;
   height: 30vh;
- 
- 
+
 }
 
 
 .charts2_sidebar{
-  position: relative;
-  top: 3vh;
-  height: 240px;
+  position: absolute;
+  top: 53vh;
+  /* height: 240px; */
   width: 99%;
   background-color: #eee;
-  padding: 20px;
+  /* padding: 3em 2em; */
 }
 .default_layer_title{
-  position: relative;
-  top: -4.5vh;
-  left: -1vw;
+  position: absolute;
+  top: -2.5vh;
+  left: 0;
   font-weight: 700;
 }
 .bar_chart_title{
+  position: absolute;
+  top: -3vh;
+  left: 1vw;
+  font-weight: 700;
+}
+.vul_bar_chart_title{
   position: relative;
-  top: -5vh;
+  top: -6vh;
   left: -1vw;
   font-weight: 700;
 }
 
-.lulc_bar_chart{
+.vul_pie_chart_title{
   position: relative;
-  top: -1vh;
+  top: -17vh;
+  left: -1vw;
+  font-weight: 700;
+}
+
+
+.lulc_bar_chart{
+  position: absolute;
+  top: 2vh;
   left: 4%;
   width: 25vw;
+ 
+}
 
+.logos_container{
+  margin-top: 30vh;
+  /* margin-left: 4vw; */
+  height: 10%;
+   width: 90%;
+   padding-top: 3em;
+ 
   
+
 }
 #bar-chart{
   height:250px !important;
-  /* margin-top:15px */
-}
-.analysis_logos{
-  width: 600px; position: relative; top: 7vh; left: -8vw;
-}
-.metadata_logos{
-  width: 600px; position: relative; top: 32vh; left: -8vw;
+  margin-top:-9vh
 }
 
 .bar_veg_cover{
   position: absolute;
-  top: -32vh;
+  top: -21vh;
   left: 2%;
   width: 15vw;
   height: 16.5vh;
@@ -954,15 +902,15 @@ title{
 
 .lulc_line_chart{
   position: relative;
-  top: -7vh;
+  top: 4vh;
   left: 4%;
   width: 25vw;
-
+ 
   
 }
 .time_series_title{
-  position: relative;
-  top: -5.5vh;
+  position: absolute;
+  top: -1vh;
   left: 35%;
   font-weight: 600;
  
@@ -970,10 +918,10 @@ title{
 }
 
 .ancillary_title{
-  position: relative;
-
-  top: -12.5vh;
-  left: 55%;
+  position: absolute;
+/* padding-bottom: -10vh; */
+  top: -3vh;
+  left: 58%;
   font-weight: 600;
   display:flex;
   flex-direction: row;
@@ -1010,7 +958,8 @@ title{
 }
 
 .ancil_data{ 
-  margin-top:-0.5vh;
+  /* margin-top:-0.5vh; */
+  margin-left: -2vw;
 }
 #line-chart{
   height: 250px !important;
@@ -1020,6 +969,9 @@ title{
 .prec_bar{
   display: none;
 }
+
+
+
 .mobile_filter{
   position: absolute;
   top: 49vh;

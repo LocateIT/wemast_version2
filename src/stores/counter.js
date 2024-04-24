@@ -340,6 +340,7 @@ export const useCounterStore = defineStore({
       
       
         this.season_list = ['WET', 'DRY']
+        return this.season_list
       
     },
     fetchParameterList(){
@@ -351,10 +352,12 @@ export const useCounterStore = defineStore({
       if(this.selected_sub_indicator === 'Water Quality'){
         this.parameter_list = ['Turbidity', 'Sus Sediments']
       }
+      return this.parameter_list
 
     },
     fetchSatelliteList(){
       this.satellite_list = ['SENTINEL', 'LANDSAT']
+      return this.satellite_list
 
     },
     fetchLanguagesList(){
@@ -572,16 +575,16 @@ export const useCounterStore = defineStore({
           
             // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
          var basin = this.selected_basin
-        //  //console.log(basin, 'ddaaaaaaaaattttttttttttttaaaaaaaaaaa')
+         console.log(basin, 'STORE BASIN')
   
   
          var year = this.selected_year
-        //  //console.log(year, 'year FOR SSSSTAAAAAAAAAAAATTTTTTTTTTS')
+         console.log(year, 'STORE YEAR')
       
     
             const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:'+year+'&outputFormat=application/json&CQL_FILTER=Name=%27'+basin+'%27'
             );
-            //console.log(response.data.features[0].properties,'stats response')
+            console.log(response.data.features[0].properties,'lulc stats response')
             var obj = response.data.features[0].properties
             
             const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))

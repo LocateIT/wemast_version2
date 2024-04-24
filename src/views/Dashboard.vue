@@ -1,17 +1,18 @@
 <template>
   <div class="app">
     <div class="navbar">
-      <Navbar />
+      <!-- <Navbar /> -->
+      <ResponsiveNav />
+      <!-- <ResponNav /> -->
     </div>
     <div class="selections">
-      <DashboardSelections @fetchData="fetchWmsData" />
+      <!-- <DashboardSelections @fetchData="fetchWmsData" /> -->
+
+      <ResponsiveSelections @fetchData="fetchWmsData"  />
     </div>
 
-   
-    <div
-      class="upload_shapefile_container"
-      v-if="upload_shapefile"
-      style="
+
+    <div class="upload_shapefile_container" v-if="upload_shapefile" style="
         z-index: 1000;
         position: absolute;
         top: 62vh;
@@ -25,36 +26,14 @@
         flex-direction: column;
         padding: 20px;
         gap: 0.5rem;
-      "
-    >
-      <span
-        class="select_zipped"
-        style="margin-top: 0.1vw; color: #073e81; font-weight: 600"
-        >{{ $t("home.upload_shapefile") }}</span
-      >
+      ">
+      <span class="select_zipped" style="margin-top: 0.1vw; color: #073e81; font-weight: 600">{{
+        $t("home.upload_shapefile") }}</span>
       <input type="file" id="file" />
-      <input
-        type="submit"
-        id="submit"
-        @click="submit_shapefile"
-        class="submit_shapefile"
-        style="margin-left: -10vw"
-      />
+      <input type="submit" id="submit" @click="submit_shapefile" class="submit_shapefile" style="margin-left: -10vw" />
       <span id="warning" style="position: relative; top: 2vh"></span>
     </div>
 
-    <div class="advanced_filter" @click="show_advanced_filter">
-      <img class="filter_icon" src=" /mapIcons/filter.svg" alt="" />
-      <img class="filter_open" src=" /mapIcons/right.svg" alt="" />
-      <p style="display: flex; flex-direction: column">
-        {{ $t("home.advanced") }}<br />{{ $t("home.filter") }}
-      </p>
-    </div>
-    <div class="compare" @click="show_compare">
-      <img class="compare_icon" src=" /mapIcons/compare.svg" alt="" />
-      <img class="compare_open" src=" /mapIcons/compare_right.svg" alt="" />
-      <p>{{ $t("home.compare") }}</p>
-    </div>
 
     <!-- <button class="request" type="button" @click="getRegion2" >REQUEST</button> -->
 
@@ -62,42 +41,80 @@
       <img src="/uiIcons/loader_white.svg" alt="" />
     </div>
 
+
+    <!-- advanced filter -->
+    <div v-if="advanced_filter" class="advanced_filter_container">
+          <img
+            class="close_advanced_filter"
+            src=" /uiIcons/close.png"
+            alt=""
+            @click="close_advanced_filter"
+          />
+          <AdvancedFilter @fetchAdvancedData="addAdvancedLayer" />
+             </div>
+
+    <!-- compare -->
+    <div v-if="compare" class="compare_container">
+          <img
+            class="close_compare"
+            src=" /uiIcons/close.png"
+            alt=""
+            @click="close_compare"
+          />
+          <Compare @fetchCompareData="compareLayers" />
+             </div>
+
+
+
+    <div class="doc_select" v-if="documentation">
+          <CustomDocumentation
+            :options="['Mapographics', 'Documentation']"
+            :default="'Manuals'"
+            class="select"
+            @input="displayToKey($event)"
+          />
+             </div>
+
+    <div class="spinner" v-if="loading">
+          <img src="/uiIcons/loader_white.svg" alt="" />
+             </div>
+     <div class="mobile_filter" v-if="show_mobile_data">
+          <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
+          <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
+          <div class="mypanel" style="display: flex; flex-direction: row; gap: 1.5em;">
+            <button @click="fetchUserMobile" class="fetch_mobile_user">My Data</button>
+          <div v-if="show_mypanel" class="mypanel" style="display: flex; flex-direction: row; gap: 5px; cursor: pointer;" @click=" router.push('/management');">
+            <List width="15" height="15"  color="#164b75" style="margin-top: 10px;" />
+          <span style="margin-top: 7px; font-weight: 600;">View Panel</span>
+          </div>
+          </div>
+       
+       
+          <img
+            style="cursor: pointer; position: absolute; top: 0.5vh; right: 0.5vw"
+            @click="close_mobile_panel"
+            src="/uiIcons/close.png"
+          />
+             </div> 
+
+
     <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
 
-    <div id="map"></div>
+
 
     <!-- <div class="clip" style="position: absolute; left: 67vw; top: 10vh;">
         <button @click="clip_custom">clip custom</button>
       </div> -->
-    <div
-      class="opacity"
-      v-if="wmsLayer != null"
-      :class="{ mainopen: sidenavigationbar }"
-    >
-      <span id="opacity">{{ $t("home.opacity") }}:</span>
-      <span id="image-opacity"> </span>
-      <input
-        type="range"
-        id="sldOpacity"
-        min="0"
-        max="1"
-        step="0.1"
-        value="1"
-      />
+    <div class="opacity" v-if="wmsLayer != null" :class="{ mainopen: sidenavigationbar }">
+      <span id="opacity">{{ $t("home.opacity") }}</span>
+      <!-- <span id="image-opacity"> </span> -->
+      <input type="range" id="sldOpacity" min="0" max="1" step="0.1" value="1" />
     </div>
 
-    <div
-      class="swap"
-      v-if="wmsCompareLayer != null"
-      title="Compare Layers"
-      @click="close_swipe"
-    >
+    <div class="swap" v-if="wmsCompareLayer != null" title="Compare Layers" @click="close_swipe">
       <img src="/uiIcons/swap.svg" alt="" />
     </div>
-    <div
-      class="map_controls_wrapper"
-      :class="{ mainopen: sidenavigationbar }"
-    ></div>
+    <div class="map_controls_wrapper" :class="{ mainopen: sidenavigationbar }"></div>
 
     <!-- leaflet side bar -->
     <!-- <div class="side-bar-view"> -->
@@ -112,18 +129,20 @@
             <img
               style="margin-left: -5vw; margin-top: 1.5vw"
               id="open"
-              src=" /uiIcons/drawer.svg"
+              src=" /mapIcons/stats.svg" 
+              title="View Statistics"
               v-if="show_sidenav"
             />
             <img
               :class="{ toggle_is_open: !show_sidenav }"
               id="close"
-              src=" /uiIcons/drawer.svg"
+              src=" /mapIcons/stats.svg" 
+              title="Close Statistics"
               v-if="!show_sidenav"
             />
           </div>
         </div>
-        <div class="sidenav_body" v-if="!show_sidenav">
+        <div class="sidenav_body" v-if="!show_sidenav" style="overflow-y: scroll; ">
           <div class="row">
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1">
               <div class="row" v-if="show_search">
@@ -172,7 +191,7 @@
             </div>
           </div>
           <div v-if="analysis_swap_toggle === 'data_analysis'">
-            <!-- <q-btn flat label="get WMS" @click="getWMS_Layer" />    -->
+           
 
             <p
               style="margin-top: 40px"
@@ -244,6 +263,14 @@
               >
                 {{ `${basin} ${sub_indicator}-${year}` }}
               </div>
+
+              <div
+                v-if="storeUserSelections.selected_sub_indicator === 'Undulation'"
+                class="chart_title"
+                :class="{ hide: compareUserSelections.selected_year != '' }"
+              >
+                {{ `${basin} ${sub_indicator}` }}
+              </div>
               <div
                 v-if="
                   compareUserSelections.selected_year != '' && sub_indicator
@@ -263,7 +290,7 @@
                   indicator === 'Basin Vulnerability Index' &&
                   compareUserSelections.selected_year == ''
                 "
-                class="bar_chart_title"
+                class="vul_bar_chart_title"
               >
                 {{ `${basin} ${indicator}-${year}` }}
               </div>
@@ -326,6 +353,7 @@
                   class="lulc_chart"
                   :chartData="storeUserSelections.lulcChartData"
                   :options="options"
+                  
                 />
               </div>
             </div>
@@ -338,7 +366,15 @@
               <!-- <div class="chart2_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">  {{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}</div> -->
             </label>
 
-            <div class="charts2_sidebar">
+            <div class="charts2_sidebar" :style="{ padding: storeUserSelections.selected_sub_indicator === 'Land Cover'  ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === ''  ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === 'Wetland Inventory'  ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'  ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '3em 2em' :
+            storeUserSelections.selected_indicator === 'Basin Vulnerability Index'  ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === 'Undulation'  ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '-8em 2em' :
+             '3em 2em'}">
               <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
 
               <div
@@ -355,9 +391,12 @@
                   v-if="sub_indicator != 'Water Quality'"
                   class="bar_chart_title"
                   :class="{ hide: compareUserSelections.selected_year != '' }"
+                  
                 >
                   {{ `${basin} ${sub_indicator}-${year}` }}
                 </div>
+
+                
                 <div
                   v-if="compareUserSelections.selected_year != ''"
                   class="bar_chart_title"
@@ -370,6 +409,7 @@
                 >
                   {{ `${basin} ${parameter}-${year}` }}
                 </div>
+               
               </div>
               <div
                 v-if="
@@ -377,7 +417,7 @@
                   year &&
                   compareUserSelections.selected_year == ''
                 "
-                class="bar_chart_title"
+                class="vul_pie_chart_title"
               >
                 {{ `${basin} ${indicator}-${year}` }}
               </div>
@@ -386,6 +426,14 @@
                 class="chart_title"
               >
                 {{ `${basin} ${indicator}-${compare_year}` }}
+              </div>
+
+              <div
+                v-if="storeUserSelections.selected_sub_indicator === 'Undulation'"
+                class="bar_chart_title"
+                :class="{ hide: compareUserSelections.selected_year != '' }"
+              >
+                {{ `${basin} ${sub_indicator}` }}
               </div>
 
               <img
@@ -490,15 +538,30 @@
                   storeUserSelections.selected_sub_indicator === 'Water Quality'
                 "
               >
-                <p class="ancil_data">Ancillary data</p>
+                <p class="ancil_data" :class="storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'ancil_water' : 'ancil_data'" 
+                :style="{marginTop:
+                   storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3vh' :
+                   storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '10vh':
+                   storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? '-0.2vh': 
+                  '-0.5vh'}">Ancillary data</p>
 
                 <CloudRain
+                class="rain"
+                :class="storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'ancil_rain' : 'rain'" 
+                :style="{marginTop: storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '3.5vh' :
+                storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '11vh' :
+                storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? '-0.2vh':  '-0.5vh'}"
                   width="18"
                   height="18"
                   color="#164b75"
                   @click="addPRECIPTimeSeriesLayer"
                 />
                 <ThermometerHalf
+                class="temp"
+                :class="storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'ancil_rain' : 'temp'" 
+                :style="{marginTop: storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '3.5vh' :
+                storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '11vh' :
+                storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? '-0.2vh':  '-0.5vh'}"
                   width="18"
                   height="18"
                   color="#164b75"
@@ -508,6 +571,8 @@
 
               <LulcLine
                 class="lulc_line_chart"
+                :style="{top: storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '-2vh' :
+                 storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '-3vh' : '4vh'}"
                 v-if="
                   storeUserSelections.selected_sub_indicator ===
                     'Vegetation Cover' ||
@@ -523,7 +588,7 @@
             </div>
           </div>
           <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
-            <table style="width: 100%">
+            <table style="width: 100%; margin-bottom: -17vw;">
               <tr>
                 <th>{{ $t("metadata.title") }}</th>
                 <td>
@@ -773,27 +838,26 @@
             </table>
           </div>
           <!-- <LineChart :height="250" :width="250" /> -->
-          <p
+          
+          <div class="logos_container">
+            <p
             class="partners"
             style="
               font-weight: bold;
               font-size: 16px;
-              position: relative;
-              top: 2vh;
-              left: 12vw;
+              /* position: relative;
+              top: 9vh;
+              left: 12vw; */
             "
           >
             Technical Partners
           </p>
-          <div class="logos_container row">
-            <!-- <SideNavLogos /> -->
+         
             <img
               src="../assets/logos/bottom.png"
               alt=""
-              :class="{
-                analysis_logos: analysis_swap_toggle === 'data_analysis',
-                metadata_logos: analysis_swap_toggle === 'metadata',
-              }"
+          style="width: 100%; height: 3em;"
+           
             />
           </div>
         </div>
@@ -821,96 +885,746 @@
         @click="close_compare"
       />
       <Compare @fetchCompareData="compareLayers" />
-    </div>
+    </div>  
+
+
+    <!-- <Sidebar v-model:visible="visibleRight" header="Statistics" position="right" class="w-11 md:w-30rem lg:w-40rem">
+      <div class=" flex flex-row gap-8">
+       
+                   
+                      <div
+                        class="data_analysis_text"
+                        @click="handleAnalysisMetaSwap2()"
+                        style="cursor: pointer"
+                      >
+                        <span
+                          :class="
+                            analysis_swap_toggle === 'data_analysis'
+                              ? 'side_nav_swap'
+                              : ''
+                          "
+                          >Data Analysis</span
+                        >
+                      </div>
+                   
+               
+                  
+                      <div
+                        class="metadata_text"
+                        @click="handleAnalysisMetaSwap()"
+                        style=""
+                      >
+                        <span
+                          :class="
+                            analysis_swap_toggle === 'metadata'
+                              ? 'side_nav_swap'
+                              : ''
+                          "
+                          >Metadata
+                        </span>
+                      </div>
+                   
+      </div>
+      <div v-if="analysis_swap_toggle === 'data_analysis'">
+           
+
+           <p
+             style="margin-top: 40px"
+             :class="
+               storeUserSelections.selected_sub_indicator ===
+                 'Burnt Area FIRMS' || 'Undulation'
+                 ? 'burnt_summary'
+                 : ''
+             "
+           >
+             <label style="margin-top: 40px; font-weight: 700; font-size: 14px"
+               >Summary</label
+             >
+             <br />
+             {{
+               storeUserSelections.selected_parameter === "Wetland Status"
+                 ? $t("summaries.wetland_status")
+                 : storeUserSelections.selected_parameter === "Wetland Extent"
+                 ? $t("summaries.wetland_extent")
+                 : storeUserSelections.selected_sub_indicator ===
+                   "Soil Moisure Index"
+                 ? $t("summaries.smi_index")
+                 : storeUserSelections.selected_sub_indicator ===
+                   "Burnt Area FIRMS"
+                 ? $t("summaries.burnt_firms")
+                 : storeUserSelections.selected_sub_indicator === "Undulation"
+                 ? $t("summaries.undulation")
+                 : storeUserSelections.selected_sub_indicator ===
+                   "Precipitation Index"
+                 ? $t("summaries.prec_index")
+                 : storeUserSelections.selected_parameter === "Turbidity"
+                 ? $t("summaries.turbidity")
+                 : storeUserSelections.selected_parameter === "Sus Sediments"
+                 ? $t("summaries.susp_sediments")
+                 : storeUserSelections.selected_sub_indicator === "Land Cover"
+                 ? $t("summaries.landcover")
+                 : storeUserSelections.selected_sub_indicator ===
+                   "Vegetation Cover"
+                 ? $t("summaries.vegcover")
+                 : storeUserSelections.selected_indicator ===
+                   "Basin Vulnerability Index"
+                 ? $t("summaries.bvi_index")
+                 : storeUserSelections.selected_sub_indicator === ""
+                 ? "please select a parameter"
+                 : ""
+             }}
+           </p>
+           <br />
+           <label
+             class="text-bold"
+             style="font-family: Montserrat; font-weight: 800"
+           >
+             
+           </label>
+
+           <div class="charts_sidebar">
+             
+             <div
+               v-if="show_zambezi_stats === true"
+               class="default_layer_title"
+             >
+               Zambezi LULC 2016
+             </div>
+
+             <div
+               v-if="year && sub_indicator"
+               class="chart_title"
+               :class="{ hide: compareUserSelections.selected_year != ''  }"
+             
+             >
+               {{ `${basin} ${sub_indicator}-${year}` }}
+             </div>
+             <div
+               v-if="
+                 compareUserSelections.selected_year != '' && sub_indicator
+               "
+               class="chart_title"
+             >
+               {{ `${basin} ${sub_indicator}-${compare_year}` }}
+             </div>
+             <div
+               v-if="compareUserSelections.selected_year != '' && indicator"
+               class="chart_title"
+             >
+               {{ `${basin} ${indicator}-${compare_year}` }}
+             </div>
+             <div
+               v-if="
+                 indicator === 'Basin Vulnerability Index' &&
+                 compareUserSelections.selected_year == ''
+               "
+               class="bar_chart_title"
+               
+             >
+               {{ `${basin} ${indicator}-${year}` }}
+             </div>
+             <img
+               src="/mapIcons/download_map.svg"
+               alt=""
+               title="Download Png"
+               class="chart_download_png"
+               style="
+                 position: absolute;
+                 top: -2.5vh;
+                 left: 28vw;
+                 height: 25px;
+               "
+               @click="chart_png"
+             />
+             <img
+               id="chart_csv"
+               src="/mapIcons/file_download-24px.svg"
+               alt=""
+               class="chart_download_png"
+               title="Download CSV"
+               style="
+                 position: absolute;
+                 top: -2.5vh;
+                 left: 29.5vw;
+                 height: 25px;
+                 width: 25px;
+               "
+               @click="downloadcsv"
+             />
+          
+             <div
+               id="chart_pie"
+               v-if="
+                 sub_indicator === 'Land Cover' ||
+                 indicator === 'Basin Vulnerability Index' ||
+                 sub_indicator === 'Wetland Inventory' ||
+                 sub_indicator === 'Burnt Area FIRMS' ||
+                 sub_indicator === 'Undulation'
+               "
+             >
+               <LulcPie
+                 :class="
+                   sub_indicator === 'Undulation'
+                     ? 'flood_chart'
+                     : 'lulc_chart'
+                 "
+                 :chartData="
+                   compare_year
+                     ? compareUserSelections.lulcChartData
+                     : storeUserSelections.lulcChartData
+                 "
+                 :options="options"
+               />
+             </div>
+
+             <div id="chart_pie" v-if="show_zambezi_stats === true">
+               <LulcPie
+                 class="lulc_chart"
+                 :chartData="storeUserSelections.lulcChartData"
+                 :options="options"
+               />
+             </div>
+           </div>
+
+           <br />
+           <label
+             class="text-bold"
+             style="font-family: Montserrat; font-weight: 800"
+           >
+           
+           </label>
+
+           <div class="charts2_sidebar">
+           
+
+             <div
+               v-if="show_zambezi_stats === true"
+               class="default_layer_title"
+             >
+               Zambezi LULC 2016
+             </div>
+             <div
+               v-if="basin && sub_indicator && year"
+               class="chart_dynamic_titles"
+             >
+               <div
+                 v-if="sub_indicator != 'Water Quality'"
+                 class="bar_chart_title"
+                 :class="{ hide: compareUserSelections.selected_year != '' }"
+                
+               >
+                 {{ `${basin} ${sub_indicator}-${year}` }}
+               </div>
+               <div
+                 v-if="compareUserSelections.selected_year != ''"
+                 class="bar_chart_title"
+               >
+                 {{ `${basin} ${sub_indicator}-${compare_year}` }}
+               </div>
+               <div
+                 v-if="sub_indicator === 'Water Quality'"
+                 class="bar_chart_title"
+                 
+               >
+                 {{ `${basin} ${parameter}-${year}` }}
+               </div>
+             </div>
+             <div
+               v-if="
+                 indicator === 'Basin Vulnerability Index' &&
+                 year &&
+                 compareUserSelections.selected_year == ''
+               "
+               class="bar_chart_title"
+             >
+               {{ `${basin} ${indicator}-${year}` }}
+             </div>
+             <div
+               v-if="compareUserSelections.selected_year != '' && indicator"
+               class="chart_title"
+             >
+               {{ `${basin} ${indicator}-${compare_year}` }}
+             </div>
+
+             <img
+               src="/mapIcons/download_map.svg"
+               alt=""
+               title="Download Png"
+               class="chart_download_png"
+               style="
+                 position: absolute;
+                 top: -2.5vh;
+                 left: 28vw;
+                 height: 25px;
+               "
+               @click="bar_chart_png"
+               v-if="sub_indicator != 'Precipitation Index'"
+             />
+             <img
+               id="chart_csv"
+               src="/mapIcons/file_download-24px.svg"
+               alt=""
+               class="chart_download_png"
+               title="Download CSV"
+               style="
+                 position: absolute;
+                 top: -2.5vh;
+                 left: 29.5vw;
+                 height: 25px;
+                 width: 25px;
+               "
+               @click="downloadcsv"
+               v-if="sub_indicator !== 'Precipitation Index'"
+             />
+             <div
+               id="bar"
+               :class="
+                 sub_indicator === 'Vegetation Cover'
+                   ? 'bar_veg_cover'
+                   : sub_indicator === 'Precipitation Index'
+                   ? 'bar_veg_cover'
+                   : sub_indicator === 'Soil Moisure Index'
+                   ? 'bar_veg_cover'
+                   : sub_indicator === 'Water Quality'
+                   ? 'bar_veg_cover'
+                   : ''
+               "
+             >
+              
+               <LulcBar
+                 :class="
+                   storeUserSelections.selected_sub_indicator ===
+                     'Burnt Area FIRMS' || 'Undulation'
+                     ? 'burnt_bar_chart'
+                     : 'lulc_bar_chart'
+                 "
+                 :height="200"
+                 :chartData="
+                   compare_year
+                     ? compareUserSelections.lulcChartData
+                     : storeUserSelections.lulcChartData
+                 "
+                 :options="
+                   sub_indicator === 'Vegetation Cover'
+                     ? veg_barchart_options
+                     : sub_indicator === 'Precipitation Index'
+                     ? spi_barchart_options
+                     : sub_indicator === 'Soil Moisure Index'
+                     ? smi_barchart_options
+                     : barchart_options
+                 "
+               />
+             </div>
+             <p
+               class="time_series_title"
+               v-if="
+                 storeUserSelections.selected_sub_indicator ===
+                   'Vegetation Cover' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Precipitation Index' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Soil Moisure Index' ||
+                 storeUserSelections.selected_sub_indicator === 'Water Quality'
+               "
+             >
+               Time Series
+             </p>
+
+             <div
+               :class="
+                 sub_indicator === 'Vegetation Cover' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Soil Moisure Index'
+                   ? 'ancillary_title'
+                   : 'ancillary_title2'
+               "
+               v-if="
+                 storeUserSelections.selected_sub_indicator ===
+                   'Vegetation Cover' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Precipitation Index' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Soil Moisure Index' ||
+                 storeUserSelections.selected_sub_indicator === 'Water Quality'
+               "
+             >
+               <p class="ancil_data">Ancillary data</p>
+
+               <CloudRain
+                 width="18"
+                 height="18"
+                 color="#164b75"
+                 @click="addPRECIPTimeSeriesLayer"
+               />
+               <ThermometerHalf
+                 width="18"
+                 height="18"
+                 color="#164b75"
+                 @click="addTEMPTimeSeriesLayer"
+               />
+             </div>
+
+             <LulcLine
+               class="lulc_line_chart"
+               v-if="
+                 storeUserSelections.selected_sub_indicator ===
+                   'Vegetation Cover' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Precipitation Index' ||
+                 storeUserSelections.selected_sub_indicator ===
+                   'Soil Moisure Index' ||
+                 storeUserSelections.selected_sub_indicator === 'Water Quality'
+               "
+               :chartData="storeUserSelections.lineChartData"
+               :options="linechartOptions"
+             />
+           </div>
+         </div>
+         <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
+           <table style="width: 100%">
+             <tr>
+               <th>{{ $t("metadata.title") }}</th>
+               <td>
+                 {{
+                   storeUserSelections.selected_indicator ===
+                   "Basin Vulnerability Index"
+                     ? `Basin Vulnerability Index for ${storeUserSelections.selected_basin} basin`
+                     : storeUserSelections.selected_sub_indicator ===
+                         "Wetland Inventory" &&
+                       storeUserSelections.selected_parameter ===
+                         "Wetland Extent"
+                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+                     : storeUserSelections.selected_sub_indicator ===
+                         "Wetland Inventory" &&
+                       storeUserSelections.selected_parameter ===
+                         "Wetland Status"
+                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+                     : storeUserSelections.selected_sub_indicator ===
+                         "Water Quality" &&
+                       storeUserSelections.selected_parameter === "Turbidity"
+                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+                     : storeUserSelections.selected_sub_indicator ===
+                         "Water Quality" &&
+                       storeUserSelections.selected_parameter ===
+                         "Sus Sediments"
+                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+                     : sub_indicator === "Land Cover" ||
+                       "Vegetation Cover" ||
+                       "Precipitation Index" ||
+                       "Undulation" ||
+                       "Burnt Area FIRMS" ||
+                       "Soil Moisure Index"
+                     ? `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`
+                     : //  sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
+                       //    'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
+                       // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
+                       //     `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
+                       ""
+                 }}
+               </td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.description") }}</th>
+
+               <td>
+                 {{
+                   storeUserSelections.selected_indicator ===
+                   "Basin Vulnerability Index"
+                     ? $t("indicators.bvi_index")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Precipitation Index"
+                     ? $t("metadata.prec_desc")
+                     : storeUserSelections.selected_parameter === "Turbidity"
+                     ? $t("metadata.turb_desc")
+                     : storeUserSelections.selected_parameter ===
+                       "Sus Sediments"
+                     ? $t("metadata.sus_desc")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Burnt Area FIRMS"
+                     ? $t("metadata.firms_desc")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Undulation"
+                     ? $t("metadata.undulation_desc")
+                     : storeUserSelections.selected_parameter ===
+                       "Wetland Status"
+                     ? $t("metadata.status_desc")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Land Cover"
+                     ? $t("metadata.lulc_desc")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Vegetation Cover"
+                     ? $t("metadata.vegcover_desc")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Wetland Inventory"
+                     ? $t("metadata.extent_desc")
+                     : storeUserSelections.selected_sub_indicator === ""
+                     ? "please select a parameter"
+                     : ""
+                 }}
+               </td>
+             </tr>
+
+             <tr>
+               <th>{{ $t("metadata.extent") }}</th>
+
+               <td>
+                 <table>
+                   <tr>
+                     <th>{{ $t("metadata.west_lon") }}</th>
+                     <td>{{ storeUserSelections.western_lon + "°" }}</td>
+                   </tr>
+                   <tr>
+                     <th>{{ $t("metadata.north_lat") }}</th>
+                     <td>{{ storeUserSelections.northern_lat + "°" }}</td>
+                   </tr>
+                   <tr>
+                     <th>{{ $t("metadata.east_lon") }}</th>
+                     <td>{{ storeUserSelections.eastern_lon + "°" }}</td>
+                   </tr>
+                   <tr>
+                     <th>{{ $t("metadata.south_lat") }}</th>
+                     <td>{{ storeUserSelections.southern_lat + "°" }}</td>
+                   </tr>
+                 </table>
+               </td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.resolution") }}</th>
+               <td>{{ `${storeUserSelections.resolution} Meters` }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.crs") }}</th>
+               <td>{{ $t("metadata.crs_text") }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.date_created") }}</th>
+
+               <td>{{ storeUserSelections.selected_year }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.region") }}</th>
+               <td>{{ storeUserSelections.selected_basin }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.tags") }}</th>
+               <td>
+                 {{
+                   storeUserSelections.selected_sub_indicator === "Land Cover"
+                     ? $t("metadata.lulc_theme") +
+                       " " +
+                       storeUserSelections.selected_season
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Precipitation Index"
+                     ? `${$t("metadata.prec_theme")}, ${
+                         storeUserSelections.selected_season
+                       } `
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Vegetation Cover"
+                     ? $t("metadata.veg_cover_theme") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " "
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Wetland Inventory"
+                     ? $t("metadata.wetland_inventory_theme") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " "
+                     : storeUserSelections.selected_indicator ===
+                       "Basin Vulnerability Index"
+                     ? $t("indicators.bvi_index") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " "
+                     : storeUserSelections.selected_parameter ===
+                       "Wetland Status"
+                     ? $t("metadata.status_theme") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " "
+                     : ""
+                 }}
+               </td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.encoding") }}</th>
+
+               <td>{{ $t("metadata.encoding_text") }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.encoding_format") }}</th>
+
+               <td>{{ $t("metadata.tif") }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.data_type") }}</th>
+
+               <td>{{ $t("metadata.raster") }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.position") }}</th>
+
+               <td>{{ geoposition }}</td>
+             </tr>
+             <tr>
+               <th>{{ $t("metadata.theme") }}</th>
+
+               <td>
+                 {{
+                   storeUserSelections.selected_parameter === "Wetland Status"
+                     ? $t("metadata.status_theme")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Precipitation Index"
+                     ? `${$t("metadata.prec_theme")}_${$t(
+                         "metadata.season"
+                       )} season`
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Land Cover"
+                     ? $t("metadata.lulc_theme")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Vegetation Cover"
+                     ? $t("metadata.veg_cover_theme")
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Wetland Inventory"
+                     ? $t("metadata.wetland_inventory_theme")
+                     : storeUserSelections.selected_indicator ===
+                       "Basin Vulnerability Index"
+                     ? $t("indicators.bvi_index") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " "
+                     : storeUserSelections.selected_sub_indicator === ""
+                     ? "please select a parameter"
+                     : ""
+                 }}
+               </td>
+             </tr>
+
+             <tr>
+               <th>{{ $t("metadata.keyword") }}</th>
+
+               <td>
+                 {{
+                   storeUserSelections.selected_sub_indicator === "Land Cover"
+                     ? $t("metadata.lulc_theme") + " "
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Vegetation Cover"
+                     ? $t("metadata.veg_cover_theme") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " " +
+                       "season"
+                     : storeUserSelections.selected_sub_indicator ===
+                       "Wetland Inventory"
+                     ? $t("metadata.veg_cover_theme")
+                     : storeUserSelections.selected_parameter ===
+                       "Wetland Status"
+                     ? $t("metadata.status_theme") +
+                       " " +
+                       storeUserSelections.selected_season +
+                       " " +
+                       "season"
+                     : ""
+                 }}
+               </td>
+             </tr>
+           </table>
+         </div>
+       
+         <p
+           class="partners"
+           style="
+             font-weight: bold;
+             font-size: 16px;
+             position: relative;
+             top: 2vh;
+             left: 12vw;
+           "
+         >
+           Technical Partners
+         </p>
+         <div class="logos_container row">
+         
+           <img
+             src="../assets/logos/bottom.png"
+             alt=""
+             :class="{
+               analysis_logos: analysis_swap_toggle === 'data_analysis',
+               metadata_logos: analysis_swap_toggle === 'metadata',
+             }"
+           />
+         </div>
+        </Sidebar> -->
+
+
 
     <!-- login icons @click="$router.push('/')"-->
-    <div class="nav_icons" id="nav_icons">
-      <RouterLink to="/">
-        <img
-          class="home"
-          src=" /uiIcons/home-landing.svg"
-          alt=""
-          title="Home"
-        />
-      </RouterLink>
+    <div class="grid">
+      <div class="col-fixed  flex flex-column gap-2 " style="width:10em;  margin-top: 9em;" >
+        
+        
+         <div class="nav_icons flex align-items-center justify-content-center " id="nav_icons">
+          <RouterLink to="/">
+            <img class="home" src=" /uiIcons/home-landing.svg" alt="" title="Home" />
+          </RouterLink>
+          <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="" title="Dashboard" />
 
-      <img
-        class="dashboard"
-        src=" /uiIcons/dashboard-24px.svg"
-        alt=""
-        title="Dashboard"
-      />
+          <RouterLink to="/signup">
+            <img class="person" src=" /uiIcons/person.svg" alt="" title="Profile" />
+          </RouterLink>
 
-      <!-- <a href="http://169.1.31.169/bkeadmin/#/search" target="_blank" rel="noopener noreferrer"> -->
-      <RouterLink to="/signup">
-        <img class="person" src=" /uiIcons/person.svg" alt="" title="Profile" />
-      </RouterLink>
-      <!-- </a> -->
+          <img class="search" src=" /uiIcons/book.svg" alt="" title="Documentation" @click="show_docs_select" />
 
-      <!-- <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank" rel="noopener noreferrer"> -->
-      <img
-        class="search"
-        src=" /uiIcons/book.svg"
-        alt=""
-        title="Documentation"
-        @click="show_docs_select"
-      />
-      <!-- </a> -->
+          <img class="home" @click="show_mobile_panel" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection"
+            style="margin-left: -5px" />
 
-      <!-- <RouterLink to="/datacollection"> -->
-      <img
-        class="home"
-        @click="show_mobile_panel"
-        src=" /uiIcons/mobile_app.svg"
-        alt=""
-        title="Data Collection"
-        style="margin-left: -5px"
-      />
-      <!-- </RouterLink> -->
-    </div>
-    <RouterView />
 
-    <div class="doc_select" v-if="documentation">
-      <CustomDocumentation
-        :options="['Mapographics', 'Documentation']"
-        :default="'Manuals'"
-        class="select"
-        @input="displayToKey($event)"
-      />
-    </div>
+            <div class="advance_wrapper flex flex-column gap-1">
+              <div class="advanced_filter w-full md:w-max flex align-items-center justify-content-center" @click="show_advanced_filter">
+                        <img class="filter_icon" src=" /mapIcons/filter.svg" alt="" />
+              
+                        <div class="openfilter flex flex-column  gap-1">
+              <p style="display: flex; flex-direction: column">
+                {{ $t("home.advanced") }}<br />{{ $t("home.filter") }}
+              </p>
+          
+                        </div>
+                      </div>
+              
+              
+                      <div class="compare w-full md:w-max flex align-items-center justify-content-center" @click="show_compare">
+                        <img class="compare_icon" src=" /mapIcons/compare.svg" alt="" />
+                        
+                        <p>{{ $t("home.compare") }}</p>
+                      </div>
+            </div>
 
-    <div class="spinner" v-if="loading">
-      <img src="/uiIcons/loader_white.svg" alt="" />
-    </div>
-    <div class="mobile_filter" v-if="show_mobile_data">
-      <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
-      <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
+        </div> 
 
-      <div class="mypanel" style="display: flex; flex-direction: row; gap: 1.5em;">
-        <button @click="fetchUserMobile" class="fetch_mobile_user">My Data</button>
+   <!-- <Column1 /> -->
 
-      <div v-if="show_mypanel" class="mypanel" style="display: flex; flex-direction: row; gap: 5px; cursor: pointer;" @click=" router.push('/management');">
-        <List width="15" height="15"  color="#164b75" style="margin-top: 10px;" />
-      <span style="margin-top: 7px; font-weight: 600;">View Panel</span>
-
+       
+        <RouterView />
+        
       </div>
 
+      <div class="second_column col-10">
+
+
+        <div id="map"></div>
       </div>
-      
-      
-      <img
-        style="cursor: pointer; position: absolute; top: 0.5vh; right: 0.5vw"
-        @click="close_mobile_panel"
-        src="/uiIcons/close.png"
-      />
+
+      <div class="third_column col-fixed  h-screen" style="width:100px"></div>
     </div>
+
+
 
     <!-- <button type="button" @click="change_zoom">zoom</button> -->
   </div>
 </template>
-  
-  
-  <script setup>
+
+
+<script setup>
 // import { RouterLink, RouterView } from 'vue-router'
 import Navbar from "../components/Navbar.vue";
 import DashboardSelections from "../components/DashboardSelections.vue";
@@ -961,7 +1675,7 @@ import PrecBar from "../components/Charts/PrecBar.vue";
 import CustomDocumentation from "../components/CustomDocumentation.vue";
 import { CloudRain } from "@vicons/fa";
 import { ThermometerHalf } from "@vicons/fa";
-import  List  from "@vicons/fa/List"
+import List from "@vicons/fa/List"
 import RescaleScreen from "../components/RescaleScreen.vue";
 import shp from "shpjs/dist/shp.js";
 import "../upload_shp/leaflet.shpfile.js";
@@ -972,6 +1686,14 @@ import * as turf from '@turf/helpers'
 import center from '@turf/center'
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 import { write } from 'shp-write'
+import 'primeflex/primeflex.css'
+import ResponsiveSelections from '../components/Customs/ResponsiveSelections.vue'
+import ResponsiveNav from "../components/ResponsiveNav.vue";
+import ResponNav from "../components/ResponNav.vue";
+ import Column1 from '../components/Customs/Column1.vue'
+
+
+// import { exec } from 'child_process'
 
 //refs go here
 let baseurl = "http://66.42.65.87";
@@ -1096,6 +1818,7 @@ let point_layergroup = ref(null);
 let point_geojson = ref(null);
 //advanced filter variables
 let country = ref(null);
+let visibleRight = ref(false);
 //variables
 const storeUserSelections = useCounterStore();
 const compareUserSelections = useCompareStore();
@@ -1110,43 +1833,47 @@ const router = useRouter();
 
 window.html2canvas = html2canvas;
 
-const opendisplaysettings = () => {
-      var displaySettingsURI = "ms-settings:display";
 
-      // Open the display settings page
-      window.location.href = displaySettingsURI;
-};
+// const opendisplaysettings = () => {
+//       var displaySettingsURI = "ms-settings:display";
 
-// Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected || window.innerWidth !== screen.width
-if (window.devicePixelRatio !== 1 ) {
-      // Prompt the user to adjust their screen settings
-      if (
-            confirm(
-                  "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
-            )
+//       // Open the display settings page
+//       window.location.href = displaySettingsURI;
+// };
 
-      ) {
-            opendisplaysettings()
-            // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
-            // Example instructions:
-            // confirm("Follow the next instructions");
-            // opendisplaysettings()
-            // var displaySettingsURI = "ms-settings:display";  
-            //         // Open the display settings page
-            //         window.location.href = displaySettingsURI;
-      } else {
-            // The user chose not to change their settings
-            alert(
-                  "You can change your screen scale and layout settings later for a better experience."
-            );
-      }
-}
+// // Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected || window.innerWidth !== screen.width
+// if (window.devicePixelRatio !== 1 ) {
+//       // Prompt the user to adjust their screen settings
+//       if (
+//             confirm(
+//                   "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
+//             )
+
+//       ) {
+//             opendisplaysettings()
+//             // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
+//             // Example instructions:
+//             // confirm("Follow the next instructions");
+//             // opendisplaysettings()
+//             // var displaySettingsURI = "ms-settings:display";  
+//             //         // Open the display settings page
+//             //         window.location.href = displaySettingsURI;
+//       } else {
+//             // The user chose not to change their settings
+//             alert(
+//                   "You can change your screen scale and layout settings later for a better experience."
+//             );
+//       }
+// }
 
 const show_upload_shapefile = () => {
   upload_shapefile.value = !upload_shapefile.value;
   // if(layer.value)map.removeLayer(layer.value)
 };
 
+const viewStats = () => {
+  visibleRight.value = true
+}
 const submit_shapefile = () => {
   var files = document.getElementById("file").files;
   if (files.length == 0) {
@@ -2247,13 +2974,11 @@ const wemast_base_layers = () => {
     base_layers.forEach((layer, i) => {
       layer_html += `<li id=base_layer-${layer}>
             <div class=base_map>
-            <div class="base_map_name" ><input type="radio" name="base_map" id="checkbox-${layer}" ${
-        current_top_base_layer.value === layer ? "checked" : ""
-      } ></div>
+            <div class="base_map_name" ><input type="radio" name="base_map" id="checkbox-${layer}" ${current_top_base_layer.value === layer ? "checked" : ""
+        } ></div>
             <div class="col-xs-10 q-ml-sm">
-             ${layer} ${
-        base_layers.length - 1 != i ? "<hr class=full-width> <br> " : ""
-      }
+             ${layer} ${base_layers.length - 1 != i ? "<hr class=full-width> <br> " : ""
+        }
              </div>
             </div>
              </li>`;
@@ -2339,7 +3064,7 @@ const AddCustomRightControls = () => {
     ) {
       try {
         document.getElementById(`${id}`).style.backgroundColor = "white";
-      } catch (err) {}
+      } catch (err) { }
     }
     if (
       ![
@@ -2370,56 +3095,56 @@ const lulc_style = () => {
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_lulc")
     : basin.value === "Zambezi"
-    ? (styles.value = "zambezi_lulc")
-    : basin.value === "Limpopo"
-    ? (styles.value = "limpopo_lulc")
-    : "okavango_lulc";
+      ? (styles.value = "zambezi_lulc")
+      : basin.value === "Limpopo"
+        ? (styles.value = "limpopo_lulc")
+        : "okavango_lulc";
 };
 const prec_style = () => {
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_spi")
     : basin.value === "Zambezi"
-    ? (styles.value = "zambezi_spi")
-    : basin.value === "Limpopo"
-    ? (styles.value = "limpopo_spi")
-    : "okavango_spi";
+      ? (styles.value = "zambezi_spi")
+      : basin.value === "Limpopo"
+        ? (styles.value = "limpopo_spi")
+        : "okavango_spi";
 };
 
 const wetland_extent_style = () => {
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_water")
     : basin.value === "Zambezi"
-    ? (styles.value = "zambezi_water")
-    : basin.value === "Limpopo"
-    ? (styles.value = "limpopo_water")
-    : "okavango_water";
+      ? (styles.value = "zambezi_water")
+      : basin.value === "Limpopo"
+        ? (styles.value = "limpopo_water")
+        : "okavango_water";
 };
 const vegcover_style = () => {
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_ndvi")
     : basin.value === "Zambezi"
-    ? (styles.value = "zambezi_ndvi")
-    : basin.value === "Limpopo"
-    ? (styles.value = "limpopo_ndvi")
-    : "okavango_ndvi";
+      ? (styles.value = "zambezi_ndvi")
+      : basin.value === "Limpopo"
+        ? (styles.value = "limpopo_ndvi")
+        : "okavango_ndvi";
 };
 const status_style = () => {
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_status")
     : basin.value === "Zambezi"
-    ? (styles.value = "zambezi_status")
-    : basin.value === "Limpopo"
-    ? (styles.value = "limpopo_status")
-    : "okavango_status";
+      ? (styles.value = "zambezi_status")
+      : basin.value === "Limpopo"
+        ? (styles.value = "limpopo_status")
+        : "okavango_status";
 };
 const bvi_style = () => {
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_bvi")
     : basin.value === "Zambezi"
-    ? (styles.value = "zambezi_bvi")
-    : basin.value === "Limpopo"
-    ? (styles.value = "limpopo_bvi")
-    : "okavango_bvi";
+      ? (styles.value = "zambezi_bvi")
+      : basin.value === "Limpopo"
+        ? (styles.value = "limpopo_bvi")
+        : "okavango_bvi";
 };
 
 const download_tiff = () => {
@@ -2745,6 +3470,14 @@ onMounted(() => {
 
       show_upload_shapefile();
     });
+
+    // document
+    // .getElementById("view_stats")
+    // .addEventListener("click", (e) => {
+    //   viewStats()
+    //   // toggle_nav()
+
+    // });
   document.getElementById("download_map").addEventListener("click", (e) => {
     //console.log("click ");
 
@@ -2767,8 +3500,7 @@ onMounted(() => {
   //     current_raster_layer.value.bringToFront(); //current_raster can be tracked and brought to front
   //   }
   // });
-
-  closeNav();
+closeNav ();
 
   const plugin = L.control
     .measure({
@@ -2850,6 +3582,7 @@ const getRegion = () => {
   geometry = selecteRegion;
   //console.log(selecteRegion, 'selected region app')
 
+
   map.createPane("pane1000").style.zIndex = 300;
   current_geojson.value = L.geoJSON(selecteRegion, {
     style: {
@@ -2865,7 +3598,7 @@ const getRegion = () => {
   current_geojson.value.addTo(map);
 
   var drawn_polygon = selecteRegion;
-  //console.log(drawn_polygon.features[0].geometry, 'drawnpoly convert')
+  // //console.log(drawn_polygon.features[0].geometry, 'drawnpoly convert')
   var object_geojson = drawn_polygon.features[0].geometry;
   var str = wkt.stringify(object_geojson);
   //console.log(str, 'wkt custom str')
@@ -2914,7 +3647,7 @@ const getRegion = () => {
 
   document
     .getElementById("location_search")
-    .appendChild(document.querySelector(".geosearch"));
+  // .appendChild(document.querySelector(".geosearch"));
 };
 
 //watch for changes
@@ -2937,7 +3670,7 @@ const getBasinName = () => {
   var selected_basin = storeUserSelections.getSelectedBasin;
 
   basin.value = selected_basin;
-  //console.log(selected_basin, 'selected basin app')
+  // console.log(selected_basin, 'selected basin app')
 
   // show_zambezi_stats.value == false
 };
@@ -2949,12 +3682,13 @@ const setSelectedBasin = computed(() => {
 });
 watch(setSelectedBasin, () => {
   getBasinName();
+
 });
 
 //indicator
 const getIndicator = () => {
   var selectedIndicator = storeUserSelections.getSelectedIndcator;
-  //console.log(selectedIndicator, 'selected indicator app')
+  // console.log(selectedIndicator, 'selected indicator app')
   indicator.value = selectedIndicator;
 };
 
@@ -2970,7 +3704,7 @@ watch(setSelectedIndicator, () => {
 
 const getSubIndicator = () => {
   var selectedSubIndicator = storeUserSelections.getSelectedSubIndcator;
-  //console.log(selectedSubIndicator, 'selected sub indicator app')
+  // console.log(selectedSubIndicator, 'selected sub indicator app')
   sub_indicator.value = selectedSubIndicator;
 };
 
@@ -2988,7 +3722,7 @@ const getYear = () => {
   var selectedYear = storeUserSelections.getSelectedYear;
 
   year.value = selectedYear;
-  //console.log(year.value, 'selected year app')
+  // console.log(year.value, 'selected year app')
 };
 
 const setSelectedYear = computed(() => {
@@ -3001,7 +3735,7 @@ watch(setSelectedYear, () => {
 const getSeason = () => {
   var selectedSeason = storeUserSelections.getSelectedSeason;
   season.value = selectedSeason;
-  //console.log(season.value, 'selected season app')
+  // console.log(season.value, 'selected season app')
 };
 const setSelectedSeason = computed(() => {
   //console.log(storeUserSelections.selected_season, 'selected season app')
@@ -3014,7 +3748,7 @@ watch(setSelectedSeason, () => {
 const getParameter = () => {
   var selectedParameter = storeUserSelections.getSelectedParameter;
   parameter.value = selectedParameter;
-  //console.log(parameter.value, 'selected parameter app')
+  // console.log(parameter.value, 'selected parameter app')
 };
 const setSelectedParameter = computed(() => {
   //console.log(storeUserSelections.selected_parameter, 'selected parameter app')
@@ -3027,7 +3761,7 @@ watch(setSelectedParameter, () => {
 const getSatellite = () => {
   var selectedSatellite = storeUserSelections.getSelectedSatellite;
   satellite.value = selectedSatellite;
-  //console.log(satellite.value, 'selected satellite app')
+  // console.log(satellite.value, 'selected satellite app')
 };
 const setSelectedSatellite = computed(() => {
   //console.log(storeUserSelections.selected_satellite, 'selected satellite app')
@@ -3052,12 +3786,12 @@ const addBVILayer = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_bvi"
             : basin.value === "Zambezi"
-            ? "zambezi_bvi"
-            : basin.value === "Limpopo"
-            ? "limpopo_bvi"
-            : basin.value === "Okavango"
-            ? "okavango_bvi"
-            : wetland_sld.value,
+              ? "zambezi_bvi"
+              : basin.value === "Limpopo"
+                ? "limpopo_bvi"
+                : basin.value === "Okavango"
+                  ? "okavango_bvi"
+                  : wetland_sld.value,
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -3089,14 +3823,14 @@ const addLulcLayer = () => {
         basin.value === "Cuvelai"
           ? "cuvelai_lulc"
           : basin.value === "Zambezi"
-          ? "zambezi_lulc"
-          : basin.value === "Limpopo"
-          ? "limpopo_lulc"
-          : basin.value === "Okavango"
-          ? "okavango_lulc"
-          : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? "zambezi_lulc"
+            : basin.value === "Limpopo"
+              ? "limpopo_lulc"
+              : basin.value === "Okavango"
+                ? "okavango_lulc"
+                : wetland_basin.value
+                  ? wetland_sld.value
+                  : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -3664,14 +4398,14 @@ const addPrecIndexWet = () => {
         basin.value === "Cuvelai"
           ? "cuvelai_spi"
           : basin.value === "Zambezi"
-          ? "zambezi_spi"
-          : basin.value === "Limpopo"
-          ? "limpopo_spi"
-          : basin.value === "Okavango"
-          ? "okavango_spi"
-          : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? "zambezi_spi"
+            : basin.value === "Limpopo"
+              ? "limpopo_spi"
+              : basin.value === "Okavango"
+                ? "okavango_spi"
+                : wetland_basin.value
+                  ? wetland_sld.value
+                  : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -3698,10 +4432,10 @@ const addPrecIndexWet = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_spi"
             : basin.value === "Zambezi"
-            ? "zambezi_spi"
-            : basin.value === "Limpopo"
-            ? "limpopo_spi"
-            : "okavango_spi",
+              ? "zambezi_spi"
+              : basin.value === "Limpopo"
+                ? "limpopo_spi"
+                : "okavango_spi",
         format: "image/png",
         transparent: true,
         opacity: 0,
@@ -3724,10 +4458,10 @@ const addPrecIndexWet = () => {
         basin.value === "Cuvelai"
           ? [-18.852976338898927, 16.092944688071]
           : basin.value === "Limpopo"
-          ? [-23.361704477797623, 29.067713023209976]
-          : basin.value === "Okavango"
-          ? [-19.971381658947745, 21.81442486792866]
-          : [-14.70984684783236, 28.0764983010178],
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
         { icon: marker.value }
       )
         // .bindPopup('Hey')
@@ -3758,14 +4492,14 @@ const addPrecIndexDry = () => {
         basin.value === "Cuvelai"
           ? "cuvelai_spi"
           : basin.value === "Zambezi"
-          ? "zambezi_spi"
-          : basin.value === "Limpopo"
-          ? "limpopo_spi"
-          : basin.value === "Okavango"
-          ? "okavango_spi"
-          : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? "zambezi_spi"
+            : basin.value === "Limpopo"
+              ? "limpopo_spi"
+              : basin.value === "Okavango"
+                ? "okavango_spi"
+                : wetland_basin.value
+                  ? wetland_sld.value
+                  : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -3791,10 +4525,10 @@ const addPrecIndexDry = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_spi"
             : basin.value === "Zambezi"
-            ? "zambezi_spi"
-            : basin.value === "Limpopo"
-            ? "limpopo_spi"
-            : "okavango_spi",
+              ? "zambezi_spi"
+              : basin.value === "Limpopo"
+                ? "limpopo_spi"
+                : "okavango_spi",
         format: "image/png",
         transparent: true,
         opacity: 0,
@@ -3817,10 +4551,10 @@ const addPrecIndexDry = () => {
         basin.value === "Cuvelai"
           ? [-18.852976338898927, 16.092944688071]
           : basin.value === "Limpopo"
-          ? [-23.361704477797623, 29.067713023209976]
-          : basin.value === "Okavango"
-          ? [-19.971381658947745, 21.81442486792866]
-          : [-14.70984684783236, 28.0764983010178],
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
         { icon: marker.value }
       )
         // .bindPopup('Hey')
@@ -3854,14 +4588,14 @@ const addWetlandExtent = () => {
         basin.value === "Cuvelai"
           ? "cuvelai_water"
           : basin.value === "Zambezi"
-          ? "zambezi_water"
-          : basin.value === "Limpopo"
-          ? "limpopo_water"
-          : basin.value === "Okavango"
-          ? "okavango_water"
-          : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? "zambezi_water"
+            : basin.value === "Limpopo"
+              ? "limpopo_water"
+              : basin.value === "Okavango"
+                ? "okavango_water"
+                : wetland_basin.value
+                  ? wetland_sld.value
+                  : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -3924,9 +4658,9 @@ const addVegCover = () => {
       getFeatureInfoUrl: function (latlng) {
         // Construct a GetFeatureInfo request URL given a point
         var point = this._map.latLngToContainerPoint(
-            latlng,
-            this._map.getZoom()
-          ),
+          latlng,
+          this._map.getZoom()
+        ),
           size = this._map.getSize(),
           params = {
             request: "GetFeatureInfo",
@@ -4042,14 +4776,14 @@ const addVegCover = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_ndvi"
             : basin.value === "Zambezi"
-            ? "zambezi_ndvi"
-            : basin.value === "Limpopo"
-            ? "limpopo_ndvi"
-            : basin.value === "Okavango"
-            ? "okavango_ndvi"
-            : wetland_basin.value
-            ? wetland_sld.value
-            : wetland_sld.value,
+              ? "zambezi_ndvi"
+              : basin.value === "Limpopo"
+                ? "limpopo_ndvi"
+                : basin.value === "Okavango"
+                  ? "okavango_ndvi"
+                  : wetland_basin.value
+                    ? wetland_sld.value
+                    : wetland_sld.value,
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -4069,14 +4803,14 @@ const addVegCover = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_ndvi"
             : basin.value === "Zambezi"
-            ? "zambezi_ndvi"
-            : basin.value === "Limpopo"
-            ? "limpopo_ndvi"
-            : basin.value === "Okavango"
-            ? "okavango_ndvi"
-            : wetland_basin.value
-            ? wetland_sld.value
-            : wetland_sld.value,
+              ? "zambezi_ndvi"
+              : basin.value === "Limpopo"
+                ? "limpopo_ndvi"
+                : basin.value === "Okavango"
+                  ? "okavango_ndvi"
+                  : wetland_basin.value
+                    ? wetland_sld.value
+                    : wetland_sld.value,
         format: "image/png",
         transparent: true,
         opacity: 0,
@@ -4100,10 +4834,10 @@ const addVegCover = () => {
         basin.value === "Cuvelai"
           ? [-18.852976338898927, 16.092944688071]
           : basin.value === "Limpopo"
-          ? [-23.361704477797623, 29.067713023209976]
-          : basin.value === "Okavango"
-          ? [-19.971381658947745, 21.81442486792866]
-          : [-14.70984684783236, 28.0764983010178],
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
         { icon: marker.value }
       )
         // .bindPopup('Hey')
@@ -4148,14 +4882,14 @@ const addWetlandStatus = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_status"
             : basin.value === "Zambezi"
-            ? "zambezi_status"
-            : basin.value === "Limpopo"
-            ? "limpopo_status"
-            : basin.value === "Okavango"
-            ? "okavango_status"
-            : wetland_basin.value
-            ? wetland_sld.value
-            : wetland_sld.value,
+              ? "zambezi_status"
+              : basin.value === "Limpopo"
+                ? "limpopo_status"
+                : basin.value === "Okavango"
+                  ? "okavango_status"
+                  : wetland_basin.value
+                    ? wetland_sld.value
+                    : wetland_sld.value,
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -4188,8 +4922,8 @@ const addBurntLayer = () => {
       styles: basin.value
         ? `${basin.value}_fire`
         : wetland_basin.value
-        ? wetland_sld.value
-        : wetland_sld.value,
+          ? wetland_sld.value
+          : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -4220,8 +4954,8 @@ const addFirmsLayer = () => {
         styles: basin.value
           ? `${basin.value}_firms`
           : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? wetland_sld.value
+            : wetland_sld.value,
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -4366,8 +5100,8 @@ const addSMILayer = () => {
         styles: basin.value
           ? `${basin.value}_smi`
           : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? wetland_sld.value
+            : wetland_sld.value,
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -4414,10 +5148,10 @@ const addSMILayer = () => {
         basin.value === "Cuvelai"
           ? [-18.852976338898927, 16.092944688071]
           : basin.value === "Limpopo"
-          ? [-23.361704477797623, 29.067713023209976]
-          : basin.value === "Okavango"
-          ? [-19.971381658947745, 21.81442486792866]
-          : [-14.70984684783236, 28.0764983010178],
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
         { icon: marker.value }
       )
         // .bindPopup('Hey')
@@ -4441,8 +5175,8 @@ const addFloodLayer = () => {
       styles: basin.value
         ? `${basin.value}_flood`
         : wetland_basin.value
-        ? wetland_sld.value
-        : wetland_sld.value,
+          ? wetland_sld.value
+          : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -4474,14 +5208,14 @@ const addSuspendedSediments = () => {
         basin.value === "Cuvelai"
           ? "cuvelai_water"
           : basin.value === "Zambezi"
-          ? "zambezi_water"
-          : basin.value === "Limpopo"
-          ? "limpopo_water"
-          : basin.value === "Okavango"
-          ? "okavango_water"
-          : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? "zambezi_water"
+            : basin.value === "Limpopo"
+              ? "limpopo_water"
+              : basin.value === "Okavango"
+                ? "okavango_water"
+                : wetland_basin.value
+                  ? wetland_sld.value
+                  : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -4529,10 +5263,10 @@ const addSuspendedSediments = () => {
         basin.value === "Cuvelai"
           ? [-18.852976338898927, 16.092944688071]
           : basin.value === "Limpopo"
-          ? [-23.361704477797623, 29.067713023209976]
-          : basin.value === "Okavango"
-          ? [-19.971381658947745, 21.81442486792866]
-          : [-14.70984684783236, 28.0764983010178],
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
         { icon: marker.value }
       )
         // .bindPopup('Hey')
@@ -4565,14 +5299,14 @@ const addTurbidity = () => {
         basin.value === "Cuvelai"
           ? "cuvelai_water"
           : basin.value === "Zambezi"
-          ? "zambezi_water"
-          : basin.value === "Limpopo"
-          ? "limpopo_water"
-          : basin.value === "Okavango"
-          ? "okavango_water"
-          : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
+            ? "zambezi_water"
+            : basin.value === "Limpopo"
+              ? "limpopo_water"
+              : basin.value === "Okavango"
+                ? "okavango_water"
+                : wetland_basin.value
+                  ? wetland_sld.value
+                  : wetland_sld.value,
       format: "image/png",
       transparent: true,
       opacity: 1.0,
@@ -4620,10 +5354,10 @@ const addTurbidity = () => {
         basin.value === "Cuvelai"
           ? [-18.852976338898927, 16.092944688071]
           : basin.value === "Limpopo"
-          ? [-23.361704477797623, 29.067713023209976]
-          : basin.value === "Okavango"
-          ? [-19.971381658947745, 21.81442486792866]
-          : [-14.70984684783236, 28.0764983010178],
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
         { icon: marker.value }
       )
         // .bindPopup('Hey')
@@ -4665,6 +5399,8 @@ const fetchWmsData = () => {
 
   createIndices();
 
+  // toggle_nav()
+
   //remove spinner when layer loads
   wmsLayer.value.on("load", function (event) {
     changeOpacity();
@@ -4684,8 +5420,8 @@ const show_mobile_panel = () => {
 };
 const close_mobile_panel = () => {
   show_mobile_data.value = false;
-  if(point_layergroup.value) point_layergroup.value.clearLayers();
-  
+  if (point_layergroup.value) point_layergroup.value.clearLayers();
+
 };
 
 
@@ -4710,7 +5446,7 @@ const fetchMobileData = async () => {
 
 
       // load points
-      point_geojson.value =  L.geoJSON(valid_geojson, {
+      point_geojson.value = L.geoJSON(valid_geojson, {
         pointToLayer: function (feature, latlng) {
           var studioicon = L.icon({
             iconUrl:
@@ -4747,57 +5483,57 @@ const fetchUserMobile = async () => {
   const apiUrl = "http://66.42.65.87:8000/mobile_data/";
 
   let login_cred = { "mail": { "name": storeUserSelections.user_email }, "passwd": { "name": storeUserSelections.user_password } }
-console.log(login_cred)
-//console.log(postData)
-// const headers = { "Content-Type": "application/x-www-form-urlencoded" };
+  console.log(login_cred)
+  //console.log(postData)
+  // const headers = { "Content-Type": "application/x-www-form-urlencoded" };
 
-await axios
-  .post(apiUrl, login_cred )
-  .then((response) => {
-    console.log('GeoJSON Response:', response.data)
-   
-
-    var geojson_object = response.data;
-    const valid_geojson = JSON.parse(geojson_object);
-    console.log(valid_geojson)
-    storeUserSelections.setUserFeatures(valid_geojson)
-    // point_layergroup.value = new L.LayerGroup();
+  await axios
+    .post(apiUrl, login_cred)
+    .then((response) => {
+      console.log('GeoJSON Response:', response.data)
 
 
-
-    // // load points
-    point_geojson.value =  L.geoJSON(valid_geojson, {
-      pointToLayer: function (feature, latlng) {
-        var studioicon = L.icon({
-          iconUrl:
-            "https://images.ctfassets.net/3prze68gbwl1/assetglossary-17su9wok1ui0z7w/c4c4bdcdf0d0f86447d3efc450d1d081/map-marker.png", // "/src/assets/marker.svg",
-          iconSize: [30, 30],
-          iconAnchor: [15, 15],
-        });
+      var geojson_object = response.data;
+      const valid_geojson = JSON.parse(geojson_object);
+      console.log(valid_geojson)
+      storeUserSelections.setUserFeatures(valid_geojson)
+      // point_layergroup.value = new L.LayerGroup();
 
 
-        console.log(feature.properties)
-        var valid_survey_resuult = JSON.parse(feature.properties.survey_result)
-        console.log(valid_survey_resuult)
 
-        var marker = L.marker(latlng, { icon: studioicon }).bindPopup(
-          `<b>Basin</b> : ${valid_survey_resuult[3]} <br>
+      // // load points
+      point_geojson.value = L.geoJSON(valid_geojson, {
+        pointToLayer: function (feature, latlng) {
+          var studioicon = L.icon({
+            iconUrl:
+              "https://images.ctfassets.net/3prze68gbwl1/assetglossary-17su9wok1ui0z7w/c4c4bdcdf0d0f86447d3efc450d1d081/map-marker.png", // "/src/assets/marker.svg",
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+          });
+
+
+          console.log(feature.properties)
+          var valid_survey_resuult = JSON.parse(feature.properties.survey_result)
+          console.log(valid_survey_resuult)
+
+          var marker = L.marker(latlng, { icon: studioicon }).bindPopup(
+            `<b>Basin</b> : ${valid_survey_resuult[3]} <br>
           <b>Wetland</b> : ${valid_survey_resuult[5]} <br>
           <b>Sub-Indicator</b> : ${valid_survey_resuult[2]} <br>
           <b>Area</b> : ${feature.properties['map_area']} <br>
           <img src="http://45.32.233.93:81/wemast/ges/${feature.properties.pic_path_name}" alt="Feature Image" style="max-width: 100%; height: auto;">
           `
-        );
-        return marker;
-      },
+          );
+          return marker;
+        },
+      })
+      point_geojson.value.addTo(point_layergroup.value);
+      point_layergroup.value.addTo(map)
     })
-    point_geojson.value.addTo(point_layergroup.value);
-    point_layergroup.value.addTo(map)
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-  });
- 
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+
 }
 
 const addCQLFilter = () => {
@@ -4959,8 +5695,8 @@ const BVIlegendContent = () => {
         (basin.value
           ? `<p>${basin.value} BVI ${year.value}</p>`
           : wetland_basin.value
-          ? `<p>${wetland_basin.value} BVI ${year.value}</p>`
-          : "") +
+            ? `<p>${wetland_basin.value} BVI ${year.value}</p>`
+            : "") +
         '<img src="' +
         `${baseurl}:8080/geoserver/BVI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=BVI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` +
         '" />';
@@ -5174,8 +5910,8 @@ const preclegendContent = () => {
         (basin.value
           ? `<p>${basin.value} SPI ${year.value}</p>`
           : wetland_basin.value
-          ? `<p>${wetland_basin.value} SPI ${year.value}</p>`
-          : "") +
+            ? `<p>${wetland_basin.value} SPI ${year.value}</p>`
+            : "") +
         '<img src="' +
         `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` +
         '" />';
@@ -5286,8 +6022,8 @@ const NDWIlegendContent = () => {
           div.innerHTML += basin.value
             ? `<p>${basin.value} ${parameter.value} ${year.value}</p>`
             : wetland_basin.value
-            ? `<p>${wetland_basin.value} ${parameter.value} ${year.value}</p>`
-            : "";
+              ? `<p>${wetland_basin.value} ${parameter.value} ${year.value}</p>`
+              : "";
 
           for (var i = 0; i < colors.length; i++) {
             div.innerHTML +=
@@ -5442,8 +6178,8 @@ const NDVIlegendContent = () => {
           div.innerHTML += basin.value
             ? `<p>${basin.value} ${sub_indicator.value} ${year.value}</p>`
             : wetland_basin.value
-            ? `<p>${wetland_basin.value} ${sub_indicator.value} ${year.value}</p>`
-            : "";
+              ? `<p>${wetland_basin.value} ${sub_indicator.value} ${year.value}</p>`
+              : "";
           for (var i = 0; i < colors.length; i++) {
             div.innerHTML +=
               '<i style="background:' +
@@ -5595,8 +6331,8 @@ const statuslegendContent = () => {
           div.innerHTML += basin.value
             ? `<p>${basin.value} ${parameter.value} ${year.value}</p>`
             : wetland_basin.value
-            ? `<p>${wetland_basin.value} ${parameter.value} ${year.value}</p>`
-            : "";
+              ? `<p>${wetland_basin.value} ${parameter.value} ${year.value}</p>`
+              : "";
           for (var i = 0; i < colors.length; i++) {
             div.innerHTML +=
               '<i style="background:' +
@@ -5748,8 +6484,8 @@ const floodlegendContent = () => {
         div.innerHTML += basin.value
           ? `<p>${basin.value} ${sub_indicator.value}</p>`
           : wetland_basin.value
-          ? `<p>${wetland_basin.value} ${sub_indicator.value}</p>`
-          : "";
+            ? `<p>${wetland_basin.value} ${sub_indicator.value}</p>`
+            : "";
         for (var i = 0; i < colors.length; i++) {
           div.innerHTML +=
             '<i style="background:' +
@@ -5894,8 +6630,8 @@ const firmslegendContent = () => {
           div.innerHTML += basin.value
             ? `<p>${basin.value} FIRMS ${year.value}</p>`
             : wetland_basin.value
-            ? `<p>${wetland_basin.value} FIRMS ${year.value}</p>`
-            : "";
+              ? `<p>${wetland_basin.value} FIRMS ${year.value}</p>`
+              : "";
           for (var i = 0; i < colors.length; i++) {
             div.innerHTML +=
               '<i style="background:' +
@@ -6027,8 +6763,8 @@ const SMIlegendContent = () => {
         (basin.value
           ? `<p>${basin.value} SMI ${year.value}</p>`
           : wetland_basin.value
-          ? `<p>${wetland_basin.value} SMI ${year.value}</p>`
-          : "") +
+            ? `<p>${wetland_basin.value} SMI ${year.value}</p>`
+            : "") +
         '<img src="' +
         `${baseurl}:8080/geoserver/SMI_DRY/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=image%2Fpng&WIDTH=20&HEIGHT=20&LAYER=SMI_DRY%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFFF;dpi:150` +
         '" />';
@@ -6232,10 +6968,10 @@ const addCompareLulcLayer = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_lulc"
             : basin.value === "Zambezi"
-            ? "zambezi_lulc"
-            : basin.value === "Limpopo"
-            ? "limpopo_lulc"
-            : "okavango_lulc",
+              ? "zambezi_lulc"
+              : basin.value === "Limpopo"
+                ? "limpopo_lulc"
+                : "okavango_lulc",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6277,10 +7013,10 @@ const addCompareBVILayer = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_bvi"
             : basin.value === "Zambezi"
-            ? "zambezi_bvi"
-            : basin.value === "Limpopo"
-            ? "limpopo_bvi"
-            : "okavango_bvi",
+              ? "zambezi_bvi"
+              : basin.value === "Limpopo"
+                ? "limpopo_bvi"
+                : "okavango_bvi",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6324,10 +7060,10 @@ const addComparePrecIndexWet = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_spi"
             : basin.value === "Zambezi"
-            ? "zambezi_spi"
-            : basin.value === "Limpopo"
-            ? "limpopo_spi"
-            : "okavango_spi",
+              ? "zambezi_spi"
+              : basin.value === "Limpopo"
+                ? "limpopo_spi"
+                : "okavango_spi",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6365,10 +7101,10 @@ const addComparePrecIndexDry = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_spi"
             : basin.value === "Zambezi"
-            ? "zambezi_spi"
-            : basin.value === "Limpopo"
-            ? "limpopo_spi"
-            : "okavango_spi",
+              ? "zambezi_spi"
+              : basin.value === "Limpopo"
+                ? "limpopo_spi"
+                : "okavango_spi",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6407,10 +7143,10 @@ const addCompareWetlandExtent = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_water"
             : basin.value === "Zambezi"
-            ? "zambezi_water"
-            : basin.value === "Limpopo"
-            ? "limpopo_water"
-            : "okavango_water",
+              ? "zambezi_water"
+              : basin.value === "Limpopo"
+                ? "limpopo_water"
+                : "okavango_water",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6451,10 +7187,10 @@ const addCompareVegCover = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_ndvi"
             : basin.value === "Zambezi"
-            ? "zambezi_ndvi"
-            : basin.value === "Limpopo"
-            ? "limpopo_ndvi"
-            : "okavango_ndvi",
+              ? "zambezi_ndvi"
+              : basin.value === "Limpopo"
+                ? "limpopo_ndvi"
+                : "okavango_ndvi",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6500,10 +7236,10 @@ const addCompareWetlandStatus = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_status"
             : basin.value === "Zambezi"
-            ? "zambezi_status"
-            : basin.value === "Limpopo"
-            ? "limpopo_status"
-            : "okavango_status",
+              ? "zambezi_status"
+              : basin.value === "Limpopo"
+                ? "limpopo_status"
+                : "okavango_status",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6627,10 +7363,10 @@ const addCompareSusSediments = () => {
           basin.value === "Cuvelai"
             ? "cuvelai_water"
             : basin.value === "Zambezi"
-            ? "zambezi_water"
-            : basin.value === "Limpopo"
-            ? "limpopo_water"
-            : "okavango_water",
+              ? "zambezi_water"
+              : basin.value === "Limpopo"
+                ? "limpopo_water"
+                : "okavango_water",
         format: "image/png",
         transparent: true,
         opacity: 1.0,
@@ -6888,11 +7624,11 @@ watch(setSelectedAdvancedBbox);
 
 const addDrawCtrl = () => {
   //remove any previous layers
-  if(layer.value) map.removeLayer(layer.value);
-  if(shp_geojson.value) map.removeLayer(shp_geojson.value);
- 
-   
-       
+  if (layer.value) map.removeLayer(layer.value);
+  if (shp_geojson.value) map.removeLayer(shp_geojson.value);
+
+
+
 
   //we add the polygon draw feature to map as seen  below
   editableLayers.value = new L.FeatureGroup();
@@ -7380,7 +8116,7 @@ const addDrawCtrl = () => {
         //remove bigger layer
         if (current_geojson.value) map.removeLayer(current_geojson.value);
         if (wmsLayer.value) map.removeLayer(wmsLayer.value);
-       
+
         //add function to add clipped layer to the map
         addBVILayer2();
         addLulcLayer2();
@@ -7404,15 +8140,15 @@ const addDrawCtrl = () => {
     // if (process.env.DEV)
     console.log("stop edit", e);
     var layers = e.layers;
-  layers.eachLayer(function (layer) {
-    var geojson = layer.toGeoJSON();
-    console.log(geojson); // This will log the GeoJSON of the edited polygon
-    // You can use this GeoJSON data as needed (send to server, manipulate, etc.)
-  });
+    layers.eachLayer(function (layer) {
+      var geojson = layer.toGeoJSON();
+      console.log(geojson); // This will log the GeoJSON of the edited polygon
+      // You can use this GeoJSON data as needed (send to server, manipulate, etc.)
+    });
 
   });
 
-  
+
 
   map.on(L.Draw.Event.DELETED, (e) => {
     // if (process.env.DEV)
@@ -7424,8 +8160,44 @@ const addDrawCtrl = () => {
   });
 };
 </script>
-  
-  <style scoped>
+
+<style scoped>
 @import "../assets/main.css";
-</style>
+
+.advanced_filter {
+  cursor: pointer;
+  z-index: 200;
+  /* position: absolute;
+  top: 69.8vh;
+  left: -0.2vw; */
+
+  background-color: steelblue;
+  padding: 1em;
+  color: #fff;
+  font-size: .7em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  /* width: 5%; */
+
+}
+
+.compare{
+  cursor: pointer;
+  /* position: absolute;
+  top:84.5vh;
+  left: -0.2vw; */
+  /* height: 135px;
+  width: 80px; */
+   background-color: #073e81;
   
+  padding: 1em;
+  color:#fff;
+  font-size: .7em;
+  display:flex;
+  flex-direction: column;
+  gap: 0.2em;
+
+
+}
+</style>

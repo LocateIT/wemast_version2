@@ -1,7 +1,7 @@
 export const leaflet_custom_controls = 
 
 `<div class="map_controls" id="controls">
-    
+ 
 <img  title="Download Image" id="download_tiff" src=" /mapIcons/file_download-24px.svg" alt="" class="download_tiff" >
 <img title="Download Map" id="download_map" src=" /uiIcons/insert_photo-24px.svg" alt="" class="download_map">
 <img title="Measure Distance" id="measure" src=" /mapIcons/straighten-24px.svg" alt="" class="measure">
@@ -15,9 +15,12 @@ left:  -12vw;  ">
 <img title="Zoom out" id="zoom_out" src=" /mapIcons/remove-24px.svg" alt="" class="zoom_out" >
 <img title="Help" id="help" src=" /mapIcons/help.svg" alt="" class="help">
 <img title="Upload Shapefile" id="upload_custom_shapefile" src=" /mapIcons/upload.svg" alt="" class="upload">
+
+
 </div>`;
 
 /*
+<img  title="View Statistics" id="view_stats" src=" /mapIcons/stats.svg" alt="" class="stats" >
 function names for invoking click event
 wemast_zoom_ctrl_in
 wemast_zoom_ctrl_out

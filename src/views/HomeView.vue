@@ -6,54 +6,91 @@
       <br>
       <RouterLink to="/dashboard">dash</RouterLink>  @click="$router.push('/dashboard')"
       <RouterView /> -->
-            <div class="nav">
+            <div class="nav flex flex-row justify-content-between flex-wrap">
                   <div class="logos">
-                        <img src="../assets/logos/SASSCAL.png" class="WeMast_Dashboard_logos" />
+                        <img src="../assets/logos/SASSCAL.png" class="WeMast_Dashboard_logos"/>
                         <img src='../assets/logos/Gmes.png' class="WeMast_Dashboard_logos" />
                         <img src="../assets/logos/Au.png" class="WeMast_Dashboard_logos" />
                         <img src="../assets/logos/EU.png" class="WeMast_Dashboard_logos" />
+                        <div class="languages -mt-3">
+                              <LanguageSwitch />
+                        </div>
 
                   </div>
 
-                  <div class="languages">
-                        <LanguageSwitch />
+
+                  <!-- 
+                  <div class="nav_icons flex justify-content-between ">
+                        <div class="flex flex-column">
+                              <img src="/uiIcons/home-inactive.svg" alt="">
+                              <p>{{ $t("home.home") }}</p>
+                        </div>
+
+                        <div class="flex flex-column">
+
+                              <img src="/uiIcons/person-inactive.svg" @click="$router.push('/dashboard')" alt="">
+                              <p>{{ $t("home.dashboard") }}</p>
+                        </div>
+
+                        <div class="flex flex-column">
+                              <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/signup')">
+                              <p>{{ $t("home.profile") }}</p>
+                        </div>
+
+                        <div class="flex flex-column">
+                              <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank"
+                                    rel="noopener noreferrer">
+
+
+                                    <img src="/uiIcons/article-inactive.svg" alt="">
+                                    <p>{{ $t("home.documentation") }}</p>
+
+                              </a>
+                        </div>
+
+                        <div class="flex flex-column">
+                              <a href="#">
+
+                                    <img src="/uiIcons/contacts-inactive.svg" alt="">
+                                    <p class="">{{ $t("home.contact") }}</p>
+
+
+                              </a>
+                        </div>
+
+
+                  </div> -->
+
+                  <div class="cardd">
+                        <Menubar :model="items" />
+
+
                   </div>
-
-                  <div class="nav_icons">
-                        <img src="/uiIcons/home-inactive.svg" alt="">
-                        <img src="/uiIcons/dashboard-inactive.svg" @click="$router.push('/dashboard')" alt="">
-                        <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/signup')">
-                        <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank"
-                              rel="noopener noreferrer">
-                              <img src="/uiIcons/article-inactive.svg" alt="">
-                        </a>
-                        <a href="#contact">
-                              <img style="position: relative; top: 0.7vh" src="/uiIcons/contacts-inactive.svg" alt="">
-                        </a>
-
-
-                  </div>
-                  <RouterView />
-                  <div class="nav_labels">
+                  <!-- <RouterView /> -->
+                  <!-- <div class="nav_labels mt-2">
                         <p>{{ $t("home.home") }}</p>
                         <p>{{ $t("home.dashboard") }}</p>
                         <p>{{ $t("home.profile") }}</p>
                         <p>{{ $t("home.documentation") }}</p>
                         <p class="nav_contact">{{ $t("home.contact") }}</p>
-                  </div>
-                  <RouterView />
+                  </div> -->
+                  <!-- <RouterView /> -->
+
+
             </div>
 
 
 
-            <div class="banner">
-                  <img class="bulb" src="/uiIcons/challenge.svg" alt="">
-                  <div class="title">
-                        {{ $t("home.wemast_title") }} <span class="abbreviation">(WeMAST)</span>
+            <div class="banner flex flex-wrap  ">
+                  <div class="bannercontent flex flex-row gap-2 ">
+                        <img class="bulb" src="/uiIcons/challenge.svg" alt="">
+                        <div class="title">
+                              {{ $t("home.wemast_title") }} <span class="abbreviation">(WeMAST)</span>
+                        </div>
                   </div>
                   <!-- @click="$router.push('/dashboard')" -->
                   <RouterLink to="/dashboard">
-                        <button class="visit">{{ $t("home.visit_portal") }}</button>
+                        <button class="visit ">{{ $t("home.visit_portal") }}</button>
                   </RouterLink>
                   <RouterView />
 
@@ -61,90 +98,115 @@
 
             </div>
 
-            <div class="showcase">
-                  <div class="image_icons">
-                        <img src="/uiIcons/challenge_hightlight.svg" alt="">
-                        <img src="/uiIcons/watch.svg" alt="">
-                        <img class="manuals" src="/uiIcons/article.svg" alt="" id="docs_icon">
-                        <img class="analytics_bulb" src="/uiIcons/challenge_hightlight.svg" alt="">
-                  </div>
-                  <div class="image_text">
-                        <p class="geodata">{{ $t("home.geodata") }}</p>
-                        <p class="timeseries">{{ $t("home.timeseries") }}</p>
-                        <p class="documentation">{{ $t("home.docs_manuals") }}</p>
-                        <p class="analytics">{{ $t("home.analytics") }}</p>
-                  </div>
 
-                  <div class="img_subtext">
-                        <p class="geodata_subtext">{{ $t("home.geodata_text") }}</p>
-                        <p class="timeseries_subtext">{{ $t("home.timeseries_text") }}</p>
-                        <p class="documentation_subtext">{{ $t("home.manual_text") }}</p>
-                        <p class="analytics_subtext">{{ $t("home.analytics_text") }}</p>
-                  </div>
-                  <div class="screenshot_carosel">
-                        <img src="/images/geodata.png" alt="" class="hightlight-item">
-                        <img src="/images/timeseries2.png" alt="" class="hightlight-item">
-                        <img src="/uiIcons/documents.png" alt="" class="hightlight-item">
-                        <img src="/uiIcons/analytics.png" alt="" class="hightlight-item">
-                  </div>
 
+            <div class="flex flex-wrap justify-content-center align-items-center summary_cards" style="margin-top: 27em">
+                  <div class="col-12 md:col-6 xl:col-3 ">
+
+                        <div class="section p-3 ">
+                              <Card>
+
+                                    <template #title>
+                                          <div class="card_header flex flex-row gap-1">
+                                                <img src="/uiIcons/challenge_hightlight.svg" alt="Icon 1">
+                                                <p style="color: #2e3192;font-weight: bold">{{ $t("home.geodata") }}</p>
+                                          </div>
+                                    </template>
+                                    <template #subtitle>{{ $t("home.geodata_text") }}</template>
+                                    <template #content>
+
+
+
+                                          <img alt="user header" src="/images/bvi_home.png" class="hightlight-item" />
+                                    </template>
+                              </Card>
+
+
+
+                        </div>
+
+
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                        <div class="section p-3 ">
+
+                              <Card>
+
+                                    <template #title>
+                                          <div class="card_header flex flex-row gap-1">
+                                                <img class="-mt-2" src="/uiIcons/watch.svg" alt="Icon 1">
+                                                <p style="color: #2e3192;font-weight: bold">{{ $t("home.docs_manuals")
+                                                      }}</p>
+                                          </div>
+                                    </template>
+                                    <template #subtitle>{{ $t("home.manual_text") }}</template>
+                                    <template #content>
+
+
+
+                                          <img alt="user header" src="/uiIcons/documents.png" class="hightlight-item" />
+                                    </template>
+                              </Card>
+                        </div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                        <div class="section p-3 ">
+
+                              <Card>
+
+                                    <template #title>
+                                          <div class="card_header flex flex-row gap-1">
+                                                <img class="-mt-2" src="/uiIcons/article.svg" alt="Icon 1">
+                                                <p style="color: #2e3192;font-weight: bold">{{ $t("home.timeseries") }}
+                                                </p>
+                                          </div>
+                                    </template>
+                                    <template #subtitle>{{ $t("home.timeseries_text") }}</template>
+                                    <template #content>
+
+
+
+                                          <img alt="user header" src="/images/timeseries2.png"
+                                                class="hightlight-item" />
+                                    </template>
+                              </Card>
+                        </div>
+                  </div>
+                  <div class="col-12 md:col-6 lg:col-3">
+                        <div class="section p-3  ">
+
+
+                              <Card>
+
+                                    <template #title>
+                                          <div class="card_header flex flex-row gap-1">
+                                                <img src="/uiIcons/challenge_hightlight.svg" alt="Icon 1">
+                                                <p style="color: #2e3192;font-weight: bold">{{ $t("home.analytics") }}
+                                                </p>
+                                          </div>
+                                    </template>
+                                    <template #subtitle>{{ $t("home.analytics_text") }}</template>
+                                    <template #content>
+
+
+
+                                          <img alt="user header" src="/uiIcons/analytics.png" class="hightlight-item" />
+                                    </template>
+                              </Card>
+                        </div>
+                  </div>
             </div>
-            <div class="wetlands">
-                  <p class="wetlands_sadc">{{ $t("home.wetlands_sadc") }}</p>
-                  <p class="eo_products">{{ $t("home.eo_products") }}</p>
-                  <p class="sadc-text">{{ $t("home.sadc_text") }}</p>
-                  <div class="sadc_images">
-                        <img class="sadc-img" src="/images/sadc1.png" alt="">
-                        <img class="sadc-img" src="/images/sadc2.png" alt="">
-                  </div>
-                  <div class="caption_icons">
-                        <img src="/uiIcons/sadc_arrow_left.svg" alt="">
-                        <img src="/uiIcons/sadc_arrow_left.svg" alt="">
-                  </div>
-                  <div class="captions">
-                        <p class="caption1">{{ $t("home.status_analytics") }}</p>
-                        <p class="caption2"> {{ $t("home.status_analytics") }}</p>
-                  </div>
-            </div>
-            <div id="river_basins">
-                  <p class="river_basins_title">{{ $t("home.river") }}</p>
-                  <p class="river_basins_infographics">{{ $t("home.infographics") }}</p>
-                  <div class="basins">
-                        <div class="basin" id="flamingo">
-                              <!-- <img class="basin_img1" src="images/sadc2.png" alt=""> -->
-                        </div>
-                        <div class="basin" ref="Cuvelai" id="cuvelai_basin_id">
-                              <p class="cuvelai_basin">{{ $t("home.cuvelai_basin") }}</p>
-                              <p class="cuvelai_text">
-                                    {{ $t("home.cuv_text") }}
-                              </p>
-                        </div>
-                        <div class="basin" id="limpopo">
-                              <p class="limpopo_basin" id="limpopo_basin_id">{{ $t("home.limpopo_basin") }}</p>
-                              <p class="limpopo_text">
-                                    {{ $t("home.lim_text") }}
-                              </p>
-                        </div>
-                        <div class="basin" id="hippo"></div>
-                        <div class="basin" id="waterfall"></div>
-                        <div class="basin" id="okavango">
-                              <div class="okavango_basin" id="okavango_basin_id">{{ $t("home.okavango_basin") }}</div>
-                              <div class="okavango_text">
-                                    {{ $t("home.oka_text") }}
-                              </div>
-                        </div>
-                        <div class="basin" id="zambezi">
-                              <p class="zambezi_basin" id="zambezi_basin_id">{{ $t("home.zambezi_basin") }}</p>
-                              <p class="zambezi_text">{{ $t("home.zam_text") }} </p>
-                        </div>
-                        <div class="basin" id="lion"></div>
 
-                  </div>
-            </div>
 
-            <div class="footer">
-                  <div class="partners">
-                        <div class="footer_logos">
+            <Wetlands />
+
+
+            <RiverBasin />
+
+
+            <!-- <div class="footer">
+                  <div class="partners flex flex-wrap justify-content-between px-4  -mt-7">
+                        <div class="footer_logos flex flex-row gap-2">
                               <img src="../assets/logos/SASSCAL.png" class="partner-logos" />
                               <img src='../assets/logos/Gmes.png' class="partner-logos" />
                               <img src="../assets/logos/Au.png" class="partner-logos" />
@@ -152,50 +214,78 @@
 
                         </div>
 
-                  </div>
-                  <div class="project">
-                        <p class="project_name">{{ $t("home.project_name") }}</p>
-                        <img class="project_logo" src="/images/project_logo.png" alt="">
-                  </div>
-                  <div class="project_info">
-                        <div class="basin_list">
-                              <div class="cuv_basin" @click="scrollToCuvelaiBasin">{{ $t("home.cuvelai_basin") }}</div>
-                              <div class="basin_underline"></div>
-
-                              <div class="lim_basin" @click="scrollToLimpopoBasin">{{ $t("home.limpopo_basin") }}</div>
-                              <div class="basin_underline"></div>
-
-                              <div class="oka_basin" @click="scrollToOkavangoBasin">{{ $t("home.okavango_basin") }}</div>
-                              <div class="basin_underline"></div>
-
-                              <div class="zam_basin" @click="scrollToZambeziBasin">{{ $t("home.zambezi_basin") }}</div>
-                              <div class="basin_underline"></div>
-
+                        <div class="project">
+                              <p class="project_name font-bold">{{ $t("home.project_name") }}</p>
+                              <img class="project_logo h-4rem" src="/images/project_logo.png" alt="">
                         </div>
 
-                        <div class="contact_list" id="contact_flex">
-                              <p id="coord">{{ $t("home.coord_team") }}</p>
-                              <p>{{ $t("home.secretariat") }}</p>
-                              <p>28 Robert Mugabe Avenue, (c/o Robert Mugabe and Newton street)</p>
-                              <p>Windhoek</p>
-                              <p>Namibia</p>
-                              <p>Tel 1: +264-(0)-61-223-997</p>
-                              <p>Tel 2: +264-(0)-61-248-693</p>
-                              <p>Email: info.wemast@sasscal.org</p>
-
-                        </div>
                   </div>
 
-                  <div class="final_footer">
-                        <div class="rights">{{ $t("home.copyright") }}</div>
+            </div> -->
 
-                        <div class="policy_terms">
-                              <div class="policy">{{ $t("home.privacy") }}</div>
-                              <div class="terms">{{ $t("home.terms") }}</div>
+
+            <div class="logo-container">
+                  <div class="logo-item">
+                        <img src="../assets/logos/SASSCAL.png" alt="Logo 1" class="partner-logos">
+                  </div>
+                  <div class="logo-item">
+                        <img src="../assets/logos/Gmes.png" alt="Logo 2" class="partner-logos">
+                  </div>
+                  <div class="logo-item">
+                        <img src="../assets/logos/Au.png" alt="Logo 3" class="partner-logos">
+                  </div>
+                  <div class="logo-item">
+                        <img src="../assets/logos/EU.png" alt="Logo 4" class="partner-logos">
+                  </div>
+                  <div class="logo-item logo-item-right">
+                        <p class="project_name font-bold">{{ $t("home.project_name") }}</p>
+                        <img src="/images/project_logo.png" alt="Logo 5" class="project_logo h-4rem">
+                  </div>
+            </div>
+
+            <div class="flex flex-wrap  gap-8 px-8 py-5 justify-content-between" style="background-color: #151548;">
+                  <div class="basin_list">
+                        <div class="cuv_basin" @click="scrollToCuvelaiBasin">{{ $t("home.cuvelai_basin") }}</div>
+                        <div class="basin_underline"></div>
+
+                        <div class="lim_basin" @click="scrollToLimpopoBasin">{{ $t("home.limpopo_basin") }}</div>
+                        <div class="basin_underline"></div>
+
+                        <div class="oka_basin" @click="scrollToOkavangoBasin">{{ $t("home.okavango_basin") }}
                         </div>
+                        <div class="basin_underline"></div>
+
+                        <div class="zam_basin" @click="scrollToZambeziBasin">{{ $t("home.zambezi_basin") }}</div>
+                        <div class="basin_underline"></div>
+
+                  </div>
+
+                  <div class="contact_list" ref="ContactsRef" id="contact_id">
+                        <p id="coord">{{ $t("home.coord_team") }}</p>
+                        <p>{{ $t("home.secretariat") }}</p>
+                        <p>28 Robert Mugabe Avenue, (c/o Robert Mugabe and Newton street)</p>
+                        <p>Windhoek</p>
+                        <p>Namibia</p>
+                        <p>Tel 1: +264-(0)-61-223-997</p>
+                        <p>Tel 2: +264-(0)-61-248-693</p>
+                        <p>Email: info.wemast@sasscal.org</p>
 
                   </div>
             </div>
+
+
+            <div class="flex justify-content-between py-5 px-8   text-50 " style="background-color: #151548;">
+                  <div class="rights">{{ $t("home.copyright") }}</div>
+
+
+                  <div class="policy">{{ $t("home.privacy") }}</div>
+                  <div class="terms">{{ $t("home.terms") }}</div>
+
+
+            </div>
+
+
+
 
 
       </div>
@@ -203,11 +293,116 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router';
 import { ref } from 'vue';
 import LanguageSwitch from '../components/LanguageSwitch.vue';
-import RescaleScreen from '../components/RescaleScreen.vue';
+import Wetlands from '../views/Wetlands.vue';
+import RiverBasin from '../views/RiverBasins.vue';
+import { useI18n } from 'vue-i18n'
+import RiverBasinsVue from './RiverBasins.vue';
+
+const router = useRouter();
+const { t } = useI18n()
+const items = ref([
+      {
+            label: t("home.home"),
+            icon: 'pi pi-home',
 
 
+      },
+      {
+            label: t("home.dashboard"),
+            icon: 'pi pi-map',
+
+            command: () => {
+                  router.push('/dashboard')
+
+            }
+      },
+      {
+            label: t("home.profile"),
+            icon: 'pi pi-user',
+
+            command: () => {
+                  router.push('/signup')
+
+            }
+      },
+
+
+      {
+            label: t("home.documentation"),
+            icon: 'pi pi-file',
+
+            command: () => {
+                  window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki")
+
+            }
+      },
+      {
+            label: t("home.contact"),
+            icon: 'pi pi-envelope',
+
+            command: () => {
+                  // scrollToContacts()
+                  window.open('https://sasscal.org/contact-2/')
+
+
+
+            }
+      }
+]);
+const menuItems = ref([
+
+      {
+            label: 'Home',
+            icon: 'pi pi-home',
+
+
+      },
+      {
+            label: 'Dashboard',
+            icon: 'pi pi-map',
+
+            command: () => {
+                  router.push('/dashboard')
+
+            }
+      },
+      {
+            label: 'Profile',
+            icon: 'pi pi-user',
+
+            command: () => {
+                  router.push('/signup')
+
+            }
+      },
+
+
+      {
+            label: 'Documentation',
+            icon: 'pi pi-file',
+
+            command: () => {
+                  window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki")
+
+            }
+      },
+      {
+            label: 'Contact',
+            icon: 'pi pi-envelope',
+
+            command: () => {
+                  // scrollToContacts()
+                  window.open('https://sasscal.org/contact-2/')
+
+
+
+            }
+      }
+]
+)
 
 let scale_div = ref(
       window.devicePixelRatio !== 1 || window.innerWidth !== screen.width
@@ -221,49 +416,49 @@ const opendisplaysettings = () => {
       window.location.href = displaySettingsURI;
 };
 
-// Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected
-if (window.devicePixelRatio !== 1 || window.innerWidth !== screen.width) {
-      // Prompt the user to adjust their screen settings
-      if (
-            confirm(
-                  "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
-            )
+// Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected  || window.innerWidth !== screen.width
+// if (window.devicePixelRatio !== 1 ) {
+//       // Prompt the user to adjust their screen settings
+//       if (
+//             confirm(
+//                   "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
+//             )
 
 
 
 
-      ) {
-            opendisplaysettings()
-            // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
-            // Example instructions:
-            // confirm("Follow the next instructions");
-            // opendisplaysettings()
-            // var displaySettingsURI = "ms-settings:display";
-            //         // Open the display settings page
-            //         window.location.href = displaySettingsURI;
-      } else {
-            // The user chose not to change their settings
-            alert(
-                  "You can change your screen scale and layout settings later for a better experience."
-            );
-      }
+//       ) {
+//             opendisplaysettings()
+//             // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
+//             // Example instructions:
+//             // confirm("Follow the next instructions");
+//             // opendisplaysettings()
+//             // var displaySettingsURI = "ms-settings:display";
+//             //         // Open the display settings page
+//             //         window.location.href = displaySettingsURI;
+//       } else {
+//             // The user chose not to change their settings
+//             alert(
+//                   "You can change your screen scale and layout settings later for a better experience."
+//             );
+//       }
+// }
+
+// const scrollToElement = (refName) => {
+//       const el = document.getElementById(ref[refName]);
+
+//       if (el) {
+//             el.scrollIntoView();
+//             console.log(ref[refName], 'ref name')
+//       }
+// }
+
+
+
+
+const scrollToContacts = () => {
+      document.getElementById('contact_id').scrollIntoView();
 }
-
-const scrollToElement = (refName) => {
-      const el = document.getElementById(ref[refName]);
-
-      if (el) {
-            el.scrollIntoView();
-            console.log(ref[refName], 'ref name')
-      }
-}
-// const scrollMeTo = (refName) => {
-//       let element = ref[refName];
-
-//       let top = element.offsetTop;
-
-//       window.scrollTo(0, top);
-//     }
 const scrollToCuvelaiBasin = () => {
       document.getElementById('cuvelai_basin_id').scrollIntoView();
 }
@@ -280,23 +475,34 @@ const scrollToOkavangoBasin = () => {
 </script>
 
 <style scoped>
-.home {
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+.home {
+      font-family: Poppins;
+      overflow: hidden !important;
+      /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
 }
 
 #homepage {
-      overflow: hidden;
+      overflow-x: hidden !important;
 }
 
 .nav {
       height: 10vh;
       width: 100vw;
-      display: flex;
-      flex-direction: row;
+      padding: 0 4em;
+
       /* background-color: #eb9292; */
 
 }
+
+@media screen and (max-width:1500px) {
+        .logos{
+           
+        display: none !important;
+   
+        }
+    }
 
 .languages {
       margin-left: 2vw;
@@ -341,31 +547,40 @@ const scrollToOkavangoBasin = () => {
 
 }
 
+
 .banner {
       position: absolute;
-      width: 95vw;
-      height: 47vh;
+
+      min-height: 46vh;
+      max-width: 100%;
       top: 10vh;
       left: 0;
-      margin-left: 50px;
-      margin-right: 50px;
+      margin: 0 3em;
       background-color: #2e3192;
-      /* padding: 2vh; */
+      padding: 4em 2em;
+
+
 }
 
+
+
 .title {
-      /* font-family: Roboto; */
-      font-size: 64px;
-      margin: 51.6px 0 19px 53.6px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.2;
-      letter-spacing: normal;
-      text-align: left;
+
+      font-size: 3em;
       color: #ffffff;
-      margin-left: 8vw;
-      margin-top: -6vh;
+      /* font-weight: bold; */
+
+
+      @media (max-width: 768px) {
+            font-size: 2em !important;
+            /* padding-top: 6em; */
+            margin-left: -.5rem !important;
+      }
+
+      @media (max-width: 480px) {
+            font-size: 1.2em !important;
+      }
+
 }
 
 .abbreviation {
@@ -379,421 +594,81 @@ const scrollToOkavangoBasin = () => {
       cursor: pointer;
       background-color: #2e3192;
       border: #1481c3 4px solid;
-      width: 250px;
-      height: 50px;
-      border-radius: 50px;
-      font-size: 20px;
-      margin-left: 8vw;
+
+      border-radius: 3em;
+      font-size: 1.2em;
+      margin-left: 6vw;
+      padding: 0.7em 1em;
+
+
+      @media (max-width: 768px) {
+            font-size: 1em !important;
+
+            margin-left: 5rem !important;
+      }
+
+      @media (-webkit-min-device-pixel-ratio: 1.25) {
+            margin: 0.7em 6em;
+      }
+
 
 }
 
-@media screen and (max-width: 1400px) {
-      .nav_icons {
-            position: absolute;
-            top: 1vh;
-            left: 54vw;
-            display: flex;
-            flex-direction: row;
-            gap: 4.5rem;
-      }
-
-      .nav_labels {
-            position: absolute;
-            top: 5vh;
-            left: 54vw;
-            display: flex;
-            flex-direction: row;
-            gap: 3.5rem;
-
-      }
-
-      .nav_contact {
-            position: absolute;
-            left: 33.5vw;
-      }
-
-      .title {
-            /* font-family: Roboto; */
-            width: 1150px !important;
-            font-size: 48px;
-            margin: 51.6px 0 19px 53.6px;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.2;
-            letter-spacing: normal;
-            text-align: left;
-            color: #ffffff;
-            margin-left: 8vw;
-            margin-top: -6vh;
-      }
-
-      .image_icons {
-            position: absolute;
-            top: 62vh;
-            left: 3.5vw;
-            display: flex;
-            flex-direction: row;
-            gap: 18rem !important;
-      }
-
-      .image_text {
-            position: absolute;
-            top: 60.5vh;
-            left: 5vw;
-            display: flex;
-            flex-direction: row;
-            gap: 18rem !important;
-            /* font-family: Montserrat; */
-            font-size: 17px;
-            font-weight: bold;
-            /* font-stretch: normal; */
-            font-style: normal;
-            /* line-height: 1.18; */
-            letter-spacing: normal;
-
-            color: #2e3192;
-      }
-
-      .geodata {
-            position: absolute;
-            white-space: nowrap;
-            left: 5vw;
-      }
-
-      .timeseries {
-            position: absolute;
-            white-space: nowrap;
-            /* background-color: #a82121; */
-            margin-left: -0.5vw;
-      }
-
-      .documentation {
-            position: absolute;
-            white-space: nowrap;
-            /* background-color: #a82121; */
-            margin-left: -3.5vw;
-      }
-
-      #docs_icon {
-            margin-left: -2.5vw;
-      }
-
-      p.analytics {
-            position: relative;
-            white-space: nowrap;
-            left: -15vw;
-      }
-
-      .screenshot_carosel {
-            position: absolute;
-            top: 68vh;
-            left: 3.5vw;
-            width: 50vw;
-            display: flex;
-            flex-direction: row;
-            gap: 0.2rem;
-      }
-
-      .hightlight-item {
-
-            width: 150px;
-            height: 150px !important;
-            object-fit: fill;
-      }
-
-      .geodata_subtext {
-            position: relative;
-            left: 1.8vw;
-            /* background-color: #f89999;  */
-            width: 500px;
-            font-size: 13px;
-      }
-
-
-      p.timeseries_subtext {
-            position: relative;
-            margin-left: -16.5vw;
-            /* background-color: #f89999;  */
-            width: 500px;
-            font-size: 13px;
-      }
-
-      .documentation_subtext {
-            position: relative;
-            margin-left: -19.5vw;
-            /* background-color: #f89999;  */
-            width: 500px;
-            font-size: 13px;
-      }
-
-      .analytics_subtext {
-            position: relative;
-            margin-left: -17.3vw;
-            /* background-color: #f89999;  */
-            width: 400px;
-            font-size: 13px;
-      }
-
-      /* .wetlands{
-  
-      overflow-wrap: break-word !important;
-      padding: 5px;
-     
-      background-color: #f89999;
-} */
-
-      .sadc-text {
-            /* font-family: Roboto; */
-            position: absolute;
-            top: 1070px;
-            left: 3.5vw;
-            right: 2vw !important;
-            width: 90% !important;
-            /* word-break: break-word; */
-            font-size: 24px !important;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.3;
-            letter-spacing: normal;
-            text-align: left;
-            color: #707070;
-      }
-
-      .sadc_images {
-            position: absolute;
-            top: 1270px;
-            left: 3.5vw;
-            display: flex;
-            flex-direction: row;
-            gap: 8px;
-      }
-
-      .sadc-img {
-            width: 45% !important;
-
-            object-fit: contain;
-
-      }
-
-      .caption_icons {
-            position: absolute;
-            top: 1660px !important;
-            ;
-            left: 3.5vw;
-            display: flex;
-            flex-direction: row;
-            gap: 37rem !important;
-
-
-
-      }
-
-      .captions {
-            position: absolute;
-            top: 1660px !important;
-            left: 3.5vw;
-            display: flex;
-            flex-direction: row;
-            gap: 37rem !important;
-            font-size: 16px;
-            margin-bottom: 2px;
-      }
-
-      .caption1 {
-            position: relative;
-            top: -1.5vh;
-            left: 2vw !important;
-
-      }
-
-      .caption2 {
-            position: relative;
-            top: -1.5vh;
-            left: -14.5vw !important;
-
-      }
-
-
-      #river_basins {
-            position: absolute;
-            top: 1700px !important;
-            left: 3.5vw;
-      }
-
-      .basins {
-            position: absolute;
-            top: 250px;
-
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-
-
-
-      }
-
-      .basin {
-            background-color: rgb(214, 217, 219);
-            color: white;
-            padding: 1rem;
-            height: 37rem;
-            width: 38rem !important;
-      }
-
-      /* @media (min-width: 900px) {
-  .basins { grid-template-columns: repeat(2, 1fr) !important;
+.grid {
+      position: absolute;
+      top: 56vh;
+      margin: -4em;
 }
-} */
-
-      #flamingo {
-            background-image: url('/images/sadc2.png');
-            background-repeat: no-repeat;
-            background-size: 42rem 39rem !important;
-
-      }
-
-      .cuvelai_basin {
-            position: relative;
-            top: -4vh;
-            font-size: 40px;
-            font-weight: bold;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.33;
-            letter-spacing: normal;
-            text-align: left;
-            color: #323690;
-            margin-top: 20px;
-            padding: 20px 0px 0px 20px !important;
-      }
-
-      .cuvelai_text {
-            position: relative;
-            top: -9vh !important;
-            width: 500px;
-            font-size: 19.5px !important;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.22;
-            letter-spacing: normal;
-            text-align: left;
-            color: #707995;
-            padding: 20px !important;
-      }
-
-      .limpopo_text {
-            /* font-family: Roboto; */
-            position: relative;
-            top: -10vh !important;
-            font-size: 22px !important;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.22;
-            letter-spacing: normal;
-            text-align: left;
-            color: #ffffff;
-            padding: 30px;
-      }
-
-      #hippo {
-            background-image: url('/images/hippo.png');
-            background-repeat: no-repeat;
-            background-size: 40rem 52rem !important;
-            height: 50rem;
-
-      }
-
-      .okavango_text {
-            position: relative;
-            top: 2vh !important;
-            width: 500px;
-            font-size: 22px !important;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.22;
-            letter-spacing: normal;
-            text-align: left;
-            color: #707995;
-            padding: 20px !important;
-      }
-
-      .zambezi_text {
-            position: relative;
-            top: -4vh;
-            font-size: 23px;
-            font-weight: normal;
-            font-stretch: normal;
-            font-style: normal;
-            line-height: 1.22;
-            letter-spacing: normal;
-            text-align: left;
-            color: #ffffff;
-            padding: 30px;
-      }
-
-      .footer {
-            position: absolute;
-            top: 5200px !important;
-            left: 3.5vw;
-            display: flex;
-            flex-direction: row !important;
-            gap: 20rem !important;
-      }
-
-      .partner-logos {
-            height: 93.8px;
-            object-fit: contain;
-      }
-
-      .project_info {
-            position: absolute;
-            top: 15vh;
-            left: -.5vw;
-            display: flex;
-            flex-direction: row;
-            gap: 22rem !important;
-            height: 35vh;
-            width: 92.5vw;
-            background-color: #151548;
-
-      }
-
-      #contact_flex {
-            height: 290px !important;
-            width: 350px;
-            /* background-color: #d35454; */
-      }
-
-      .contact_list {
-            position: relative;
-            left: 12vw;
-            display: flex;
-            flex-direction: column;
-            gap: -2.5rem !important;
-            color: #ffffff;
-            font-size: 12px;
-      }
-
-      .final_footer {
-            position: absolute;
-            top: 460px;
-            left: -.5vw;
-            height: 15vh;
-            width: 92.5vw;
-            background-color: #05051f;
-            display: flex;
-            flex-direction: row;
-            gap: 22rem !important;
-      }
 
 
-
+.container {
+      position: absolute;
+      top: 56vh;
+      display: flex;
+      /* grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); Adjust minmax and min-width as needed */
+      gap: 12em;
+      max-width: 95vw;
+      /* margin: 0 auto; */
+      margin-left: 2.2vw;
+      /* background-color: #f5f5f5;  */
 }
+
+.section {
+      /* background-color: #f5f5f5;  */
+      /* padding: 20px; */
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      gap: 0.5em;
+}
+
+
+@media  screen and (min-width: 769px) and (max-width: 975px) {
+
+      .banner{
+            padding-bottom: 0;
+            font-size: 0.7em;
+      }
+
+      .cardd{
+            width:100%;
+      }
+      .summary_cards{
+            margin-left:2em;
+      }
+    
+}
+
+.icon img {
+      max-width: 100%;
+      height: auto;
+}
+
+p {
+      margin: 0 0 10px 0;
+      /* Adjust paragraph margin */
+}
+
 
 
 
@@ -921,101 +796,28 @@ const scrollToOkavangoBasin = () => {
 
 .hightlight-item {
 
-      width: 40%;
-      height: 200px;
+      width: 100%;
+      height: 100%;
       object-fit: fill;
 }
 
-.wetlands_sadc {
-      position: absolute;
-      top: 95vh;
-      left: 3.5vw;
-      /* font-family: Montserrat; */
-      font-size: 50px;
-      font-weight: 800;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.5;
-      letter-spacing: normal;
-      text-align: left;
-      color: #323690;
-}
 
-.eo_products {
-      position: absolute;
-      top: 1000px;
-      left: 3.5vw;
-      /* font-family: Roboto; */
-      font-size: 30px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: normal;
-      text-align: left;
-      color: #050000;
-}
 
-.sadc-text {
-      /* font-family: Roboto; */
-      position: absolute;
-      top: 1070px;
-      left: 3.5vw;
-      font-size: 30px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: normal;
-      text-align: left;
-      color: #707070;
-}
-
-.sadc-img {
-      width: 50%;
-
-      object-fit: contain;
-
-}
-
-.sadc_images {
-      position: absolute;
-      top: 1270px;
-      left: 3.5vw;
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
-}
 
 .caption_icons {
-      position: absolute;
+      /* position: absolute;
       top: 1860px;
-      left: 3.5vw;
-      display: flex;
-      flex-direction: row;
-      gap: 56rem;
+      left: 3.5vw; */
+      margin-top: 35em;
+      background-color: darksalmon;
+      gap: 27em;
 
 
 
 }
 
-.captions {
-      position: absolute;
-      top: 1857px;
-      left: 3.5vw;
-      display: flex;
-      flex-direction: row;
-      gap: 56rem;
-      font-size: 16px;
-      margin-bottom: 2px;
-}
 
-.caption1 {
-      position: relative;
-      top: -1.5vh;
-      left: 1.5vw;
 
-}
 
 .caption2 {
       position: relative;
@@ -1024,304 +826,149 @@ const scrollToOkavangoBasin = () => {
 
 }
 
-#river_basins {
-      position: absolute;
-      top: 1900px;
-      left: 3.5vw;
-}
 
-.river_basins_title {
-
-
-      font-size: 50px;
-      font-weight: 700;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.5;
-      letter-spacing: normal;
-      text-align: left;
-      color: #323690;
-}
-
-.river_basins_infographics {
-      font-size: 30px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: normal;
-      text-align: left;
-      color: #050000;
-}
-
-.basins {
-      position: absolute;
-      top: 250px;
-      /* left: 3.5vw;    */
-
-
-
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      gap: rem;
-
-
-}
-
-
-
-.basin {
-      background-color: rgb(214, 217, 219);
-      color: white;
-      padding: 1rem;
-      height: 37rem;
-      width: 53rem;
-}
-
-@media (min-width: 900px) {
-      .basins {
-            grid-template-columns: repeat(2, 1fr);
-      }
-}
-
-#flamingo {
-      background-image: url('/images/sadc2.png');
-      background-repeat: no-repeat;
-      background-size: 55rem 39rem;
-
-}
-
-.cuvelai_basin {
-      position: relative;
-      top: -4vh;
-      font-size: 40px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      text-align: left;
-      color: #323690;
-      margin-top: 20px;
-      padding: 30px 0px 0px 30px;
-}
-
-.cuvelai_text {
-      position: relative;
-      top: -8vh;
-      font-size: 23px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.22;
-      letter-spacing: normal;
-      text-align: left;
-      color: #707995;
-      padding: 30px;
-}
-
-.limpopo_basin {
-      position: relative;
-      top: -3vh;
-      font-size: 40px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      text-align: left;
-      color: #1c80c3;
-      margin-top: 20px;
-      padding: 30px 0px 0px 30px;
-
-}
-
-#limpopo {
-      background-color: #353996;
-      height: 50rem;
-}
-
-.limpopo_text {
-      /* font-family: Roboto; */
-      position: relative;
-      top: -8vh;
-      font-size: 23px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.22;
-      letter-spacing: normal;
-      text-align: left;
-      color: #ffffff;
-      padding: 30px;
-}
-
-#hippo {
-      background-image: url('/images/hippo.png');
-      background-repeat: no-repeat;
-      background-size: 55rem 52rem;
-      height: 50rem;
-
-}
-
-#waterfall {
-      background-image: url('/images/waterfall.png');
-      background-repeat: no-repeat;
-      background-size: 55rem 52rem;
-      height: 50rem;
-
-}
-
-.okavango_basin {
-      position: relative;
-      top: -4vh;
-      font-size: 40px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      text-align: left;
-      color: #323690;
-      margin-top: 20px;
-      padding: 30px 0px 0px 30px;
-}
-
-.okavango_text {
-      font-size: 23px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.22;
-      letter-spacing: normal;
-      text-align: left;
-      color: #707070;
-      padding: 30px;
-}
-
-#okavango {
-      height: 50rem;
-
-}
-
-#zambezi {
-      background-color: #1481c3;
-      height: 50rem;
-
-}
-
-.zambezi_basin {
-      /* position: relative;
-      top: -4vh; */
-      font-size: 40px;
-      font-weight: bold;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      text-align: left;
-      color: #323690;
-      margin-top: 20px;
-      padding: 30px 0px 0px 30px;
-
-}
-
-.zambezi_text {
-      font-size: 23px;
-      font-weight: normal;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.22;
-      letter-spacing: normal;
-      text-align: left;
-      color: #ffffff;
-      padding: 30px;
-}
-
-#lion {
-      background-image: url('/images/lion.png');
-      background-repeat: no-repeat;
-      background-size: 55rem 52rem;
-      height: 50rem;
-}
 
 .footer {
-      position: absolute;
-      top: 5400px;
-      left: 3.5vw;
+      margin-top: 5em;
       display: flex;
       flex-direction: row;
       gap: 50rem;
+      /* background-color: #1481c3; */
+      /* padding: 7em; */
 }
 
-@media screen and (max-width: 600px) {
-      .partner-logos {
-            height: 93.8px;
-            width: 100%;
-            object-fit: contain;
-      }
+
+
+.partners {
+      gap: 62em;
 }
 
 .partner-logos {
-      height: 93.8px;
-      object-fit: contain;
-}
-
-.project-name {
-      /* float: right; */
-      position: relative;
-      top: -3vh;
-      font-weight: 800;
-}
-
-.project_logo {
-      height: 73.8px;
-      object-fit: contain;
-}
-
-@media screen and (min-width: 769px) {
-      .project_logo {
-            position: relative;
-            top: -3vh;
-            height: 93.8px;
-
-            object-fit: contain;
-      }
-
-      .project_name {
-            /* float: right; */
-            position: relative;
-            top: -3vh;
-            font-weight: 600;
-      }
+      height: 4em;
+      /* object-fit: contain; */
 }
 
 .project_info {
       position: absolute;
-      top: 15vh;
-      left: -.5vw;
+      top: 95vh;
+      background-color: #151548;
+
+}
+
+
+.logo-container {
       display: flex;
-      flex-direction: row;
-      gap: 50rem;
-      height: 35vh;
-      width: 92.5vw;
+      justify-content: space-between;
+      align-items: flex-start;
+      /* Align items to the top */
+      flex-wrap: wrap;
+      margin: 2em;
+}
+
+.logo-item {
+      flex: 0 0 calc(25% - 10px);
+      /* Adjust the width as per your requirement */
+      margin-bottom: 10px;
+}
+
+.logo-item:last-child {
+      margin-bottom: 0;
+      /* Remove margin from the last item */
+}
+
+@media only screen and (max-width: 768px) {
+      .logo-item {
+            flex-basis: calc(50% - 10px);
+            /* Adjust the width for smaller screens */
+      }
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.25) {
+      .partners {
+            gap: 30em;
+      }
+
+      .project_info {
+            /* padding: 1em 0em; */
+            /* gap: 2em; */
+            /* width: 65%; */
+            background-color: #151548;
+
+      }
+
+      .final_footer {
+
+            background-color: transparent !important;
+
+
+
+      }
+
+      .cuvelai_text {
+
+            font-size: 1em;
+
+            color: #707995;
+            margin-top: -1em;
+      }
+
+      .limpopo_text {
+            font-size: 1em;
+            padding: 0.5em 2em;
+            margin-top: -1em;
+
+            color: #ffffff;
+
+      }
+
+      .okavango_text {
+            font-size: 1em;
+            padding: 2em;
+            margin-top: -1em;
+            color: #707070;
+
+      }
+
+      .zambezi_text {
+            font-size: 1em;
+            padding: 2em;
+            margin-top: -1em;
+            color: #ffffff;
+
+      }
+
+
+
+
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.5) {
+      .partners {
+            gap: 30em;
+      }
+}
+
+
+
+.project_info {
+
+
+
+      gap: 30em;
+
+      /* padding: 1em 14em; */
       background-color: #151548;
 
 }
 
 .basin_list {
       cursor: pointer;
-      /* font-family: Roboto; */
-      font-size: 30px;
+
+      font-size: 1.5;
       font-weight: 300;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: normal;
-      text-align: left;
+
       color: #ffffff;
-      padding: 20px;
+      /* padding-right: 2em; */
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -1335,13 +982,7 @@ const scrollToOkavangoBasin = () => {
 }
 
 .contact_list {
-      position: relative;
-      left: 12vw;
-      display: flex;
-      flex-direction: column;
-      gap: -5rem;
-      color: #ffffff;
-      font-size: 12px;
+      color: #fff;
 }
 
 #coord {
@@ -1350,43 +991,14 @@ const scrollToOkavangoBasin = () => {
 
 .final_footer {
       position: absolute;
-      top: 460px;
-      left: -.5vw;
-      height: 15vh;
-      width: 92.5vw;
-      background-color: #05051f;
-      display: flex;
-      flex-direction: row;
-      gap: 50rem;
-}
-
-.rights {
-      position: relative;
-      top: 2vh;
-      left: 1vw;
-      font-size: 21px;
-      font-weight: 300;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      text-align: left;
       color: #ffffff;
-}
 
-.policy_terms {
-      position: relative;
-      top: 2vh;
-      left: 15vw;
-      display: flex;
-      flex-direction: row;
-      gap: 7rem;
-      color: #ffffff;
-      font-size: 21px;
-      font-weight: 300;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.33;
-      letter-spacing: normal;
-      text-align: left;
-}</style>
+      /* left: -.5vw; */
+      padding: 2em 10em;
+      margin-top: 24.5em;
+      background-color: #151548;
+      ;
+      gap: 15em;
+      width: 100%;
+}
+</style>

@@ -1,23 +1,22 @@
 <template>
-   
-    <p class="select_language"> Select Language</p>
-    <select class="lang"
-    @change="switchLanguage"
-    
-    >
-    <option  class="lang_options"
-    v-for="sLocale in supportedLocales"
-    :key="`locale-${sLocale}`"
-    :value="sLocale">
-    
-    {{ t(`locale.${sLocale}`) }}
-    </option>
 
-</select>
-  
+    <div class="flex flex-column gap-1">
+        <p class="">Select Language</p>
+        <select class="lang" @change="switchLanguage">
+            <option class="lang_options" v-for="sLocale in supportedLocales" :key="`locale-${sLocale}`"
+                :value="sLocale">
+
+                {{ t(`locale.${sLocale}`) }}
+            </option>
+
+
+        </select>
+    </div>
+
 </template>
 
 <script setup>
+import 'primeflex/primeflex.css'
 import { useI18n } from 'vue-i18n'
 import Tr from "@/i18n/translation"
 
@@ -29,22 +28,25 @@ const supportedLocales = Tr.supportedLocales
 
 // })
 const switchLanguage = async (e) => {
-const newLocale = e.target.value
-await Tr.switchLanguage(newLocale)
+    const newLocale = e.target.value
+    await Tr.switchLanguage(newLocale)
 }
 
 </script>
 
 <style scoped>
-.select_language{
+.select_language {
     /* font-weight: 600; */
     line-height: 0.5rem;
 }
-.lang{
+
+.lang {
     outline: none;
     border: none;
+    font-family: Poppins;
 }
-.lang_options{
+
+.lang_options {
     border-bottom: 1px;
     padding: 5px;
 

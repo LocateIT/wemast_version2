@@ -43,25 +43,17 @@
 }
 
 .eo_products {
-      /* position: absolute;
-      top: 1000px;
-      left: 3.5vw; */
+    
 
       font-size: 1.5em;
       font-weight: bold;
-      /* font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: normal;
-      text-align: left; */
+      
       color: #050000;
 }
 
 .sadc-text {
 
-      /* position: absolute;
-      top: 1070px;
-      left: 3.5vw; */
+     
       font-size: 1.5em;
       font-weight: normal;
       font-stretch: normal;
@@ -86,7 +78,7 @@
       position: relative;
       overflow: hidden;
       height: 65vh;
-      /* Adjust the height of each row */
+  
 }
 
 .grid-item img {

@@ -72,37 +72,22 @@
 
     font-size: 2.5em;
     font-weight: 700;
-    /* font-stretch: normal;
-      font-style: normal;
-      line-height: 1.5;
-      letter-spacing: normal;
-      text-align: left; */
+  
     color: #323690;
 }
 
 .river_basins_infographics {
     font-size: 1.5em;
     font-weight: bold;
-    /* font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: normal;
-      text-align: left; */
+   
     color: #050000;
 }
 
 .basins {
-    /* position: absolute; */
-    /* top: 250px; */
-    /* left: 3.5vw;    */
-
-
-
-    /* max-width: 1200px; */
-    /* margin: 0 auto; */
+ 
     margin-top: 2em;
     display: grid;
-    /* gap: 0rem; */
+   
 
 
 }
@@ -112,14 +97,14 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 0.3em;
     padding: 1em;
-    /* Adjust the gap between images */
+ 
 }
 
 .grid-item {
     position: relative;
     overflow: hidden;
     height: 65vh;
-    /* Adjust the height of each row */
+   
 }
 
 .grid-item img {

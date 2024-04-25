@@ -13,7 +13,7 @@ import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import PrimeVue from 'primevue/config';
 import "primeflex/primeflex.css";
-import "primevue/resources/themes/aura-light-green/theme.css";
+import "primevue/resources/themes/aura-light-blue/theme.css";
 // import "primeicons/primeicons.css";
 import Dropdown from 'primevue/dropdown';
 import Button from 'primevue/button';
@@ -23,6 +23,8 @@ import InputText from 'primevue/inputtext';
 // import Sidebar from 'primevue/sidebar';
 import SplitButton from 'primevue/splitbutton';
 import Card from 'primevue/card';
+import FileUpload from 'primevue/fileupload';
+
 
 const app = createApp(App)
 // .use(i18n)
@@ -40,5 +42,6 @@ app.component('Menubar', Menubar);
 // app.component('Sidebar', Sidebar);
 app.component('SplitButton', SplitButton);
 app.component('Card', Card);
+app.component('FileUpload', FileUpload);
 
 app.mount('#app')

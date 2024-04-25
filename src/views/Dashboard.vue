@@ -12,26 +12,45 @@
     </div>
 
 
-    <div class="upload_shapefile_container" v-if="upload_shapefile" style="
+    <!-- <div class="upload_shapefile_container" v-if="upload_shapefile" style="
         z-index: 1000;
         position: absolute;
         top: 62vh;
-        left: 77vw;
-        height: 12vh;
-        width: 12vw;
+        left: 72vw;
+        
         background-color: #fff;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        padding: 20px;
+        padding: 2em;
         gap: 0.5rem;
       ">
       <span class="select_zipped" style="margin-top: 0.1vw; color: #073e81; font-weight: 600">{{
         $t("home.upload_shapefile") }}</span>
-      <input type="file" id="file" />
-      <input type="submit" id="submit" @click="submit_shapefile" class="submit_shapefile" style="margin-left: -10vw" />
+       <input type="file" id="file" />
+      <input type="submit" id="submit" @click="submit_shapefile" class="submit_shapefile" /> 
+      
       <span id="warning" style="position: relative; top: 2vh"></span>
+    </div> -->
+
+
+
+    <div class="upload_shapefile_container  flex justify-content-center surface-card p-5 border-round m-3" v-if="upload_shapefile"
+    style="
+        z-index: 1000;
+        position: absolute;
+        top: 60vh;
+        left: 65vw;
+      ">
+        <FileUpload  id="file"  name="zipFile"  accept=".zip" :multiple="true"  customUpload @uploader="submit_shapefile" >
+        <template #empty>
+                <p>Drag and drop files to here to upload.</p>
+            </template>
+            </FileUpload>
+
+        <span id="warning" style="position: relative; top: 2vh"></span>
+        
     </div>
 
 
@@ -1681,6 +1700,7 @@ import shp from "shpjs/dist/shp.js";
 import "../upload_shp/leaflet.shpfile.js";
 import Toast, { POSITION } from "vue-toastification";
 import { useToast } from "vue-toastification";
+// import { useToast } from "primevue/usetoast";
 import { useRoute, useRouter } from 'vue-router';
 import * as turf from '@turf/helpers'
 import center from '@turf/center'
@@ -1874,13 +1894,17 @@ const show_upload_shapefile = () => {
 const viewStats = () => {
   visibleRight.value = true
 }
-const submit_shapefile = () => {
-  var files = document.getElementById("file").files;
-  if (files.length == 0) {
+
+
+const submit_shapefile = (event) => {
+  // var files = document.getElementById("file").files;
+  if (event.files.length == 0) {
     return; //do nothing if no file given yet
   }
 
-  var file = files[0];
+  // var file = files[0];  
+  const file = event.files[0];
+  // console.log("Uploaded file:", file);
 
   if (file.name.slice(-3) != "zip") {
     //Demo only tested for .zip. All others, return.
@@ -1892,10 +1916,10 @@ const submit_shapefile = () => {
     return;
   } else {
     toast.success("Shapefile uploaded successfully", {
-      timeout: 2000,
+      timeout: 3000,
       position: POSITION.BOTTOM_RIGHT,
     });
-    document.getElementById("warning").innerHTML = ""; //clear warning message.
+    document.getElementById("warning").innerHTML = ""; 
     handleZipFile(file);
   }
 };

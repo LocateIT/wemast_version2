@@ -1713,6 +1713,7 @@ import ResponsiveNav from "../components/ResponsiveNav.vue";
 
 //refs go here
 let baseurl = "http://66.42.65.87";
+let apiKey = import.meta.env.VITE_MAPBOX_API_KEY
 
 let upload_shapefile = ref(false);
 
@@ -1895,7 +1896,8 @@ function convertToLayer(buffer) {
   if (wmsLayer.value) map.removeLayer(wmsLayer.value);
   if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
   if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
-  if (wmsPrecTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value); //lulc_legend.value
+  // if (wmsPrecTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value); 
+  //lulc_legend.value
 
   shp(buffer).then(function (geojson) {
     //More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
@@ -3233,8 +3235,7 @@ const setLeafletMap = () => {
         'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 
       id: "mapbox/satellite-v9",
-      accessToken:
-        "pk.eyJ1IjoiY2hyaXNiYXJ0IiwiYSI6ImNrZTFtb3Z2bDAweTMyem1zcmthMGY0ejQifQ.3PzoCgSiG-1-sV1qJvO9Og",
+      accessToken:apiKey,
     }
   );
 
@@ -3245,8 +3246,7 @@ const setLeafletMap = () => {
         'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 10,
       id: "mapbox/streets-v11",
-      accessToken:
-        "pk.eyJ1IjoiY2hyaXNiYXJ0IiwiYSI6ImNrZTFtb3Z2bDAweTMyem1zcmthMGY0ejQifQ.3PzoCgSiG-1-sV1qJvO9Og",
+      accessToken:apiKey,
     }
   );
 
@@ -3269,48 +3269,17 @@ const setLeafletMap = () => {
 
   L.control.layers(baseMaps.value).addTo(map);
 
-  ///////////////////hide layers control
-  //  var layerControl = document.getElementsByClassName(
-  //   "leaflet-control-layers"
-  // );
-  // layerControl[0].style.visibility = "hidden";
 
   current_top_base_layer.value = "MapBoxSatellite";
 
-  //        var printer = L.easyPrint({
-  // 	// title: 'My awesome print button',
-  //   tileLayer: mapboxSatellite,
-  // 	position: 'bottomright',
-  // 	sizeModes: ['A4Portrait', 'A4Landscape'],
-  //   filename: 'mymap',
-  //   exportOnly: true,
-  //       		hideControlContainer: true
-  // }).addTo(map);
-  // printPlugin.value = printer
-
-  // printPlugin.value.printMap('A4Portrait', 'MyFileName');
+  
 };
 
 //hooks
 
 onMounted(() => {
   setLeafletMap();
-  //     //console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
-  //    var device_scale = window.devicePixelRatio
-  //    browserZoomLevel.value = Math.round(window.devicePixelRatio * 100);
-  //   //  alert(browserZoomLevel.value)
-  //   //  //console.log('browser zoom',browserZoomLevel)
-  //    if(device_scale === 1.25){
-  //     // document.body.style.zoom = "99%";
-  //   //  alert(browserZoomLevel)
-  //   // window.devicePixelRatio = 1
-  // // browserZoomLevel.value = 80
-
-  //  browserZoomLevel.value = Math.round(browserZoomLevel.value - 45)
-  //  window.devicePixelRatio = 1
-  //  alert(browserZoomLevel.value)
-
-  //    }
+ 
 
   //load zambezi
   const fetchZambezi = async () => {
@@ -3362,9 +3331,7 @@ onMounted(() => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Name='Zambezi'",
-      // CQL_FILTER:"BBOX(the_geom, 13, -19, 19, -15 )"
-      //  CQL_FILTER: "INTERSECTS(the_geom, MULTIPOLYGON (((16.3419 -15.1163, 16.3418 -15.1255, 16.351 -15.1255, 16.3509 -15.1346, 16.36 -15.1346, 16.3692 -15.1346, 16.3693 -15.1255, 16.3785 -15.1255, 16.3876 -15.1255, 16.3875 -15.1346, 16.3967 -15.1346, 16.4059 -15.1346, 16.406 -15.1255, 16.4151 -15.1255, 16.4243 -15.1255, 16.4242 -15.1346, 16.4334 -15.1346, 16.4425 -15.1346, 16.4424 -15.1437, 16.4423 -15.1528, 16.4422 -15.162, 16.4514 -15.162, 16.4606 -15.162, 16.4697 -15.162, 16.4696 -15.1711, 16.4695 -15.1802, 16.4787 -15.1802, 16.4786 -15.1893, 16.4785 -15.1984, 16.4877 -15.1984, 16.4876 -15.2076, 16.4967 -15.2076, 16.4966 -15.2167, 16.5058 -15.2167, 16.515 -15.2167, 16.5241 -15.2167, 16.524 -15.2258, 16.5332 -15.2258, 16.5331 -15.2349, 16.5423 -15.2349, 16.5422 -15.244, 16.5513 -15.244, 16.5605 -15.244, 16.5604 -15.2532, 16.5696 -15.2532, 16.5697 -15.244, 16.5698 -15.2349, 16.5699 -15.2258, 16.57 -15.2167, 16.5791 -15.2167, 16.5883 -15.2167, 16.5975 -15.2167, 16.6067 -15.2167, 16.6066 -15.2258, 16.6157 -15.2258, 16.6249 -15.2258, 16.6341 -15.2258, 16.634 -15.2349, 16.6431 -15.2349, 16.6523 -15.2349, 16.6522 -15.2441, 16.6614 -15.2441, 16.6613 -15.2532, 16.6521 -15.2532, 16.652 -15.2623, 16.6519 -15.2714, 16.6518 -15.2805, 16.661 -15.2805, 16.6702 -15.2805, 16.6701 -15.2897, 16.6792 -15.2897, 16.6884 -15.2897, 16.6976 -15.2897, 16.7067 -15.2897, 16.7159 -15.2897, 16.7158 -15.2988, 16.725 -15.2988, 16.7249 -15.3079, 16.7248 -15.317, 16.7156 -15.317, 16.7065 -15.317, 16.7064 -15.3262, 16.7063 -15.3353, 16.7062 -15.3444, 16.7153 -15.3444, 16.7152 -15.3535, 16.7244 -15.3535, 16.7336 -15.3535, 16.7428 -15.3535, 16.7427 -15.3627, 16.7518 -15.3627, 16.7519 -15.3535, 16.7611 -15.3535, 16.761 -15.3627, 16.7702 -15.3627, 16.7794 -15.3627, 16.7793 -15.3718, 16.7884 -15.3718, 16.7883 -15.3809, 16.7882 -15.39, 16.7881 -15.3992, 16.7881 -15.4083, 16.788 -15.4174, 16.7971 -15.4174, 16.8063 -15.4174, 16.8062 -15.4265, 16.8154 -15.4265, 16.8153 -15.4357, 16.8245 -15.4357, 16.8336 -15.4357, 16.8428 -15.4357, 16.8427 -15.4448, 16.8426 -15.4539, 16.8518 -15.4539, 16.8517 -15.463, 16.8609 -15.463, 16.8701 -15.463, 16.87 -15.4722, 16.8699 -15.4813, 16.8791 -15.4813, 16.8882 -15.4813, 16.8974 -15.4813, 16.8973 -15.4904, 16.9065 -15.4904, 16.9064 -15.4995, 16.9156 -15.4995, 16.9248 -15.4995, 16.9339 -15.4995, 16.934 -15.4904, 16.9432 -15.4904, 16.9431 -15.4995, 16.9523 -15.4995, 16.9522 -15.5087, 16.9521 -15.5178, 16.9613 -15.5178, 16.9705 -15.5178, 16.9704 -15.5269, 16.9795 -15.5269, 16.9887 -15.5269, 16.9979 -15.5269, 17.0071 -15.5269, 17.0163 -15.5269, 17.0254 -15.5269, 17.0346 -15.5269, 17.0438 -15.5269, 17.0437 -15.5361, 17.0529 -15.5361, 17.062 -15.5361, 17.0712 -15.5361, 17.0713 -15.5269, 17.0805 -15.5269, 17.0806 -15.5178, 17.0898 -15.5178, 17.0989 -15.5178, 17.0988 -15.5269, 17.108 -15.527, 17.1172 -15.527, 17.1171 -15.5361, 17.1263 -15.5361, 17.1355 -15.5361, 17.1446 -15.5361, 17.1538 -15.5361, 17.1537 -15.5452, 17.1629 -15.5452, 17.1721 -15.5452, 17.1813 -15.5452, 17.1905 -15.5452, 17.1904 -15.5543, 17.1903 -15.5635, 17.1902 -15.5726, 17.1994 -15.5726, 17.2086 -15.5726, 17.2085 -15.5817, 17.2177 -15.5817, 17.2177 -15.5726, 17.2269 -15.5726, 17.2361 -15.5726, 17.236 -15.5817, 17.2359 -15.5909, 17.2451 -15.5909, 17.245 -15.6, 17.2542 -15.6, 17.2541 -15.6091, 17.254 -15.6182, 17.2632 -15.6182, 17.2631 -15.6274, 17.2631 -15.6365, 17.263 -15.6456, 17.2721 -15.6456, 17.2813 -15.6456, 17.2905 -15.6456, 17.2904 -15.6548, 17.2996 -15.6548, 17.2995 -15.6639, 17.3087 -15.6639, 17.3086 -15.673, 17.3178 -15.673, 17.3177 -15.6822, 17.3176 -15.6913, 17.3176 -15.7004, 17.3084 -15.7004, 17.3083 -15.7095, 17.3175 -15.7095, 17.3174 -15.7187, 17.3173 -15.7278, 17.3265 -15.7278, 17.3357 -15.7278, 17.3356 -15.7369, 17.3355 -15.7461, 17.3447 -15.7461, 17.3446 -15.7552, 17.3538 -15.7552, 17.3537 -15.7643, 17.3537 -15.7735, 17.3628 -15.7735, 17.372 -15.7735, 17.3721 -15.7643, 17.3722 -15.7552, 17.3814 -15.7552, 17.3814 -15.7461, 17.3906 -15.7461, 17.3905 -15.7552, 17.3997 -15.7552, 17.4089 -15.7552, 17.4088 -15.7643, 17.4088 -15.7735, 17.4087 -15.7826, 17.4179 -15.7826, 17.4178 -15.7917, 17.427 -15.7917, 17.4362 -15.7917, 17.4453 -15.7917, 17.4453 -15.8009, 17.4452 -15.81, 17.4451 -15.8191, 17.4543 -15.8191, 17.4635 -15.8191, 17.4636 -15.81, 17.4727 -15.81, 17.4819 -15.81, 17.4911 -15.81, 17.491 -15.8191, 17.50))) )"
+      
     });
 
     wmsLayer.value.addTo(map);
@@ -3381,7 +3348,7 @@ onMounted(() => {
   };
 
   addLulcLayer();
-  // addCQLFilter()
+
 
   //load stats for zambezi ndwi
 
@@ -3500,38 +3467,7 @@ closeNav ();
     .addTo(map);
 }); //OnMounted end
 
-//change browser zoom on click
-//   const change_zoom = () => {
-//     // //console.log('screen scale', window.devicePixelRatio) //1, 1.25 etc
-//    var device_scale = window.devicePixelRatio
-// //    browserZoomLevel.value = Math.round(window.devicePixelRatio * 100);
-// //   //  alert(browserZoomLevel.value)
-// // //   //  alert(browserZoomLevel.value)
-// // //   //  //console.log('browser zoom',browserZoomLevel)
-// //    if(device_scale === 1.25){
-// //     document.body.style.zoom = "80%";
-// //     // document.body.style.zoom = "99%";
-// //   //  alert(browserZoomLevel.value)
-// //   // device_scale = 1
-// // // browserZoomLevel.value = 80
 
-// // //  browserZoomLevel.value = Math.round(browserZoomLevel.value - 45)
-// // //  window.devicePixelRatio = 1
-// // //  alert(browserZoomLevel.value)
-
-// //    }
-// var currFFZoom = 1;
-//     var currIEZoom = 100;
-
-//     if(device_scale === 1.25) {
-
-//             var step = 10;
-//             currIEZoom -= step;
-//             $('body').css('zoom', ' ' + currIEZoom + '%');
-
-//     }
-
-//   }
 
 //function to get regions
 
@@ -3818,44 +3754,7 @@ const addLulcLayer = () => {
   }
 };
 
-//  const clip_custom = () => {
 
-//     // if(wmsLayer.value)map.removeLayer(wmsLayer.value)
-
-//   // //console.log('just to see if request is accessed') //accessed
-//   map.createPane("pane400").style.zIndex = 600;
-
-//   var drawn_polygon = storeUserSelections.custom_geojson.geojson.coordinates
-//   //console.log(drawn_polygon, 'drawn polygon')
-//   //get bounds
-//   var custom_bounds = custom_geojson.value.getBounds()
-//   //console.log(custom_bounds, 'custom bounds')
-//   var north_east = custom_bounds._northEast
-//   var south_west = custom_bounds._southWest
-
-//   // var latlng1 = L.latLng(drawn_polygon[0]);
-//   // var latlng2 = L.latLng(drawn_polygon[2]);
-//   // const myLatLngBounds = L.latLngBounds(latlng1, latlng2);
-
-//   // var str = wkt.stringify(drawn_polygon)
-//   // //console.log(str, 'wkt custom str')
-
-// customWmsLayer.value =  L.tileLayer.wms("${baseurl}:8080/geoserver/LULC/wms?", {
-//      pane: 'pane400',
-//      layers: `LULC:${year.value}`,
-//      crs:L.CRS.EPSG4326,
-//     //  styles: styles.value,
-//      format: 'image/png',
-//      bounds: custom_bounds,
-//      transparent: true,
-//      opacity:1.0
-
-// });
-
-// customWmsLayer.value.addTo(map);
-// //console.log(customWmsLayer.value, 'custom wms layer')
-
-//  }
 
 const addPrecTimeSeries = () => {
   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
@@ -4881,35 +4780,7 @@ const addWetlandStatus = () => {
   }
 };
 
-const addBurntLayer = () => {
-  if (sub_indicator.value === "Burnt Area MODIS") {
-    // //console.log('just to see if request is accessed') //accessed
-    map.createPane("pane400").style.zIndex = 200;
 
-    wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/FIRE/wms?`, {
-      pane: "pane400",
-      layers: `FIRE:${year.value}`,
-      crs: L.CRS.EPSG4326,
-      styles: basin.value
-        ? `${basin.value}_fire`
-        : wetland_basin.value
-          ? wetland_sld.value
-          : wetland_sld.value,
-      format: "image/png",
-      transparent: true,
-      opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
-    });
-
-    wmsLayer.value.addTo(map);
-
-    //console.log(wmsLayer.value, 'wms')
-
-    modislegendContent();
-
-    changeOpacity();
-  }
-};
 
 const addFirmsLayer = () => {
   if (sub_indicator.value === "Burnt Area FIRMS") {
@@ -4943,119 +4814,6 @@ const addFirmsLayer = () => {
   }
 };
 
-//  const addSMITimeSeries = () => {
-//   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
-
-//     onAdd: function (map) {
-//       // Triggered when the layer is added to a map.
-//       //   Register a click listener, then do all the upstream WMS things
-//       L.TileLayer.WMS.prototype.onAdd.call(this, map);
-//       map.on('click' , this.getFeatureInfo, this);
-//     },
-
-//     onRemove: function (map) {
-//       // Triggered when the layer is removed from a map.
-//       //   Unregister a click listener, then do all the upstream WMS things
-//       L.TileLayer.WMS.prototype.onRemove.call(this, map);
-//       map.off('click', this.getFeatureInfo, this);
-//     },
-
-//     getFeatureInfo: function (evt) {
-//       // Make an AJAX request to the server and hope for the best
-//       var url = this.getFeatureInfoUrl(evt.latlng),
-//           showResults = L.Util.bind(this.showGetFeatureInfo, this);
-//       $.ajax({
-//         url: url,
-//         success: function (data, status, xhr) {
-//           var err = typeof data === 'string' ? null : data;
-//           showResults(err, evt.latlng, data);
-//         },
-//         error: function (xhr, status, error) {
-//           showResults(error);
-//         }
-//       });
-//     },
-
-//     getFeatureInfoUrl: function (latlng) {
-//       // Construct a GetFeatureInfo request URL given a point
-//       var point = this._map.latLngToContainerPoint(latlng, this._map.getZoom()),
-
-//           size = this._map.getSize(),
-
-//           params = {
-//             request: 'GetFeatureInfo',
-//             service: 'WMS',
-//             srs: 'EPSG:4326',
-//             styles: this.wmsParams.styles,
-//             transparent: this.wmsParams.transparent,
-//             version: this.wmsParams.version,
-//             format: this.wmsParams.format,
-//             bbox: this._map.getBounds().toBBoxString(),
-//             height: size.y,
-//             width: size.x,
-//             layers: this.wmsParams.layers,
-//             query_layers: this.wmsParams.layers,
-//             // X: point.x,
-//             // Y: point.y,
-//             info_format: 'application/json'
-//           };
-
-//       params[params.version === '1.3.0' ? 'i' : 'x'] = point.x;
-//       params[params.version === '1.3.0' ? 'j' : 'y'] = point.y;
-//       // //console.log(point, 'point')
-
-//       // //console.log(Math.floor(point.x),  Math.floor(point.y), 'math floor points' )
-
-//       return this._url + L.Util.getParamString(params, this._url, true);
-//     },
-
-//     showGetFeatureInfo: function (err, latlng, content) {
-//       if (err) {
-//         // //console.log(latlng, 'lat long')
-
-//         ;
-//         // //console.log(latlng, 'wms latlng')
-//         //console.log(content.features[0].properties, "smi wms content")
-
-//         var bands = content.features[0].properties
-
-//         var band_names = Object.keys(bands)
-//         //console.log(band_names.slice(15,23), 'band names')
-
-//         lineChartData.labels = band_names
-
-//         var band_values = Object.values(bands)
-//         //console.log(band_values.slice(15,23), 'band values')
-//         lineChartData.datasets[0].data = band_values
-
-//         //console.log(lineChartData, 'line chart data')
-
-//         storeUserSelections.lineChartData.labels = band_names.slice(15,22)
-//         storeUserSelections.lineChartData.labels = ['2016', '2017', '2018', '2019', '2020', '2021', '2022']
-//         storeUserSelections.lineChartData.datasets[0].data = band_values.slice(15,22)
-//         //console.log(storeUserSelections.lineChartData, 'store linechart data')
-
-//           return
-//           // //console.log(latlng, 'lat long');
-
-//         } // do nothing if there's an error
-
-//       // Otherwise show the content in a popup, or something.
-
-//       // L.popup({ maxWidth: 800})
-//       //   .setLatLng(latlng)
-//       //   .setContent( content)
-//       //   .openOn(this._map);
-
-//     },
-
-//   }); //end of L.extend
-
-//   L.tileLayer.betterWms = function (url, options) {
-//     return new L.TileLayer.BetterWMS(url, options);
-//   };
-
-//  }
 
 const addSMILayer = () => {
   if (sub_indicator.value === "Soil Moisure Index") {
@@ -5507,22 +5265,7 @@ const fetchUserMobile = async () => {
 
 }
 
-const addCQLFilter = () => {
-  map.createPane("pane400").style.zIndex = 200;
-  wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
-    pane: "pane400",
-    layers: `LULC:2017`,
-    crs: L.CRS.EPSG4326,
-    //  styles:'zambezi_lulc',
-    format: "image/png",
-    transparent: true,
-    opacity: 1.0,
-    //  CQL_FILTER: "CQL_FILTER=Name=%27Zambezi%27"
-    //  CQL_FILTER:"INTERSECTS(corr_cell, collectGeometries(queryCollection('data_api_adminlevelzero', 'geometry', 'country_name = ''Angola''')))"
-  });
 
-  wmsLayer.value.addTo(map);
-};
 
 const downloadcsv = () => {
   let csv_data = [];
@@ -5563,12 +5306,7 @@ const downloadcsv = () => {
 
 const chart_png = () => {
   loading.value = true;
-  //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
-
-  //   saveAs(blob, `${basin.value}.png`);
-
-  // });
-
+  
   let mapElement = document.getElementById("doughnut-chart");
 
   setTimeout(async () => {
@@ -5592,11 +5330,7 @@ const chart_png = () => {
 
 const bar_chart_png = () => {
   loading.value = true;
-  //  domtoimage.toBlob(document.getElementById("map")).then(function (blob) {
-
-  //   saveAs(blob, `${basin.value}.png`);
-
-  // });
+  
 
   let mapElement = document.getElementById("bar-chart");
 
@@ -6480,66 +6214,7 @@ const floodlegendContent = () => {
   getLegendContent();
 };
 
-const modislegendContent = () => {
-  const getLegendContent = async () => {
-    try {
-      const response = await axios.get(
-        `${baseurl}:8080/geoserver/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRE%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
-      );
-      //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
-      var object_array =
-        response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
 
-      var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
-        return item.label;
-      });
-      //console.log(label_array, 'label array')
-
-      var colors_array = object_array.map((item) => {
-        return item.color;
-      });
-      //console.log(colors_array, 'colors array')
-      if (firms_legend.value) map.removeControl(firms_legend.value);
-      if (smi_legend.value) map.removeControl(smi_legend.value);
-      if (modis_legend.value) map.removeControl(modis_legend.value);
-      if (flood_legend.value) map.removeControl(flood_legend.value);
-      if (status_legend.value) map.removeControl(status_legend.value);
-      if (ndvi_legend.value) map.removeControl(ndvi_legend.value);
-      if (ndwi_legend.value) map.removeControl(ndwi_legend.value);
-      if (prec_legend.value) map.removeControl(prec_legend.value);
-      if (lulc_legend.value) map.removeControl(lulc_legend.value);
-
-      var legend = L.control({ position: "bottomright" });
-      modis_legend.value = legend;
-      var colors = colors_array;
-      var labels = label_array;
-
-      modis_legend.value.onAdd = function (map) {
-        var div = L.DomUtil.create("div", "legend");
-        div.innerHTML += `<p>${basin.value} ${sub_indicator.value}</p>`;
-        for (var i = 0; i < colors.length; i++) {
-          div.innerHTML +=
-            '<i style="background:' +
-            colors[i] +
-            '" ></i>' +
-            labels[i] +
-            "<br>";
-        }
-
-        let draggable = new L.Draggable(div); //the legend can be dragged around the div
-        draggable.enable();
-
-        return div;
-      };
-
-      modis_legend.value.addTo(map);
-    } catch (error) {
-      //console.log(error)
-    }
-  };
-  getLegendContent();
-};
 const firmslegendContent = () => {
   const getLegendContent = async () => {
     try {

@@ -287,6 +287,18 @@ const handleParameterChange = () => {
 <style scoped >
 .card{
     font-family: Poppins;
+
+
 }
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .card{
+        margin-left: -2em !important;
+    }
+}
+
+    
+  
+
 
 </style>

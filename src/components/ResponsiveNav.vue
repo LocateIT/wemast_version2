@@ -6,15 +6,15 @@
 
 
 
-                    <div class="flex gap-4 text-sm">
+                    <div class=" flex gap-4 text-sm">
                         <img src="../assets/logos/WeMAST.png" class="h-3rem" />
 
-                        <div class="flex flex-column flex-wrap text-sm">
-                            <span class="font-bold text-bluegray-700">{{ $t("home.wemast_title") }}</span>
-                            <span style="color:steelblue;font-weight:bold">(WeMAST)</span>
+                        <div class=" flex flex-column flex-wrap text-sm">
+                            <span class=" projname font-bold text-bluegray-700">{{ $t("home.wemast_title") }}</span>
+                            <span class="projname" style="color:steelblue;font-weight:bold">(WeMAST)</span>
                         </div>
                     </div>
-                    <div class="flex gap-1 -ml-6">
+                    <div class=" logoss flex gap-1 -ml-6">
                         <img src="../assets/logos/SASSCAL.png" class="h-3rem" />
 
                         <img src="../assets/logos/Gmes.png" class="h-3rem" />
@@ -67,5 +67,28 @@ import LanguageSwitch from './LanguageSwitch.vue';
     /* margin: 0em 5em; */
     margin-left: 2em;
     font-family: Poppins;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+    .projname {
+  display: none !important;
+}
+.logoss{
+   margin-left: 0.5em !important;
+   gap: 3em !important;
+}
+}
+
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+.projname {
+  display: none !important;
+}
+.logoss{
+   margin-left: 0.5em !important;
+   gap: 3em !important;
+}
+
 }
 </style>

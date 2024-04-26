@@ -41,11 +41,11 @@
         z-index: 1000;
         position: absolute;
         top: 60vh;
-        left: 65vw;
+        left: 66vw;
       ">
         <FileUpload  id="file"  name="zipFile"  accept=".zip" :multiple="true"  customUpload @uploader="submit_shapefile" >
         <template #empty>
-                <p>Drag and drop files to here to upload.</p>
+                <p>Drag and drop files here to upload.</p>
             </template>
             </FileUpload>
 
@@ -1603,7 +1603,7 @@
                         <img class="filter_icon" src=" /mapIcons/filter.svg" alt="" />
               
                         <div class="openfilter flex flex-column  gap-1">
-              <p style="display: flex; flex-direction: column">
+              <p style="display: flex; flex-direction: column" class="advanced_text">
                 {{ $t("home.advanced") }}<br />{{ $t("home.filter") }}
               </p>
           
@@ -1614,7 +1614,7 @@
                       <div class="compare w-full md:w-max flex align-items-center justify-content-center" @click="show_compare">
                         <img class="compare_icon" src=" /mapIcons/compare.svg" alt="" />
                         
-                        <p>{{ $t("home.compare") }}</p>
+                        <p class="compare_text">{{ $t("home.compare") }}</p>
                       </div>
             </div>
 
@@ -1695,7 +1695,7 @@ import CustomDocumentation from "../components/CustomDocumentation.vue";
 import { CloudRain } from "@vicons/fa";
 import { ThermometerHalf } from "@vicons/fa";
 import List from "@vicons/fa/List"
-import RescaleScreen from "../components/RescaleScreen.vue";
+
 import shp from "shpjs/dist/shp.js";
 import "../upload_shp/leaflet.shpfile.js";
 import Toast, { POSITION } from "vue-toastification";
@@ -1709,17 +1709,11 @@ import { write } from 'shp-write'
 import 'primeflex/primeflex.css'
 import ResponsiveSelections from '../components/Customs/ResponsiveSelections.vue'
 import ResponsiveNav from "../components/ResponsiveNav.vue";
-import ResponNav from "../components/ResponNav.vue";
- import Column1 from '../components/Customs/Column1.vue'
 
-
-// import { exec } from 'child_process'
 
 //refs go here
 let baseurl = "http://66.42.65.87";
-let scale_div = ref(
-  window.devicePixelRatio !== 1 || window.innerWidth !== screen.width
-);
+
 let upload_shapefile = ref(false);
 
 let documentation = ref(false);
@@ -1797,16 +1791,7 @@ let wmsTimeseriesLayer = ref(null);
 let wmsPrecTimeseriesLayer = ref(null);
 
 let customWmsLayer = ref(null);
-let year_2013 = ref(null);
-let year_2014 = ref(null);
-let year_2015 = ref(null);
-let year_2016 = ref(null);
-let year_2017 = ref(null);
-let year_2018 = ref(null);
-let year_2019 = ref(null);
-let year_2020 = ref(null);
-let year_2021 = ref(null);
-let year_2022 = ref(null);
+
 
 let geometry = {};
 let chartData = ref([]);
@@ -1847,53 +1832,15 @@ const toast = useToast();
 const router = useRouter();
 
 
-// //console.log(storeUserSelections.fetchCountriesList)
-
-//console.log(storeUserSelections.getLoadingState, 'getLoadingState')
 
 window.html2canvas = html2canvas;
 
-
-// const opendisplaysettings = () => {
-//       var displaySettingsURI = "ms-settings:display";
-
-//       // Open the display settings page
-//       window.location.href = displaySettingsURI;
-// };
-
-// // Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected || window.innerWidth !== screen.width
-// if (window.devicePixelRatio !== 1 ) {
-//       // Prompt the user to adjust their screen settings
-//       if (
-//             confirm(
-//                   "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
-//             )
-
-//       ) {
-//             opendisplaysettings()
-//             // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
-//             // Example instructions:
-//             // confirm("Follow the next instructions");
-//             // opendisplaysettings()
-//             // var displaySettingsURI = "ms-settings:display";  
-//             //         // Open the display settings page
-//             //         window.location.href = displaySettingsURI;
-//       } else {
-//             // The user chose not to change their settings
-//             alert(
-//                   "You can change your screen scale and layout settings later for a better experience."
-//             );
-//       }
-// }
 
 const show_upload_shapefile = () => {
   upload_shapefile.value = !upload_shapefile.value;
   // if(layer.value)map.removeLayer(layer.value)
 };
 
-const viewStats = () => {
-  visibleRight.value = true
-}
 
 
 const submit_shapefile = (event) => {
@@ -8191,9 +8138,7 @@ const addDrawCtrl = () => {
 .advanced_filter {
   cursor: pointer;
   z-index: 200;
-  /* position: absolute;
-  top: 69.8vh;
-  left: -0.2vw; */
+ 
 
   background-color: steelblue;
   padding: 1em;
@@ -8202,7 +8147,7 @@ const addDrawCtrl = () => {
   display: flex;
   flex-direction: column;
   gap: 0.2em;
-  /* width: 5%; */
+ 
 
 }
 

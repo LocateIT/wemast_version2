@@ -990,14 +990,14 @@ title{
 
 .mobile_filter{
   position: absolute;
-  top: 49vh;
-  left: 4.1vw;
+  top: 45vh;
+  left: 7.2vw;
   z-index: 1500;
   background-color: #fff;
-  width: 250px;
-  height: 180px;
+  /* width: 250px;
+  height: 180px; */
  
-  padding: 1em 1em 1em 1.5em;
+  padding: 2em;
   display:flex;
   flex-direction: column;
   gap:1em;

@@ -1,60 +1,39 @@
 <template>
   <div class="app">
     <div class="navbar">
-      <!-- <Navbar /> -->
+
       <ResponsiveNav />
-      <!-- <ResponNav /> -->
+
     </div>
     <div class="selections">
       <!-- <DashboardSelections @fetchData="fetchWmsData" /> -->
 
-      <ResponsiveSelections @fetchData="fetchWmsData"  />
+      <ResponsiveSelections @fetchData="fetchWmsData" />
     </div>
 
 
-    <!-- <div class="upload_shapefile_container" v-if="upload_shapefile" style="
-        z-index: 1000;
-        position: absolute;
-        top: 62vh;
-        left: 72vw;
-        
-        background-color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        padding: 2em;
-        gap: 0.5rem;
-      ">
-      <span class="select_zipped" style="margin-top: 0.1vw; color: #073e81; font-weight: 600">{{
-        $t("home.upload_shapefile") }}</span>
-       <input type="file" id="file" />
-      <input type="submit" id="submit" @click="submit_shapefile" class="submit_shapefile" /> 
-      
-      <span id="warning" style="position: relative; top: 2vh"></span>
-    </div> -->
 
 
 
-    <div class="upload_shapefile_container  flex justify-content-center surface-card p-5 border-round m-3" v-if="upload_shapefile"
-    style="
+    <div class="upload_shapefile_container  flex justify-content-center surface-card p-5 border-round m-3"
+      v-if="upload_shapefile" style="
         z-index: 1000;
         position: absolute;
         top: 60vh;
         left: 66vw;
       ">
-        <FileUpload  id="file"  name="zipFile"  accept=".zip" :multiple="true"  customUpload @uploader="submit_shapefile" >
+      <FileUpload id="file" name="zipFile" accept=".zip" :multiple="true" customUpload @uploader="submit_shapefile">
         <template #empty>
-                <p>Drag and drop files here to upload.</p>
-            </template>
-            </FileUpload>
+          <p>Drag and drop files here to upload.</p>
+        </template>
+      </FileUpload>
 
-        <span id="warning" style="position: relative; top: 2vh"></span>
-        
+      <span id="warning" style="position: relative; top: 2vh"></span>
+
     </div>
 
 
-    <!-- <button class="request" type="button" @click="getRegion2" >REQUEST</button> -->
+
 
     <div class="spinner" v-if="loading">
       <img src="/uiIcons/loader_white.svg" alt="" />
@@ -63,67 +42,44 @@
 
     <!-- advanced filter -->
     <div v-if="advanced_filter" class="advanced_filter_container">
-          <img
-            class="close_advanced_filter"
-            src=" /uiIcons/close.png"
-            alt=""
-            @click="close_advanced_filter"
-          />
-          <AdvancedFilter @fetchAdvancedData="addAdvancedLayer" />
-             </div>
+      <img class="close_advanced_filter" src=" /uiIcons/close.png" alt="" @click="close_advanced_filter" />
+      <AdvancedFilter @fetchAdvancedData="addAdvancedLayer" />
+    </div>
 
     <!-- compare -->
     <div v-if="compare" class="compare_container">
-          <img
-            class="close_compare"
-            src=" /uiIcons/close.png"
-            alt=""
-            @click="close_compare"
-          />
-          <Compare @fetchCompareData="compareLayers" />
-             </div>
+      <img class="close_compare" src=" /uiIcons/close.png" alt="" @click="close_compare" />
+      <Compare @fetchCompareData="compareLayers" />
+    </div>
 
 
 
     <div class="doc_select" v-if="documentation">
-          <CustomDocumentation
-            :options="['Mapographics', 'Documentation']"
-            :default="'Manuals'"
-            class="select"
-            @input="displayToKey($event)"
-          />
-             </div>
+      <CustomDocumentation :options="['Mapographics', 'Documentation']" :default="'Manuals'" class="select"
+        @input="displayToKey($event)" />
+    </div>
 
     <div class="spinner" v-if="loading">
-          <img src="/uiIcons/loader_white.svg" alt="" />
-             </div>
-     <div class="mobile_filter" v-if="show_mobile_data">
-          <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
-          <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
-          <div class="mypanel" style="display: flex; flex-direction: row; gap: 1.5em;">
-            <button @click="fetchUserMobile" class="fetch_mobile_user">My Data</button>
-          <div v-if="show_mypanel" class="mypanel" style="display: flex; flex-direction: row; gap: 5px; cursor: pointer;" @click=" router.push('/management');">
-            <List width="15" height="15"  color="#164b75" style="margin-top: 10px;" />
+      <img src="/uiIcons/loader_white.svg" alt="" />
+    </div>
+    <div class="mobile_filter" v-if="show_mobile_data">
+      <p style="color: steelblue; font-weight: 600;">Fetch Mobile Data</p>
+      <button @click="fetchMobileData" class="fetch_mobile">All Data</button>
+      <div class="mypanel" style="display: flex; flex-direction: row; gap: 1.5em;">
+        <button @click="fetchUserMobile" class="fetch_mobile_user">My Data</button>
+        <div v-if="show_mypanel" class="mypanel" style="display: flex; flex-direction: row; gap: 5px; cursor: pointer;"
+          @click=" router.push('/management');">
+          <List width="15" height="15" color="#164b75" style="margin-top: 10px;" />
           <span style="margin-top: 7px; font-weight: 600;">View Panel</span>
-          </div>
-          </div>
-       
-       
-          <img
-            style="cursor: pointer; position: absolute; top: 0.5vh; right: 0.5vw"
-            @click="close_mobile_panel"
-            src="/uiIcons/close.png"
-          />
-             </div> 
+        </div>
+      </div>
 
 
-    <!-- <h1 class="header_countries">{{storeUserSelections.indicator_list}}</h1> -->
+      <img style="cursor: pointer; position: absolute; top: 0.5vh; right: 0.5vw" @click="close_mobile_panel"
+        src="/uiIcons/close.png" />
+    </div>
 
 
-
-    <!-- <div class="clip" style="position: absolute; left: 67vw; top: 10vh;">
-        <button @click="clip_custom">clip custom</button>
-      </div> -->
     <div class="opacity" v-if="wmsLayer != null" :class="{ mainopen: sidenavigationbar }">
       <span id="opacity">{{ $t("home.opacity") }}</span>
       <!-- <span id="image-opacity"> </span> -->
@@ -145,20 +101,10 @@
       <div id="mySidenav" style="height: 100%">
         <div id="protrusion" class="protrusion">
           <div class="toggle_icon" @click.stop="toggle_nav">
-            <img
-              style="margin-left: -5vw; margin-top: 1.5vw"
-              id="open"
-              src=" /mapIcons/stats.svg" 
-              title="View Statistics"
-              v-if="show_sidenav"
-            />
-            <img
-              :class="{ toggle_is_open: !show_sidenav }"
-              id="close"
-              src=" /mapIcons/stats.svg" 
-              title="Close Statistics"
-              v-if="!show_sidenav"
-            />
+            <img style="margin-left: -5vw; margin-top: 1.5vw" id="open" src=" /mapIcons/stats.svg"
+              title="View Statistics" v-if="show_sidenav" />
+            <img :class="{ toggle_is_open: !show_sidenav }" id="close" src=" /mapIcons/stats.svg"
+              title="Close Statistics" v-if="!show_sidenav" />
           </div>
         </div>
         <div class="sidenav_body" v-if="!show_sidenav" style="overflow-y: scroll; ">
@@ -172,36 +118,21 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="q-pa-xs">
-                    <div
-                      class="data_analysis_text"
-                      @click="handleAnalysisMetaSwap2()"
-                      style="cursor: pointer"
-                    >
-                      <span
-                        :class="
-                          analysis_swap_toggle === 'data_analysis'
-                            ? 'side_nav_swap'
-                            : ''
-                        "
-                        >Data Analysis</span
-                      >
+                    <div class="data_analysis_text" @click="handleAnalysisMetaSwap2()" style="cursor: pointer">
+                      <span :class="analysis_swap_toggle === 'data_analysis'
+          ? 'side_nav_swap'
+          : ''
+        ">Data Analysis</span>
                     </div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="q-pa-xs">
-                    <div
-                      class="metadata_text"
-                      @click="handleAnalysisMetaSwap()"
-                      style=""
-                    >
-                      <span
-                        :class="
-                          analysis_swap_toggle === 'metadata'
-                            ? 'side_nav_swap'
-                            : ''
-                        "
-                        >Metadata
+                    <div class="metadata_text" @click="handleAnalysisMetaSwap()" style="">
+                      <span :class="analysis_swap_toggle === 'metadata'
+          ? 'side_nav_swap'
+          : ''
+        ">Metadata
                       </span>
                     </div>
                   </div>
@@ -210,400 +141,270 @@
             </div>
           </div>
           <div v-if="analysis_swap_toggle === 'data_analysis'">
-           
 
-            <p
-              style="margin-top: 40px"
-              :class="
-                storeUserSelections.selected_sub_indicator ===
-                  'Burnt Area FIRMS' || 'Undulation'
-                  ? 'burnt_summary'
-                  : ''
-              "
-            >
-              <label style="margin-top: 40px; font-weight: 700; font-size: 14px"
-                >Summary</label
-              >
+
+            <p style="margin-top: 40px" :class="storeUserSelections.selected_sub_indicator ===
+          'Burnt Area FIRMS' || 'Undulation'
+          ? 'burnt_summary'
+          : ''
+        ">
+              <label style="margin-top: 40px; font-weight: 700; font-size: 14px">Summary</label>
               <br />
               {{
-                storeUserSelections.selected_parameter === "Wetland Status"
-                  ? $t("summaries.wetland_status")
-                  : storeUserSelections.selected_parameter === "Wetland Extent"
-                  ? $t("summaries.wetland_extent")
-                  : storeUserSelections.selected_sub_indicator ===
-                    "Soil Moisure Index"
-                  ? $t("summaries.smi_index")
-                  : storeUserSelections.selected_sub_indicator ===
-                    "Burnt Area FIRMS"
-                  ? $t("summaries.burnt_firms")
-                  : storeUserSelections.selected_sub_indicator === "Undulation"
+        storeUserSelections.selected_parameter === "Wetland Status"
+          ? $t("summaries.wetland_status")
+          : storeUserSelections.selected_parameter === "Wetland Extent"
+            ? $t("summaries.wetland_extent")
+            : storeUserSelections.selected_sub_indicator ===
+              "Soil Moisure Index"
+              ? $t("summaries.smi_index")
+              : storeUserSelections.selected_sub_indicator ===
+                "Burnt Area FIRMS"
+                ? $t("summaries.burnt_firms")
+                : storeUserSelections.selected_sub_indicator === "Undulation"
                   ? $t("summaries.undulation")
                   : storeUserSelections.selected_sub_indicator ===
                     "Precipitation Index"
-                  ? $t("summaries.prec_index")
-                  : storeUserSelections.selected_parameter === "Turbidity"
-                  ? $t("summaries.turbidity")
-                  : storeUserSelections.selected_parameter === "Sus Sediments"
-                  ? $t("summaries.susp_sediments")
-                  : storeUserSelections.selected_sub_indicator === "Land Cover"
-                  ? $t("summaries.landcover")
-                  : storeUserSelections.selected_sub_indicator ===
-                    "Vegetation Cover"
-                  ? $t("summaries.vegcover")
-                  : storeUserSelections.selected_indicator ===
-                    "Basin Vulnerability Index"
-                  ? $t("summaries.bvi_index")
-                  : storeUserSelections.selected_sub_indicator === ""
-                  ? "please select a parameter"
-                  : ""
-              }}
+                    ? $t("summaries.prec_index")
+                    : storeUserSelections.selected_parameter === "Turbidity"
+                      ? $t("summaries.turbidity")
+                      : storeUserSelections.selected_parameter === "Sus Sediments"
+                        ? $t("summaries.susp_sediments")
+                        : storeUserSelections.selected_sub_indicator === "Land Cover"
+                          ? $t("summaries.landcover")
+                          : storeUserSelections.selected_sub_indicator ===
+                            "Vegetation Cover"
+                            ? $t("summaries.vegcover")
+                            : storeUserSelections.selected_indicator ===
+                              "Basin Vulnerability Index"
+                              ? $t("summaries.bvi_index")
+                              : storeUserSelections.selected_sub_indicator === ""
+                                ? "please select a parameter"
+                                : ""
+      }}
             </p>
             <br />
-            <label
-              class="text-bold"
-              style="font-family: Montserrat; font-weight: 800"
-            >
+            <label class="text-bold" style="font-family: Montserrat; font-weight: 800">
               <!-- <div class="chart_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">{{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}  </div> -->
             </label>
 
             <div class="charts_sidebar">
               <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()"> ref="charts"   v-if="charts" to be added later -->
-              <div
-                v-if="show_zambezi_stats === true"
-                class="default_layer_title"
-              >
+              <div v-if="show_zambezi_stats === true" class="default_layer_title">
                 Zambezi LULC 2016
               </div>
 
-              <div
-                v-if="year && sub_indicator"
-                class="chart_title"
-                :class="{ hide: compareUserSelections.selected_year != '' }"
-              >
+              <div v-if="year && sub_indicator" class="chart_title"
+                :class="{ hide: compareUserSelections.selected_year != '' }">
                 {{ `${basin} ${sub_indicator}-${year}` }}
               </div>
 
-              <div
-                v-if="storeUserSelections.selected_sub_indicator === 'Undulation'"
-                class="chart_title"
-                :class="{ hide: compareUserSelections.selected_year != '' }"
-              >
+              <div v-if="storeUserSelections.selected_sub_indicator === 'Undulation'" class="chart_title"
+                :class="{ hide: compareUserSelections.selected_year != '' }">
                 {{ `${basin} ${sub_indicator}` }}
               </div>
-              <div
-                v-if="
-                  compareUserSelections.selected_year != '' && sub_indicator
-                "
-                class="chart_title"
-              >
+              <div v-if="compareUserSelections.selected_year != '' && sub_indicator
+        " class="chart_title">
                 {{ `${basin} ${sub_indicator}-${compare_year}` }}
               </div>
-              <div
-                v-if="compareUserSelections.selected_year != '' && indicator"
-                class="chart_title"
-              >
+              <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
                 {{ `${basin} ${indicator}-${compare_year}` }}
               </div>
-              <div
-                v-if="
-                  indicator === 'Basin Vulnerability Index' &&
-                  compareUserSelections.selected_year == ''
-                "
-                class="vul_bar_chart_title"
-              >
+              <div v-if="indicator === 'Basin Vulnerability Index' &&
+        compareUserSelections.selected_year == ''
+        " class="vul_bar_chart_title">
                 {{ `${basin} ${indicator}-${year}` }}
               </div>
-              <img
-                src="/mapIcons/download_map.svg"
-                alt=""
-                title="Download Png"
-                class="chart_download_png"
-                style="
+              <img src="/mapIcons/download_map.svg" alt="" title="Download Png" class="chart_download_png" style="
                   position: absolute;
                   top: -2.5vh;
                   left: 28vw;
                   height: 25px;
-                "
-                @click="chart_png"
-              />
-              <img
-                id="chart_csv"
-                src="/mapIcons/file_download-24px.svg"
-                alt=""
-                class="chart_download_png"
-                title="Download CSV"
-                style="
+                " @click="chart_png" />
+              <img id="chart_csv" src="/mapIcons/file_download-24px.svg" alt="" class="chart_download_png"
+                title="Download CSV" style="
                   position: absolute;
                   top: -2.5vh;
                   left: 29.5vw;
                   height: 25px;
                   width: 25px;
-                "
-                @click="downloadcsv"
-              />
+                " @click="downloadcsv" />
               <!--  v-if="sub_indicator != 'Precipitation Index'" -->
-              <div
-                id="chart_pie"
-                v-if="
-                  sub_indicator === 'Land Cover' ||
-                  indicator === 'Basin Vulnerability Index' ||
-                  sub_indicator === 'Wetland Inventory' ||
-                  sub_indicator === 'Burnt Area FIRMS' ||
-                  sub_indicator === 'Undulation'
-                "
-              >
-                <LulcPie
-                  :class="
-                    sub_indicator === 'Undulation'
-                      ? 'flood_chart'
-                      : 'lulc_chart'
-                  "
-                  :chartData="
-                    compare_year
-                      ? compareUserSelections.lulcChartData
-                      : storeUserSelections.lulcChartData
-                  "
-                  :options="options"
-                />
+              <div id="chart_pie" v-if="sub_indicator === 'Land Cover' ||
+        indicator === 'Basin Vulnerability Index' ||
+        sub_indicator === 'Wetland Inventory' ||
+        sub_indicator === 'Burnt Area FIRMS' ||
+        sub_indicator === 'Undulation'
+        ">
+                <LulcPie :class="sub_indicator === 'Undulation'
+          ? 'flood_chart'
+          : 'lulc_chart'
+        " :chartData="compare_year
+          ? compareUserSelections.lulcChartData
+          : storeUserSelections.lulcChartData
+        " :options="options" />
               </div>
 
               <div id="chart_pie" v-if="show_zambezi_stats === true">
-                <LulcPie
-                  class="lulc_chart"
-                  :chartData="storeUserSelections.lulcChartData"
-                  :options="options"
-                  
-                />
+                <LulcPie class="lulc_chart" :chartData="storeUserSelections.lulcChartData" :options="options" />
               </div>
             </div>
 
             <br />
-            <label
-              class="text-bold"
-              style="font-family: Montserrat; font-weight: 800"
-            >
+            <label class="text-bold" style="font-family: Montserrat; font-weight: 800">
               <!-- <div class="chart2_title_sidebar"  style="font-family: 'Trebuchet MS'; font-weight: 800;">  {{storeUserSelections.selected_cause}} blackspots in {{storeUserSelections.selected_region}}</div> -->
             </label>
 
-            <div class="charts2_sidebar" :style="{ padding: storeUserSelections.selected_sub_indicator === 'Land Cover'  ? '8em 2em' :
-            storeUserSelections.selected_sub_indicator === ''  ? '8em 2em' :
-            storeUserSelections.selected_sub_indicator === 'Wetland Inventory'  ? '8em 2em' :
-            storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'  ? '8em 2em' :
-            storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '3em 2em' :
-            storeUserSelections.selected_indicator === 'Basin Vulnerability Index'  ? '8em 2em' :
-            storeUserSelections.selected_sub_indicator === 'Undulation'  ? '8em 2em' :
-            storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '-8em 2em' :
-             '3em 2em'}">
+            <div class="charts2_sidebar" :style="{
+        padding: storeUserSelections.selected_sub_indicator === 'Land Cover' ? '8em 2em' :
+          storeUserSelections.selected_sub_indicator === '' ? '8em 2em' :
+            storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? '8em 2em' :
+              storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? '8em 2em' :
+                storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3em 2em' :
+                  storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? '8em 2em' :
+                    storeUserSelections.selected_sub_indicator === 'Undulation' ? '8em 2em' :
+                      storeUserSelections.selected_sub_indicator === 'Water Quality' ? '-8em 2em' :
+                        '3em 2em'
+      }">
               <!-- <img class="close_chart" src="../assets/images/close_small.svg" alt="" @click="close_chart()">  ref="charts"   v-if="charts" to be added later -->
 
-              <div
-                v-if="show_zambezi_stats === true"
-                class="default_layer_title"
-              >
+              <div v-if="show_zambezi_stats === true" class="default_layer_title">
                 Zambezi LULC 2016
               </div>
-              <div
-                v-if="basin && sub_indicator && year"
-                class="chart_dynamic_titles"
-              >
-                <div
-                  v-if="sub_indicator != 'Water Quality'"
-                  class="bar_chart_title"
-                  :class="{ hide: compareUserSelections.selected_year != '' }"
-                  
-                >
+              <div v-if="basin && sub_indicator && year" class="chart_dynamic_titles">
+                <div v-if="sub_indicator != 'Water Quality'" class="bar_chart_title"
+                  :class="{ hide: compareUserSelections.selected_year != '' }">
                   {{ `${basin} ${sub_indicator}-${year}` }}
                 </div>
 
-                
-                <div
-                  v-if="compareUserSelections.selected_year != ''"
-                  class="bar_chart_title"
-                >
+
+                <div v-if="compareUserSelections.selected_year != ''" class="bar_chart_title">
                   {{ `${basin} ${sub_indicator}-${compare_year}` }}
                 </div>
-                <div
-                  v-if="sub_indicator === 'Water Quality'"
-                  class="bar_chart_title"
-                >
+                <div v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">
                   {{ `${basin} ${parameter}-${year}` }}
                 </div>
-               
+
               </div>
-              <div
-                v-if="
-                  indicator === 'Basin Vulnerability Index' &&
-                  year &&
-                  compareUserSelections.selected_year == ''
-                "
-                class="vul_pie_chart_title"
-              >
+              <div v-if="indicator === 'Basin Vulnerability Index' &&
+        year &&
+        compareUserSelections.selected_year == ''
+        " class="vul_pie_chart_title">
                 {{ `${basin} ${indicator}-${year}` }}
               </div>
-              <div
-                v-if="compareUserSelections.selected_year != '' && indicator"
-                class="chart_title"
-              >
+              <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
                 {{ `${basin} ${indicator}-${compare_year}` }}
               </div>
 
-              <div
-                v-if="storeUserSelections.selected_sub_indicator === 'Undulation'"
-                class="bar_chart_title"
-                :class="{ hide: compareUserSelections.selected_year != '' }"
-              >
+              <div v-if="storeUserSelections.selected_sub_indicator === 'Undulation'" class="bar_chart_title"
+                :class="{ hide: compareUserSelections.selected_year != '' }">
                 {{ `${basin} ${sub_indicator}` }}
               </div>
 
-              <img
-                src="/mapIcons/download_map.svg"
-                alt=""
-                title="Download Png"
-                class="chart_download_png"
-                style="
+              <img src="/mapIcons/download_map.svg" alt="" title="Download Png" class="chart_download_png" style="
                   position: absolute;
                   top: -2.5vh;
                   left: 28vw;
                   height: 25px;
-                "
-                @click="bar_chart_png"
-                v-if="sub_indicator != 'Precipitation Index'"
-              />
-              <img
-                id="chart_csv"
-                src="/mapIcons/file_download-24px.svg"
-                alt=""
-                class="chart_download_png"
-                title="Download CSV"
-                style="
+                " @click="bar_chart_png" v-if="sub_indicator != 'Precipitation Index'" />
+              <img id="chart_csv" src="/mapIcons/file_download-24px.svg" alt="" class="chart_download_png"
+                title="Download CSV" style="
                   position: absolute;
                   top: -2.5vh;
                   left: 29.5vw;
                   height: 25px;
                   width: 25px;
-                "
-                @click="downloadcsv"
-                v-if="sub_indicator !== 'Precipitation Index'"
-              />
-              <div
-                id="bar"
-                :class="
-                  sub_indicator === 'Vegetation Cover'
-                    ? 'bar_veg_cover'
-                    : sub_indicator === 'Precipitation Index'
-                    ? 'bar_veg_cover'
-                    : sub_indicator === 'Soil Moisure Index'
-                    ? 'bar_veg_cover'
-                    : sub_indicator === 'Water Quality'
-                    ? 'bar_veg_cover'
-                    : ''
-                "
-              >
+                " @click="downloadcsv" v-if="sub_indicator !== 'Precipitation Index'" />
+              <div id="bar" :class="sub_indicator === 'Vegetation Cover'
+          ? 'bar_veg_cover'
+          : sub_indicator === 'Precipitation Index'
+            ? 'bar_veg_cover'
+            : sub_indicator === 'Soil Moisure Index'
+              ? 'bar_veg_cover'
+              : sub_indicator === 'Water Quality'
+                ? 'bar_veg_cover'
+                : ''
+        ">
                 <!-- class="lulc_bar_chart"  sub_indicator === 'Water Quality'      ? 'prec_bar' -->
-                <LulcBar
-                  :class="
-                    storeUserSelections.selected_sub_indicator ===
-                      'Burnt Area FIRMS' || 'Undulation'
-                      ? 'burnt_bar_chart'
-                      : 'lulc_bar_chart'
-                  "
-                  :height="200"
-                  :chartData="
-                    compare_year
-                      ? compareUserSelections.lulcChartData
-                      : storeUserSelections.lulcChartData
-                  "
-                  :options="
-                    sub_indicator === 'Vegetation Cover'
-                      ? veg_barchart_options
-                      : sub_indicator === 'Precipitation Index'
-                      ? spi_barchart_options
-                      : sub_indicator === 'Soil Moisure Index'
-                      ? smi_barchart_options
-                      : barchart_options
-                  "
-                />
+                <LulcBar :class="storeUserSelections.selected_sub_indicator ===
+          'Burnt Area FIRMS' || 'Undulation'
+          ? 'burnt_bar_chart'
+          : 'lulc_bar_chart'
+        " :height="200" :chartData="compare_year
+          ? compareUserSelections.lulcChartData
+          : storeUserSelections.lulcChartData
+        " :options="sub_indicator === 'Vegetation Cover'
+          ? veg_barchart_options
+          : sub_indicator === 'Precipitation Index'
+            ? spi_barchart_options
+            : sub_indicator === 'Soil Moisure Index'
+              ? smi_barchart_options
+              : barchart_options
+        " />
               </div>
-              <p
-                class="time_series_title"
-                v-if="
-                  storeUserSelections.selected_sub_indicator ===
-                    'Vegetation Cover' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Precipitation Index' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Soil Moisure Index' ||
-                  storeUserSelections.selected_sub_indicator === 'Water Quality'
-                "
-              >
+              <p class="time_series_title" v-if="storeUserSelections.selected_sub_indicator ===
+        'Vegetation Cover' ||
+        storeUserSelections.selected_sub_indicator ===
+        'Precipitation Index' ||
+        storeUserSelections.selected_sub_indicator ===
+        'Soil Moisure Index' ||
+        storeUserSelections.selected_sub_indicator === 'Water Quality'
+        ">
                 Time Series
               </p>
 
-              <div
-                :class="
-                  sub_indicator === 'Vegetation Cover' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Soil Moisure Index'
-                    ? 'ancillary_title'
-                    : 'ancillary_title2'
-                "
-                v-if="
-                  storeUserSelections.selected_sub_indicator ===
-                    'Vegetation Cover' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Precipitation Index' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Soil Moisure Index' ||
-                  storeUserSelections.selected_sub_indicator === 'Water Quality'
-                "
-              >
-                <p class="ancil_data" :class="storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'ancil_water' : 'ancil_data'" 
-                :style="{marginTop:
-                   storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3vh' :
-                   storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '10vh':
-                   storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? '-0.2vh': 
-                  '-0.5vh'}">Ancillary data</p>
+              <div :class="sub_indicator === 'Vegetation Cover' ||
+          storeUserSelections.selected_sub_indicator ===
+          'Soil Moisure Index'
+          ? 'ancillary_title'
+          : 'ancillary_title2'
+        " v-if="storeUserSelections.selected_sub_indicator ===
+        'Vegetation Cover' ||
+        storeUserSelections.selected_sub_indicator ===
+        'Precipitation Index' ||
+        storeUserSelections.selected_sub_indicator ===
+        'Soil Moisure Index' ||
+        storeUserSelections.selected_sub_indicator === 'Water Quality'
+        ">
+                <p class="ancil_data"
+                  :class="storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'ancil_water' : 'ancil_data'"
+                  :style="{
+        marginTop:
+          storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3vh' :
+            storeUserSelections.selected_sub_indicator === 'Water Quality' ? '10vh' :
+              storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? '-0.2vh' :
+                '-0.5vh'
+      }">Ancillary data</p>
 
-                <CloudRain
-                class="rain"
-                :class="storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'ancil_rain' : 'rain'" 
-                :style="{marginTop: storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '3.5vh' :
-                storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '11vh' :
-                storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? '-0.2vh':  '-0.5vh'}"
-                  width="18"
-                  height="18"
-                  color="#164b75"
-                  @click="addPRECIPTimeSeriesLayer"
-                />
-                <ThermometerHalf
-                class="temp"
-                :class="storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'ancil_rain' : 'temp'" 
-                :style="{marginTop: storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '3.5vh' :
-                storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '11vh' :
-                storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? '-0.2vh':  '-0.5vh'}"
-                  width="18"
-                  height="18"
-                  color="#164b75"
-                  @click="addTEMPTimeSeriesLayer"
-                />
+                <CloudRain class="rain"
+                  :class="storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'ancil_rain' : 'rain'"
+                  :style="{
+        marginTop: storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3.5vh' :
+          storeUserSelections.selected_sub_indicator === 'Water Quality' ? '11vh' :
+            storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? '-0.2vh' : '-0.5vh'
+      }" width="18"
+                  height="18" color="#164b75" @click="addPRECIPTimeSeriesLayer" />
+                <ThermometerHalf class="temp"
+                  :class="storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'ancil_rain' : 'temp'"
+                  :style="{
+        marginTop: storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3.5vh' :
+          storeUserSelections.selected_sub_indicator === 'Water Quality' ? '11vh' :
+            storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? '-0.2vh' : '-0.5vh'
+      }" width="18"
+                  height="18" color="#164b75" @click="addTEMPTimeSeriesLayer" />
               </div>
 
-              <LulcLine
-                class="lulc_line_chart"
-                :style="{top: storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? '-2vh' :
-                 storeUserSelections.selected_sub_indicator === 'Water Quality'  ? '-3vh' : '4vh'}"
-                v-if="
-                  storeUserSelections.selected_sub_indicator ===
-                    'Vegetation Cover' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Precipitation Index' ||
-                  storeUserSelections.selected_sub_indicator ===
-                    'Soil Moisure Index' ||
-                  storeUserSelections.selected_sub_indicator === 'Water Quality'
-                "
-                :chartData="storeUserSelections.lineChartData"
-                :options="linechartOptions"
-              />
+              <LulcLine class="lulc_line_chart" :style="{
+        top: storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '-2vh' :
+          storeUserSelections.selected_sub_indicator === 'Water Quality' ? '-3vh' : '4vh'
+      }" v-if="storeUserSelections.selected_sub_indicator ===
+        'Vegetation Cover' ||
+        storeUserSelections.selected_sub_indicator ===
+        'Precipitation Index' ||
+        storeUserSelections.selected_sub_indicator ===
+        'Soil Moisure Index' ||
+        storeUserSelections.selected_sub_indicator === 'Water Quality'
+        " :chartData="storeUserSelections.lineChartData" :options="linechartOptions" />
             </div>
           </div>
           <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
@@ -612,40 +413,39 @@
                 <th>{{ $t("metadata.title") }}</th>
                 <td>
                   {{
-                    storeUserSelections.selected_indicator ===
-                    "Basin Vulnerability Index"
-                      ? `Basin Vulnerability Index for ${storeUserSelections.selected_basin} basin`
-                      : storeUserSelections.selected_sub_indicator ===
-                          "Wetland Inventory" &&
-                        storeUserSelections.selected_parameter ===
-                          "Wetland Extent"
-                      ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                      : storeUserSelections.selected_sub_indicator ===
-                          "Wetland Inventory" &&
-                        storeUserSelections.selected_parameter ===
-                          "Wetland Status"
-                      ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                      : storeUserSelections.selected_sub_indicator ===
-                          "Water Quality" &&
-                        storeUserSelections.selected_parameter === "Turbidity"
-                      ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                      : storeUserSelections.selected_sub_indicator ===
-                          "Water Quality" &&
-                        storeUserSelections.selected_parameter ===
-                          "Sus Sediments"
-                      ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                      : sub_indicator === "Land Cover" ||
-                        "Vegetation Cover" ||
-                        "Precipitation Index" ||
-                        "Undulation" ||
-                        "Burnt Area FIRMS" ||
-                        "Soil Moisure Index"
-                      ? `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`
-                      : //  sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
-                        //    'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
-                        // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
-                        //     `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
-                        ""
+        storeUserSelections.selected_indicator ===
+          "Basin Vulnerability Index"
+          ? `Basin Vulnerability Index for ${storeUserSelections.selected_basin} basin`
+          : storeUserSelections.selected_sub_indicator ===
+            "Wetland Inventory" &&
+            storeUserSelections.selected_parameter ===
+            "Wetland Extent"
+            ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+            : storeUserSelections.selected_sub_indicator ===
+              "Wetland Inventory" &&
+              storeUserSelections.selected_parameter ===
+              "Wetland Status"
+              ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+              : storeUserSelections.selected_sub_indicator ===
+                "Water Quality" &&
+                storeUserSelections.selected_parameter === "Turbidity"
+                ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+                : storeUserSelections.selected_sub_indicator ===
+                  "Water Quality" &&
+                  storeUserSelections.selected_parameter ===
+                  "Sus Sediments"
+                  ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
+                  : sub_indicator === "Land Cover" ||
+                    "Vegetation Cover" ||
+                    "Precipitation Index" ||
+                    "Undulation" ||
+                    "Burnt Area FIRMS" ||
+                    "Soil Moisure Index"
+                    ? `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`
+                    : // sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
+                    // 'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
+                    // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&
+                    storeUserSelections.selected_parameter === 'Wetland Status'  ? "" : ''
                   }}
                 </td>
               </tr>
@@ -654,39 +454,39 @@
 
                 <td>
                   {{
-                    storeUserSelections.selected_indicator ===
-                    "Basin Vulnerability Index"
-                      ? $t("indicators.bvi_index")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Precipitation Index"
-                      ? $t("metadata.prec_desc")
-                      : storeUserSelections.selected_parameter === "Turbidity"
-                      ? $t("metadata.turb_desc")
-                      : storeUserSelections.selected_parameter ===
-                        "Sus Sediments"
-                      ? $t("metadata.sus_desc")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Burnt Area FIRMS"
-                      ? $t("metadata.firms_desc")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Undulation"
-                      ? $t("metadata.undulation_desc")
-                      : storeUserSelections.selected_parameter ===
-                        "Wetland Status"
+        storeUserSelections.selected_indicator ===
+          "Basin Vulnerability Index"
+          ? $t("indicators.bvi_index")
+          : storeUserSelections.selected_sub_indicator ===
+            "Precipitation Index"
+            ? $t("metadata.prec_desc")
+            : storeUserSelections.selected_parameter === "Turbidity"
+              ? $t("metadata.turb_desc")
+              : storeUserSelections.selected_parameter ===
+                "Sus Sediments"
+                ? $t("metadata.sus_desc")
+                : storeUserSelections.selected_sub_indicator ===
+                  "Burnt Area FIRMS"
+                  ? $t("metadata.firms_desc")
+                  : storeUserSelections.selected_sub_indicator ===
+                    "Undulation"
+                    ? $t("metadata.undulation_desc")
+                    : storeUserSelections.selected_parameter ===
+                      "Wetland Status"
                       ? $t("metadata.status_desc")
                       : storeUserSelections.selected_sub_indicator ===
                         "Land Cover"
-                      ? $t("metadata.lulc_desc")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Vegetation Cover"
-                      ? $t("metadata.vegcover_desc")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Wetland Inventory"
-                      ? $t("metadata.extent_desc")
-                      : storeUserSelections.selected_sub_indicator === ""
-                      ? "please select a parameter"
-                      : ""
-                  }}
+                        ? $t("metadata.lulc_desc")
+                        : storeUserSelections.selected_sub_indicator ===
+                          "Vegetation Cover"
+                          ? $t("metadata.vegcover_desc")
+                          : storeUserSelections.selected_sub_indicator ===
+                            "Wetland Inventory"
+                            ? $t("metadata.extent_desc")
+                            : storeUserSelections.selected_sub_indicator === ""
+                              ? "please select a parameter"
+                              : ""
+      }}
                 </td>
               </tr>
 
@@ -735,41 +535,40 @@
                 <th>{{ $t("metadata.tags") }}</th>
                 <td>
                   {{
-                    storeUserSelections.selected_sub_indicator === "Land Cover"
-                      ? $t("metadata.lulc_theme") +
-                        " " +
-                        storeUserSelections.selected_season
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Precipitation Index"
-                      ? `${$t("metadata.prec_theme")}, ${
-                          storeUserSelections.selected_season
-                        } `
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Vegetation Cover"
-                      ? $t("metadata.veg_cover_theme") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " "
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Wetland Inventory"
-                      ? $t("metadata.wetland_inventory_theme") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " "
-                      : storeUserSelections.selected_indicator ===
-                        "Basin Vulnerability Index"
-                      ? $t("indicators.bvi_index") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " "
-                      : storeUserSelections.selected_parameter ===
-                        "Wetland Status"
-                      ? $t("metadata.status_theme") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " "
-                      : ""
-                  }}
+        storeUserSelections.selected_sub_indicator === "Land Cover"
+          ? $t("metadata.lulc_theme") +
+          " " +
+          storeUserSelections.selected_season
+          : storeUserSelections.selected_sub_indicator ===
+            "Precipitation Index"
+            ? `${$t("metadata.prec_theme")}, ${storeUserSelections.selected_season
+            } `
+            : storeUserSelections.selected_sub_indicator ===
+              "Vegetation Cover"
+              ? $t("metadata.veg_cover_theme") +
+              " " +
+              storeUserSelections.selected_season +
+              " "
+              : storeUserSelections.selected_sub_indicator ===
+                "Wetland Inventory"
+                ? $t("metadata.wetland_inventory_theme") +
+                " " +
+                storeUserSelections.selected_season +
+                " "
+                : storeUserSelections.selected_indicator ===
+                  "Basin Vulnerability Index"
+                  ? $t("indicators.bvi_index") +
+                  " " +
+                  storeUserSelections.selected_season +
+                  " "
+                  : storeUserSelections.selected_parameter ===
+                    "Wetland Status"
+                    ? $t("metadata.status_theme") +
+                    " " +
+                    storeUserSelections.selected_season +
+                    " "
+                    : ""
+      }}
                 </td>
               </tr>
               <tr>
@@ -797,32 +596,32 @@
 
                 <td>
                   {{
-                    storeUserSelections.selected_parameter === "Wetland Status"
-                      ? $t("metadata.status_theme")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Precipitation Index"
-                      ? `${$t("metadata.prec_theme")}_${$t(
-                          "metadata.season"
-                        )} season`
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Land Cover"
-                      ? $t("metadata.lulc_theme")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Vegetation Cover"
-                      ? $t("metadata.veg_cover_theme")
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Wetland Inventory"
-                      ? $t("metadata.wetland_inventory_theme")
-                      : storeUserSelections.selected_indicator ===
-                        "Basin Vulnerability Index"
-                      ? $t("indicators.bvi_index") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " "
-                      : storeUserSelections.selected_sub_indicator === ""
+        storeUserSelections.selected_parameter === "Wetland Status"
+          ? $t("metadata.status_theme")
+          : storeUserSelections.selected_sub_indicator ===
+            "Precipitation Index"
+            ? `${$t("metadata.prec_theme")}_${$t(
+              "metadata.season"
+            )} season`
+            : storeUserSelections.selected_sub_indicator ===
+              "Land Cover"
+              ? $t("metadata.lulc_theme")
+              : storeUserSelections.selected_sub_indicator ===
+                "Vegetation Cover"
+                ? $t("metadata.veg_cover_theme")
+                : storeUserSelections.selected_sub_indicator ===
+                  "Wetland Inventory"
+                  ? $t("metadata.wetland_inventory_theme")
+                  : storeUserSelections.selected_indicator ===
+                    "Basin Vulnerability Index"
+                    ? $t("indicators.bvi_index") +
+                    " " +
+                    storeUserSelections.selected_season +
+                    " "
+                    : storeUserSelections.selected_sub_indicator === ""
                       ? "please select a parameter"
                       : ""
-                  }}
+      }}
                 </td>
               </tr>
 
@@ -831,53 +630,45 @@
 
                 <td>
                   {{
-                    storeUserSelections.selected_sub_indicator === "Land Cover"
-                      ? $t("metadata.lulc_theme") + " "
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Vegetation Cover"
-                      ? $t("metadata.veg_cover_theme") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " " +
-                        "season"
-                      : storeUserSelections.selected_sub_indicator ===
-                        "Wetland Inventory"
-                      ? $t("metadata.veg_cover_theme")
-                      : storeUserSelections.selected_parameter ===
-                        "Wetland Status"
-                      ? $t("metadata.status_theme") +
-                        " " +
-                        storeUserSelections.selected_season +
-                        " " +
-                        "season"
-                      : ""
-                  }}
+        storeUserSelections.selected_sub_indicator === "Land Cover"
+          ? $t("metadata.lulc_theme") + " "
+          : storeUserSelections.selected_sub_indicator ===
+            "Vegetation Cover"
+            ? $t("metadata.veg_cover_theme") +
+            " " +
+            storeUserSelections.selected_season +
+            " " +
+            "season"
+            : storeUserSelections.selected_sub_indicator ===
+              "Wetland Inventory"
+              ? $t("metadata.veg_cover_theme")
+              : storeUserSelections.selected_parameter ===
+                "Wetland Status"
+                ? $t("metadata.status_theme") +
+                " " +
+                storeUserSelections.selected_season +
+                " " +
+                "season"
+                : ""
+      }}
                 </td>
               </tr>
             </table>
           </div>
           <!-- <LineChart :height="250" :width="250" /> -->
-          
+
           <div class="logos_container">
-            <p
-            class="partners"
-            style="
+            <p class="partners" style="
               font-weight: bold;
               font-size: 16px;
               /* position: relative;
               top: 9vh;
               left: 12vw; */
-            "
-          >
-            Technical Partners
-          </p>
-         
-            <img
-              src="../assets/logos/bottom.png"
-              alt=""
-          style="width: 100%; height: 3em;"
-           
-            />
+            ">
+              Technical Partners
+            </p>
+
+            <img src="../assets/logos/bottom.png" alt="" style="width: 100%; height: 3em;" />
           </div>
         </div>
       </div>
@@ -886,703 +677,24 @@
     <!-- advanced filter -->
 
     <div v-if="advanced_filter" class="advanced_filter_container">
-      <img
-        class="close_advanced_filter"
-        src=" /uiIcons/close.png"
-        alt=""
-        @click="close_advanced_filter"
-      />
+      <img class="close_advanced_filter" src=" /uiIcons/close.png" alt="" @click="close_advanced_filter" />
       <AdvancedFilter @fetchAdvancedData="addAdvancedLayer" />
     </div>
 
     <!-- compare -->
     <div v-if="compare" class="compare_container">
-      <img
-        class="close_compare"
-        src=" /uiIcons/close.png"
-        alt=""
-        @click="close_compare"
-      />
+      <img class="close_compare" src=" /uiIcons/close.png" alt="" @click="close_compare" />
       <Compare @fetchCompareData="compareLayers" />
-    </div>  
-
-
-    <!-- <Sidebar v-model:visible="visibleRight" header="Statistics" position="right" class="w-11 md:w-30rem lg:w-40rem">
-      <div class=" flex flex-row gap-8">
-       
-                   
-                      <div
-                        class="data_analysis_text"
-                        @click="handleAnalysisMetaSwap2()"
-                        style="cursor: pointer"
-                      >
-                        <span
-                          :class="
-                            analysis_swap_toggle === 'data_analysis'
-                              ? 'side_nav_swap'
-                              : ''
-                          "
-                          >Data Analysis</span
-                        >
-                      </div>
-                   
-               
-                  
-                      <div
-                        class="metadata_text"
-                        @click="handleAnalysisMetaSwap()"
-                        style=""
-                      >
-                        <span
-                          :class="
-                            analysis_swap_toggle === 'metadata'
-                              ? 'side_nav_swap'
-                              : ''
-                          "
-                          >Metadata
-                        </span>
-                      </div>
-                   
-      </div>
-      <div v-if="analysis_swap_toggle === 'data_analysis'">
-           
-
-           <p
-             style="margin-top: 40px"
-             :class="
-               storeUserSelections.selected_sub_indicator ===
-                 'Burnt Area FIRMS' || 'Undulation'
-                 ? 'burnt_summary'
-                 : ''
-             "
-           >
-             <label style="margin-top: 40px; font-weight: 700; font-size: 14px"
-               >Summary</label
-             >
-             <br />
-             {{
-               storeUserSelections.selected_parameter === "Wetland Status"
-                 ? $t("summaries.wetland_status")
-                 : storeUserSelections.selected_parameter === "Wetland Extent"
-                 ? $t("summaries.wetland_extent")
-                 : storeUserSelections.selected_sub_indicator ===
-                   "Soil Moisure Index"
-                 ? $t("summaries.smi_index")
-                 : storeUserSelections.selected_sub_indicator ===
-                   "Burnt Area FIRMS"
-                 ? $t("summaries.burnt_firms")
-                 : storeUserSelections.selected_sub_indicator === "Undulation"
-                 ? $t("summaries.undulation")
-                 : storeUserSelections.selected_sub_indicator ===
-                   "Precipitation Index"
-                 ? $t("summaries.prec_index")
-                 : storeUserSelections.selected_parameter === "Turbidity"
-                 ? $t("summaries.turbidity")
-                 : storeUserSelections.selected_parameter === "Sus Sediments"
-                 ? $t("summaries.susp_sediments")
-                 : storeUserSelections.selected_sub_indicator === "Land Cover"
-                 ? $t("summaries.landcover")
-                 : storeUserSelections.selected_sub_indicator ===
-                   "Vegetation Cover"
-                 ? $t("summaries.vegcover")
-                 : storeUserSelections.selected_indicator ===
-                   "Basin Vulnerability Index"
-                 ? $t("summaries.bvi_index")
-                 : storeUserSelections.selected_sub_indicator === ""
-                 ? "please select a parameter"
-                 : ""
-             }}
-           </p>
-           <br />
-           <label
-             class="text-bold"
-             style="font-family: Montserrat; font-weight: 800"
-           >
-             
-           </label>
-
-           <div class="charts_sidebar">
-             
-             <div
-               v-if="show_zambezi_stats === true"
-               class="default_layer_title"
-             >
-               Zambezi LULC 2016
-             </div>
-
-             <div
-               v-if="year && sub_indicator"
-               class="chart_title"
-               :class="{ hide: compareUserSelections.selected_year != ''  }"
-             
-             >
-               {{ `${basin} ${sub_indicator}-${year}` }}
-             </div>
-             <div
-               v-if="
-                 compareUserSelections.selected_year != '' && sub_indicator
-               "
-               class="chart_title"
-             >
-               {{ `${basin} ${sub_indicator}-${compare_year}` }}
-             </div>
-             <div
-               v-if="compareUserSelections.selected_year != '' && indicator"
-               class="chart_title"
-             >
-               {{ `${basin} ${indicator}-${compare_year}` }}
-             </div>
-             <div
-               v-if="
-                 indicator === 'Basin Vulnerability Index' &&
-                 compareUserSelections.selected_year == ''
-               "
-               class="bar_chart_title"
-               
-             >
-               {{ `${basin} ${indicator}-${year}` }}
-             </div>
-             <img
-               src="/mapIcons/download_map.svg"
-               alt=""
-               title="Download Png"
-               class="chart_download_png"
-               style="
-                 position: absolute;
-                 top: -2.5vh;
-                 left: 28vw;
-                 height: 25px;
-               "
-               @click="chart_png"
-             />
-             <img
-               id="chart_csv"
-               src="/mapIcons/file_download-24px.svg"
-               alt=""
-               class="chart_download_png"
-               title="Download CSV"
-               style="
-                 position: absolute;
-                 top: -2.5vh;
-                 left: 29.5vw;
-                 height: 25px;
-                 width: 25px;
-               "
-               @click="downloadcsv"
-             />
-          
-             <div
-               id="chart_pie"
-               v-if="
-                 sub_indicator === 'Land Cover' ||
-                 indicator === 'Basin Vulnerability Index' ||
-                 sub_indicator === 'Wetland Inventory' ||
-                 sub_indicator === 'Burnt Area FIRMS' ||
-                 sub_indicator === 'Undulation'
-               "
-             >
-               <LulcPie
-                 :class="
-                   sub_indicator === 'Undulation'
-                     ? 'flood_chart'
-                     : 'lulc_chart'
-                 "
-                 :chartData="
-                   compare_year
-                     ? compareUserSelections.lulcChartData
-                     : storeUserSelections.lulcChartData
-                 "
-                 :options="options"
-               />
-             </div>
-
-             <div id="chart_pie" v-if="show_zambezi_stats === true">
-               <LulcPie
-                 class="lulc_chart"
-                 :chartData="storeUserSelections.lulcChartData"
-                 :options="options"
-               />
-             </div>
-           </div>
-
-           <br />
-           <label
-             class="text-bold"
-             style="font-family: Montserrat; font-weight: 800"
-           >
-           
-           </label>
-
-           <div class="charts2_sidebar">
-           
-
-             <div
-               v-if="show_zambezi_stats === true"
-               class="default_layer_title"
-             >
-               Zambezi LULC 2016
-             </div>
-             <div
-               v-if="basin && sub_indicator && year"
-               class="chart_dynamic_titles"
-             >
-               <div
-                 v-if="sub_indicator != 'Water Quality'"
-                 class="bar_chart_title"
-                 :class="{ hide: compareUserSelections.selected_year != '' }"
-                
-               >
-                 {{ `${basin} ${sub_indicator}-${year}` }}
-               </div>
-               <div
-                 v-if="compareUserSelections.selected_year != ''"
-                 class="bar_chart_title"
-               >
-                 {{ `${basin} ${sub_indicator}-${compare_year}` }}
-               </div>
-               <div
-                 v-if="sub_indicator === 'Water Quality'"
-                 class="bar_chart_title"
-                 
-               >
-                 {{ `${basin} ${parameter}-${year}` }}
-               </div>
-             </div>
-             <div
-               v-if="
-                 indicator === 'Basin Vulnerability Index' &&
-                 year &&
-                 compareUserSelections.selected_year == ''
-               "
-               class="bar_chart_title"
-             >
-               {{ `${basin} ${indicator}-${year}` }}
-             </div>
-             <div
-               v-if="compareUserSelections.selected_year != '' && indicator"
-               class="chart_title"
-             >
-               {{ `${basin} ${indicator}-${compare_year}` }}
-             </div>
-
-             <img
-               src="/mapIcons/download_map.svg"
-               alt=""
-               title="Download Png"
-               class="chart_download_png"
-               style="
-                 position: absolute;
-                 top: -2.5vh;
-                 left: 28vw;
-                 height: 25px;
-               "
-               @click="bar_chart_png"
-               v-if="sub_indicator != 'Precipitation Index'"
-             />
-             <img
-               id="chart_csv"
-               src="/mapIcons/file_download-24px.svg"
-               alt=""
-               class="chart_download_png"
-               title="Download CSV"
-               style="
-                 position: absolute;
-                 top: -2.5vh;
-                 left: 29.5vw;
-                 height: 25px;
-                 width: 25px;
-               "
-               @click="downloadcsv"
-               v-if="sub_indicator !== 'Precipitation Index'"
-             />
-             <div
-               id="bar"
-               :class="
-                 sub_indicator === 'Vegetation Cover'
-                   ? 'bar_veg_cover'
-                   : sub_indicator === 'Precipitation Index'
-                   ? 'bar_veg_cover'
-                   : sub_indicator === 'Soil Moisure Index'
-                   ? 'bar_veg_cover'
-                   : sub_indicator === 'Water Quality'
-                   ? 'bar_veg_cover'
-                   : ''
-               "
-             >
-              
-               <LulcBar
-                 :class="
-                   storeUserSelections.selected_sub_indicator ===
-                     'Burnt Area FIRMS' || 'Undulation'
-                     ? 'burnt_bar_chart'
-                     : 'lulc_bar_chart'
-                 "
-                 :height="200"
-                 :chartData="
-                   compare_year
-                     ? compareUserSelections.lulcChartData
-                     : storeUserSelections.lulcChartData
-                 "
-                 :options="
-                   sub_indicator === 'Vegetation Cover'
-                     ? veg_barchart_options
-                     : sub_indicator === 'Precipitation Index'
-                     ? spi_barchart_options
-                     : sub_indicator === 'Soil Moisure Index'
-                     ? smi_barchart_options
-                     : barchart_options
-                 "
-               />
-             </div>
-             <p
-               class="time_series_title"
-               v-if="
-                 storeUserSelections.selected_sub_indicator ===
-                   'Vegetation Cover' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Precipitation Index' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Soil Moisure Index' ||
-                 storeUserSelections.selected_sub_indicator === 'Water Quality'
-               "
-             >
-               Time Series
-             </p>
-
-             <div
-               :class="
-                 sub_indicator === 'Vegetation Cover' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Soil Moisure Index'
-                   ? 'ancillary_title'
-                   : 'ancillary_title2'
-               "
-               v-if="
-                 storeUserSelections.selected_sub_indicator ===
-                   'Vegetation Cover' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Precipitation Index' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Soil Moisure Index' ||
-                 storeUserSelections.selected_sub_indicator === 'Water Quality'
-               "
-             >
-               <p class="ancil_data">Ancillary data</p>
-
-               <CloudRain
-                 width="18"
-                 height="18"
-                 color="#164b75"
-                 @click="addPRECIPTimeSeriesLayer"
-               />
-               <ThermometerHalf
-                 width="18"
-                 height="18"
-                 color="#164b75"
-                 @click="addTEMPTimeSeriesLayer"
-               />
-             </div>
-
-             <LulcLine
-               class="lulc_line_chart"
-               v-if="
-                 storeUserSelections.selected_sub_indicator ===
-                   'Vegetation Cover' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Precipitation Index' ||
-                 storeUserSelections.selected_sub_indicator ===
-                   'Soil Moisure Index' ||
-                 storeUserSelections.selected_sub_indicator === 'Water Quality'
-               "
-               :chartData="storeUserSelections.lineChartData"
-               :options="linechartOptions"
-             />
-           </div>
-         </div>
-         <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
-           <table style="width: 100%">
-             <tr>
-               <th>{{ $t("metadata.title") }}</th>
-               <td>
-                 {{
-                   storeUserSelections.selected_indicator ===
-                   "Basin Vulnerability Index"
-                     ? `Basin Vulnerability Index for ${storeUserSelections.selected_basin} basin`
-                     : storeUserSelections.selected_sub_indicator ===
-                         "Wetland Inventory" &&
-                       storeUserSelections.selected_parameter ===
-                         "Wetland Extent"
-                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                     : storeUserSelections.selected_sub_indicator ===
-                         "Wetland Inventory" &&
-                       storeUserSelections.selected_parameter ===
-                         "Wetland Status"
-                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                     : storeUserSelections.selected_sub_indicator ===
-                         "Water Quality" &&
-                       storeUserSelections.selected_parameter === "Turbidity"
-                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                     : storeUserSelections.selected_sub_indicator ===
-                         "Water Quality" &&
-                       storeUserSelections.selected_parameter ===
-                         "Sus Sediments"
-                     ? `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin`
-                     : sub_indicator === "Land Cover" ||
-                       "Vegetation Cover" ||
-                       "Precipitation Index" ||
-                       "Undulation" ||
-                       "Burnt Area FIRMS" ||
-                       "Soil Moisure Index"
-                     ? `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`
-                     : //  sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
-                       //    'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
-                       // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&  storeUserSelections.selected_parameter === 'Wetland Status' ?
-                       //     `${storeUserSelections.selected_parameter} for ${storeUserSelections.selected_basin} basin` :
-                       ""
-                 }}
-               </td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.description") }}</th>
-
-               <td>
-                 {{
-                   storeUserSelections.selected_indicator ===
-                   "Basin Vulnerability Index"
-                     ? $t("indicators.bvi_index")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Precipitation Index"
-                     ? $t("metadata.prec_desc")
-                     : storeUserSelections.selected_parameter === "Turbidity"
-                     ? $t("metadata.turb_desc")
-                     : storeUserSelections.selected_parameter ===
-                       "Sus Sediments"
-                     ? $t("metadata.sus_desc")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Burnt Area FIRMS"
-                     ? $t("metadata.firms_desc")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Undulation"
-                     ? $t("metadata.undulation_desc")
-                     : storeUserSelections.selected_parameter ===
-                       "Wetland Status"
-                     ? $t("metadata.status_desc")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Land Cover"
-                     ? $t("metadata.lulc_desc")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Vegetation Cover"
-                     ? $t("metadata.vegcover_desc")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Wetland Inventory"
-                     ? $t("metadata.extent_desc")
-                     : storeUserSelections.selected_sub_indicator === ""
-                     ? "please select a parameter"
-                     : ""
-                 }}
-               </td>
-             </tr>
-
-             <tr>
-               <th>{{ $t("metadata.extent") }}</th>
-
-               <td>
-                 <table>
-                   <tr>
-                     <th>{{ $t("metadata.west_lon") }}</th>
-                     <td>{{ storeUserSelections.western_lon + "°" }}</td>
-                   </tr>
-                   <tr>
-                     <th>{{ $t("metadata.north_lat") }}</th>
-                     <td>{{ storeUserSelections.northern_lat + "°" }}</td>
-                   </tr>
-                   <tr>
-                     <th>{{ $t("metadata.east_lon") }}</th>
-                     <td>{{ storeUserSelections.eastern_lon + "°" }}</td>
-                   </tr>
-                   <tr>
-                     <th>{{ $t("metadata.south_lat") }}</th>
-                     <td>{{ storeUserSelections.southern_lat + "°" }}</td>
-                   </tr>
-                 </table>
-               </td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.resolution") }}</th>
-               <td>{{ `${storeUserSelections.resolution} Meters` }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.crs") }}</th>
-               <td>{{ $t("metadata.crs_text") }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.date_created") }}</th>
-
-               <td>{{ storeUserSelections.selected_year }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.region") }}</th>
-               <td>{{ storeUserSelections.selected_basin }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.tags") }}</th>
-               <td>
-                 {{
-                   storeUserSelections.selected_sub_indicator === "Land Cover"
-                     ? $t("metadata.lulc_theme") +
-                       " " +
-                       storeUserSelections.selected_season
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Precipitation Index"
-                     ? `${$t("metadata.prec_theme")}, ${
-                         storeUserSelections.selected_season
-                       } `
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Vegetation Cover"
-                     ? $t("metadata.veg_cover_theme") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " "
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Wetland Inventory"
-                     ? $t("metadata.wetland_inventory_theme") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " "
-                     : storeUserSelections.selected_indicator ===
-                       "Basin Vulnerability Index"
-                     ? $t("indicators.bvi_index") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " "
-                     : storeUserSelections.selected_parameter ===
-                       "Wetland Status"
-                     ? $t("metadata.status_theme") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " "
-                     : ""
-                 }}
-               </td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.encoding") }}</th>
-
-               <td>{{ $t("metadata.encoding_text") }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.encoding_format") }}</th>
-
-               <td>{{ $t("metadata.tif") }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.data_type") }}</th>
-
-               <td>{{ $t("metadata.raster") }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.position") }}</th>
-
-               <td>{{ geoposition }}</td>
-             </tr>
-             <tr>
-               <th>{{ $t("metadata.theme") }}</th>
-
-               <td>
-                 {{
-                   storeUserSelections.selected_parameter === "Wetland Status"
-                     ? $t("metadata.status_theme")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Precipitation Index"
-                     ? `${$t("metadata.prec_theme")}_${$t(
-                         "metadata.season"
-                       )} season`
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Land Cover"
-                     ? $t("metadata.lulc_theme")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Vegetation Cover"
-                     ? $t("metadata.veg_cover_theme")
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Wetland Inventory"
-                     ? $t("metadata.wetland_inventory_theme")
-                     : storeUserSelections.selected_indicator ===
-                       "Basin Vulnerability Index"
-                     ? $t("indicators.bvi_index") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " "
-                     : storeUserSelections.selected_sub_indicator === ""
-                     ? "please select a parameter"
-                     : ""
-                 }}
-               </td>
-             </tr>
-
-             <tr>
-               <th>{{ $t("metadata.keyword") }}</th>
-
-               <td>
-                 {{
-                   storeUserSelections.selected_sub_indicator === "Land Cover"
-                     ? $t("metadata.lulc_theme") + " "
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Vegetation Cover"
-                     ? $t("metadata.veg_cover_theme") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " " +
-                       "season"
-                     : storeUserSelections.selected_sub_indicator ===
-                       "Wetland Inventory"
-                     ? $t("metadata.veg_cover_theme")
-                     : storeUserSelections.selected_parameter ===
-                       "Wetland Status"
-                     ? $t("metadata.status_theme") +
-                       " " +
-                       storeUserSelections.selected_season +
-                       " " +
-                       "season"
-                     : ""
-                 }}
-               </td>
-             </tr>
-           </table>
-         </div>
-       
-         <p
-           class="partners"
-           style="
-             font-weight: bold;
-             font-size: 16px;
-             position: relative;
-             top: 2vh;
-             left: 12vw;
-           "
-         >
-           Technical Partners
-         </p>
-         <div class="logos_container row">
-         
-           <img
-             src="../assets/logos/bottom.png"
-             alt=""
-             :class="{
-               analysis_logos: analysis_swap_toggle === 'data_analysis',
-               metadata_logos: analysis_swap_toggle === 'metadata',
-             }"
-           />
-         </div>
-        </Sidebar> -->
+    </div>
 
 
 
-    <!-- login icons @click="$router.push('/')"-->
+    
     <div class="grid">
-      <div class="col-fixed  flex flex-column gap-2 " style="width:10em;  margin-top: 9em;" >
-        
-        
-         <div class="nav_icons flex align-items-center justify-content-center " id="nav_icons">
+      <div class="col-fixed  flex flex-column gap-2 " style="width:10em;  margin-top: 9em;">
+
+
+        <div class="nav_icons flex align-items-center justify-content-center " id="nav_icons">
           <RouterLink to="/">
             <img class="home" src=" /uiIcons/home-landing.svg" alt="" title="Home" />
           </RouterLink>
@@ -1598,33 +710,34 @@
             style="margin-left: -5px" />
 
 
-            <div class="advance_wrapper flex flex-column gap-1">
-              <div class="advanced_filter w-full md:w-max flex align-items-center justify-content-center" @click="show_advanced_filter">
-                        <img class="filter_icon" src=" /mapIcons/filter.svg" alt="" />
-              
-                        <div class="openfilter flex flex-column  gap-1">
-              <p style="display: flex; flex-direction: column" class="advanced_text">
-                {{ $t("home.advanced") }}<br />{{ $t("home.filter") }}
-              </p>
-          
-                        </div>
-                      </div>
-              
-              
-                      <div class="compare w-full md:w-max flex align-items-center justify-content-center" @click="show_compare">
-                        <img class="compare_icon" src=" /mapIcons/compare.svg" alt="" />
-                        
-                        <p class="compare_text">{{ $t("home.compare") }}</p>
-                      </div>
+          <div class="advance_wrapper flex flex-column gap-1">
+            <div class="advanced_filter w-full md:w-max flex align-items-center justify-content-center"
+              @click="show_advanced_filter">
+              <img class="filter_icon" src=" /mapIcons/filter.svg" alt="" />
+
+              <div class="openfilter flex flex-column  gap-1">
+                <p style="display: flex; flex-direction: column" class="advanced_text">
+                  {{ $t("home.advanced") }}<br />{{ $t("home.filter") }}
+                </p>
+
+              </div>
             </div>
 
-        </div> 
 
-   <!-- <Column1 /> -->
+            <div class="compare w-full md:w-max flex align-items-center justify-content-center" @click="show_compare">
+              <img class="compare_icon" src=" /mapIcons/compare.svg" alt="" />
 
-       
+              <p class="compare_text">{{ $t("home.compare") }}</p>
+            </div>
+          </div>
+
+        </div>
+
+
+
+
         <RouterView />
-        
+
       </div>
 
       <div class="second_column col-10">
@@ -1636,9 +749,6 @@
       <div class="third_column col-fixed  h-screen" style="width:100px"></div>
     </div>
 
-
-
-    <!-- <button type="button" @click="change_zoom">zoom</button> -->
   </div>
 </template>
 
@@ -1867,7 +977,7 @@ const submit_shapefile = (event) => {
       timeout: 3000,
       position: POSITION.BOTTOM_RIGHT,
     });
-    document.getElementById("warning").innerHTML = ""; 
+    document.getElementById("warning").innerHTML = "";
     handleZipFile(file);
   }
 };
@@ -1885,8 +995,8 @@ function handleZipFile(file) {
   reader.readAsArrayBuffer(file);
 }
 
-function convertToLayer(buffer) {
-  //remove previously loaded layers   drawn_layer.value  custom_geojson
+const convertToLayer = (buffer) => {
+
   if (layer.value) map.removeLayer(layer.value);
   if (drawn_layer.value) map.removeLayer(drawn_layer.value);
   if (custom_geojson.value) map.removeLayer(custom_geojson.value);
@@ -1896,12 +1006,10 @@ function convertToLayer(buffer) {
   if (wmsLayer.value) map.removeLayer(wmsLayer.value);
   if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
   if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
-  // if (wmsPrecTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value); 
-  //lulc_legend.value
+
 
   shp(buffer).then(function (geojson) {
-    //More info: https://github.com/calvinmetcalf/shapefile-js   .features[0].geometry.coordinates[0]
-    //console.log(geojson, 'uploaded shapefile geojson')
+
     shp_geojson.value = geojson.features[0];
     layer.value = L.shapefile(geojson, {
       style: {
@@ -1910,7 +1018,7 @@ function convertToLayer(buffer) {
         fillOpacity: 0,
         weight: 4,
       },
-    }).addTo(map); //More info: https://github.com/calvinmetcalf/leaflet.shapefile
+    }).addTo(map);
 
     map.fitBounds(layer.value.getBounds(), {
       padding: [50, 50],
@@ -1918,7 +1026,7 @@ function convertToLayer(buffer) {
 
     if (layer.value) storeUserSelections.region_placeholder = "Custom";
     if (layer.value) storeUserSelections.selected_basin = "Custom";
-    //  //console.log(storeUserSelections.selected_basin);
+
 
     const apiUrl = "http://45.32.233.93:8000/custom_polygon/";
     generate_layer_abbreviations();
@@ -1932,8 +1040,7 @@ function convertToLayer(buffer) {
     const merged = { ...targetObject, ...sourceObject1, ...sourceObject2 };
     //console.log(merged);
 
-    axios
-      .post(apiUrl, merged)
+    axios.post(apiUrl, merged)
       .then((response) => {
         //console.log('custom_shapefile response:', response.data)
 
@@ -2355,7 +1462,7 @@ function convertToLayer(buffer) {
       .catch((error) => {
         //console.log('Error:', error)
       });
-  });
+  })
 }
 
 let lineChartData = {
@@ -2668,7 +1775,6 @@ let smi_barchart_options = {
   maintainAspectRatio: false,
 };
 
-// const chartData = storeUserSelections.getLulcChartData
 
 const show_advanced_filter = () => {
   advanced_filter.value = true;
@@ -3235,7 +2341,7 @@ const setLeafletMap = () => {
         'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
 
       id: "mapbox/satellite-v9",
-      accessToken:apiKey,
+      accessToken: apiKey,
     }
   );
 
@@ -3246,7 +2352,7 @@ const setLeafletMap = () => {
         'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 10,
       id: "mapbox/streets-v11",
-      accessToken:apiKey,
+      accessToken: apiKey,
     }
   );
 
@@ -3272,14 +2378,14 @@ const setLeafletMap = () => {
 
   current_top_base_layer.value = "MapBoxSatellite";
 
-  
+
 };
 
 //hooks
 
 onMounted(() => {
   setLeafletMap();
- 
+
 
   //load zambezi
   const fetchZambezi = async () => {
@@ -3331,7 +2437,7 @@ onMounted(() => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      
+
     });
 
     wmsLayer.value.addTo(map);
@@ -3409,13 +2515,13 @@ onMounted(() => {
       show_upload_shapefile();
     });
 
-    // document
-    // .getElementById("view_stats")
-    // .addEventListener("click", (e) => {
-    //   viewStats()
-    //   // toggle_nav()
+  // document
+  // .getElementById("view_stats")
+  // .addEventListener("click", (e) => {
+  //   viewStats()
+  //   // toggle_nav()
 
-    // });
+  // });
   document.getElementById("download_map").addEventListener("click", (e) => {
     //console.log("click ");
 
@@ -3438,7 +2544,7 @@ onMounted(() => {
   //     current_raster_layer.value.bringToFront(); //current_raster can be tracked and brought to front
   //   }
   // });
-closeNav ();
+  closeNav();
 
   const plugin = L.control
     .measure({
@@ -5306,7 +4412,7 @@ const downloadcsv = () => {
 
 const chart_png = () => {
   loading.value = true;
-  
+
   let mapElement = document.getElementById("doughnut-chart");
 
   setTimeout(async () => {
@@ -5330,7 +4436,7 @@ const chart_png = () => {
 
 const bar_chart_png = () => {
   loading.value = true;
-  
+
 
   let mapElement = document.getElementById("bar-chart");
 
@@ -7809,39 +6915,4 @@ const addDrawCtrl = () => {
 
 <style scoped>
 @import "../assets/main.css";
-
-.advanced_filter {
-  cursor: pointer;
-  z-index: 200;
- 
-
-  background-color: steelblue;
-  padding: 1em;
-  color: #fff;
-  font-size: .7em;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2em;
- 
-
-}
-
-.compare{
-  cursor: pointer;
-  /* position: absolute;
-  top:84.5vh;
-  left: -0.2vw; */
-  /* height: 135px;
-  width: 80px; */
-   background-color: #073e81;
-  
-  padding: 1em;
-  color:#fff;
-  font-size: .7em;
-  display:flex;
-  flex-direction: column;
-  gap: 0.2em;
-
-
-}
 </style>

@@ -22,6 +22,7 @@
         "year_label":"Ano",
         "wemast_select_season":"Época",
         "wemast_select_satellite": "Satellite",
+        "date_label": "Data",
         "request": "SOLICITAR",
         "search":"Pesquisar Locais",
         "season_label":"Época",

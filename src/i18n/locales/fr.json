@@ -22,6 +22,7 @@
         "year_label":"Année",
         "wemast_select_season":"saison",
         "wemast_select_satellite":"Satélite",
+        "date_label": "Date",
         "request": "DEMANDE",
         "search":"Emplacement de recherche",
         "season_label":"Saison",

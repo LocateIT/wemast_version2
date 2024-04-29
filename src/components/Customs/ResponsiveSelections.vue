@@ -80,9 +80,8 @@
 
 
         <FloatLabel class="w-full md:w-10rem" v-if="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'">
-            <label for="buttondisplay"> Date </label>
-            <Calendar v-model="selectedDate" @update:v-model="selectedDate = $event" showIcon :showOnFocus="false"
-                inputId="buttondisplay" dateFormat="dd/mm/yy" />
+            <label for="buttondisplay">{{ $t("home.date_label") }}</label>
+            <Calendar v-model="selectedDate" @update:v-model="selectedDate = $event" showIcon :showOnFocus="false" dateFormat="dd-mm-yy" />
         </FloatLabel>
 
         <Button label="" severity="info" rounded @click="$emit('fetchData')">{{ $t("home.request") }}</Button>
@@ -128,8 +127,12 @@ const selectedDateWatcher = () => {
     const day = date.getDate();
     const month = date.getMonth() + 1; // Month is 0-indexed, so we add 1
     const year = date.getFullYear();
-    console.log('Selected date changed:', `${day}-${month}-${year}`);
-    return `${day}-${month}-${year}`;
+    
+    const formattedDate = `${year}-${month}-${day}`
+
+    storeUserSelections.burntAreaDate = formattedDate
+    console.log('Selected date changed:', formattedDate);
+    return formattedDate;
 };
 
 // Watch for changes to selectedDate

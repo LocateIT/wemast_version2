@@ -175,6 +175,7 @@ export const useCounterStore = defineStore({
       satellite_list:[],
       satellite_placeholder:'',
       selected_satellite:'',
+      burntAreaDate:'',
       custom_geojson: {
         custom: true,
         name:'',
@@ -269,7 +270,7 @@ export const useCounterStore = defineStore({
       // pinia.$app.use(i18n)
      
       //console.log(i18n, 'usei18n')
-      this.indicator_list = [i18n.global.t('indicators.bvi_index'),i18n.global.t('indicators.exposure'), 'Sensitivity','Resiliance']
+      this.indicator_list = [i18n.global.t('indicators.bvi_index'),i18n.global.t('indicators.exposure'), i18n.global.t('indicators.sensitivity'),i18n.global.t('indicators.resiliance')]
       // this.indicator_list = ['Basin Vulnerability Index','Exposure', 'Sensitivity','Resiliance']
       return this.indicator_list.sort()
     },
@@ -1224,6 +1225,7 @@ export const useCounterStore = defineStore({
     getConfirmPassword:(state) => state.confirm_password,
     getZambeziStats:(state) => state.lulcChartData,
     getLatLon: state => state.latlon,
+    getBurntAreaDate:state => state.burntAreaDate
 
   
     

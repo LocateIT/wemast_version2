@@ -936,6 +936,7 @@ let wetland_basin = ref(null);
 let wetland_sld = ref("");
 let polygon_post_indicator = ref(null);
 let polygon_sld = ref("");
+let burnt_date = ref('')
 
 let point_layergroup = ref(null);
 let point_geojson = ref(null);
@@ -2690,7 +2691,9 @@ const getBasinName = () => {
   var selected_basin = storeUserSelections.getSelectedBasin;
 
   basin.value = selected_basin;
+
   // console.log(selected_basin, 'selected basin app')
+
 
   // show_zambezi_stats.value == false
 };
@@ -2790,6 +2793,24 @@ const setSelectedSatellite = computed(() => {
 watch(setSelectedSatellite, () => {
   getSatellite();
 });
+
+
+const getBurntDate = () => {
+  var selectedDate = storeUserSelections.getBurntDate;
+  
+};
+const setSelectedDate= computed(() => {
+  // console.log(storeUserSelections.burntAreaDate, 'selected burnt_date app')
+
+  burnt_date.value = storeUserSelections.burntAreaDate;
+  // console.log(burnt_date.value, 'selected burnt_date app')
+  return storeUserSelections.getBurntDate;
+});
+watch(setSelectedDate, () => {
+  getBurntDate();
+});
+
+
 
 const addBVILayer = () => {
   if (indicator.value === "Basin Vulnerability Index") {

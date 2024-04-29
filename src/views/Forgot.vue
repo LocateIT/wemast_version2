@@ -1,51 +1,37 @@
 <template>
     <div class="register">
-        <form  @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
-    <p id="heading">
-        
-        <PersonOutline width="250" height="100" color="#164b75" />
-    </p>
-
-
-<!-- 
-    <div class="field">
-    <Person width="20" height="16" color="#164b75" />
-      <input autocomplete="off" placeholder="Username" class="input-field" type="text">
-    </div> -->
-
-    <div class="field">
-    <Envelope width="18" height="15"  color="#164b75"/>
-      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
-    </div>
-
-
-
-    <!-- <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password">
-    </div> -->
-
-    <!-- <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Confirm Password" class="input-field" type="password">
-    </div> -->
-
-
-
-    <div class="btn">
-
-    <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
-    <RouterLink to="/reset" >
-    <button class="button2">Request Password</button>
-    </RouterLink>
-
-    
-
-    
-    </div>
-
-    <!-- <button class="button3">Forgot Password</button> -->
-</form>
+        <div class="formwrapper">
+          <form  @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
+            <div id="heading">
+            <h2 style="color:#164b75">Forgot Password</h2>
+          </div>
+          
+          
+          
+              <div class="field">
+              <Envelope width="18" height="15"  color="#164b75"/>
+                <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
+              </div>
+          
+          
+          
+          
+          
+          
+              <div class="btn">
+          
+              <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
+              <RouterLink to="/reset" >
+              <button class="button2">Request Password</button>
+              </RouterLink>
+          
+              
+          
+              
+              </div>
+          
+          </form>
+        </div>
 
     </div>
 
@@ -125,28 +111,35 @@ axios.post(apiUrl, postData, {headers})
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 .register{
-    /* background-color: aliceblue; */
-    width: 30%;
-    height: 50vh;
-    margin-top: 12em;
-    margin-left: 40em;
-    background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+  width: 99vw;
+  font-family: Poppins;
+  background-image: url('/images/waterfall.png');
+  background-size: cover;
+  background-position: center;
 
 }
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  
-  padding-left: 2em;
-  padding-right: 2em;
-  padding-bottom: 0.4em;
+
+  /* gap: 0.5em; */
+  padding: 2.5em 2em;
   /* background-color: rgb(219, 218, 218); */
   /* border-radius: 25px; */
   transition: .4s ease-in-out;
-  width: 25vw;
-  height: 59.2vh;
+  /* width: 25vw; */
+  /* height: 59.2vh; */
+}
+
+.formwrapper{
+  background-color: rgba(238, 238, 238, 0.7);
+  border-radius: 1.5em;
 }
 
 .form:hover {
@@ -171,6 +164,7 @@ axios.post(apiUrl, postData, {headers})
   border: #fffbfb 1px solid;
   outline: none;
   color: rgb(95, 95, 95);
+  font-family: Poppins;
   background-color: rgb(248, 248, 248);
   box-shadow: inset 2px 5px 10px rgb(161, 176, 184);
 }
@@ -187,6 +181,7 @@ axios.post(apiUrl, postData, {headers})
   outline: none;
   width: 100%;
   color: #4e4c4c;
+  font-family: Poppins;
 }
 
 .form .btn {
@@ -215,9 +210,7 @@ axios.post(apiUrl, postData, {headers})
 }
 
 .button2 {
-  padding: 1em;
-  padding-left: 4.3em;
-  padding-right: 4.3em;
+ padding: 1em 6em;
   border-radius: 20px;
   border: none;
   outline: none;
@@ -226,6 +219,7 @@ axios.post(apiUrl, postData, {headers})
   color: white;
   margin-bottom: 1.5rem;
   cursor: pointer;
+  font-family: Poppins;
 }
 
 .button2:hover {

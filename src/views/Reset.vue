@@ -1,162 +1,151 @@
 <template>
-    <div class="register">
-        <form  @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
-    <p id="heading">
-        
-        <PersonOutline width="250" height="100" color="#164b75" />
-    </p>
-
-
-<!-- 
-    <div class="field">
-    <Person width="20" height="16" color="#164b75" />
-      <input autocomplete="off" placeholder="Username" class="input-field" type="text">
-    </div> -->
-
-    <!-- <div class="field">
-    <Envelope width="18" height="15"  color="#164b75"/>
-      <input autocomplete="off" placeholder="Email" class="input-field" type="text">
-    </div> -->
-
-    <div class="field">
-    <Envelope width="18" height="15"  color="#164b75"/>
-      <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
+  <div class="register">
+    <div class="formwrapper">
+      <form @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
+        <div id="heading">
+              <h2 style="color:#164b75">Forgot Password</h2>
+            </div>
+      
+      
+        <div class="field">
+          <Envelope width="18" height="15" color="#164b75" />
+          <input autocomplete="off" placeholder="Email" class="input-field" type="text" @input="showEmailInput">
+        </div>
+        <div class="field">
+          <Glasses width="20" height="20" color="#164b75" />
+          <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
+        </div>
+        <div class="field">
+          <Glasses width="20" height="20" color="#164b75" />
+          <input placeholder="Confirm New Password" class="input-field" type="password" @input="showPasswordInput">
+        </div>
+        <div class="btn">
+          <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
+          <RouterLink to="/login">
+            <button class="button2">Reset</button>
+          </RouterLink>
+          <RouterView />
+        </div>
+        <!-- <button class="button3">Forgot Password</button> -->
+      </form>
     </div>
 
-    <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Password" class="input-field" type="password" @input="showPasswordInput">
-    </div>
-
-    <div class="field">
-        <Glasses width="20" height="20" color="#164b75" />
-        <input placeholder="Confirm New Password" class="input-field" type="password" @input="showPasswordInput">
-    </div>
+  </div>
 
 
-
-    <div class="btn">
-
-    <!-- <button class="button1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button> -->
-    <RouterLink to="/login" >
-    <button class="button2">Reset</button>
-    </RouterLink>
-
-   
-    <RouterView />
-
-    
-    </div>
-
-    <!-- <button class="button3">Forgot Password</button> -->
-</form>
-
-    </div>
-
-  
 </template>
 
 <script setup>
 
 import { NButton, NSpace, NInput } from 'naive-ui'
-  import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
-  import { Envelope } from "@vicons/fa"
-  import { CashOutline as CashIcon } from "@vicons/ionicons5";
-  import { ref } from 'vue'
-  import { useRoute, useRouter } from 'vue-router';
-  import Toast, { POSITION } from "vue-toastification";
-  import { useToast } from "vue-toastification";
-  import axios from 'axios'
+import { GlassesOutline, Glasses, Person, AtSharp, PersonOutline } from "@vicons/ionicons5";
+import { Envelope } from "@vicons/fa"
+import { CashOutline as CashIcon } from "@vicons/ionicons5";
+import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router';
+import Toast, { POSITION } from "vue-toastification";
+import { useToast } from "vue-toastification";
+import axios from 'axios'
 
-  const router = useRouter();
-    const route = useRoute();
-    const toast = useToast();
-
-
-  let email = ref('')
-  let password = ref('')
+const router = useRouter();
+const route = useRoute();
+const toast = useToast();
 
 
-  const showEmailInput = (e) => {
-            email.value = e.target.value
-          }
-            const showPasswordInput = (e) => {
-              password.value = e.target.value
-            }
-
-            const submitForm =  () => {
-
-const formInputsData = [{
-          // username: username.value,
-          // phone: phone.value,
-         email: email.value,
-         password: password.value,
-         confirm: confirm_password.value
-        }]
-        console.log(formInputsData , 'formInputsData target')
-
-        const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
-const data = formInputsData
-
-const postData = 'login_forgotpassword_PostJSON='+ encodeURIComponent(JSON.stringify([{"_useremail":`${formInputsData[0].email}`,"_userpass":`${formInputsData[0].password}`}]))
-console.log(postData)
-const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-
-axios.post(apiUrl, postData, {headers})
-.then(response => {
-  console.log('Response:', response.data)
-  if(response.data[0].success === true) {
-    // this.$router.push('/dashboard')
-    toast.success("Reset Successful", {
-        timeout: 2000,
-        position: POSITION.TOP_CENTER
-      });
-    router.push('/login');
-  }
-  else{
-    // alert(response.data[0].error)
-    toast.error(response.data[0].error, {
-        timeout: 2000,
-        position: POSITION.TOP_CENTER
-      });
-  }
-})
-.catch(error => {
-  console.error('Error:', error)
-});
+let email = ref('')
+let password = ref('')
 
 
-  
+const showEmailInput = (e) => {
+  email.value = e.target.value
+}
+const showPasswordInput = (e) => {
+  password.value = e.target.value
+}
 
-        }
+const submitForm = () => {
+
+  const formInputsData = [{
+    // username: username.value,
+    // phone: phone.value,
+    email: email.value,
+    password: password.value,
+    confirm: confirm_password.value
+  }]
+  console.log(formInputsData, 'formInputsData target')
+
+  const apiUrl = "http://45.32.233.93:81/wemast/wemast_gen.php";
+  const data = formInputsData
+
+  const postData = 'login_forgotpassword_PostJSON=' + encodeURIComponent(JSON.stringify([{ "_useremail": `${formInputsData[0].email}`, "_userpass": `${formInputsData[0].password}` }]))
+  console.log(postData)
+  const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+
+  axios.post(apiUrl, postData, { headers })
+    .then(response => {
+      console.log('Response:', response.data)
+      if (response.data[0].success === true) {
+        // this.$router.push('/dashboard')
+        toast.success("Reset Successful", {
+          timeout: 2000,
+          position: POSITION.TOP_CENTER
+        });
+        router.push('/login');
+      }
+      else {
+        // alert(response.data[0].error)
+        toast.error(response.data[0].error, {
+          timeout: 2000,
+          position: POSITION.TOP_CENTER
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error)
+    });
+
+
+
+
+}
 
 
 
 </script>
 
 <style scoped>
-.register{
-    /* background-color: aliceblue; */
-    width: 30%;
-    height: 50vh;
-    margin-top: 12em;
-    margin-left: 40em;
-    background-color: #f0f0f0;
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+.register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+  width: 99vw;
+  font-family: Poppins;
+  background-image: url('/images/waterfall.png');
+  background-size: cover;
+  background-position: center;
 
 }
+
 .form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  
+  /* gap: 10px; */
+
   padding-left: 2em;
   padding-right: 2em;
   padding-bottom: 0.4em;
   /* background-color: rgb(219, 218, 218); */
   /* border-radius: 25px; */
   transition: .4s ease-in-out;
-  width: 25vw;
-  height: 59.2vh;
+  /* width: 25vw; */
+  /* height: 59.2vh; */
+}
+
+.formwrapper{
+  background-color: rgba(238, 238, 238, 0.7);
+  border-radius: 1.5em;
 }
 
 .form:hover {
@@ -197,6 +186,7 @@ axios.post(apiUrl, postData, {headers})
   outline: none;
   width: 100%;
   color: #4e4c4c;
+  font-family: Poppins;
 }
 
 .form .btn {
@@ -236,6 +226,7 @@ axios.post(apiUrl, postData, {headers})
   color: white;
   margin-bottom: 1.5rem;
   cursor: pointer;
+  font-family: Poppins;
 }
 
 .button2:hover {
@@ -243,12 +234,12 @@ axios.post(apiUrl, postData, {headers})
   color: white;
 }
 
-.forgot{
-   position: relative;
-   top: -4vh;
-   left: 4.5vw;
-   text-decoration: underline;
-   color: rgb(64, 153, 226) ;
-   cursor: pointer;
+.forgot {
+  position: relative;
+  top: -4vh;
+  left: 4.5vw;
+  text-decoration: underline;
+  color: rgb(64, 153, 226);
+  cursor: pointer;
 }
 </style>

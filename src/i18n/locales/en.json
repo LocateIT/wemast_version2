@@ -25,6 +25,7 @@
         "year_label":"Year",
         "wemast_select_season":"Season",
         "wemast_select_satellite": "Satellite",
+        "date_label": "Date",
         "request": "REQUEST",
         "search":"Search Location",
         "season_label":"Season",

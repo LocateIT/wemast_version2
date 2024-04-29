@@ -299,4 +299,27 @@ const submitForm = () => {
   cursor: pointer;
   font-size: .8em;
 }
+@media (max-width: 768px) {
+  .register {
+   width: 100%;
+
+
+  }
+  .form{
+    width: 90%;
+
+  }
+  .btn{
+    gap:4em;
+  }
+  .button2{
+    padding: .2em 2em;
+    
+
+
+  }
+
+  
+
+}
 </style>

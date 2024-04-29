@@ -3,7 +3,7 @@
     <div class="formwrapper">
       <form @submit.prevent="submitForm" class="form" style="margin-left: 0%;  margin-top: 0%; ">
         <div id="heading">
-              <h2 style="color:#164b75">Forgot Password</h2>
+              <h2 style="color:#164b75">Reset Password</h2>
             </div>
       
       
@@ -241,5 +241,31 @@ const submitForm = () => {
   text-decoration: underline;
   color: rgb(64, 153, 226);
   cursor: pointer;
+}
+@media (max-width: 768px) {
+ 
+ .form{
+   width: 90%;
+
+ }
+
+ .formwrapper{
+ background-color: rgba(238, 238, 238, 0.7);
+ border-radius: 1.5em;
+ width: 90%;
+}
+ .btn{
+   gap:3em;
+ }
+ .button2{
+   padding: .5em 2em;
+   word-wrap: break-word;
+   
+
+
+ }
+
+ 
+
 }
 </style>

@@ -422,19 +422,42 @@ const submitForm = () => {
   color: white;
 }
 
-.button3 {
-  margin-bottom: 3em;
-  padding: 0.5em;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  transition: .4s ease-in-out;
-  background-color: rgb(22, 75, 117);
-  color: white;
+
+
+@media (-webkit-min-device-pixel-ratio: 1.25) {
+  .register {
+    margin-top: -2em;
+    padding-bottom: 8em;
+
+
+  }
+
+  
+
 }
 
-.button3:hover {
-  background-color: red;
-  color: white;
+@media (max-width: 768px) {
+  .register {
+   width: 90%;
+
+
+  }
+  .form{
+    width: 90%;
+
+  }
+  .btn{
+    gap:3em;
+  }
+  .button2{
+    padding: .5em 1em;
+    word-wrap: break-word;
+    
+
+
+  }
+
+  
+
 }
 </style>

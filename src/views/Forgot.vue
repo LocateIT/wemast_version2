@@ -235,4 +235,31 @@ axios.post(apiUrl, postData, {headers})
    color: rgb(64, 153, 226) ;
    cursor: pointer;
 }
+
+@media (max-width: 768px) {
+ 
+  .form{
+    width: 90%;
+
+  }
+
+  .formwrapper{
+  background-color: rgba(238, 238, 238, 0.7);
+  border-radius: 1.5em;
+  width: 90%;
+}
+  .btn{
+    gap:3em;
+  }
+  .button2{
+    padding: .5em 2em;
+    word-wrap: break-word;
+    
+
+
+  }
+
+  
+
+}
 </style>

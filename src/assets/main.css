@@ -354,26 +354,7 @@ font-size: 18px;
 margin-bottom: 20px;
 }
 
-table, th, td {
-border: 1px solid #ddd;
-  text-align: left;
-  padding: 8px;
-  margin-top: 40px;
-}
 
-
-th{
-font-weight: bolder;
-}
-
-tr:nth-child(even) {
-background-color: #ddd;
-}
-table {
-  border-collapse: separate;
-  text-indent: initial;
-  border-spacing: 2px;
-}
 
   .download_tiff_2{
     position: absolute;

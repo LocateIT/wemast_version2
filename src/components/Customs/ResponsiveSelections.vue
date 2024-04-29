@@ -15,64 +15,80 @@
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-10rem" :style="{ display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index'  ? 'none' : ''}">
+        <FloatLabel class="w-full md:w-10rem"
+            :style="{ display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' : '' }">
             <Dropdown v-model="selectedSubIndicator" :options="subindicators" optionLabel="name"
                 class=" custom-dropdown w-full " @click="subindicatorToggle()" @change="handleSubIndicator" />
             <label for="dd-city">{{ $t("home.wemast_select_subindicator") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-8rem" :style="{display: storeUserSelections.selected_sub_indicator === 'Land Cover'  ? 'none' : 
-        storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ?  'none':
-        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ?  'none' :
-        storeUserSelections.selected_sub_indicator === 'Precipitation Index' ?  'none' :
-        storeUserSelections.selected_sub_indicator === 'Undulation' ?  'none' :
-        storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ?  'none' :
-        storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ?  'none': ''}">
-            <Dropdown v-model="selectedParameter" :options="parameters" optionLabel="name"
-                class="w-full " @click="parameterToggle()" @change="handleParameterChange"
-                 />
+        <FloatLabel class="w-full md:w-8rem" :style="{
+                display: storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
+                    storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? 'none' :
+                        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
+                            storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? 'none' :
+                                storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
+                                    storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? 'none' :
+                                        storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' : ''
+            }">
+            <Dropdown v-model="selectedParameter" :options="parameters" optionLabel="name" class="w-full "
+                @click="parameterToggle()" @change="handleParameterChange" />
             <label for="dd-city">{{ $t("home.wemast_select_parameter") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-8rem" :style="{ display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Land Cover'  ? 'none' :
-        storeUserSelections.selected_parameter === 'Wetland Extent'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Precipitation Index'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Undulation'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Soil Moisure Index'  ? 'none' :
-        
-         ''}">
-            <Dropdown v-model="selectedSatellite" :options="satellites" optionLabel="name"
-                class="w-full " @click="satelliteToggle()" @change="handleSatelliteChange" />
+        <FloatLabel class="w-full md:w-8rem" :style="{
+                display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' :
+                    storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
+                        storeUserSelections.selected_parameter === 'Wetland Extent' ? 'none' :
+                            storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
+                                storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? 'none' :
+                                    storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
+                                        storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
+                                            storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? 'none' :
+
+                                                ''
+            }">
+            <Dropdown v-model="selectedSatellite" :options="satellites" optionLabel="name" class="w-full "
+                @click="satelliteToggle()" @change="handleSatelliteChange" />
             <label for="dd-city">{{ $t("home.wemast_select_satellite") }}</label>
         </FloatLabel>
 
-        <FloatLabel class="w-full md:w-8rem" :style="{ display: storeUserSelections.selected_sub_indicator === 'Land Cover'  ? 'none' :
-        storeUserSelections.selected_parameter === 'Wetland Extent'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Undulation'  ? 'none' :
-        storeUserSelections.selected_sub_indicator === 'Water Quality'  ? 'none' :
-         '' }">
+        <FloatLabel class="w-full md:w-8rem" :style="{
+                display: storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
+                    storeUserSelections.selected_parameter === 'Wetland Extent' ? 'none' :
+                        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
+                            storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
+                                storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
+                                    ''
+            }">
             <Dropdown v-model="selectedSeason" :options="seasons" optionLabel="name" class="w-full "
                 @click="seasonToggle()" @change="handleSeasonChange" />
             <label for="dd-city">{{ $t("home.wemast_select_season") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-8rem" :style="{ display: storeUserSelections.selected_sub_indicator === 'Undulation'  ? 'none' : ''}">
-            <Dropdown v-model="selectedYear" :options="years" optionLabel="name" class="w-full "
-                @click="yearToggle()" @change="handleYearChange" />
+        <FloatLabel class="w-full md:w-8rem" :style="{
+                display: storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
+                    storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' : ''
+            }">
+            <Dropdown v-model="selectedYear" :options="years" optionLabel="name" class="w-full " @click="yearToggle()"
+                @change="handleYearChange" />
             <label for="dd-city">{{ $t("home.wemast_select_year") }}</label>
         </FloatLabel>
 
+
+        <FloatLabel class="w-full md:w-10rem" v-if="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'">
+            <label for="buttondisplay"> Date </label>
+            <Calendar v-model="selectedDate" @update:v-model="selectedDate = $event" showIcon :showOnFocus="false"
+                inputId="buttondisplay" dateFormat="dd/mm/yy" />
+        </FloatLabel>
+
         <Button label="" severity="info" rounded @click="$emit('fetchData')">{{ $t("home.request") }}</Button>
-        
-       
-            
+
+
+
     </div>
 
 </template>
@@ -81,7 +97,7 @@
 import 'primeflex/primeflex.css'
 import 'primeicons/primeicons.css'
 
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useCounterStore } from '../../stores/counter';
 
 const selectedBasin = ref();
@@ -91,6 +107,8 @@ const selectedYear = ref();
 const selectedSeason = ref()
 const selectedSatellite = ref()
 const selectedParameter = ref()
+const buttondisplay = ref();
+const selectedDate = ref(null);
 
 const storeUserSelections = useCounterStore();
 
@@ -104,6 +122,18 @@ let parameters = ref([])
 
 
 
+const selectedDateWatcher = () => {
+    //   console.log('Selected date changed:', selectedDate.value);
+    const date = new Date(selectedDate.value);
+    const day = date.getDate();
+    const month = date.getMonth() + 1; // Month is 0-indexed, so we add 1
+    const year = date.getFullYear();
+    console.log('Selected date changed:', `${day}-${month}-${year}`);
+    return `${day}-${month}-${year}`;
+};
+
+// Watch for changes to selectedDate
+watch(selectedDate, selectedDateWatcher);
 const toggle = () => {
 
     var basinlist = storeUserSelections.fetchCountriesList()
@@ -112,7 +142,7 @@ const toggle = () => {
     var basinObject = basinlist.map((item) => ({ "name": item, "code": item }))
     // console.log(basinObject)
     basins.value = basinObject
-   
+
 }
 const handleDropdownChange = () => {
     console.log('Selected basin:', selectedBasin.value.name);
@@ -166,7 +196,7 @@ const yearToggle = () => {
     let yearList = []
     //   console.log(selectedSubIndicator.value.name)
 
-    if (selectedSubIndicator.value ?.name === 'Land Cover') {
+    if (selectedSubIndicator.value?.name === 'Land Cover') {
         yearList = ["1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
         ].reverse() // removed'2018','2019','2020', '2021', "2022"
@@ -178,8 +208,8 @@ const yearToggle = () => {
     if (selectedIndicator.value.name === 'Basin Vulnerability Index') {
         yearList = ["2000", "2005", "2010", "2015", "2022"].reverse()
     }
-    if (selectedSubIndicator.value ?.name === 'Precipitation Index'
-        || selectedSubIndicator.value ?.name === 'Soil Moisure Index') { //removed 2000 since it lacks stats data
+    if (selectedSubIndicator.value?.name === 'Precipitation Index'
+        || selectedSubIndicator.value?.name === 'Soil Moisure Index') { //removed 2000 since it lacks stats data
         yearList = ["2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
             '2018', '2019', '2020', '2021', "2022"].reverse()
@@ -187,8 +217,8 @@ const yearToggle = () => {
     }
 
 
-    if (selectedSubIndicator.value ?.name === 'Burnt Area MODIS'
-        || selectedSubIndicator.value ?.name === 'Burnt Area FIRMS') { //removed 2000 since it lacks stats data
+    if (selectedSubIndicator.value?.name === 'Burnt Area MODIS'
+        || selectedSubIndicator.value?.name === 'Burnt Area FIRMS') { //removed 2000 since it lacks stats data
         yearList = ["2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
             '2018'].reverse()
@@ -197,15 +227,15 @@ const yearToggle = () => {
 
 
 
-    if (selectedSubIndicator.value ?.name === 'Wetland Inventory' && selectedParameter.value.name === 'Wetland Extent'
-        || selectedSubIndicator.value ?.name === 'Water Quality' && selectedParameter.value.name === 'Sus Sediments'
-        || selectedSubIndicator.value ?.name === 'Water Quality' && selectedParameter.value.name === 'Turbidity') {
+    if (selectedSubIndicator.value?.name === 'Wetland Inventory' && selectedParameter.value.name === 'Wetland Extent'
+        || selectedSubIndicator.value?.name === 'Water Quality' && selectedParameter.value.name === 'Sus Sediments'
+        || selectedSubIndicator.value?.name === 'Water Quality' && selectedParameter.value.name === 'Turbidity') {
         yearList = ["2000", "2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
             '2018', '2019', '2020', '2021'].reverse()
 
     }
-    if (selectedSubIndicator.value ?.name === 'Vegetation Cover' && selectedSatellite.value.name === 'LANDSAT') { //removed 2000 since it lacks stats data
+    if (selectedSubIndicator.value?.name === 'Vegetation Cover' && selectedSatellite.value.name === 'LANDSAT') { //removed 2000 since it lacks stats data
         yearList = ["2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
             '2018', '2019', '2020', '2021', "2022"].reverse()
@@ -213,12 +243,12 @@ const yearToggle = () => {
     }
 
 
-    if (selectedSatellite.value ?.name === 'LANDSAT') { //removed 2000 since it lacks stats data
+    if (selectedSatellite.value?.name === 'LANDSAT') { //removed 2000 since it lacks stats data
         yearList = ["2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
             '2018', '2019', '2020', '2021', "2022"].reverse()
     }
-    if (selectedSatellite.value ?.name === 'SENTINEL') {
+    if (selectedSatellite.value?.name === 'SENTINEL') {
         yearList = ["2016", "2017", '2018', '2019', '2020', '2021', "2022"].reverse()
     }
 
@@ -262,11 +292,11 @@ const parameterToggle = () => {
     let parameterList = []
     //    console.log('Selected parameter:', parameterList)
 
-    if (selectedSubIndicator.value ?.name === 'Wetland Inventory') {
+    if (selectedSubIndicator.value?.name === 'Wetland Inventory') {
         parameterList = ['Wetland Extent', 'Wetland Status']
 
     }
-    if (selectedSubIndicator.value ?.name === 'Water Quality') {
+    if (selectedSubIndicator.value?.name === 'Water Quality') {
         parameterList = ['Turbidity', 'Sus Sediments']
     }
     let parameterObject = parameterList.map((item) => ({ "name": item, "code": item }))
@@ -284,21 +314,16 @@ const handleParameterChange = () => {
 
 </script>
 
-<style scoped >
-.card{
+<style scoped>
+.card {
     font-family: Poppins;
 
 
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-    .card{
+    .card {
         margin-left: -2em !important;
     }
 }
-
-    
-  
-
-
 </style>

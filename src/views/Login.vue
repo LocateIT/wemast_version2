@@ -165,7 +165,7 @@ const headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 axios.post(apiUrl, postData, {headers})
 .then(response => {
   console.log('Response:', response.data)
-  var valid_object = JSON.parse(response.data[0].data)
+  var valid_object = JSON.parse(response.data[0]?.data)
   console.log(valid_object)
   storeUserSelections.setUserDetails(valid_object)
 

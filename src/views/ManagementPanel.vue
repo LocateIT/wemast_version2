@@ -1,6 +1,7 @@
 <template>
    <div class="management" >
-    <Navbar style="margin-left: -5vw;" />
+    <!-- <Navbar style="margin-left: -5vw;" /> -->
+    <ResponsiveNav />
     <!-- <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/signup')"  > -->
 
     <div style="background-color: #fff; height: 90vh; position: absolute; width: 100vw; padding: 20px;">
@@ -69,6 +70,7 @@
 
 <script setup>
 import Navbar from "../components/Navbar.vue"
+import ResponsiveNav from "../components/ResponsiveNav.vue";
 import { UserCircle } from "@vicons/fa";
 // import Download  from "@vicons/fa/Download";
 import  DownloadOutline  from "@vicons/ionicons5/DownloadOutline";
@@ -284,6 +286,27 @@ shpwrite.download(shapes, options)
 }
 .table{
   width: 80vw;
+}
+
+table, th, td {
+border: 1px solid #ddd;
+  text-align: left;
+  padding: 8px;
+  margin-top: 40px;
+}
+
+
+th{
+font-weight: bolder;
+}
+
+tr:nth-child(even) {
+background-color: #ddd;
+}
+table {
+  border-collapse: separate;
+  text-indent: initial;
+  border-spacing: 2px;
 }
 
 

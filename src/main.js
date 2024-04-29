@@ -24,6 +24,7 @@ import InputText from 'primevue/inputtext';
 import SplitButton from 'primevue/splitbutton';
 import Card from 'primevue/card';
 import FileUpload from 'primevue/fileupload';
+import Calendar from 'primevue/calendar';
 
 
 const app = createApp(App)
@@ -43,5 +44,6 @@ app.component('Menubar', Menubar);
 app.component('SplitButton', SplitButton);
 app.component('Card', Card);
 app.component('FileUpload', FileUpload);
+app.component('Calendar', Calendar);
 
 app.mount('#app')

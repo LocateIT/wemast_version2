@@ -6920,6 +6920,6 @@ const addDrawCtrl = () => {
 };
 </script>
 
-<style scoped>
+<style >
 @import "../assets/main.css";
 </style>

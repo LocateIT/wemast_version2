@@ -415,7 +415,7 @@
             </div>
           </div>
           <div class="meta" v-if="analysis_swap_toggle === 'metadata'">
-            <table style="width: 100%; margin-bottom: -17vw;">
+            <table class="metatable" style="width: 100%; margin-bottom: -17vw;">
               <tr>
                 <th>{{ $t("metadata.title") }}</th>
                 <td>
@@ -713,7 +713,7 @@
 
           <img class="search" src=" /uiIcons/book.svg" alt="" title="Documentation" @click="show_docs_select" />
 
-          <img class="home" @click="show_mobile_panel" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection"
+          <img class="home" id="mobileicon" @click="show_mobile_panel" src=" /uiIcons/mobile_app.svg" alt="" title="Data Collection"
             style="margin-left: -5px" />
 
 

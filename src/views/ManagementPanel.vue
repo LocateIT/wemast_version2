@@ -9,7 +9,7 @@
       
       <div v-if="storeUserSelections.isLoggedIn == false" style="display: flex; flex-direction: row; gap: 1rem; margin-top: 50px;">
         <UserCircle width="100" height="100"  color="#164b75" />
-        <span @click="$router.push('/signup')" style="font-size:20px; font-weight: 600; margin-top: 30px; color: #297EAE;">Please <span style="text-decoration: underline; cursor: pointer;">Log in </span>to view your data</span>
+        <span @click="$router.push('/signup')" style="font-size:20px; font-weight: 600; margin-top: 30px; color: #297EAE;">{{ $t("management.login") }}</span>
 
     </div>
 
@@ -22,7 +22,7 @@
 
 
     <div class="features" style="position: relative; top:4vh">
-      <span  style="font-size:20px; font-weight: 600; margin-top: 50px; color: #297EAE;">Total GeoFeatures: {{ storeUserSelections.user_features?.length }}</span>
+      <span  style="font-size:20px; font-weight: 600; margin-top: 50px; color: #297EAE;">{{ $t("management.total_geofeatures") }}: {{ storeUserSelections.user_features?.length }}</span>
 
     </div>
    
@@ -32,11 +32,11 @@
     <table class="table">
       <thead>
         <tr style="color:#297EAE">
-          <th>Name</th>
-          <th>Email</th>
-          <th>Status</th>
-          <th>Role</th>
-          <th>Export data</th>
+          <th>{{ $t("management.name") }}</th>
+          <th>{{ $t("management.email") }}</th>
+          <th>{{ $t("management.status") }}</th>
+          <th>{{ $t("management.role") }}</th>
+          <th>{{ $t("management.export") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -103,104 +103,15 @@ let user_geofeatures = storeUserSelections.user_features
   
 const downloadShapefile = () => {
 
-  // console.log('download shp')
-//   const featureCollection1 = {  
-//   "type": "FeatureCollection",
-//   "features": [
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           36.5152457883251,
-//           -0.4912572719726569
-//         ],
-//         "type": "Point"
-//       }
-//     },
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           37.68758878690309,
-//           -0.3224056022858832
-//         ],
-//         "type": "Point"
-//       }
-//     },
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           38.69107579803108,
-//           -0.8144744636909564
-//         ],
-//         "type": "Point"
-//       }
-//     },
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           37.383648009493214,
-//           -1.4463520978251978
-//         ],
-//         "type": "Point"
-//       }
-//     },
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           38.64765568697254,
-//           -2.174476524260484
-//         ],
-//         "type": "Point"
-//       }
-//     },
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           37.25338767631911,
-//           0.4205552646543822
-//         ],
-//         "type": "Point"
-//       }
-//     },
-//     {
-//       "type": "Feature",
-//       "properties": {},
-//       "geometry": {
-//         "coordinates": [
-//           39.03361222971523,
-//           -1.0170756614406287
-//         ],
-//         "type": "Point"
-//       }
-//     }
-//   ]
-
-// }
-
-// // const turfFeatureCollection = featureCollection(featureCollection1.features);
-
-// // // Create shapefile
-// const shapefileContent = shpwrite.zip(featureCollection1) //create(turfFeatureCollection);
 
 const options = {
-  // folder: "C:\Users\Locate04\Downloads",
-  filename: "my_zip_folder",
+  
+  filename: "myData",
   outputType: "blob",
   compression: "DEFLATE",
   types: {
     point: "mypoints",
-    // polygon: "mypolygons",
+    // polygon: "mypolygons", uncomment these if there is polygon or line data
     // polyline: "mylines",
   },
 };
@@ -280,9 +191,10 @@ shpwrite.download(shapes, options)
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 .management{
   overflow: hidden !important;
-  font-family: sans-serif;
+  font-family: Poppins;
 }
 .table{
   width: 80vw;

@@ -58,7 +58,7 @@ import LanguageSwitch from './LanguageSwitch.vue';
 
 </script>
 
-<style>
+<style scoped>
 .card {
     width: 100vw;
 
@@ -90,5 +90,22 @@ import LanguageSwitch from './LanguageSwitch.vue';
    gap: 3em !important;
 }
 
+}
+
+@media only screen and (min-width: 300px) and (max-width: 500px) {
+    .card {
+   
+    margin-top: -1em;
+    font-family: Poppins;
+}
+    .logoss{
+   display: none !important;;
+}
+.projname {
+  display: none !important;
+}
+.projname {
+  display: none !important;
+}
 }
 </style>

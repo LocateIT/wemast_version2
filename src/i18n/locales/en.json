@@ -197,6 +197,15 @@
     "seasons":{
         "wet":"WET",
         "dry": "DRY"
+    },
+    "management":{
+        "login":"Please Log in to view your data",
+        "total_geofeatures": "Total Geofeatures",
+        "name":"Name",
+        "email":"Email",
+        "status":"Status",
+        "role":"Role",
+        "export":"Export Data"
     }
     
 }

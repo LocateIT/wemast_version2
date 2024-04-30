@@ -191,6 +191,15 @@
     "seasons":{
         "wet":"HUMIDE",
         "dry": "SEC"
+    },
+    "management":{
+        "login":"Veuillez vous connecter pour consulter vos données",
+        "total_geofeatures": "Total des GéoFonctionnalités",
+        "name":"Nom",
+        "email":"E-mail",
+        "status":"Statut",
+        "role":"Rôle",
+        "export":"Exporter les données"
     }
     
     

@@ -186,6 +186,15 @@
     "seasons":{
         "wet": "HÚMIDO",
         "dry": "SECA"
+    },
+    "management":{
+        "login":"Por favor, faça login para visualizar seus dados",
+        "total_geofeatures": "Total de GeoRecursos",
+        "name":"Nome",
+        "email":"E-mail",
+        "status":"Status",
+        "role":"Função",
+        "export":"Exportar dados"
     }
     
    

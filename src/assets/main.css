@@ -1088,6 +1088,36 @@ title{
 
 }
 
+.metatable th {
+  border: 1px solid #ddd;
+    text-align: left;
+    padding: 8px;
+    margin-top: 40px;
+  }
+
+  .metatable td {
+    border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+      margin-top: 40px;
+    }
+  
+  
+  .metatable th{
+  font-weight: bolder;
+  }
+  
+  .metatable tr:nth-child(even) {
+  background-color: #ddd;
+  }
+  .metatable {
+    border-collapse: separate;
+    text-indent: initial;
+    border-spacing: 2px;
+    margin-top: 40px;
+  }
+  
+
  /* For laptops */
     @media only screen and (min-width: 992px) and (max-width: 1199px) {
     
@@ -1174,4 +1204,29 @@ title{
    }
 
 
+}
+@media only screen and (min-width: 300px) and (max-width: 500px) {
+  .advanced_filter, .compare{
+    /* padding: 0.5em 3em !important; */
+    /* width: 95% !important; */
+    display:none !important;
+   }
+   .home, .dashboard, .person, .search{
+    margin-left:-0.5em;
+    height: 1.5em !important;
+   }
+   #mobileicon{
+    margin-left: -0.5em !important;
+   }
+   .opacity{
+    margin-left:-14em;
+    margin-top:-0.8em;
+
+   }
+   .map_controls{
+    display: none;
+   }
+   .toggle_icon{
+
+   }
 }

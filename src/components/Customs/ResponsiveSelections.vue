@@ -1,29 +1,29 @@
 <template>
     <div class="card flex flex-row flex-wrap gap-2">
-        <FloatLabel class=" w-full md:w-8rem">
+        <FloatLabel class="select w-full md:w-8rem ">
             <Dropdown v-model="selectedBasin" :options="basins" optionLabel="name" class=" w-full  " @click="toggle()"
                 @change="handleDropdownChange" />
-            <label for="dd-city"> {{ $t("home.wemast_select_region") }}</label>
+            <label for="dd-city" class="basin"> {{ $t("home.wemast_select_region") }}</label>
 
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-9rem">
+        <FloatLabel class="select w-full md:w-9rem">
             <Dropdown v-model="selectedIndicator" :options="indicators" optionLabel="name" class="w-full "
                 @click="indicatorToggle()" @change="handleIndicator" />
-            <label for="indicator">{{ $t("home.wemast_select_indicator") }}</label>
+            <label for="indicator" class="basin">{{ $t("home.wemast_select_indicator") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-10rem"
+        <FloatLabel class=" select w-full md:w-10rem"
             :style="{ display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' : '' }">
             <Dropdown v-model="selectedSubIndicator" :options="subindicators" optionLabel="name"
                 class=" custom-dropdown w-full " @click="subindicatorToggle()" @change="handleSubIndicator" />
-            <label for="dd-city">{{ $t("home.wemast_select_subindicator") }}</label>
+            <label for="dd-city" class="basin">{{ $t("home.wemast_select_subindicator") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-8rem" :style="{
+        <FloatLabel class=" select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? 'none' :
                         storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
@@ -34,11 +34,11 @@
             }">
             <Dropdown v-model="selectedParameter" :options="parameters" optionLabel="name" class="w-full "
                 @click="parameterToggle()" @change="handleParameterChange" />
-            <label for="dd-city">{{ $t("home.wemast_select_parameter") }}</label>
+            <label for="dd-city" class="basin">{{ $t("home.wemast_select_parameter") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-8rem" :style="{
+        <FloatLabel class="select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' :
                     storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
                         storeUserSelections.selected_parameter === 'Wetland Extent' ? 'none' :
@@ -52,10 +52,10 @@
             }">
             <Dropdown v-model="selectedSatellite" :options="satellites" optionLabel="name" class="w-full "
                 @click="satelliteToggle()" @change="handleSatelliteChange" />
-            <label for="dd-city">{{ $t("home.wemast_select_satellite") }}</label>
+            <label for="dd-city" class="basin">{{ $t("home.wemast_select_satellite") }}</label>
         </FloatLabel>
 
-        <FloatLabel class="w-full md:w-8rem" :style="{
+        <FloatLabel class="select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
                     storeUserSelections.selected_parameter === 'Wetland Extent' ? 'none' :
                         storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
@@ -65,17 +65,17 @@
             }">
             <Dropdown v-model="selectedSeason" :options="seasons" optionLabel="name" class="w-full "
                 @click="seasonToggle()" @change="handleSeasonChange" />
-            <label for="dd-city">{{ $t("home.wemast_select_season") }}</label>
+            <label for="dd-city" class="basin">{{ $t("home.wemast_select_season") }}</label>
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-8rem" :style="{
+        <FloatLabel class="select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                     storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' : ''
             }">
             <Dropdown v-model="selectedYear" :options="years" optionLabel="name" class="w-full " @click="yearToggle()"
                 @change="handleYearChange" />
-            <label for="dd-city">{{ $t("home.wemast_select_year") }}</label>
+            <label for="dd-city" class="basin">{{ $t("home.wemast_select_year") }}</label>
         </FloatLabel>
 
 
@@ -84,7 +84,7 @@
             <Calendar v-model="selectedDate" @update:v-model="selectedDate = $event" showIcon :showOnFocus="false" dateFormat="dd-mm-yy" />
         </FloatLabel>
 
-        <Button label="" severity="info" rounded @click="$emit('fetchData')">{{ $t("home.request") }}</Button>
+        <Button label="" severity="info" class="requestt" rounded @click="$emit('fetchData')">{{ $t("home.request") }}</Button>
 
 
 
@@ -327,6 +327,23 @@ const handleParameterChange = () => {
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .card {
         margin-left: -2em !important;
+    }
+}
+@media only screen and (min-width: 300px) and (max-width: 500px) {
+    .card {
+        margin-left: -.5em !important;
+        margin-top: -1.5em !important;
+    }
+    .select {
+       width:5em !important;
+       padding: 0;
+    }
+    .basin{
+        /* display: none; */
+        font-size: 10px;
+    }
+    .requestt{
+        width: 6.5em
     }
 }
 </style>

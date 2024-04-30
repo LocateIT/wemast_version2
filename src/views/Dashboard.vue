@@ -55,8 +55,10 @@
 
 
     <div class="doc_select" v-if="documentation">
-      <CustomDocumentation :options="['Mapographics', 'Documentation']" :default="'Manuals'" class="select"
-        @input="displayToKey($event)" />
+      <!-- <CustomDocumentation :options="['Mapographics', 'Documentation']" :default="'Manuals'" class="select"
+        @input="displayToKey($event)" /> -->
+
+        <Dropdown v-model="selectedDoc" :options="docs" optionLabel="name" @change="displayToKey" placeholder="Manuals" class="w-full md:w-14rem" />
     </div>
 
     <div class="spinner" v-if="loading">
@@ -954,6 +956,13 @@ const router = useRouter();
 
 window.html2canvas = html2canvas;
 
+const selectedDoc = ref();
+const docs = ref([
+    { name: 'Documentation', value: 'Documentation' },
+    { name: 'Mapographics', value: 'Mapographics' },
+    
+]);
+
 
 const show_upload_shapefile = () => {
   upload_shapefile.value = !upload_shapefile.value;
@@ -1815,15 +1824,18 @@ const close_compare = () => {
 
 const show_docs_select = () => {
   documentation.value = !documentation.value;
+  show_mobile_data.value = false;
 };
 
-const displayToKey = ($event) => {
+const displayToKey = () => {
   // var selection = $event.target.value
   //console.log($event, 'documentation selection')
-  if ($event === "Documentation") {
+  // console.log('doc:', selectedDoc.value.name);
+  var doc = selectedDoc.value.name
+  if (doc === "Documentation") {
     window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki");
   }
-  if ($event === "Mapographics") {
+  if (doc === "Mapographics") {
     window.open(
       "https://drive.google.com/file/d/1n8QMjQO5zSu_k57MQuI4I3QsIeHLlzbH/view"
       // "https://drive.google.com/file/d/1pH1TgiyP1JpT3tl7U9ZOYDS2iLJ22Cw1/view?pli=1"
@@ -4280,6 +4292,7 @@ const fetchWmsData = () => {
 
 const show_mobile_panel = () => {
   show_mobile_data.value = true;
+  documentation.value = false;
 };
 const close_mobile_panel = () => {
   show_mobile_data.value = false;

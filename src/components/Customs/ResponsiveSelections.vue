@@ -317,7 +317,7 @@ const handleParameterChange = () => {
 
 </script>
 
-<style scoped>
+<style >
 .card {
     font-family: Poppins;
 

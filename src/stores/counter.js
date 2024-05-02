@@ -938,7 +938,7 @@ export const useCounterStore = defineStore({
           //console.log(labels, 'stats labels')
 
           this.lulcChartData.labels = labels
-          this.lulcChartData.labels = ['Oct-Dec']
+          // this.lulcChartData.labels = ['Oct-Dec']
          
         
           var figures = Object.values(newObj)

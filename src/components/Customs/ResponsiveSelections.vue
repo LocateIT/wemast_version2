@@ -71,7 +71,7 @@
 
         <FloatLabel class="select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
-                    storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' : ''
+                    ''
             }">
             <Dropdown v-model="selectedYear" :options="years" optionLabel="name" class="w-full " @click="yearToggle()"
                 @change="handleYearChange" />

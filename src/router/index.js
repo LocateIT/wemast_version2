@@ -4,7 +4,7 @@ import About from "@/views/AboutView.vue";
 import Dashboard from "@/views/Dashboard.vue";
 import Error from "@/views/Error.vue"
 // import DashboardSelections from "../components/DashboardSelections.vue"
-import DataCollection from "@/views/DataCollection.vue"
+
 import Signup from "@/views/Signup.vue"
 import Login from "@/views/Login.vue"
 import Forgot from "@/views/Forgot.vue"
@@ -28,12 +28,7 @@ const routes = [
     name: "Dashboard",
     component: Dashboard,
   },
-  {
-    path: "/datacollection",
-    name: "DataCollection",
-    component: DataCollection,
-
-  },
+ 
   {
     path: "/signup",
     name: "Signup",

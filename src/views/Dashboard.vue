@@ -989,14 +989,14 @@ const getCustomStatistics = () => {
   let postData = {
     "geojson": {
       "type": "FeatureCollection",
-      "features":[
-      shp_geojson.value
+      "features": [
+        shp_geojson.value
       ]
 
     },
     "start_date": sub_indicator.value === 'Land Cover' ? "2024-01-01" : burnt_date.value,
     "name": "LULC",
-    "year":year.value
+    "year": year.value
   }
 
 
@@ -1012,7 +1012,7 @@ const getCustomStatistics = () => {
 
 
 
-    
+
 
 
 
@@ -1021,28 +1021,108 @@ const getCustomStatistics = () => {
     console.log(clean)
 
     // Replace the key names with double quotes and convert to valid JSON format
-const validJSON = clean.replace(/([{,]\s*)([0-9.]+)(\s*:\s*)/g, '$1"$2"$3');
+    const validJSON = clean.replace(/([{,]\s*)([0-9.]+)(\s*:\s*)/g, '$1"$2"$3');
 
-// Parse the JSON string to convert it into a JavaScript object
-const jsonObject = JSON.parse(validJSON);
+    // Parse the JSON string to convert it into a JavaScript object
+    const jsonObject = JSON.parse(validJSON);
 
-// Now jsonObject is a valid JavaScript object
-console.log(jsonObject);
+    // Now jsonObject is a valid JavaScript object
+    console.log(jsonObject);
 
     var customFireStats = Object.values(jsonObject)
     storeUserSelections.lulcChartData.datasets[0].data = customFireStats
     console.log(storeUserSelections.lulcChartData.datasets[0].data)
 
+
+    function getClassForValue(value) {
+      switch (value) {
+        case '0.0':
+          return "no data";
+        case '1.0':
+          return "no data";
+        case '2.0':
+          return "Unused";
+        case '3.0':
+          return "Water";
+        case '4.0':
+          return "Cloud";
+        case '5.0':
+          return "Land";
+        case '6.0':
+          return "Unclassified";
+        case '7.0':
+          return "Low confidence";
+        case '8.0':
+          return "Nominal confidence fire pixel";
+        case '9.0':
+          return "High confidence fire pixel";
+
+        default:
+          return "unknown";
+      }
+    }
+
+
+    function getColorForValue(value) {
+      switch (value) {
+        case '0.0':
+          return "transparent";
+        case '1.0':
+          return "transparent";
+        case '2.0':
+          return "transparent";
+        case '3.0':
+          return "#1252e6";
+        case '4.0':
+          return "#f2f3f5";
+        case '5.0':
+          return "#c7bea9";
+        case '6.0':
+          return "#f9fab6";
+        case '7.0':
+          return "#ecf00e";
+        case '8.0':
+          return "#f0a10e";
+          case '9.0':
+          return "cf1c13";
+
+        default:
+          return "unknown";
+      }
+    }
+
     var firelabels = Object.keys(jsonObject)
+    const classes = firelabels.map(value => getClassForValue(value));
+
+
+    // Print the result as an array of classes
+   
+    console.log(classes);
+
+
+    const colors = firelabels.map(value => getColorForValue(value));
+    console.log(colors);
+    //   firelabels.forEach((value, index) => {
+    //     console.log(` ${classes[index]}`);
+    //     var arrayfirelabels = [classes[index]]
+    //     // arrayfirelabels.push(classes[index])
+    //     // console.log(arrayfirelabels)
+    // });
+
+    // const valuesWithClasses = firelabels.map((value, index) => {
+    //     return { value: value, class: classes[index] };
+    // });
+    // console.log(valuesWithClasses);
+
 
     //implement switch case to derive classes for firelabels
-    storeUserSelections.lulcChartData.labels = ['Unclassified', 'Low Confidence', 'Nominal Confidence','High Confidence']
-    console.log(storeUserSelections.lulcChartData.labels )
-
-
+    storeUserSelections.lulcChartData.labels = classes
+    console.log(storeUserSelections.lulcChartData.labels)
+    storeUserSelections.lulcChartData.datasets[0].backgroundColor = colors
+    
     var fireLayerName = response.data[1].layer_name
     console.log(fireLayerName)
-    
+
     fireLayer.value = fireLayerName
     console.log(fireLayer.value)
     // typeof(fireLayer.value)
@@ -1051,34 +1131,34 @@ console.log(jsonObject);
 
 
     const addFirmsLayer2 = () => {
-          if (sub_indicator.value === "Burnt Area FIRMS") {
-            // //console.log('just to see if request is accessed') //accessed
-            map.createPane("pane400").style.zIndex = 200;
-          console.log(fireLayer.value)
-            wmsLayer.value = L.tileLayer.wms(
-      `http://66.42.65.87:8080/geoserver/REALTIME/wms?`,
-      {
-        pane: "pane400",
-        layers:`REALTIME:${fireLayer.value}`,
-        crs: L.CRS.EPSG4326,
-        styles: 'realtime',
-        format: "image/png",
-        transparent: true,
-        opacity: 1.0,
-        
-      }
-    );
+      if (sub_indicator.value === "Burnt Area FIRMS") {
+        // //console.log('just to see if request is accessed') //accessed
+        map.createPane("pane400").style.zIndex = 200;
+        console.log(fireLayer.value)
+        wmsLayer.value = L.tileLayer.wms(
+          `http://66.42.65.87:8080/geoserver/REALTIME/wms?`,
+          {
+            pane: "pane400",
+            layers: `REALTIME:${fireLayer.value}`,
+            crs: L.CRS.EPSG4326,
+            styles: 'realtime',
+            format: "image/png",
+            transparent: true,
+            opacity: 1.0,
 
-            wmsLayer.value.addTo(map);
-
-            //console.log(wmsLayer.value, 'wms')
-
-            firmslegendContent();
-            changeOpacity();
           }
-        };
+        );
 
-        addFirmsLayer2();
+        wmsLayer.value.addTo(map);
+
+        //console.log(wmsLayer.value, 'wms')
+
+        firmslegendContent();
+        changeOpacity();
+      }
+    };
+
+    addFirmsLayer2();
 
   }).catch((error) => {
     //do sth
@@ -1087,15 +1167,15 @@ console.log(jsonObject);
 
 const convertToLayer = (buffer) => {
 
-      if (layer.value) map.removeLayer(layer.value);
-      if (drawn_layer.value) map.removeLayer(drawn_layer.value);
-      if (custom_geojson.value) map.removeLayer(custom_geojson.value);
+  if (layer.value) map.removeLayer(layer.value);
+  if (drawn_layer.value) map.removeLayer(drawn_layer.value);
+  if (custom_geojson.value) map.removeLayer(custom_geojson.value);
 
-      if (lulc_legend.value) map.removeControl(lulc_legend.value);
-      if (current_geojson.value) map.removeLayer(current_geojson.value);
-      if (wmsLayer.value) map.removeLayer(wmsLayer.value);
-      if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
-      if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
+  if (lulc_legend.value) map.removeControl(lulc_legend.value);
+  if (current_geojson.value) map.removeLayer(current_geojson.value);
+  if (wmsLayer.value) map.removeLayer(wmsLayer.value);
+  if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
+  if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
 
 
   shp(buffer).then(function (geojson) {
@@ -1386,7 +1466,7 @@ const convertToLayer = (buffer) => {
             changeOpacity();
           }
         };
-        
+
 
         const addSMILayer2 = () => {
           if (sub_indicator.value === "Soil Moisure Index") {
@@ -1522,7 +1602,7 @@ const convertToLayer = (buffer) => {
         addWetlandExtent2();
         addVegCover2();
         addWetlandStatus2();
-        
+
         addSMILayer2();
         addFloodLayer2();
         addSuspendedSediments2();
@@ -1852,7 +1932,7 @@ const show_advanced_filter = () => {
   advanced_filter.value = true;
   compare.value = false;
   show_mobile_data.value = false;
- 
+
 };
 const show_compare = () => {
   compare.value = true;
@@ -1906,7 +1986,7 @@ const displayToKey = () => {
   if (doc === "Mapographics") {
     window.open(
       "https://drive.google.com/file/d/1n8QMjQO5zSu_k57MQuI4I3QsIeHLlzbH/view"
-     
+
     );
   }
 };
@@ -1916,7 +1996,7 @@ const toggle_nav = (e) => {
   const cmd = e.target.id;
   cmd_.value = e.target.id;
   if (cmd === "close") return closeNav();
-  
+
   document.querySelector("#download_tiff").style.left = "-2vw";
 
   document.querySelector("#download_map").style.position = "absolute";
@@ -1973,9 +2053,9 @@ const toggle_nav = (e) => {
       "absolute";
     document.querySelector("#upload_custom_shapefile").style.left = "4vw";
 
-   
- 
-    
+
+
+
   }
 
   return openNav();
@@ -2531,7 +2611,7 @@ onMounted(() => {
       changeDefaultOpacity();
     });
 
-   
+
 
     lulclegendContent();
   };
@@ -2573,7 +2653,7 @@ onMounted(() => {
     download_tiff();
   });
 
- 
+
   document.getElementById("help").addEventListener("click", (e) => {
 
     help();
@@ -2587,21 +2667,21 @@ onMounted(() => {
       show_upload_shapefile();
     });
 
-  
+
   document.getElementById("download_map").addEventListener("click", (e) => {
-   
+
 
     downloadMap("My leaflet map");
   });
 
   document.getElementById("draw_polygon").addEventListener("click", (e) => {
- 
+
 
     addDrawCtrl();
     draw_polygon();
   });
 
- 
+
   closeNav();
 
   const plugin = L.control
@@ -3002,12 +3082,12 @@ const addPrecTimeSeries = () => {
 
     showGetFeatureInfo: function (err, latlng, content) {
       if (err) {
-  
+
 
         var bands = content.features[0].properties;
 
         var band_names = Object.keys(bands);
- 
+
 
         lineChartData.labels = band_names;
 
@@ -3050,7 +3130,7 @@ const addPrecTimeSeries = () => {
   const getClickedLatLon = () => {
     latlon.value = storeUserSelections.latlon;
     if (group.value !== null) group.value.clearLayers();
-       
+
     group.value = L.layerGroup().addTo(map);
     marker.value = L.icon({
       iconUrl: "/mapIcons/point.svg",
@@ -3158,21 +3238,21 @@ const addPRECIPTimeSeries = () => {
 
         var truncated_values = band_values.map((value_item) => {
           parseInt(value_item).toFixed(2);
-     
+
         });
 
         var renamed_band_names = band_names.map((band_item) =>
           band_item.replace(/Band/, "Pentad")
         );
-   
+
         lineChartData.datasets[0].data = band_values;
 
         //console.log(lineChartData, 'PRECIP line chart data')
 
         storeUserSelections.lineChartData.labels = renamed_band_names;
-   
+
         storeUserSelections.lineChartData.datasets[0].data = band_values;
-     
+
 
         storeUserSelections.latlon = [latlng.lat, latlng.lng];
         // //console.log(storeUserSelections.latlon, 'updated store lat lon')
@@ -3181,14 +3261,14 @@ const addPRECIPTimeSeries = () => {
         // //console.log(latlng, 'lat long');
       } // do nothing if there's an error
 
-    
+
     },
   }); //end of L.extend
 
   const getClickedLatLon = () => {
     latlon.value = storeUserSelections.latlon;
     if (group.value !== null) group.value.clearLayers();
-       
+
     group.value = L.layerGroup().addTo(map);
     marker.value = L.icon({
       iconUrl: "/mapIcons/point.svg",
@@ -3270,14 +3350,14 @@ const addTEMPTimeSeries = () => {
 
       params[params.version === "1.3.0" ? "i" : "x"] = point.x;
       params[params.version === "1.3.0" ? "j" : "y"] = point.y;
-    
+
 
       return this._url + L.Util.getParamString(params, this._url, true);
     },
 
     showGetFeatureInfo: function (err, latlng, content) {
       if (err) {
-   
+
 
         var bands = content.features[0].properties;
 
@@ -3287,14 +3367,14 @@ const addTEMPTimeSeries = () => {
         lineChartData.labels = band_names;
 
         var band_values = Object.values(bands);
-       
-       
+
+
         lineChartData.datasets[0].data = band_values;
 
-     
+
 
         storeUserSelections.lineChartData.labels = band_names;
-      
+
         storeUserSelections.lineChartData.labels = [
           "January",
           "February",
@@ -3309,24 +3389,24 @@ const addTEMPTimeSeries = () => {
           "November",
           "December",
         ];
-        
+
         storeUserSelections.lineChartData.datasets[0].data = band_values;
-   
+
         storeUserSelections.latlon = [latlng.lat, latlng.lng];
-     
+
 
         return;
-       
+
       } // do nothing if there's an error
 
-     
+
     },
   }); //end of L.extend
 
   const getClickedLatLon = () => {
     latlon.value = storeUserSelections.latlon;
     if (group.value !== null) group.value.clearLayers();
-       
+
     group.value = L.layerGroup().addTo(map);
     marker.value = L.icon({
       iconUrl: "/mapIcons/point.svg",
@@ -3461,7 +3541,7 @@ const addPrecIndexWet = () => {
 
     const getDefaultLatLon = () => {
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -3554,7 +3634,7 @@ const addPrecIndexDry = () => {
 
     const getDefaultLatLon = () => {
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -3756,7 +3836,7 @@ const addVegCover = () => {
     const getClickedLatLon = () => {
       latlon.value = storeUserSelections.latlon;
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -3837,7 +3917,7 @@ const addVegCover = () => {
 
     const getDefaultLatLon = () => {
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -3946,7 +4026,7 @@ const addFirmsLayer = () => {
     //     format: "image/png",
     //     transparent: true,
     //     opacity: 1.0,
-        
+
     //   }
     // );
 
@@ -3961,11 +4041,11 @@ const addFirmsLayer = () => {
     //     format: "image/png",
     //     transparent: true,
     //     opacity: 1.0,
-        
+
     //   }
     // );
 
-//loading lulc layer since realtime fire doesnt cover the whole basin
+    //loading lulc layer since realtime fire doesnt cover the whole basin
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
       pane: "pane400",
       layers: `LULC:${year.value}`,
@@ -4047,7 +4127,7 @@ const addSMILayer = () => {
 
     const getDefaultLatLon = () => {
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -4162,7 +4242,7 @@ const addSuspendedSediments = () => {
 
     const getDefaultLatLon = () => {
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -4253,7 +4333,7 @@ const addTurbidity = () => {
 
     const getDefaultLatLon = () => {
       if (group.value !== null) group.value.clearLayers();
-         
+
       group.value = L.layerGroup().addTo(map);
       marker.value = L.icon({
         iconUrl: "/mapIcons/point.svg",
@@ -4565,22 +4645,22 @@ const removeLegend = () => {
 
 const removeCompareLegend = () => {
   if (lulc_compare_legend.value)
-        map.removeControl(lulc_compare_legend.value);
-      if (firms_compare_legend.value)
-        map.removeControl(firms_compare_legend.value);
-      if (smi_compare_legend.value) map.removeControl(smi_compare_legend.value);
-      if (modis_legend.value) map.removeControl(modis_legend.value);
-      if (flood_compare_legend.value)
-        map.removeControl(flood_compare_legend.value);
-      if (status_compare_legend.value)
-        map.removeControl(status_compare_legend.value);
-      if (ndvi_compare_legend.value)
-        map.removeControl(ndvi_compare_legend.value);
-      if (ndwi_compare_legend.value)
-        map.removeControl(ndwi_compare_legend.value);
-      if (prec_compare_legend.value)
-        map.removeControl(prec_compare_legend.value);
-      if (bvi_compare_legend.value) map.removeControl(bvi_compare_legend.value);
+    map.removeControl(lulc_compare_legend.value);
+  if (firms_compare_legend.value)
+    map.removeControl(firms_compare_legend.value);
+  if (smi_compare_legend.value) map.removeControl(smi_compare_legend.value);
+  if (modis_legend.value) map.removeControl(modis_legend.value);
+  if (flood_compare_legend.value)
+    map.removeControl(flood_compare_legend.value);
+  if (status_compare_legend.value)
+    map.removeControl(status_compare_legend.value);
+  if (ndvi_compare_legend.value)
+    map.removeControl(ndvi_compare_legend.value);
+  if (ndwi_compare_legend.value)
+    map.removeControl(ndwi_compare_legend.value);
+  if (prec_compare_legend.value)
+    map.removeControl(prec_compare_legend.value);
+  if (bvi_compare_legend.value) map.removeControl(bvi_compare_legend.value);
 }
 
 const BVIlegendContent = () => {
@@ -4637,8 +4717,8 @@ const lulclegendContent = () => {
       if (firms_legend.value) map.removeControl(firms_legend.value);
       if (smi_legend.value) map.removeControl(smi_legend.value);
       if (modis_legend.value) map.removeControl(modis_legend.value);
-    removeLegend()
-     
+      removeLegend()
+
 
       if (wmsLayer.value) {
         var legend = L.control({
@@ -4834,9 +4914,9 @@ const NDWIlegendContent = () => {
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-    
+
       removeLegend()
-      
+
       if (wmsLayer.value) {
         var legend = L.control({ position: "bottomleft" });
         ndwi_legend.value = legend;
@@ -4948,7 +5028,7 @@ const NDVIlegendContent = () => {
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-    removeLegend()
+      removeLegend()
 
       if (lulc_compare_legend.value)
         map.removeControl(lulc_compare_legend.value);
@@ -5321,7 +5401,7 @@ const comparefirmslegendContent = () => {
       });
       //console.log(colors_array, 'colors array')
 
-     removeCompareLegend()
+      removeCompareLegend()
 
       if (wmsCompareLayer.value) {
         var legend = L.control({ position: "bottomright" });

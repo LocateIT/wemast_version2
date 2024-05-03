@@ -148,7 +148,7 @@
 
 
             <p style="margin-top: 40px" :class="storeUserSelections.selected_sub_indicator ===
-        'Burnt Area FIRMS' || 'Undulation'
+        'Fire Confidence' || 'Undulation'
         ? 'burnt_summary'
         : ''
         ">
@@ -163,7 +163,7 @@
               "Soil Moisure Index"
               ? $t("summaries.smi_index")
               : storeUserSelections.selected_sub_indicator ===
-                "Burnt Area FIRMS"
+                "Fire Confidence"
                 ? $t("summaries.burnt_firms")
                 : storeUserSelections.selected_sub_indicator === "Undulation"
                   ? $t("summaries.undulation")
@@ -198,9 +198,14 @@
                 Zambezi LULC 2016
               </div>
 
-              <div v-if="year && sub_indicator" class="chart_title"
+              <div v-if="year && sub_indicator && sub_indicator !== 'Fire Confidence'" class="chart_title"
                 :class="{ hide: compareUserSelections.selected_year != '' }">
                 {{ `${basin} ${sub_indicator}-${year}` }}
+              </div>
+
+              <div v-if="year && sub_indicator && burnt_date" class="chart_title"
+                :class="{ hide: compareUserSelections.selected_year != '' }">
+                {{ `${basin} ${sub_indicator}-${burnt_date}` }}
               </div>
 
               <div v-if="storeUserSelections.selected_sub_indicator === 'Undulation'" class="chart_title"
@@ -237,7 +242,7 @@
               <div id="chart_pie" v-if="sub_indicator === 'Land Cover' ||
         indicator === 'Basin Vulnerability Index' ||
         sub_indicator === 'Wetland Inventory' ||
-        sub_indicator === 'Burnt Area FIRMS' ||
+        sub_indicator === 'Fire Confidence' ||
         sub_indicator === 'Undulation'
         ">
                 <LulcPie :class="sub_indicator === 'Undulation'
@@ -263,7 +268,7 @@
         padding: storeUserSelections.selected_sub_indicator === 'Land Cover' ? '8em 2em' :
           storeUserSelections.selected_sub_indicator === '' ? '8em 2em' :
             storeUserSelections.selected_sub_indicator === 'Wetland Inventory' ? '8em 2em' :
-              storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? '8em 2em' :
+              storeUserSelections.selected_sub_indicator === 'Fire Confidence' ? '8em 2em' :
                 storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? '3em 2em' :
                   storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? '8em 2em' :
                     storeUserSelections.selected_sub_indicator === 'Undulation' ? '8em 2em' :
@@ -275,10 +280,27 @@
               <div v-if="show_zambezi_stats === true" class="default_layer_title">
                 Zambezi LULC 2016
               </div>
-              <div v-if="basin && sub_indicator && year" class="chart_dynamic_titles">
+              <div v-if="basin && sub_indicator && sub_indicator !== 'Fire Confidence' && year" class="chart_dynamic_titles">
                 <div v-if="sub_indicator != 'Water Quality'" class="bar_chart_title"
                   :class="{ hide: compareUserSelections.selected_year != '' }">
                   {{ `${basin} ${sub_indicator}-${year}` }}
+                </div>
+
+
+                <div v-if="compareUserSelections.selected_year != ''" class="bar_chart_title">
+                  {{ `${basin} ${sub_indicator}-${compare_year}` }}
+                </div>
+                <div v-if="sub_indicator === 'Water Quality'" class="bar_chart_title">
+                  {{ `${basin} ${parameter}-${year}` }}
+                </div>
+
+              </div>
+
+
+              <div v-if="basin && sub_indicator && burnt_date" class="chart_dynamic_titles">
+                <div v-if="sub_indicator === 'Fire Confidence'" class="bar_chart_title"
+                  :class="{ hide: compareUserSelections.selected_year != '' }">
+                  {{ `${basin} ${sub_indicator}-${burnt_date}` }}
                 </div>
 
 
@@ -331,7 +353,7 @@
         ">
                 <!-- class="lulc_bar_chart"  sub_indicator === 'Water Quality'      ? 'prec_bar' -->
                 <LulcBar :class="storeUserSelections.selected_sub_indicator ===
-        'Burnt Area FIRMS' || 'Undulation'
+        'Fire Confidence' || 'Undulation'
         ? 'burnt_bar_chart'
         : 'lulc_bar_chart'
         " :height="200" :chartData="compare_year
@@ -441,11 +463,11 @@
                     "Vegetation Cover" ||
                     "Precipitation Index" ||
                     "Undulation" ||
-                    "Burnt Area FIRMS" ||
+                    "Fire Confidence" ||
                     "Soil Moisure Index"
                     ? `${storeUserSelections.selected_sub_indicator} for ${storeUserSelections.selected_basin} basin`
                     : // sub_indicator === 'Land Cover' || 'Vegetation Cover' ||
-                    // 'Precipitation Index' || 'Undulation'|| 'Burnt Area FIRMS' || 'Soil Moisure Index' ?
+                    // 'Precipitation Index' || 'Undulation'|| 'Fire Confidence' || 'Soil Moisure Index' ?
                     // storeUserSelections.selected_sub_indicator === 'Wetland Inventory' &&
                     storeUserSelections.selected_parameter === 'Wetland Status' ? "" : ''
       }}
@@ -468,7 +490,7 @@
                 "Sus Sediments"
                 ? $t("metadata.sus_desc")
                 : storeUserSelections.selected_sub_indicator ===
-                  "Burnt Area FIRMS"
+                  "Fire Confidence"
                   ? $t("metadata.firms_desc")
                   : storeUserSelections.selected_sub_indicator ===
                     "Undulation"
@@ -1130,7 +1152,7 @@ const getCustomStatistics = () => {
 
 
     const addFirmsLayer2 = () => {
-      if (sub_indicator.value === "Burnt Area FIRMS") {
+      if (sub_indicator.value === "Fire Confidence") {
         
         // //console.log('just to see if request is accessed') //accessed
         map.createPane("pane400").style.zIndex = 200;
@@ -2184,7 +2206,7 @@ const generate_layer_abbreviations = () => {
   if (parameter.value === "Wetland Status") {
     layer_abbreviations.value = "STATUS";
   }
-  if (sub_indicator.value === "Burnt Area FIRMS") {
+  if (sub_indicator.value === "Fire Confidence") {
     layer_abbreviations.value = "FIRE";
   }
   if (sub_indicator.value === "Precipitation Index") {
@@ -2426,7 +2448,7 @@ const download_tiff = () => {
     status_style();
     url = `${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`;
   }
-  if (sub_indicator.value === "Burnt Area FIRMS") {
+  if (sub_indicator.value === "Fire Confidence") {
     url = `${baseurl}:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`;
   }
   if (sub_indicator.value === "Soil Moisure Index") {
@@ -4013,7 +4035,7 @@ const addWetlandStatus = () => {
 
 
 const addFirmsLayer = () => {
-  if (sub_indicator.value === "Burnt Area FIRMS") {
+  if (sub_indicator.value === "Fire Confidence") {
     // //console.log('just to see if request is accessed') //accessed
     map.createPane("pane400").style.zIndex = 200;
 
@@ -5954,7 +5976,7 @@ const addCompareWetlandStatus = () => {
 };
 const addCompareFirmsLayer = () => {
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
-  if (sub_indicator.value === "Burnt Area FIRMS") {
+  if (sub_indicator.value === "Fire Confidence") {
     //&& season.value === 'DRY'
 
     // //console.log('just to see if request is accessed') //accessed
@@ -6634,7 +6656,7 @@ const addDrawCtrl = () => {
           }
         };
         const addFirmsLayer2 = () => {
-          if (sub_indicator.value === "Burnt Area FIRMS") {
+          if (sub_indicator.value === "Fire Confidence") {
             loading.value = true;
 
             //for realtime firms

@@ -26,7 +26,7 @@
         <FloatLabel class=" select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
                     storeUserSelections.selected_sub_indicator === 'Vegetation Cover' ? 'none' :
-                        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
+                        storeUserSelections.selected_sub_indicator === 'Fire Confidence' ? 'none' :
                             storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? 'none' :
                                 storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                     storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? 'none' :
@@ -42,7 +42,7 @@
                 display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' :
                     storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
                         storeUserSelections.selected_parameter === 'Wetland Extent' ? 'none' :
-                            storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
+                            storeUserSelections.selected_sub_indicator === 'Fire Confidence' ? 'none' :
                                 storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? 'none' :
                                     storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                         storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
@@ -58,7 +58,7 @@
         <FloatLabel class="select w-full md:w-8rem" :style="{
                 display: storeUserSelections.selected_sub_indicator === 'Land Cover' ? 'none' :
                     storeUserSelections.selected_parameter === 'Wetland Extent' ? 'none' :
-                        storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS' ? 'none' :
+                        storeUserSelections.selected_sub_indicator === 'Fire Confidence' ? 'none' :
                             storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                 storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
                                     ''
@@ -79,7 +79,7 @@
         </FloatLabel>
 
 
-        <FloatLabel class="w-full md:w-10rem" v-if="storeUserSelections.selected_sub_indicator === 'Burnt Area FIRMS'">
+        <FloatLabel class="w-full md:w-10rem" v-if="storeUserSelections.selected_sub_indicator === 'Fire Confidence'">
             <label for="buttondisplay">{{ $t("home.date_label") }}</label>
             <Calendar v-model="selectedDate" @update:v-model="selectedDate = $event" showIcon :showOnFocus="false" dateFormat="dd-mm-yy" />
         </FloatLabel>
@@ -182,7 +182,7 @@ const subindicatorToggle = () => {
         subindicatorList = ['Water Quality', 'Soil Moisure Index']
     }
     if (selectedIndicator.value.name === 'Resiliance') {
-        subindicatorList = ['Burnt Area FIRMS', 'Precipitation Index', 'Undulation']
+        subindicatorList = ['Fire Confidence', 'Precipitation Index', 'Undulation']
     }
 
     let subindicatorObject = subindicatorList.map((item) => ({ "name": item, "code": item }))
@@ -221,7 +221,7 @@ const yearToggle = () => {
 
 
     if (selectedSubIndicator.value?.name === 'Burnt Area MODIS'
-        || selectedSubIndicator.value?.name === 'Burnt Area FIRMS') { //removed 2000 since it lacks stats data
+        || selectedSubIndicator.value?.name === 'Fire Confidence') { //removed 2000 since it lacks stats data
         yearList = ["2001", "2002", "2003", "2004", "2005", "2006",
             "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017",
             '2018'].reverse()

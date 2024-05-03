@@ -283,7 +283,7 @@ export const useCounterStore = defineStore({
         this.sub_indicator_list = ['Water Quality', 'Soil Moisure Index']
       }
       if(this.selected_indicator === 'Resiliance' ){
-        this.sub_indicator_list = [ 'Burnt Area FIRMS', 'Precipitation Index', 'Undulation']
+        this.sub_indicator_list = [ 'Fire Confidence', 'Precipitation Index', 'Undulation']
       }
     },
     fetchYearList(){
@@ -304,7 +304,7 @@ export const useCounterStore = defineStore({
       }
       
       if(this.selected_sub_indicator === 'Burnt Area MODIS'
-      || this.selected_sub_indicator === 'Burnt Area FIRMS') { //removed 2000 since it lacks stats data
+      || this.selected_sub_indicator === 'Fire Confidence') { //removed 2000 since it lacks stats data
         this.year_list = ["2001","2002","2003","2004","2005","2006",
       "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017",
         '2018'].reverse()
@@ -918,7 +918,7 @@ export const useCounterStore = defineStore({
         }
 
        
-        if(this.selected_sub_indicator === 'Burnt Area FIRMS') {
+        if(this.selected_sub_indicator === 'Fire Confidence') {
         try {
           
        var basin = this.selected_basin

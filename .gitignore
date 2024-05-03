@@ -26,6 +26,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+.env
 
 #Electron-builder output
 /dist_electron

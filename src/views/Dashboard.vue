@@ -966,6 +966,7 @@ const submit_shapefile = (event) => {
     });
     document.getElementById("warning").innerHTML = "";
     handleZipFile(file);
+    loading.value = true;
   }
 };
 
@@ -982,7 +983,63 @@ function handleZipFile(file) {
   reader.readAsArrayBuffer(file);
 }
 
+const getClassForValue = (value) => {
+      switch (value) {
+        case '0.0':
+          return "no data";
+        case '1.0':
+          return "no data";
+        case '2.0':
+          return "Unused";
+        case '3.0':
+          return "Water";
+        case '4.0':
+          return "Cloud";
+        case '5.0':
+          return "Land";
+        case '6.0':
+          return "Unclassified";
+        case '7.0':
+          return "Low confidence";
+        case '8.0':
+          return "Nominal confidence";
+        case '9.0':
+          return "High confidence";
 
+        default:
+          return "unknown";
+      }
+    }
+
+
+    const getColorForValue = (value) => {
+      switch (value) {
+        case '0.0':
+          return "#fff";
+        case '1.0':
+          return "#fff";
+        case '2.0':
+          return "#fff";
+        case '3.0':
+          return "#1252e6";
+        case '4.0':
+          return "#dadada";
+        case '5.0':
+          return "#c7bea9";
+        case '6.0':
+          return "#f9fab6";
+        case '7.0':
+          return "#ecf00e";
+        case '8.0':
+          return "#f0a10e";
+        case '9.0':
+          return "cf1c13";
+
+        default:
+          return "unknown";
+      }
+    }
+    
 const getCustomStatistics = () => {
   const apiUrl = "http://45.32.233.93:8090/get_fire_mask_and_name/";
   console.log(burnt_date.value)
@@ -1013,9 +1070,6 @@ const getCustomStatistics = () => {
 
 
 
-
-
-
     var fireStats = response.data[1].statistics
     var clean = JSON.parse(fireStats);
     console.log(clean)
@@ -1034,69 +1088,14 @@ const getCustomStatistics = () => {
     console.log(storeUserSelections.lulcChartData.datasets[0].data)
 
 
-    function getClassForValue(value) {
-      switch (value) {
-        case '0.0':
-          return "no data";
-        case '1.0':
-          return "no data";
-        case '2.0':
-          return "Unused";
-        case '3.0':
-          return "Water";
-        case '4.0':
-          return "Cloud";
-        case '5.0':
-          return "Land";
-        case '6.0':
-          return "Unclassified";
-        case '7.0':
-          return "Low confidence";
-        case '8.0':
-          return "Nominal confidence fire pixel";
-        case '9.0':
-          return "High confidence fire pixel";
-
-        default:
-          return "unknown";
-      }
-    }
-
-
-    function getColorForValue(value) {
-      switch (value) {
-        case '0.0':
-          return "transparent";
-        case '1.0':
-          return "transparent";
-        case '2.0':
-          return "transparent";
-        case '3.0':
-          return "#1252e6";
-        case '4.0':
-          return "#f2f3f5";
-        case '5.0':
-          return "#c7bea9";
-        case '6.0':
-          return "#f9fab6";
-        case '7.0':
-          return "#ecf00e";
-        case '8.0':
-          return "#f0a10e";
-          case '9.0':
-          return "cf1c13";
-
-        default:
-          return "unknown";
-      }
-    }
+    
 
     var firelabels = Object.keys(jsonObject)
     const classes = firelabels.map(value => getClassForValue(value));
 
 
     // Print the result as an array of classes
-   
+
     console.log(classes);
 
 
@@ -1119,7 +1118,7 @@ const getCustomStatistics = () => {
     storeUserSelections.lulcChartData.labels = classes
     console.log(storeUserSelections.lulcChartData.labels)
     storeUserSelections.lulcChartData.datasets[0].backgroundColor = colors
-    
+
     var fireLayerName = response.data[1].layer_name
     console.log(fireLayerName)
 
@@ -1132,6 +1131,7 @@ const getCustomStatistics = () => {
 
     const addFirmsLayer2 = () => {
       if (sub_indicator.value === "Burnt Area FIRMS") {
+        
         // //console.log('just to see if request is accessed') //accessed
         map.createPane("pane400").style.zIndex = 200;
         console.log(fireLayer.value)
@@ -1151,9 +1151,14 @@ const getCustomStatistics = () => {
 
         wmsLayer.value.addTo(map);
 
+        wmsLayer.value.on("load", function (event) {
+              loading.value = false;
+            });
+
         //console.log(wmsLayer.value, 'wms')
 
         firmslegendContent();
+        // lulclegendContent()
         changeOpacity();
       }
     };
@@ -4071,7 +4076,8 @@ const addFirmsLayer = () => {
 
     //console.log(wmsLayer.value, 'wms')
 
-    firmslegendContent();
+    // firmslegendContent();
+    lulclegendContent()
     changeOpacity();
   }
 };
@@ -5326,7 +5332,7 @@ const firmslegendContent = () => {
   const getLegendContent = async () => {
     try {
       const response = await axios.get(
-        `${baseurl}:8080/geoserver/FIRMS_WET/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=FIRMS_WET%3A2000&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
+        `${baseurl}:8080/geoserver/REALTIME/wms?REQUEST=GetLegendGraphic&VERSION=1.0.0&FORMAT=application/json&WIDTH=20&HEIGHT=20&LAYER=REALTIME:fire1035699075.tif&legend_options=fontName:poppins;fontAntiAliasing:true;fontColor:0x000033;fontSize:7;bgColor:0xFFFFEE;dpi:150`
       );
       //console.log(response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries, 'legend response')
       var object_array =
@@ -5334,28 +5340,40 @@ const firmslegendContent = () => {
 
       var label_array = object_array.map((item) => {
         //console.log(item.label, 'labels items array')
+
+        
         return item.label;
       });
       //console.log(label_array, 'label array')
+     var cleanarray = label_array.filter((item) => item !== 'No data' && item !== 'Unused')
+     console.log(cleanarray);
+
+     
+
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
+
+
+      var cleancolorarray = colors_array.filter((item) => item !== '#FFFFFF' )
+     console.log(cleancolorarray);
+
       //console.log(colors_array, 'colors array')
       removeLegend()
 
       if (wmsLayer.value) {
         var legend = L.control({ position: "bottomleft" });
         firms_legend.value = legend;
-        var colors = colors_array;
-        var labels = label_array;
+        var colors = cleancolorarray //colors_array;
+        var labels =  cleanarray //label_array;
 
         firms_legend.value.onAdd = function (map) {
           var div = L.DomUtil.create("div", "legend");
           div.innerHTML += basin.value
-            ? `<p>${basin.value} FIRMS ${year.value}</p>`
+            ? `<p>${basin.value} Fire Confidence ${year.value}</p>`
             : wetland_basin.value
-              ? `<p>${wetland_basin.value} FIRMS ${year.value}</p>`
+              ? `<p>${wetland_basin.value} Fire Confidence ${year.value}</p>`
               : "";
           for (var i = 0; i < colors.length; i++) {
             div.innerHTML +=
@@ -6617,30 +6635,103 @@ const addDrawCtrl = () => {
         };
         const addFirmsLayer2 = () => {
           if (sub_indicator.value === "Burnt Area FIRMS") {
-            // //console.log('just to see if request is accessed') //accessed
-            map.createPane("pane400").style.zIndex = 200;
+            loading.value = true;
 
-            wmsLayer.value = L.tileLayer.wms(
-              `${baseurl}:8080/geoserver/FIRMS_DRY/wms?`,
-              {
-                pane: "pane400",
-                layers: `FIRMS_DRY:${year.value}`,
-                crs: L.CRS.EPSG4326,
-                styles: polygon_sld.value,
-                format: "image/png",
-                transparent: true,
-                opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
-              }
-            );
+            //for realtime firms
+            const fireApiUrl = "http://45.32.233.93:8090/get_fire_mask_and_name/";
 
-            wmsLayer.value.addTo(map);
+            let firePostData = {
+              "geojson": {
+                "type": "FeatureCollection",
+                "features": [
+                  drawn_layer.value
+                ]
 
-            //console.log(wmsLayer.value, 'wms')
+              },
+              "start_date": sub_indicator.value === 'Land Cover' ? "2024-01-01" : burnt_date.value,
+              "name": "LULC",
+              "year": year.value
+            }
 
-            firmslegendContent();
-            changeOpacity();
+
+            axios.post(fireApiUrl, firePostData).then((response) => {
+              var fireLayerName = response.data[1].layer_name
+              console.log(fireLayerName)
+
+              fireLayer.value = fireLayerName
+              console.log(fireLayer.value)
+
+
+
+              var fireStats = response.data[1].statistics
+              var clean = JSON.parse(fireStats);
+              console.log(clean)
+
+              // Replace the key names with double quotes and convert to valid JSON format
+              const validJSON = clean.replace(/([{,]\s*)([0-9.]+)(\s*:\s*)/g, '$1"$2"$3');
+
+              // Parse the JSON string to convert it into a JavaScript object
+              const jsonObject = JSON.parse(validJSON);
+
+              // Now jsonObject is a valid JavaScript object
+              console.log(jsonObject);
+
+              var customFireStats = Object.values(jsonObject)
+              storeUserSelections.lulcChartData.datasets[0].data = customFireStats
+              console.log(storeUserSelections.lulcChartData.datasets[0].data)
+
+
+
+              var firelabels = Object.keys(jsonObject)
+              const classes = firelabels.map(value => getClassForValue(value));
+
+
+              // Print the result as an array of classes
+
+              console.log(classes);
+
+
+              const colors = firelabels.map(value => getColorForValue(value));
+              console.log(colors);
+
+
+              storeUserSelections.lulcChartData.labels = classes
+              console.log(storeUserSelections.lulcChartData.labels)
+              storeUserSelections.lulcChartData.datasets[0].backgroundColor = colors
+
+              //load the fire layer for drawn polygon
+              if (wmsLayer.value) map.removeLayer(wmsLayer.value);
+              map.createPane("pane400").style.zIndex = 200;
+
+              wmsLayer.value = L.tileLayer.wms(
+                `http://66.42.65.87:8080/geoserver/REALTIME/wms?`,
+                {
+                  pane: "pane400",
+                  layers: `REALTIME:${fireLayer.value}`,
+                  crs: L.CRS.EPSG4326,
+                  styles: 'realtime',
+                  format: "image/png",
+                  transparent: true,
+                  opacity: 1.0,
+
+                }
+              );
+
+              wmsLayer.value.addTo(map);
+
+              wmsLayer.value.on("load", function (event) {
+              loading.value = false;
+            });
+              firmslegendContent();
+              changeOpacity();
+
+            })
+              .catch((error) => {
+                //do sth
+              })
+
           }
+
         };
 
         const addSMILayer2 = () => {
@@ -6787,6 +6878,9 @@ const addDrawCtrl = () => {
       .catch((error) => {
         //console.log('Error:', error)
       });
+
+
+
   });
 
   map.on(L.Draw.Event.EDITSTOP, (e) => {

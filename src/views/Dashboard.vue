@@ -5393,7 +5393,7 @@ const firmslegendContent = () => {
         firms_legend.value.onAdd = function (map) {
           var div = L.DomUtil.create("div", "legend");
           div.innerHTML += basin.value
-            ? `<p>${basin.value} Fire Confidence ${year.value}</p>`
+            ? `<p>${basin.value} Fire Confidence ${burnt_date.value} </p>`
             : wetland_basin.value
               ? `<p>${wetland_basin.value} Fire Confidence ${year.value}</p>`
               : "";

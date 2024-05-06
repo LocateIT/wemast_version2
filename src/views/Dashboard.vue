@@ -280,7 +280,8 @@
               <div v-if="show_zambezi_stats === true" class="default_layer_title">
                 Zambezi LULC 2016
               </div>
-              <div v-if="basin && sub_indicator && sub_indicator !== 'Fire Confidence' && year" class="chart_dynamic_titles">
+              <div v-if="basin && sub_indicator && sub_indicator !== 'Fire Confidence' && year"
+                class="chart_dynamic_titles">
                 <div v-if="sub_indicator != 'Water Quality'" class="bar_chart_title"
                   :class="{ hide: compareUserSelections.selected_year != '' }">
                   {{ `${basin} ${sub_indicator}-${year}` }}
@@ -1006,62 +1007,62 @@ function handleZipFile(file) {
 }
 
 const getClassForValue = (value) => {
-      switch (value) {
-        case '0.0':
-          return "no data";
-        case '1.0':
-          return "no data";
-        case '2.0':
-          return "Unused";
-        case '3.0':
-          return "Water";
-        case '4.0':
-          return "Cloud";
-        case '5.0':
-          return "Land";
-        case '6.0':
-          return "Unclassified";
-        case '7.0':
-          return "Low confidence";
-        case '8.0':
-          return "Nominal confidence";
-        case '9.0':
-          return "High confidence";
+  switch (value) {
+    case '0.0':
+      return "no data";
+    case '1.0':
+      return "no data";
+    case '2.0':
+      return "Unused";
+    case '3.0':
+      return "Water";
+    case '4.0':
+      return "Cloud";
+    case '5.0':
+      return "Land";
+    case '6.0':
+      return "Unclassified";
+    case '7.0':
+      return "Low confidence";
+    case '8.0':
+      return "Nominal confidence";
+    case '9.0':
+      return "High confidence";
 
-        default:
-          return "unknown";
-      }
-    }
+    default:
+      return "unknown";
+  }
+}
 
 
-    const getColorForValue = (value) => {
-      switch (value) {
-        case '0.0':
-          return "#fff";
-        case '1.0':
-          return "#fff";
-        case '2.0':
-          return "#fff";
-        case '3.0':
-          return "#1252e6";
-        case '4.0':
-          return "#dadada";
-        case '5.0':
-          return "#c7bea9";
-        case '6.0':
-          return "#f9fab6";
-        case '7.0':
-          return "#ecf00e";
-        case '8.0':
-          return "#f0a10e";
-        case '9.0':
-          return "cf1c13";
+const getColorForValue = (value) => {
+  switch (value) {
+    case '0.0':
+      return "#fff";
+    case '1.0':
+      return "#fff";
+    case '2.0':
+      return "#fff";
+    case '3.0':
+      return "#1252e6";
+    case '4.0':
+      return "#dadada";
+    case '5.0':
+      return "#c7bea9";
+    case '6.0':
+      return "#f9fab6";
+    case '7.0':
+      return "#ecf00e";
+    case '8.0':
+      return "#f0a10e";
+    case '9.0':
+      return "cf1c13";
 
-        default:
-          return "unknown";
-      }
-    }
-    
+    default:
+      return "unknown";
+  }
+}
+
 const getCustomStatistics = () => {
   const apiUrl = "http://45.32.233.93:8090/get_fire_mask_and_name/";
   console.log(burnt_date.value)
@@ -1079,81 +1080,74 @@ const getCustomStatistics = () => {
   }
 
 
+
   axios.post(apiUrl, postData).then((response) => {
     console.log(response.data)
 
-    var lulcStats = response.data[0]['custom lulc']
-    console.log(lulcStats)
 
-    var customLULCStats = Object.values(lulcStats)
-    storeUserSelections.lulcChartData.datasets[0].data = customLULCStats
-    console.log(storeUserSelections.lulcChartData.datasets[0].data)
+    if (sub_indicator.value === 'Land Cover') {
+      var lulcStats = response.data[0]['custom lulc']
+      console.log(lulcStats)
 
-
-
-
-    var fireStats = response.data[1].statistics
-    var clean = JSON.parse(fireStats);
-    console.log(clean)
-
-    // Replace the key names with double quotes and convert to valid JSON format
-    const validJSON = clean.replace(/([{,]\s*)([0-9.]+)(\s*:\s*)/g, '$1"$2"$3');
-
-    // Parse the JSON string to convert it into a JavaScript object
-    const jsonObject = JSON.parse(validJSON);
-
-    // Now jsonObject is a valid JavaScript object
-    console.log(jsonObject);
-
-    var customFireStats = Object.values(jsonObject)
-    storeUserSelections.lulcChartData.datasets[0].data = customFireStats
-    console.log(storeUserSelections.lulcChartData.datasets[0].data)
+      var customLULCStats = Object.values(lulcStats)
+      storeUserSelections.lulcChartData.datasets[0].data = customLULCStats
+      console.log(storeUserSelections.lulcChartData.datasets[0].data)
 
 
-    
+    }
+    if (sub_indicator.value === 'Fire Confidence') {
+      var fireStats = response.data[1].statistics
+      var clean = JSON.parse(fireStats);
+      console.log(clean)
 
-    var firelabels = Object.keys(jsonObject)
-    const classes = firelabels.map(value => getClassForValue(value));
+      // Replace the key names with double quotes and convert to valid JSON format
+      const validJSON = clean.replace(/([{,]\s*)([0-9.]+)(\s*:\s*)/g, '$1"$2"$3');
 
+      // Parse the JSON string to convert it into a JavaScript object
+      const jsonObject = JSON.parse(validJSON);
 
-    // Print the result as an array of classes
+      // Now jsonObject is a valid JavaScript object
+      console.log(jsonObject);
 
-    console.log(classes);
-
-
-    const colors = firelabels.map(value => getColorForValue(value));
-    console.log(colors);
-    //   firelabels.forEach((value, index) => {
-    //     console.log(` ${classes[index]}`);
-    //     var arrayfirelabels = [classes[index]]
-    //     // arrayfirelabels.push(classes[index])
-    //     // console.log(arrayfirelabels)
-    // });
-
-    // const valuesWithClasses = firelabels.map((value, index) => {
-    //     return { value: value, class: classes[index] };
-    // });
-    // console.log(valuesWithClasses);
+      var customFireStats = Object.values(jsonObject)
+      storeUserSelections.lulcChartData.datasets[0].data = customFireStats
+      console.log(storeUserSelections.lulcChartData.datasets[0].data)
 
 
-    //implement switch case to derive classes for firelabels
-    storeUserSelections.lulcChartData.labels = classes
-    console.log(storeUserSelections.lulcChartData.labels)
-    storeUserSelections.lulcChartData.datasets[0].backgroundColor = colors
 
-    var fireLayerName = response.data[1].layer_name
-    console.log(fireLayerName)
 
-    fireLayer.value = fireLayerName
-    console.log(fireLayer.value)
-    // typeof(fireLayer.value)
-    // console.log( typeof(fireLayer.value))
+      var firelabels = Object.keys(jsonObject)
+      const classes = firelabels.map(value => getClassForValue(value));
+
+
+      // Print the result as an array of classes
+
+      console.log(classes);
+
+
+      const colors = firelabels.map(value => getColorForValue(value));
+      console.log(colors);
+
+
+
+      //implement switch case to derive classes for firelabels
+      storeUserSelections.lulcChartData.labels = classes
+      console.log(storeUserSelections.lulcChartData.labels)
+      storeUserSelections.lulcChartData.datasets[0].backgroundColor = colors
+
+      var fireLayerName = response.data[1].layer_name
+      console.log(fireLayerName)
+
+      fireLayer.value = fireLayerName
+      console.log(fireLayer.value)
+
+    }
 
 
 
     const addFirmsLayer2 = () => {
       if (sub_indicator.value === "Fire Confidence") {
-        
+
         // //console.log('just to see if request is accessed') //accessed
         map.createPane("pane400").style.zIndex = 200;
         console.log(fireLayer.value)
@@ -1174,8 +1168,8 @@ const getCustomStatistics = () => {
         wmsLayer.value.addTo(map);
 
         wmsLayer.value.on("load", function (event) {
-              loading.value = false;
-            });
+          loading.value = false;
+        });
 
         //console.log(wmsLayer.value, 'wms')
 
@@ -1302,6 +1296,10 @@ const convertToLayer = (buffer) => {
             );
 
             wmsLayer.value.addTo(map);
+
+            wmsLayer.value.on("load", function (event) {
+              loading.value = false;
+            });
 
             // //console.log(wmsLayer.value, 'wms')
 
@@ -2745,6 +2743,7 @@ onMounted(() => {
 const getRegion = () => {
   //  close_nav()
   if (layer.value) map.removeLayer(layer.value);
+  if (editableLayers.value) map.removeLayer(editableLayers.value);
   if (current_geojson.value) map.removeLayer(current_geojson.value);
   if (wmsLayer.value) map.removeLayer(wmsLayer.value);
   if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
@@ -4547,8 +4546,6 @@ const fetchUserMobile = async () => {
 
 }
 
-
-
 const downloadcsv = () => {
   let csv_data = [];
 
@@ -5363,14 +5360,14 @@ const firmslegendContent = () => {
       var label_array = object_array.map((item) => {
         //console.log(item.label, 'labels items array')
 
-        
+
         return item.label;
       });
       //console.log(label_array, 'label array')
-     var cleanarray = label_array.filter((item) => item !== 'No data' && item !== 'Unused')
-     console.log(cleanarray);
+      var cleanarray = label_array.filter((item) => item !== 'No data' && item !== 'Unused')
+      console.log(cleanarray);
 
-     
+
 
 
       var colors_array = object_array.map((item) => {
@@ -5378,8 +5375,8 @@ const firmslegendContent = () => {
       });
 
 
-      var cleancolorarray = colors_array.filter((item) => item !== '#FFFFFF' )
-     console.log(cleancolorarray);
+      var cleancolorarray = colors_array.filter((item) => item !== '#FFFFFF')
+      console.log(cleancolorarray);
 
       //console.log(colors_array, 'colors array')
       removeLegend()
@@ -5388,7 +5385,7 @@ const firmslegendContent = () => {
         var legend = L.control({ position: "bottomleft" });
         firms_legend.value = legend;
         var colors = cleancolorarray //colors_array;
-        var labels =  cleanarray //label_array;
+        var labels = cleanarray //label_array;
 
         firms_legend.value.onAdd = function (map) {
           var div = L.DomUtil.create("div", "legend");
@@ -6450,6 +6447,35 @@ const addDrawCtrl = () => {
             sub_indicator.value === "Land Cover" &&
             drawn_layer.value != null
           ) {
+
+            const lulcapiUrl = "http://45.32.233.93:8090/get_fire_mask_and_name/";
+            console.log(burnt_date.value)
+            let postData = {
+              "geojson": {
+                "type": "FeatureCollection",
+                "features": [
+                drawn_layer.value
+                ]
+
+              },
+              "start_date": sub_indicator.value === 'Land Cover' ? "2024-01-01" : burnt_date.value,
+              "name": "LULC",
+              "year": year.value
+            }
+
+axios.post(lulcapiUrl, postData).then((response) => {
+  var lulcStats = response.data[0]['custom lulc']
+      console.log(lulcStats)
+
+      var customLULCStats = Object.values(lulcStats)
+      storeUserSelections.lulcChartData.datasets[0].data = customLULCStats
+      console.log(storeUserSelections.lulcChartData.datasets[0].data)
+
+})
+.catch((err) => {
+  console.log(err)
+})
+
             // //console.log('just to see if request is accessed') //accessed
             map.createPane("pane400").style.zIndex = 200;
 
@@ -6742,8 +6768,8 @@ const addDrawCtrl = () => {
               wmsLayer.value.addTo(map);
 
               wmsLayer.value.on("load", function (event) {
-              loading.value = false;
-            });
+                loading.value = false;
+              });
               firmslegendContent();
               changeOpacity();
 

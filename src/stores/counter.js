@@ -919,52 +919,114 @@ export const useCounterStore = defineStore({
 
        
         if(this.selected_sub_indicator === 'Fire Confidence') {
-        try {
+    //     try {
           
-       var basin = this.selected_basin
-       var year = this.selected_year
-     var season = this.selected_season
+    //    var basin = this.selected_basin
+    //    var year = this.selected_year
+    //  var season = this.selected_season
 
       
-          const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_STATS_DRY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRMS_STATS_DRY%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
-          );
-          //console.log(response.data.features[0].properties,'fire stats response')
-          var obj = response.data.features[0].properties
+    //       const response = await axios.get(`http://66.42.65.87:8080/geoserver/FIRMS_STATS_DRY/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=FIRMS_STATS_DRY%3A${year}&maxFeatures=50&outputFormat=application%2Fjson&CQL_FILTER=Name=%27${basin}%27`
+    //       );
+    //       //console.log(response.data.features[0].properties,'fire stats response')
+    //       var obj = response.data.features[0].properties
           
-          const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
-          //console.log(newObj, 'NEW OBJECT')
+    //       const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('ClassNODAT') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+    //       //console.log(newObj, 'NEW OBJECT')
   
-          var labels = Object.keys(newObj)
-          //console.log(labels, 'stats labels')
+    //       var labels = Object.keys(newObj)
+    //       //console.log(labels, 'stats labels')
 
-          this.lulcChartData.labels = labels
-          // this.lulcChartData.labels = ['Oct-Dec']
+    //       this.lulcChartData.labels = labels
+    //       // this.lulcChartData.labels = ['Oct-Dec']
          
         
-          var figures = Object.values(newObj)
-          //console.log(figures, 'stats figures')
-          // var converted = figures.map( (item) => item/100)
-          // //console.log(converted, 'converted figres')
-          this.lulcChartData.datasets[0].data = figures
-          this.lulcChartData.datasets[0].backgroundColor = ['#55ff00', '#f36f21', '#fcde8b', '#ff0000']
+    //       var figures = Object.values(newObj)
+    //       //console.log(figures, 'stats figures')
+    //       // var converted = figures.map( (item) => item/100)
+    //       // //console.log(converted, 'converted figres')
+    //       this.lulcChartData.datasets[0].data = figures
+    //       this.lulcChartData.datasets[0].backgroundColor = ['#55ff00', '#f36f21', '#fcde8b', '#ff0000']
 
 
-           //for new array
-           this.stats_array.labels = labels
-           this.stats_array.data_figures = figures
+    //        //for new array
+    //        this.stats_array.labels = labels
+    //        this.stats_array.data_figures = figures
 
-           //capture bbox
-           var bbox = response.data.features[0].bbox
-           //console.log(bbox, 'BOUNDING BOX')
-            this.western_lon = bbox[0]
-            this.northern_lat = bbox[1]
-            this.eastern_lon = bbox[2]
-            this.southern_lat = bbox[3]
-            this.resolution = '100'
+    //        //capture bbox
+    //        var bbox = response.data.features[0].bbox
+    //        //console.log(bbox, 'BOUNDING BOX')
+    //         this.western_lon = bbox[0]
+    //         this.northern_lat = bbox[1]
+    //         this.eastern_lon = bbox[2]
+    //         this.southern_lat = bbox[3]
+    //         this.resolution = '100'
           
        
           
-        } catch (error) {
+    //     } 
+
+    try {
+          
+      // //console.log(this.selected_basin, 'BASIN FOR STATISTICS')
+   var basin = this.selected_basin
+   console.log(basin, 'STORE BASIN')
+
+
+   var year = this.selected_year
+   console.log(year, 'STORE YEAR')
+
+
+      const response = await axios.get('http://66.42.65.87:8080/geoserver/wfs?request=GetFeature&service=WFS&version=1.0.0&typeName=LULC_STATS:'+year+'&outputFormat=application/json&CQL_FILTER=Name=%27'+basin+'%27'
+      );
+      console.log(response.data.features[0].properties,'lulc stats response')
+      var obj = response.data.features[0].properties
+      
+      const newObj = Object.fromEntries(Object.entries(obj).filter(([key]) => !key.includes('MAJ_BAS') && !key.includes('Basin_Name') && !key.includes('Name') && !key.includes('0')))
+      //console.log(newObj, 'NEW OBJECT')
+
+      var labels = Object.keys(newObj)
+      //console.log(labels, 'stats labels')
+      this.lulcChartData.labels = labels
+     
+    
+      var figures = Object.values(newObj)
+      //console.log(figures, 'stats figures')
+      // var converted = figures.map( (item) => item/100)
+      // //console.log(converted, 'converted figres')
+      this.lulcChartData.datasets[0].data = figures
+      this.lulcChartData.datasets[0].backgroundColor = [
+        "#a8a800",
+        "#ccc",
+        "#bd6860",
+        "green",
+        "#fff1d2",
+        "#55ff00",
+        '#4dd7ff',
+        '#d2efff'
+      ]
+
+
+      //for new array
+      this.stats_array.labels = labels
+      this.stats_array.data_figures = figures
+
+
+      //capture bbox
+      var bbox = response.data.features[0].bbox
+      //console.log(bbox, 'BOUNDING BOX')
+       this.western_lon = bbox[0]
+       this.northern_lat = bbox[1]
+       this.eastern_lon = bbox[2]
+       this.southern_lat = bbox[3]
+
+       this.resolution = '300'
+     
+   
+      
+    }
+        
+        catch (error) {
           console.error('an error occured'+error);
           
         }

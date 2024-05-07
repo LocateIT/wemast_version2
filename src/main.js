@@ -25,6 +25,7 @@ import SplitButton from 'primevue/splitbutton';
 import Card from 'primevue/card';
 import FileUpload from 'primevue/fileupload';
 import Calendar from 'primevue/calendar';
+import Tooltip from 'primevue/tooltip';
 
 
 const app = createApp(App)
@@ -34,6 +35,8 @@ app.use(createPinia())
 app.use(i18n)
 app.use(Toast)
 app.use(PrimeVue);
+
+app.directive('tooltip', Tooltip);
 
 app.component('Dropdown', Dropdown);
 app.component('Button', Button);

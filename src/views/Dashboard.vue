@@ -766,7 +766,22 @@
       <div class="second_column col-10">
 
 
-        <div id="map"></div>
+        <div id="map" class="flex justify-content-center align-items-center">
+          <div style=" width: 30%; height:50%; z-index:1000"
+          v-tooltip.top="{
+                value: 'Upload custom shapefile or polygon to load layer',
+                pt: {
+                    arrow: {
+                        style: {
+                            borderBottomColor: 'var(--primary-color)'
+                        }
+                    },
+                    text: 'bg-primary font-medium'
+                }
+            }"
+              v-if="sub_indicator === 'Fire Confidence' && shp_geojson == null" > </div>
+        
+        </div>
       </div>
 
       <div class="third_column col-fixed  h-screen" style="width:100px"></div>
@@ -833,7 +848,7 @@ import { useRoute, useRouter } from 'vue-router';
 import 'primeflex/primeflex.css'
 import ResponsiveSelections from '../components/Customs/ResponsiveSelections.vue'
 import ResponsiveNav from "../components/ResponsiveNav.vue";
-
+import useAddLulcLayer from '../composables/LulcComposable'
 
 //refs go here
 let baseurl = "http://66.42.65.87";
@@ -950,6 +965,7 @@ const toast = useToast();
 const router = useRouter();
 
 window.html2canvas = html2canvas;
+const { addLulcLayerComposable } = useAddLulcLayer()
 
 const selectedDoc = ref();
 const docs = ref([
@@ -2742,10 +2758,10 @@ onMounted(() => {
 
 const getRegion = () => {
   //  close_nav()
+  if (wmsLayer.value) map.removeLayer(wmsLayer.value);
   if (layer.value) map.removeLayer(layer.value);
   if (editableLayers.value) map.removeLayer(editableLayers.value);
-  if (current_geojson.value) map.removeLayer(current_geojson.value);
-  if (wmsLayer.value) map.removeLayer(wmsLayer.value);
+  if (current_geojson.value) map.removeLayer(current_geojson.value); 
   if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
   if (wmsPrecTimeseriesLayer.value)
     map.removeLayer(wmsPrecTimeseriesLayer.value);
@@ -2964,7 +2980,6 @@ watch(setSelectedDate, () => {
 });
 
 
-
 const addBVILayer = () => {
   if (indicator.value === "Basin Vulnerability Index") {
     // //console.log('just to see if request is accessed') //accessed
@@ -3040,8 +3055,6 @@ const addLulcLayer = () => {
     changeOpacity();
   }
 };
-
-
 
 const addPrecTimeSeries = () => {
   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
@@ -4031,45 +4044,11 @@ const addWetlandStatus = () => {
   }
 };
 
-
-
 const addFirmsLayer = () => {
   if (sub_indicator.value === "Fire Confidence") {
     // //console.log('just to see if request is accessed') //accessed
     map.createPane("pane400").style.zIndex = 200;
 
-    // wmsLayer.value = L.tileLayer.wms(
-    //   `${baseurl}:8080/geoserver/FIRMS_DRY/wms?`,
-    //   {
-    //     pane: "pane400",
-    //     layers: `FIRMS_DRY:${year.value}`,
-    //     crs: L.CRS.EPSG4326,
-    //     styles: basin.value
-    //       ? `${basin.value}_firms`
-    //       : wetland_basin.value
-    //         ? wetland_sld.value
-    //         : wetland_sld.value,
-    //     format: "image/png",
-    //     transparent: true,
-    //     opacity: 1.0,
-
-    //   }
-    // );
-
-
-    // wmsLayer.value = L.tileLayer.wms(
-    //   `http://66.42.65.87:8080/geoserver/REALTIME/wms?`,
-    //   {
-    //     pane: "pane400",
-    //     layers:`REALTIME:fire6509612654.tif`,
-    //     crs: L.CRS.EPSG4326,
-    //     styles: 'realtime',
-    //     format: "image/png",
-    //     transparent: true,
-    //     opacity: 1.0,
-
-    //   }
-    // );
 
     //loading lulc layer since realtime fire doesnt cover the whole basin
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
@@ -4402,19 +4381,18 @@ const fetchWmsData = () => {
   if (layer.value) map.removeLayer(layer.value);
 
   addLulcLayer();
+  // addLulcLayerComposable(sub_indicator.value, baseurl, year.value, basin.value, wetland_basin.value, wetland_sld.value, map, wmsLayer.value )
   addBVILayer();
   addPrecIndexWet();
   addPrecIndexDry();
   addWetlandExtent();
   addVegCover();
   addWetlandStatus();
-
   addFirmsLayer();
   addSMILayer();
   addFloodLayer();
   addSuspendedSediments();
   addTurbidity();
-
   createIndices();
 
   // toggle_nav()

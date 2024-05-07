@@ -1090,7 +1090,7 @@ const getCustomStatistics = () => {
       ]
 
     },
-    "start_date": sub_indicator.value === 'Land Cover' ? "2024-01-01" : burnt_date.value,
+    "start_date": sub_indicator.value === 'Land Cover' ? `${year.value}-01-01` : burnt_date.value,
     "name": "LULC",
     "year": year.value
   }
@@ -1136,7 +1136,7 @@ const getCustomStatistics = () => {
       const classes = firelabels.map(value => getClassForValue(value));
 
 
-      // Print the result as an array of classes
+      // log the result as an array of classes
 
       console.log(classes);
 
@@ -1164,7 +1164,7 @@ const getCustomStatistics = () => {
     const addFirmsLayer2 = () => {
       if (sub_indicator.value === "Fire Confidence") {
 
-        // //console.log('just to see if request is accessed') //accessed
+        //   
         map.createPane("pane400").style.zIndex = 200;
         console.log(fireLayer.value)
         wmsLayer.value = L.tileLayer.wms(
@@ -1262,7 +1262,7 @@ const convertToLayer = (buffer) => {
 
         const addBVILayer2 = () => {
           if (indicator.value === "Basin Vulnerability Index") {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1295,7 +1295,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Land Cover" &&
             shp_geojson.value != null
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1334,7 +1334,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Precipitation Index" &&
             season.value === "WET"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1368,7 +1368,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Precipitation Index" &&
             season.value === "DRY"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1401,7 +1401,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Wetland Inventory" &&
             parameter.value === "Wetland Extent"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1439,7 +1439,7 @@ const convertToLayer = (buffer) => {
           ) {
             //&& season.value === 'DRY'
 
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
             map.createPane("timeseries").style.zIndex = 300;
 
@@ -1478,7 +1478,7 @@ const convertToLayer = (buffer) => {
           ) {
             //&& season.value === 'DRY'
 
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1511,7 +1511,7 @@ const convertToLayer = (buffer) => {
 
         const addSMILayer2 = () => {
           if (sub_indicator.value === "Soil Moisure Index") {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1536,7 +1536,7 @@ const convertToLayer = (buffer) => {
 
         const addFloodLayer2 = () => {
           if (sub_indicator.value === "Undulation") {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1567,7 +1567,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Water Quality" &&
             parameter.value === "Sus Sediments"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1602,7 +1602,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Water Quality" &&
             parameter.value === "Turbidity"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -1670,7 +1670,6 @@ let lineChartData = {
     },
   ],
 };
-let lineData = ref({});
 const createIndices = () => {
   if (sub_indicator.value === "Vegetation Cover") {
     indexx.value = "NDVI";
@@ -2368,12 +2367,7 @@ const opensidenavigationbar = () => {
 };
 
 const lulc_style = () => {
-  //  if(basin.value === 'Cuvelai'){
-  //   styles.value = 'cuvelai_lulc'
-  //  }
-  //  if(basin.value === 'Zambezi' ) styles.value = 'zambezi_lulc'
-  //  if(basin.value === 'Limpopo') styles.value = 'limpopo_lulc'
-  //  if(basin.value === 'Okavango') styles.value = 'okavango_lulc'
+
   basin.value === "Cuvelai"
     ? (styles.value = "cuvelai_lulc")
     : basin.value === "Zambezi"
@@ -2632,7 +2626,7 @@ onMounted(() => {
 
   //loadd lulc
   const addLulcLayer = () => {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane400").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
@@ -2758,7 +2752,9 @@ onMounted(() => {
 
 const getRegion = () => {
   //  close_nav()
+  
   if (wmsLayer.value) map.removeLayer(wmsLayer.value);
+  // if (wmsLayer.value) clearLulcLayer(wmsLayer);
   if (layer.value) map.removeLayer(layer.value);
   if (editableLayers.value) map.removeLayer(editableLayers.value);
   if (current_geojson.value) map.removeLayer(current_geojson.value); 
@@ -2982,7 +2978,7 @@ watch(setSelectedDate, () => {
 
 const addBVILayer = () => {
   if (indicator.value === "Basin Vulnerability Index") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane400").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(
@@ -3021,7 +3017,7 @@ const addBVILayer = () => {
 
 const addLulcLayer = () => {
   if (sub_indicator.value === "Land Cover") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane400").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/LULC/wms?`, {
@@ -3521,7 +3517,7 @@ const addTEMPTimeSeriesLayer = () => {
 
 const addPrecIndexWet = () => {
   if (sub_indicator.value === "Precipitation Index" && season.value === "WET") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_WET/wms?`, {
@@ -3615,7 +3611,7 @@ const addPrecIndexWet = () => {
 
 const addPrecIndexDry = () => {
   if (sub_indicator.value === "Precipitation Index" && season.value === "DRY") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/SPI_DRY/wms?`, {
@@ -3711,7 +3707,7 @@ const addWetlandExtent = () => {
     sub_indicator.value === "Wetland Inventory" &&
     parameter.value === "Wetland Extent"
   ) {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -3754,7 +3750,7 @@ const addVegCover = () => {
   if (sub_indicator.value === "Vegetation Cover") {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
     map.createPane("timeseries").style.zIndex = 300;
 
@@ -4003,7 +3999,7 @@ const addWetlandStatus = () => {
   ) {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(
@@ -4046,7 +4042,7 @@ const addWetlandStatus = () => {
 
 const addFirmsLayer = () => {
   if (sub_indicator.value === "Fire Confidence") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane400").style.zIndex = 200;
 
 
@@ -4069,7 +4065,7 @@ const addFirmsLayer = () => {
                   : wetland_sld.value,
       format: "image/png",
       transparent: true,
-      opacity: 0.4,
+      opacity: 1,
     });
 
     wmsLayer.value.addTo(map);
@@ -4085,7 +4081,7 @@ const addFirmsLayer = () => {
 
 const addSMILayer = () => {
   if (sub_indicator.value === "Soil Moisure Index") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane400").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(
@@ -4162,7 +4158,7 @@ const addSMILayer = () => {
 
 const addFloodLayer = () => {
   if (sub_indicator.value === "Undulation") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane400").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/FLOOD/wms`, {
@@ -4194,7 +4190,7 @@ const addSuspendedSediments = () => {
     sub_indicator.value === "Water Quality" &&
     parameter.value === "Sus Sediments"
   ) {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -4285,7 +4281,7 @@ const addTurbidity = () => {
     sub_indicator.value === "Water Quality" &&
     parameter.value === "Turbidity"
   ) {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsLayer.value = L.tileLayer.wms(`${baseurl}:8080/geoserver/NDWI/wms?`, {
@@ -4380,8 +4376,8 @@ const fetchWmsData = () => {
   if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
   if (layer.value) map.removeLayer(layer.value);
 
-  addLulcLayer();
-  // addLulcLayerComposable(sub_indicator.value, baseurl, year.value, basin.value, wetland_basin.value, wetland_sld.value, map, wmsLayer.value )
+  // addLulcLayer();
+  addLulcLayerComposable(sub_indicator.value, baseurl, year.value, basin.value, wetland_basin.value, wetland_sld.value, map, wmsLayer.value )
   addBVILayer();
   addPrecIndexWet();
   addPrecIndexDry();
@@ -4824,27 +4820,7 @@ const compareLulcLegend = () => {
 };
 
 const preclegendContent = () => {
-  if (firms_legend.value) map.removeControl(firms_legend.value);
-  if (smi_legend.value) map.removeControl(smi_legend.value);
-  if (modis_legend.value) map.removeControl(modis_legend.value);
-  if (flood_legend.value) map.removeControl(flood_legend.value);
-  if (status_legend.value) map.removeControl(status_legend.value);
-  if (ndvi_legend.value) map.removeControl(ndvi_legend.value);
-  if (ndwi_legend.value) map.removeControl(ndwi_legend.value);
-  if (prec_legend.value) map.removeControl(prec_legend.value);
-  if (lulc_legend.value) map.removeControl(lulc_legend.value);
-  if (smi_compare_legend.value) map.removeControl(smi_compare_legend.value);
-  if (bvi_legend.value) map.removeControl(bvi_legend.value);
-
-  if (lulc_compare_legend.value) map.removeControl(lulc_compare_legend.value);
-  if (firms_compare_legend.value) map.removeControl(firms_compare_legend.value);
-  if (smi_compare_legend.value) map.removeControl(smi_compare_legend.value);
-  if (modis_legend.value) map.removeControl(modis_legend.value);
-  if (flood_compare_legend.value) map.removeControl(flood_compare_legend.value);
-  if (status_compare_legend.value)
-    map.removeControl(status_compare_legend.value);
-  if (ndvi_compare_legend.value) map.removeControl(ndvi_compare_legend.value);
-  if (ndwi_compare_legend.value) map.removeControl(ndwi_compare_legend.value);
+ removeLegend()
   if (prec_compare_legend.value) map.removeControl(prec_compare_legend.value);
 
   if (wmsLayer.value) {
@@ -5641,7 +5617,7 @@ watch(setCompareSatellite, () => {
 
 const addCompareLulcLayer = () => {
   if (sub_indicator.value === "Land Cover") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5686,7 +5662,7 @@ const addCompareLulcLayer = () => {
 };
 const addCompareBVILayer = () => {
   if (indicator.value === "Basin Vulnerability Index") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5733,7 +5709,7 @@ const addCompareBVILayer = () => {
 
 const addComparePrecIndexWet = () => {
   if (sub_indicator.value === "Precipitation Index" && season.value === "WET") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5774,7 +5750,7 @@ const addComparePrecIndexWet = () => {
 
 const addComparePrecIndexDry = () => {
   if (sub_indicator.value === "Precipitation Index" && season.value === "DRY") {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5816,7 +5792,7 @@ const addCompareWetlandExtent = () => {
     sub_indicator.value === "Wetland Inventory" &&
     parameter.value === "Wetland Extent"
   ) {
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5860,7 +5836,7 @@ const addCompareVegCover = () => {
   if (sub_indicator.value === "Vegetation Cover") {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5909,7 +5885,7 @@ const addCompareWetlandStatus = () => {
   ) {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5954,7 +5930,7 @@ const addCompareFirmsLayer = () => {
   if (sub_indicator.value === "Fire Confidence") {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5993,7 +5969,7 @@ const addCompareSMILayer = () => {
   if (sub_indicator.value === "Soil Moisure Index") {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -6036,7 +6012,7 @@ const addCompareSusSediments = () => {
   ) {
     //&& season.value === 'DRY'
 
-    // //console.log('just to see if request is accessed') //accessed
+    //   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -6392,7 +6368,7 @@ const addDrawCtrl = () => {
 
         const addBVILayer2 = () => {
           if (indicator.value === "Basin Vulnerability Index") {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6410,10 +6386,7 @@ const addDrawCtrl = () => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
-
-            // addLulcLegend()
-            // lulclegendContent()
+  
             BVIlegendContent();
 
             changeOpacity();
@@ -6436,7 +6409,7 @@ const addDrawCtrl = () => {
                 ]
 
               },
-              "start_date": sub_indicator.value === 'Land Cover' ? "2024-01-01" : burnt_date.value,
+              "start_date": sub_indicator.value === 'Land Cover' ? `${year.value}-01-01` : burnt_date.value,
               "name": "LULC",
               "year": year.value
             }
@@ -6454,7 +6427,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
   console.log(err)
 })
 
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6486,7 +6459,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Precipitation Index" &&
             season.value === "WET"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6520,7 +6493,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Precipitation Index" &&
             season.value === "DRY"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6553,7 +6526,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Wetland Inventory" &&
             parameter.value === "Wetland Extent"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6591,7 +6564,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
           ) {
             //&& season.value === 'DRY'
 
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
             map.createPane("timeseries").style.zIndex = 300;
 
@@ -6630,7 +6603,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
           ) {
             //&& season.value === 'DRY'
 
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6674,7 +6647,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 ]
 
               },
-              "start_date": sub_indicator.value === 'Land Cover' ? "2024-01-01" : burnt_date.value,
+              "start_date": sub_indicator.value === 'Land Cover' ? `${year.value}-01-01`: burnt_date.value,
               "name": "LULC",
               "year": year.value
             }
@@ -6762,7 +6735,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
         const addSMILayer2 = () => {
           if (sub_indicator.value === "Soil Moisure Index") {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6787,7 +6760,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
         const addFloodLayer2 = () => {
           if (sub_indicator.value === "Undulation") {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6818,7 +6791,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Water Quality" &&
             parameter.value === "Sus Sediments"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6853,7 +6826,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Water Quality" &&
             parameter.value === "Turbidity"
           ) {
-            // //console.log('just to see if request is accessed') //accessed
+            //   
             map.createPane("pane800").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(

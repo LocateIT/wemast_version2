@@ -40,5 +40,8 @@ export default function useAddLulcLayer() {
     }
   };
 
-  return { addLulcLayerComposable };
+ 
+
+
+  return { addLulcLayerComposable  };
 }

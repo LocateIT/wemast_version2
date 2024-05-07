@@ -3,7 +3,7 @@
         <FloatLabel class="select w-full md:w-8rem ">
             <Dropdown v-model="selectedBasin" :options="basins" optionLabel="name" class=" w-full  " @click="toggle()"
                 @change="handleDropdownChange" />
-            <label for="dd-city" class="basin"> {{ $t("home.wemast_select_region") }}</label>
+            <label for="dd-city" class="basin"> {{ storeUserSelections.selected_basin === '' ? 'Zambezi' :   $t("home.wemast_select_region") }}</label>
 
         </FloatLabel>
 
@@ -11,7 +11,7 @@
         <FloatLabel class="select w-full md:w-9rem">
             <Dropdown v-model="selectedIndicator" :options="indicators" optionLabel="name" class="w-full "
                 @click="indicatorToggle()" @change="handleIndicator" />
-            <label for="indicator" class="basin">{{ $t("home.wemast_select_indicator") }}</label>
+            <label for="indicator" class="basin">{{storeUserSelections.selected_indicator === '' ? 'Exposure' :  $t("home.wemast_select_indicator") }}</label>
         </FloatLabel>
 
 
@@ -19,7 +19,7 @@
             :style="{ display: storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' : '' }">
             <Dropdown v-model="selectedSubIndicator" :options="subindicators" optionLabel="name"
                 class=" custom-dropdown w-full " @click="subindicatorToggle()" @change="handleSubIndicator" />
-            <label for="dd-city" class="basin">{{ $t("home.wemast_select_subindicator") }}</label>
+            <label for="dd-city" class="basin">{{ storeUserSelections.selected_sub_indicator === '' ? 'Land Cover' : $t("home.wemast_select_subindicator") }}</label>
         </FloatLabel>
 
 
@@ -30,7 +30,8 @@
                             storeUserSelections.selected_sub_indicator === 'Precipitation Index' ? 'none' :
                                 storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                     storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? 'none' :
-                                        storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' : ''
+                                        storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'none' :
+                                        storeUserSelections.selected_sub_indicator === '' ? 'none': ''
             }">
             <Dropdown v-model="selectedParameter" :options="parameters" optionLabel="name" class="w-full "
                 @click="parameterToggle()" @change="handleParameterChange" />
@@ -47,8 +48,7 @@
                                     storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                         storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
                                             storeUserSelections.selected_sub_indicator === 'Soil Moisure Index' ? 'none' :
-
-                                                ''
+                                            storeUserSelections.selected_sub_indicator === '' ? 'none' : ''
             }">
             <Dropdown v-model="selectedSatellite" :options="satellites" optionLabel="name" class="w-full "
                 @click="satelliteToggle()" @change="handleSatelliteChange" />
@@ -61,6 +61,7 @@
                         storeUserSelections.selected_sub_indicator === 'Fire Confidence' ? 'none' :
                             storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                 storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
+                                storeUserSelections.selected_sub_indicator === '' ? 'none'  :
                                     ''
             }">
             <Dropdown v-model="selectedSeason" :options="seasons" optionLabel="name" class="w-full "
@@ -75,7 +76,7 @@
             }">
             <Dropdown v-model="selectedYear" :options="years" optionLabel="name" class="w-full " @click="yearToggle()"
                 @change="handleYearChange" />
-            <label for="dd-city" class="basin">{{ $t("home.wemast_select_year") }}</label>
+            <label for="dd-city" class="basin">{{ storeUserSelections.selected_year === '' ? '2017' :  $t("home.wemast_select_year") }}</label>
         </FloatLabel>
 
 

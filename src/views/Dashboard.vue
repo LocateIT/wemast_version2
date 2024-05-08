@@ -437,7 +437,7 @@
               <tr>
                 <th>{{ $t("metadata.title") }}</th>
                 <td>
-                  {{
+                  {{ storeUserSelections.selected_sub_indicator === '' ? 'Land Cover for Zambezi basin':
         storeUserSelections.selected_indicator ===
           "Basin Vulnerability Index"
           ? `Basin Vulnerability Index for ${storeUserSelections.selected_basin} basin`
@@ -509,7 +509,7 @@
                             "Wetland Inventory"
                             ? $t("metadata.extent_desc")
                             : storeUserSelections.selected_sub_indicator === ""
-                              ? "please select a parameter"
+                              ? $t("metadata.lulc_desc")
                               : ""
       }}
                 </td>
@@ -550,16 +550,16 @@
               <tr>
                 <th>{{ $t("metadata.date_created") }}</th>
 
-                <td>{{ storeUserSelections.selected_year }}</td>
+                <td>{{storeUserSelections.selected_sub_indicator === '' ? '2017' : storeUserSelections.selected_year }}</td>
               </tr>
               <tr>
                 <th>{{ $t("metadata.region") }}</th>
-                <td>{{ storeUserSelections.selected_basin }}</td>
+                <td>{{ storeUserSelections.selected_sub_indicator === '' ? 'Zambezi' : storeUserSelections.selected_basin }}</td>
               </tr>
               <tr>
                 <th>{{ $t("metadata.tags") }}</th>
                 <td>
-                  {{
+                  {{ storeUserSelections.selected_sub_indicator === '' ? $t("metadata.lulc_theme") :
         storeUserSelections.selected_sub_indicator === "Land Cover"
           ? $t("metadata.lulc_theme") +
           " " +
@@ -644,7 +644,7 @@
                     storeUserSelections.selected_season +
                     " "
                     : storeUserSelections.selected_sub_indicator === ""
-                      ? "please select a parameter"
+                      ? $t("metadata.lulc_theme")
                       : ""
       }}
                 </td>
@@ -654,7 +654,7 @@
                 <th>{{ $t("metadata.keyword") }}</th>
 
                 <td>
-                  {{
+                  {{ storeUserSelections.selected_sub_indicator === '' ? $t("metadata.lulc_theme") :
         storeUserSelections.selected_sub_indicator === "Land Cover"
           ? $t("metadata.lulc_theme") + " "
           : storeUserSelections.selected_sub_indicator ===
@@ -2574,6 +2574,12 @@ const setLeafletMap = () => {
 
 
   current_top_base_layer.value = "MapBoxSatellite";
+
+
+  var center = map.getCenter();
+  var lat = center.lat.toFixed(2);
+  var lon = center.lng.toFixed(2);
+  geoposition.value = `${lat}, ${lon}`;
 
 
 };

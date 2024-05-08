@@ -633,7 +633,7 @@
               ? $t("metadata.lulc_theme")
               : storeUserSelections.selected_sub_indicator ===
                 "Vegetation Cover"
-                ? $t("metadata.veg_cover_theme")
+                ? $t("metadata.veg_cover_theme") 
                 : storeUserSelections.selected_sub_indicator ===
                   "Wetland Inventory"
                   ? $t("metadata.wetland_inventory_theme")

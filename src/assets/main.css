@@ -342,8 +342,9 @@ border: 1px solid rgb(224, 213, 193); /* creates padding around scroll thumb */
 
 #mapContainer  .base_layer_list {
 list-style: none;
-font-size: 15px;
-padding: 5px;
+font-size: 1em;
+padding: 0.5em;
+font-family:Poppins;
 }
 .side_nav_swap {
 color: #1481c3;
@@ -354,26 +355,7 @@ font-size: 18px;
 margin-bottom: 20px;
 }
 
-/* table, th, td {
-border: 1px solid #ddd;
-  text-align: left;
-  padding: 8px;
-  margin-top: 40px;
-}
 
-
-th{
-font-weight: bolder;
-}
-
-tr:nth-child(even) {
-background-color: #ddd;
-}
-table {
-  border-collapse: separate;
-  text-indent: initial;
-  border-spacing: 2px;
-} */
 
   .download_tiff_2{
     position: absolute;
@@ -578,17 +560,22 @@ color: #000;
 .base_layer_list{
   list-style-type: none;
   
-  font-size: 14px;
+  font-size: 0.4em;
   
   margin-top: 25px;
-  height: 164.7px;
+  /* height: 164.7px; */
+  padding: 0 2em;
 }
 .base_map_name{
 
-  margin-left: -30px;
-  margin-top: -15px;
+  margin-left: -2em;
+  margin-top: -1em;
 }
 
+.base_map{
+  font-family: Poppins;
+  
+}
 
 .col-xs-10.q-ml-sm {
   margin-top: -23px;
@@ -628,54 +615,23 @@ background-color: rgb(180, 28, 160);
 cursor: pointer;
 }
 
-/* .advanced_filter p{
-  
-  color: #fcfafa;
-  position: relative;
-  left: 0.5vw;
- 
-  display: inline-block;
-  top: 5px;
-  font-size: 14px;
-  white-space: nowrap;
-  font-weight: 600;
-} */
+
 .filter_icon{
-  /* position: relative;
-  margin-top: 20px;
-  margin-left: 5px; */
+  
   height:2em
 }
 .filter_open{
-  /* position: absolute;
-  margin-top: 100px;
-  margin-left: 25px; */
+ 
   height:2em;
 }
 
-.compare p{
-  
-  /* color: #fcfafa;
-  position: relative;
-  left: 0.7vw;
-  
-  display: inline-block;
-  top: 5px;
-  font-size: 14px;
-  white-space: nowrap;
-  font-weight: 600; */
-}
+
 .compare_icon{
-  /* position: relative;
-  margin-top: 20px;
-  margin-left: 10px; */
+
   height:2em;
 }
 .compare_open{
-  /* position: absolute;
-  margin-top: 100px;
-  margin-left: 20px;
-  */
+ 
 }
 
 .advanced_filter_container{
@@ -733,7 +689,7 @@ top: 36.4vh;
 .legend {
  
   padding: 6px 8px;
-  font: 14px Arial, Helvetica, sans-serif;
+  font: 14px Poppins;
   background: white;
 
   border-radius: 10px;

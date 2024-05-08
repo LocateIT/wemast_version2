@@ -1,14 +1,9 @@
 <template>
       <div class="home" id="homepage">
 
-
-            <!-- <RouterLink to="/">home</RouterLink>
-      <br>
-      <RouterLink to="/dashboard">dash</RouterLink>  @click="$router.push('/dashboard')"
-      <RouterView /> -->
             <div class="nav flex flex-row justify-content-between flex-wrap">
                   <div class="logos">
-                        <img src="../assets/logos/SASSCAL.png" class="WeMast_Dashboard_logos"/>
+                        <img src="../assets/logos/SASSCAL.png" class="WeMast_Dashboard_logos" />
                         <img src='../assets/logos/Gmes.png' class="WeMast_Dashboard_logos" />
                         <img src="../assets/logos/Au.png" class="WeMast_Dashboard_logos" />
                         <img src="../assets/logos/EU.png" class="WeMast_Dashboard_logos" />
@@ -18,68 +13,13 @@
 
                   </div>
 
-
-                  <!-- 
-                  <div class="nav_icons flex justify-content-between ">
-                        <div class="flex flex-column">
-                              <img src="/uiIcons/home-inactive.svg" alt="">
-                              <p>{{ $t("home.home") }}</p>
-                        </div>
-
-                        <div class="flex flex-column">
-
-                              <img src="/uiIcons/person-inactive.svg" @click="$router.push('/dashboard')" alt="">
-                              <p>{{ $t("home.dashboard") }}</p>
-                        </div>
-
-                        <div class="flex flex-column">
-                              <img src="/uiIcons/person-inactive.svg" alt="" @click="$router.push('/signup')">
-                              <p>{{ $t("home.profile") }}</p>
-                        </div>
-
-                        <div class="flex flex-column">
-                              <a href="https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki" target="_blank"
-                                    rel="noopener noreferrer">
-
-
-                                    <img src="/uiIcons/article-inactive.svg" alt="">
-                                    <p>{{ $t("home.documentation") }}</p>
-
-                              </a>
-                        </div>
-
-                        <div class="flex flex-column">
-                              <a href="#">
-
-                                    <img src="/uiIcons/contacts-inactive.svg" alt="">
-                                    <p class="">{{ $t("home.contact") }}</p>
-
-
-                              </a>
-                        </div>
-
-
-                  </div> -->
-
                   <div class="cardd">
                         <Menubar :model="items" />
 
 
                   </div>
-                  <!-- <RouterView /> -->
-                  <!-- <div class="nav_labels mt-2">
-                        <p>{{ $t("home.home") }}</p>
-                        <p>{{ $t("home.dashboard") }}</p>
-                        <p>{{ $t("home.profile") }}</p>
-                        <p>{{ $t("home.documentation") }}</p>
-                        <p class="nav_contact">{{ $t("home.contact") }}</p>
-                  </div> -->
-                  <!-- <RouterView /> -->
-
 
             </div>
-
-
 
             <div class="banner flex flex-wrap  ">
                   <div class="bannercontent flex flex-row gap-2 ">
@@ -88,7 +28,7 @@
                               {{ $t("home.wemast_title") }} <span class="abbreviation">(WeMAST)</span>
                         </div>
                   </div>
-                  <!-- @click="$router.push('/dashboard')" -->
+                  
                   <RouterLink to="/dashboard">
                         <button class="visit ">{{ $t("home.visit_portal") }}</button>
                   </RouterLink>
@@ -98,9 +38,8 @@
 
             </div>
 
-
-
-            <div class="flex flex-wrap justify-content-center align-items-center summary_cards" style="margin-top: 27em">
+            <div class="flex flex-wrap justify-content-center align-items-center summary_cards"
+                  style="margin-top: 27em">
                   <div class="col-12 md:col-6 xl:col-3 ">
 
                         <div class="section p-3 ">
@@ -204,25 +143,6 @@
             <RiverBasin />
 
 
-            <!-- <div class="footer">
-                  <div class="partners flex flex-wrap justify-content-between px-4  -mt-7">
-                        <div class="footer_logos flex flex-row gap-2">
-                              <img src="../assets/logos/SASSCAL.png" class="partner-logos" />
-                              <img src='../assets/logos/Gmes.png' class="partner-logos" />
-                              <img src="../assets/logos/Au.png" class="partner-logos" />
-                              <img src="../assets/logos/EU.png" class="partner-logos" />
-
-                        </div>
-
-                        <div class="project">
-                              <p class="project_name font-bold">{{ $t("home.project_name") }}</p>
-                              <img class="project_logo h-4rem" src="/images/project_logo.png" alt="">
-                        </div>
-
-                  </div>
-
-            </div> -->
-
 
             <div class="logo-container">
                   <div class="logo-item">
@@ -283,10 +203,6 @@
 
 
             </div>
-
-
-
-
 
       </div>
 </template>
@@ -352,107 +268,10 @@ const items = ref([
             }
       }
 ]);
-const menuItems = ref([
-
-      {
-            label: 'Home',
-            icon: 'pi pi-home',
-
-
-      },
-      {
-            label: 'Dashboard',
-            icon: 'pi pi-map',
-
-            command: () => {
-                  router.push('/dashboard')
-
-            }
-      },
-      {
-            label: 'Profile',
-            icon: 'pi pi-user',
-
-            command: () => {
-                  router.push('/signup')
-
-            }
-      },
-
-
-      {
-            label: 'Documentation',
-            icon: 'pi pi-file',
-
-            command: () => {
-                  window.open("https://github.com/sethgis/WeMAST_LTG2-Documentation/wiki")
-
-            }
-      },
-      {
-            label: 'Contact',
-            icon: 'pi pi-envelope',
-
-            command: () => {
-                  // scrollToContacts()
-                  window.open('https://sasscal.org/contact-2/')
-
-
-
-            }
-      }
-]
-)
 
 let scale_div = ref(
       window.devicePixelRatio !== 1 || window.innerWidth !== screen.width
 );
-
-// let cuv_ref = ref('Cuvelai')
-const opendisplaysettings = () => {
-      var displaySettingsURI = "ms-settings:display";
-
-      // Open the display settings page
-      window.location.href = displaySettingsURI;
-};
-
-// Check if the user's screen scale is not 100% (1.0) or the screen layout is not as expected  || window.innerWidth !== screen.width
-// if (window.devicePixelRatio !== 1 ) {
-//       // Prompt the user to adjust their screen settings
-//       if (
-//             confirm(
-//                   "For the best experience, please change your screen scale and layout to 100%. Go to display setting, Under Scale and layout, select 100% (recommended)"
-//             )
-
-
-
-
-//       ) {
-//             opendisplaysettings()
-//             // You can provide instructions on how to change these settings here, but you can't change them directly from JavaScript
-//             // Example instructions:
-//             // confirm("Follow the next instructions");
-//             // opendisplaysettings()
-//             // var displaySettingsURI = "ms-settings:display";
-//             //         // Open the display settings page
-//             //         window.location.href = displaySettingsURI;
-//       } else {
-//             // The user chose not to change their settings
-//             alert(
-//                   "You can change your screen scale and layout settings later for a better experience."
-//             );
-//       }
-// }
-
-// const scrollToElement = (refName) => {
-//       const el = document.getElementById(ref[refName]);
-
-//       if (el) {
-//             el.scrollIntoView();
-//             console.log(ref[refName], 'ref name')
-//       }
-// }
-
 
 
 
@@ -480,7 +299,7 @@ const scrollToOkavangoBasin = () => {
 .home {
       font-family: Poppins;
       overflow: hidden !important;
-      /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
+    
 }
 
 #homepage {
@@ -492,17 +311,15 @@ const scrollToOkavangoBasin = () => {
       width: 100vw;
       padding: 0 4em;
 
-      /* background-color: #eb9292; */
-
 }
 
 @media screen and (max-width:1500px) {
-        .logos{
-           
-        display: none !important;
-   
-        }
-    }
+      .logos {
+
+            display: none !important;
+
+      }
+}
 
 .languages {
       margin-left: 2vw;
@@ -550,7 +367,6 @@ const scrollToOkavangoBasin = () => {
 
 .banner {
       position: absolute;
-
       min-height: 46vh;
       max-width: 100%;
       top: 10vh;
@@ -589,6 +405,7 @@ const scrollToOkavangoBasin = () => {
 }
 
 .visit {
+      font-family: Poppins;
       text-decoration: none;
       color: white;
       cursor: pointer;
@@ -643,20 +460,21 @@ const scrollToOkavangoBasin = () => {
 }
 
 
-@media  screen and (min-width: 769px) and (max-width: 975px) {
+@media screen and (min-width: 769px) and (max-width: 975px) {
 
-      .banner{
+      .banner {
             padding-bottom: 0;
             font-size: 0.7em;
       }
 
-      .cardd{
-            width:100%;
+      .cardd {
+            width: 100%;
       }
-      .summary_cards{
-            margin-left:2em;
+
+      .summary_cards {
+            margin-left: 2em;
       }
-    
+
 }
 
 .icon img {

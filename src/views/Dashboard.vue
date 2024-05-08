@@ -1347,7 +1347,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1414,7 +1414,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1453,7 +1453,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1491,7 +1491,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1524,7 +1524,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1549,7 +1549,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1580,7 +1580,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1615,7 +1615,7 @@ const convertToLayer = (buffer) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -1691,8 +1691,8 @@ let linechartOptions = {
         scaleLabel: {
           display: true,
           fontStyle: "bold",
-          fontFamily: "Helvetica",
-          labelString: "Values",
+          fontFamily: "Poppins",
+          labelString: "Pixel Values",
           color: "red",
         },
         ticks: {
@@ -1708,7 +1708,7 @@ let linechartOptions = {
         scaleLabel: {
           display: true,
           fontStyle: "bold",
-          fontFamily: "Helvetica",
+          fontFamily: "Poppins",
           labelString: "Years",
         },
         gridLines: {
@@ -1732,6 +1732,7 @@ let options = {
     labels: {
       fontColor: "#000",
       fontWeight: "bolder",
+      fontFamily: "Poppins",
       padding: 10,
       usePointStyle: true,
       pointStyle: "circle",
@@ -1765,17 +1766,21 @@ let barchart_options = {
   scales: {
     xAxes: [
       {
-        //   stacked: true,
-
+        scaleLabel: {
+          display: true,
+          fontStyle: "bold",
+          fontFamily: "Poppins",
+          labelString:   sub_indicator === "Land Cover" ? "Land Cover classes" : 'Classes',
+        },
         ticks: {
           beginAtZero: true,
-
           fontColor: "#000",
+          fontFamily: "Poppins",
         },
         gridLines: {
           display: false,
           color: "#eee",
-          // padding: 2
+         
         },
       },
     ],
@@ -1786,10 +1791,10 @@ let barchart_options = {
         scaleLabel: {
           display: true,
           fontStyle: "bold",
-          fontFamily: "Helvetica",
+          fontFamily: "Poppins",
           labelString:
             sub_indicator === "Precipitation Index"
-              ? "Values"
+              ? "SPI Values"
               : "Area in Hectares (Ha)",
         },
         barPercentage: 0.95,
@@ -1840,6 +1845,7 @@ let veg_barchart_options = {
         scaleLabel: {
           display: true,
           fontStyle: "bold",
+          fontFamily: "Poppins",
           labelString: "NDVI Values",
         },
         barPercentage: 0.95,
@@ -1941,6 +1947,7 @@ let smi_barchart_options = {
         scaleLabel: {
           display: true,
           fontStyle: "bold",
+          fontFamily: "Poppins",
           labelString: "SMI Values",
         },
         barPercentage: 0.95,
@@ -2510,7 +2517,7 @@ const downloadMap = (caption) => {
     container: map._container,
     caption: {
       text: caption,
-      font: "30px Arial",
+      font: "30px Poppins",
       fillStyle: "black",
       position: [100, 200],
     },
@@ -3545,7 +3552,7 @@ const addPrecIndexWet = () => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
+       
     });
 
     wmsLayer.value.addTo(map);
@@ -3575,7 +3582,7 @@ const addPrecIndexWet = () => {
         format: "image/png",
         transparent: true,
         opacity: 0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
@@ -3639,7 +3646,7 @@ const addPrecIndexDry = () => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
+       
     });
 
     wmsLayer.value.addTo(map);
@@ -3668,7 +3675,7 @@ const addPrecIndexDry = () => {
         format: "image/png",
         transparent: true,
         opacity: 0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
@@ -3735,7 +3742,7 @@ const addWetlandExtent = () => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
+       
     });
 
     wmsLayer.value.addTo(map);
@@ -3923,7 +3930,7 @@ const addVegCover = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -3950,7 +3957,7 @@ const addVegCover = () => {
         format: "image/png",
         transparent: true,
         opacity: 0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -4029,7 +4036,7 @@ const addWetlandStatus = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -4104,7 +4111,7 @@ const addSMILayer = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -4179,7 +4186,7 @@ const addFloodLayer = () => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
+       
     });
 
     wmsLayer.value.addTo(map);
@@ -4218,7 +4225,7 @@ const addSuspendedSediments = () => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
+       
     });
 
     wmsLayer.value.addTo(map);
@@ -4309,7 +4316,7 @@ const addTurbidity = () => {
       format: "image/png",
       transparent: true,
       opacity: 1.0,
-      // CQL_FILTER: "Band1='1.0'"
+       
     });
 
     wmsLayer.value.addTo(map);
@@ -5643,7 +5650,7 @@ const addCompareLulcLayer = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5688,7 +5695,7 @@ const addCompareBVILayer = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5735,7 +5742,7 @@ const addComparePrecIndexWet = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5776,7 +5783,7 @@ const addComparePrecIndexDry = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5818,7 +5825,7 @@ const addCompareWetlandExtent = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5911,7 +5918,7 @@ const addCompareWetlandStatus = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5949,7 +5956,7 @@ const addCompareFirmsLayer = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -5988,7 +5995,7 @@ const addCompareSMILayer = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -6038,7 +6045,7 @@ const addCompareSusSediments = () => {
         format: "image/png",
         transparent: true,
         opacity: 1.0,
-        // CQL_FILTER: "Band1='1.0'"
+         
       }
     );
 
@@ -6478,7 +6485,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6545,7 +6552,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6584,7 +6591,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6622,7 +6629,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6754,7 +6761,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6779,7 +6786,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6810,7 +6817,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 
@@ -6845,7 +6852,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
                 format: "image/png",
                 transparent: true,
                 opacity: 1.0,
-                // CQL_FILTER: "Band1='1.0'"
+                 
               }
             );
 

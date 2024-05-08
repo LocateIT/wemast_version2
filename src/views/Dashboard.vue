@@ -4376,8 +4376,8 @@ const fetchWmsData = () => {
   if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
   if (layer.value) map.removeLayer(layer.value);
 
-  // addLulcLayer();
-  addLulcLayerComposable(sub_indicator.value, baseurl, year.value, basin.value, wetland_basin.value, wetland_sld.value, map, wmsLayer.value )
+  addLulcLayer();
+  // addLulcLayerComposable(sub_indicator.value, baseurl, year.value, basin.value, wetland_basin.value, wetland_sld.value, map, wmsLayer.value )
   addBVILayer();
   addPrecIndexWet();
   addPrecIndexDry();

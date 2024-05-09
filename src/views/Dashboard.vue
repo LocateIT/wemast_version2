@@ -216,9 +216,9 @@
         " class="chart_title">
                 {{ `${basin} ${sub_indicator}-${compare_year}` }}
               </div>
-              <!-- <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
+              <div v-if="compareUserSelections.selected_year != '' && indicator === 'Basin Vulnerability Index' " class="chart_title">
                 {{ `${basin} ${indicator}-${compare_year}` }}
-              </div> -->
+              </div>
               <div v-if="indicator === 'Basin Vulnerability Index' &&
         compareUserSelections.selected_year == ''
         " class="vul_bar_chart_title">
@@ -319,9 +319,9 @@
         " class="vul_pie_chart_title">
                 {{ `${basin} ${indicator}-${year}` }}
               </div>
-              <!-- <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
+              <div v-if="compareUserSelections.selected_year != '' && indicator === 'Basin Vulnerability Index'" class="chart_title">
                 {{ `${basin} ${indicator}-${compare_year}` }}
-              </div> -->
+              </div>
 
               <div v-if="storeUserSelections.selected_sub_indicator === 'Undulation'" class="bar_chart_title"
                 :class="{ hide: compareUserSelections.selected_year != '' }">
@@ -719,18 +719,49 @@
 
         <div class="nav_icons flex align-items-center justify-content-center " id="nav_icons">
           <RouterLink to="/">
-            <img class="home" src=" /uiIcons/home-landing.svg" alt="" title="Home" />
+            <img class="home" src=" /uiIcons/home-landing.svg" alt="" v-tooltip.right="{
+                value: 'Home',
+                pt: {
+                    
+                    text: 'bg-primary text-xs'
+                }
+            }" />
           </RouterLink>
-          <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="" title="Dashboard" />
+          <img class="dashboard" src=" /uiIcons/dashboard-24px.svg" alt="" v-tooltip.right="{
+                value: 'Dashboard',
+                pt: {
+                    
+                    text: 'bg-primary text-xs'
+                }
+            }" />
 
           <RouterLink to="/signup">
-            <img class="person" src=" /uiIcons/person.svg" alt="" title="Profile" />
+            <img class="person" src=" /uiIcons/person.svg" alt="" v-tooltip.right="{
+                value: 'Profile',
+                pt: {
+                    
+                    text: 'bg-primary text-xs'
+                }
+            }" />
           </RouterLink>
 
-          <img class="search" src=" /uiIcons/book.svg" alt="" title="Documentation" @click="show_docs_select" />
+          <img class="search" src=" /uiIcons/book.svg" alt="" 
+          v-tooltip.right="{
+                value: 'Manuals',
+                pt: {
+                    
+                    text: 'bg-primary text-xs'
+                }
+            }" @click="show_docs_select" />
 
           <img class="home" id="mobileicon" @click="show_mobile_panel" src=" /uiIcons/mobile_app.svg" alt=""
-            title="Data Collection" style="margin-left: -5px" />
+          v-tooltip.right="{
+                value: 'Data Collection',
+                pt: {
+                    
+                    text: 'bg-primary text-xs'
+                }
+            }" style="margin-left: -5px" />
 
 
           <div class="advance_wrapper flex flex-column gap-1">
@@ -763,12 +794,9 @@
 
       </div>
 
-      <div class="second_column col-10">
-
-
-        <div id="map" class="flex justify-content-center align-items-center">
-          <div style=" width: 30%; height:50%; z-index:1000"
-          v-tooltip.top="{
+      <div class="second_column col-10 ">
+        <!-- <div style=" width: 40%; height:30%; z-index:400; position: absolute; top:20vh; left: 30vw; "
+          v-tooltip.bottom="{
                 value: 'Upload custom shapefile or polygon to load layer',
                 pt: {
                     arrow: {
@@ -779,7 +807,12 @@
                     text: 'bg-primary font-medium'
                 }
             }"
-              v-if="sub_indicator === 'Fire Confidence' && shp_geojson == null" > </div>
+              v-if="sub_indicator === 'Fire Confidence' && shp_geojson == null && drawn_layer == null" >
+             </div> -->
+
+
+        <div id="map" class="flex ">
+          
         
         </div>
       </div>
@@ -1896,6 +1929,7 @@ let spi_barchart_options = {
         scaleLabel: {
           display: true,
           fontStyle: "bold",
+          fontFamily: "Poppins",
           labelString: "SPI Values",
         },
         barPercentage: 0.95,
@@ -4082,6 +4116,11 @@ const addFirmsLayer = () => {
     });
 
     wmsLayer.value.addTo(map);
+
+    toast.info("Upload custom shapefile or polygon to load Fire confidence layer", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
+    });
 
     //console.log(wmsLayer.value, 'wms')
 

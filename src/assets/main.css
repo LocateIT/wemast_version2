@@ -761,9 +761,9 @@ title{
   /* border-radius: 4px; */
 }
 .chart_title{
-  position: relative;
-  top: -5vh;
-  left: -1vw;
+  position: absolute;
+  top: -4vh;
+  left: 0vw;
   font-weight: 700;
 }
 

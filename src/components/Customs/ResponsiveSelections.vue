@@ -61,6 +61,7 @@
                         storeUserSelections.selected_sub_indicator === 'Fire Confidence' ? 'none' :
                             storeUserSelections.selected_sub_indicator === 'Undulation' ? 'none' :
                                 storeUserSelections.selected_sub_indicator === 'Water Quality' ? 'none' :
+                                storeUserSelections.selected_indicator === 'Basin Vulnerability Index' ? 'flex' :
                                 storeUserSelections.selected_sub_indicator === '' ? 'none'  :
                                     ''
             }">

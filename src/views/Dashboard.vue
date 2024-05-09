@@ -216,9 +216,9 @@
         " class="chart_title">
                 {{ `${basin} ${sub_indicator}-${compare_year}` }}
               </div>
-              <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
+              <!-- <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
                 {{ `${basin} ${indicator}-${compare_year}` }}
-              </div>
+              </div> -->
               <div v-if="indicator === 'Basin Vulnerability Index' &&
         compareUserSelections.selected_year == ''
         " class="vul_bar_chart_title">
@@ -319,9 +319,9 @@
         " class="vul_pie_chart_title">
                 {{ `${basin} ${indicator}-${year}` }}
               </div>
-              <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
+              <!-- <div v-if="compareUserSelections.selected_year != '' && indicator" class="chart_title">
                 {{ `${basin} ${indicator}-${compare_year}` }}
-              </div>
+              </div> -->
 
               <div v-if="storeUserSelections.selected_sub_indicator === 'Undulation'" class="bar_chart_title"
                 :class="{ hide: compareUserSelections.selected_year != '' }">

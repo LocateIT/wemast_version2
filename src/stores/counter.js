@@ -592,8 +592,11 @@ export const useCounterStore = defineStore({
             //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            //console.log(labels, 'stats labels')
-            this.lulcChartData.labels = labels
+            console.log(labels, 'stats labels')
+            var renamed_labels = labels.map((item) =>
+              item.replace(/Agricultur/, "Agriculture")
+            );
+            this.lulcChartData.labels = renamed_labels //labels
            
           
             var figures = Object.values(newObj)

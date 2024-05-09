@@ -105,7 +105,7 @@
       <div id="mySidenav" style="height: 100%">
         <div id="protrusion" class="protrusion">
           <div class="toggle_icon" @click.stop="toggle_nav">
-            <img style="margin-left: -5vw; margin-top: 1.5vw" id="open" src=" /mapIcons/stats.svg"
+            <img style="margin-left: -5vw; margin-top: 1.5vw;border-radius: 2px;" id="open" src=" /mapIcons/stats.svg"
               title="View Statistics" v-if="show_sidenav" />
             <img :class="{ toggle_is_open: !show_sidenav }" id="close" src=" /mapIcons/stats.svg"
               title="Close Statistics" v-if="!show_sidenav" />
@@ -1313,7 +1313,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
 
             // addLulcLegend()
             // lulclegendContent()
@@ -1350,7 +1350,7 @@ const convertToLayer = (buffer) => {
               loading.value = false;
             });
 
-            // //console.log(wmsLayer.value, 'wms')
+             
 
             // addLulcLegend()
             lulclegendContent();
@@ -1385,7 +1385,7 @@ const convertToLayer = (buffer) => {
             );
 
             wmsLayer.value.addTo(map);
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -1418,7 +1418,7 @@ const convertToLayer = (buffer) => {
             );
 
             wmsLayer.value.addTo(map);
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -1453,7 +1453,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -1470,7 +1470,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Vegetation Cover" &&
             shp_geojson.value != null
           ) {
-            //&& season.value === 'DRY'
+             
 
             //   
             map.createPane("pane800").style.zIndex = 200;
@@ -1492,7 +1492,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -1509,7 +1509,7 @@ const convertToLayer = (buffer) => {
             sub_indicator.value === "Wetland Inventory" &&
             parameter.value === "Wetland Status"
           ) {
-            //&& season.value === 'DRY'
+             
 
             //   
             map.createPane("pane800").style.zIndex = 200;
@@ -1530,7 +1530,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -1619,7 +1619,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -1654,7 +1654,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -3022,7 +3022,30 @@ watch(setSelectedDate, () => {
   getBurntDate();
 });
 
+const getDefaultLatLon = () => {
+      if (group.value !== null) group.value.clearLayers();
 
+      group.value = L.layerGroup().addTo(map);
+      marker.value = L.icon({
+        iconUrl: "/mapIcons/point.svg",
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+      });
+
+      var mark = L.marker(
+        basin.value === "Cuvelai"
+          ? [-18.852976338898927, 16.092944688071]
+          : basin.value === "Limpopo"
+            ? [-23.361704477797623, 29.067713023209976]
+            : basin.value === "Okavango"
+              ? [-19.971381658947745, 21.81442486792866]
+              : [-14.70984684783236, 28.0764983010178],
+        { icon: marker.value }
+      )
+        // .bindPopup('Hey')
+        .addTo(group.value);
+      return mark;
+    };
 const addBVILayer = () => {
   if (indicator.value === "Basin Vulnerability Index") {
     //   
@@ -3052,7 +3075,7 @@ const addBVILayer = () => {
 
     wmsLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
 
     // addLulcLegend()
     // lulclegendContent()
@@ -3090,7 +3113,7 @@ const addLulcLayer = () => {
 
     wmsLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
 
     // addLulcLegend()
     lulclegendContent();
@@ -3098,6 +3121,8 @@ const addLulcLayer = () => {
     changeOpacity();
   }
 };
+
+
 
 const addPrecTimeSeries = () => {
   L.TileLayer.BetterWMS = L.TileLayer.WMS.extend({
@@ -3115,6 +3140,7 @@ const addPrecTimeSeries = () => {
       map.off("click", this.getFeatureInfo, this);
     },
 
+   
     getFeatureInfo: function (evt) {
       // Make an AJAX request to the server and hope for the best
       var url = this.getFeatureInfoUrl(evt.latlng),
@@ -3590,7 +3616,7 @@ const addPrecIndexWet = () => {
     });
 
     wmsLayer.value.addTo(map);
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -3621,30 +3647,7 @@ const addPrecIndexWet = () => {
     );
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
-    const getDefaultLatLon = () => {
-      if (group.value !== null) group.value.clearLayers();
-
-      group.value = L.layerGroup().addTo(map);
-      marker.value = L.icon({
-        iconUrl: "/mapIcons/point.svg",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
-
-      var mark = L.marker(
-        basin.value === "Cuvelai"
-          ? [-18.852976338898927, 16.092944688071]
-          : basin.value === "Limpopo"
-            ? [-23.361704477797623, 29.067713023209976]
-            : basin.value === "Okavango"
-              ? [-19.971381658947745, 21.81442486792866]
-              : [-14.70984684783236, 28.0764983010178],
-        { icon: marker.value }
-      )
-        // .bindPopup('Hey')
-        .addTo(group.value);
-      return mark;
-    };
+    
 
     getDefaultLatLon();
 
@@ -3684,7 +3687,7 @@ const addPrecIndexDry = () => {
     });
 
     wmsLayer.value.addTo(map);
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -3714,30 +3717,7 @@ const addPrecIndexDry = () => {
     );
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
-    const getDefaultLatLon = () => {
-      if (group.value !== null) group.value.clearLayers();
-
-      group.value = L.layerGroup().addTo(map);
-      marker.value = L.icon({
-        iconUrl: "/mapIcons/point.svg",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
-
-      var mark = L.marker(
-        basin.value === "Cuvelai"
-          ? [-18.852976338898927, 16.092944688071]
-          : basin.value === "Limpopo"
-            ? [-23.361704477797623, 29.067713023209976]
-            : basin.value === "Okavango"
-              ? [-19.971381658947745, 21.81442486792866]
-              : [-14.70984684783236, 28.0764983010178],
-        { icon: marker.value }
-      )
-        // .bindPopup('Hey')
-        .addTo(group.value);
-      return mark;
-    };
+   
 
     getDefaultLatLon();
 
@@ -3781,7 +3761,7 @@ const addWetlandExtent = () => {
 
     wmsLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -3795,7 +3775,7 @@ const addWetlandExtent = () => {
 
 const addVegCover = () => {
   if (sub_indicator.value === "Vegetation Cover") {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -3997,34 +3977,11 @@ const addVegCover = () => {
 
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
-    const getDefaultLatLon = () => {
-      if (group.value !== null) group.value.clearLayers();
-
-      group.value = L.layerGroup().addTo(map);
-      marker.value = L.icon({
-        iconUrl: "/mapIcons/point.svg",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
-
-      var mark = L.marker(
-        basin.value === "Cuvelai"
-          ? [-18.852976338898927, 16.092944688071]
-          : basin.value === "Limpopo"
-            ? [-23.361704477797623, 29.067713023209976]
-            : basin.value === "Okavango"
-              ? [-19.971381658947745, 21.81442486792866]
-              : [-14.70984684783236, 28.0764983010178],
-        { icon: marker.value }
-      )
-        // .bindPopup('Hey')
-        .addTo(group.value);
-      return mark;
-    };
+    
 
     getDefaultLatLon();
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -4044,7 +4001,7 @@ const addWetlandStatus = () => {
     sub_indicator.value === "Wetland Inventory" &&
     parameter.value === "Wetland Status"
   ) {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -4076,7 +4033,7 @@ const addWetlandStatus = () => {
 
     wmsLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -4122,9 +4079,6 @@ const addFirmsLayer = () => {
       position: POSITION.BOTTOM_CENTER,
     });
 
-    //console.log(wmsLayer.value, 'wms')
-
-    // firmslegendContent();
     lulclegendContent()
     changeOpacity();
   }
@@ -4175,34 +4129,7 @@ const addSMILayer = () => {
     );
     wmsPrecTimeseriesLayer.value.addTo(map);
 
-    //   wmsPrecTimeseriesLayer.value.on('load', function (event) {
-    //     loading.value = false
-    // });
-
-    const getDefaultLatLon = () => {
-      if (group.value !== null) group.value.clearLayers();
-
-      group.value = L.layerGroup().addTo(map);
-      marker.value = L.icon({
-        iconUrl: "/mapIcons/point.svg",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
-
-      var mark = L.marker(
-        basin.value === "Cuvelai"
-          ? [-18.852976338898927, 16.092944688071]
-          : basin.value === "Limpopo"
-            ? [-23.361704477797623, 29.067713023209976]
-            : basin.value === "Okavango"
-              ? [-19.971381658947745, 21.81442486792866]
-              : [-14.70984684783236, 28.0764983010178],
-        { icon: marker.value }
-      )
-        // .bindPopup('Hey')
-        .addTo(group.value);
-      return mark;
-    };
+   
 
     getDefaultLatLon();
   }
@@ -4269,7 +4196,7 @@ const addSuspendedSediments = () => {
 
     wmsLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -4294,30 +4221,7 @@ const addSuspendedSediments = () => {
     );
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
-    const getDefaultLatLon = () => {
-      if (group.value !== null) group.value.clearLayers();
-
-      group.value = L.layerGroup().addTo(map);
-      marker.value = L.icon({
-        iconUrl: "/mapIcons/point.svg",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
-
-      var mark = L.marker(
-        basin.value === "Cuvelai"
-          ? [-18.852976338898927, 16.092944688071]
-          : basin.value === "Limpopo"
-            ? [-23.361704477797623, 29.067713023209976]
-            : basin.value === "Okavango"
-              ? [-19.971381658947745, 21.81442486792866]
-              : [-14.70984684783236, 28.0764983010178],
-        { icon: marker.value }
-      )
-        // .bindPopup('Hey')
-        .addTo(group.value);
-      return mark;
-    };
+    
 
     getDefaultLatLon();
 
@@ -4360,7 +4264,7 @@ const addTurbidity = () => {
 
     wmsLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
@@ -4385,30 +4289,7 @@ const addTurbidity = () => {
     );
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
-    const getDefaultLatLon = () => {
-      if (group.value !== null) group.value.clearLayers();
-
-      group.value = L.layerGroup().addTo(map);
-      marker.value = L.icon({
-        iconUrl: "/mapIcons/point.svg",
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
-      });
-
-      var mark = L.marker(
-        basin.value === "Cuvelai"
-          ? [-18.852976338898927, 16.092944688071]
-          : basin.value === "Limpopo"
-            ? [-23.361704477797623, 29.067713023209976]
-            : basin.value === "Okavango"
-              ? [-19.971381658947745, 21.81442486792866]
-              : [-14.70984684783236, 28.0764983010178],
-        { icon: marker.value }
-      )
-        // .bindPopup('Hey')
-        .addTo(group.value);
-      return mark;
-    };
+    
 
     getDefaultLatLon();
 
@@ -4761,6 +4642,10 @@ const lulclegendContent = () => {
       });
       //console.log(label_array, 'label array')
 
+      var renamed_labels = label_array.map((item) =>
+          item.replace(/Shubland/, "Shrubland")
+        );
+
       var colors_array = object_array.map((item) => {
         return item.color;
       });
@@ -4778,7 +4663,7 @@ const lulclegendContent = () => {
         });
         lulc_legend.value = legend;
         var colors = colors_array;
-        var labels = label_array;
+        var labels = renamed_labels;
 
         lulc_legend.value.onAdd = function (map) {
           var div = L.DomUtil.create("div", "legend");
@@ -5061,22 +4946,7 @@ const NDVIlegendContent = () => {
       });
       removeLegend()
 
-      if (lulc_compare_legend.value)
-        map.removeControl(lulc_compare_legend.value);
-      if (firms_compare_legend.value)
-        map.removeControl(firms_compare_legend.value);
-      if (smi_compare_legend.value) map.removeControl(smi_compare_legend.value);
-      if (modis_legend.value) map.removeControl(modis_legend.value);
-      if (flood_compare_legend.value)
-        map.removeControl(flood_compare_legend.value);
-      if (status_compare_legend.value)
-        map.removeControl(status_compare_legend.value);
-      if (ndvi_compare_legend.value)
-        map.removeControl(ndvi_compare_legend.value);
-      if (ndwi_compare_legend.value)
-        map.removeControl(ndwi_compare_legend.value);
-      if (prec_compare_legend.value)
-        map.removeControl(prec_compare_legend.value);
+      removeCompareLegend()
 
       if (wmsLayer.value) {
         var legend = L.control({ position: "bottomleft" });
@@ -5695,7 +5565,7 @@ const addCompareLulcLayer = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5740,7 +5610,7 @@ const addCompareBVILayer = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5786,7 +5656,7 @@ const addComparePrecIndexWet = () => {
     );
 
     wmsCompareLayer.value.addTo(map);
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5827,7 +5697,7 @@ const addComparePrecIndexDry = () => {
     );
 
     wmsCompareLayer.value.addTo(map);
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5870,7 +5740,7 @@ const addCompareWetlandExtent = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5886,7 +5756,7 @@ const addCompareWetlandExtent = () => {
 };
 const addCompareVegCover = () => {
   if (sub_indicator.value === "Vegetation Cover") {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -5913,7 +5783,7 @@ const addCompareVegCover = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5935,7 +5805,7 @@ const addCompareWetlandStatus = () => {
     sub_indicator.value === "Wetland Inventory" &&
     parameter.value === "Wetland Status"
   ) {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -5963,7 +5833,7 @@ const addCompareWetlandStatus = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -5980,7 +5850,7 @@ const addCompareWetlandStatus = () => {
 const addCompareFirmsLayer = () => {
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if (sub_indicator.value === "Fire Confidence") {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -6001,7 +5871,7 @@ const addCompareFirmsLayer = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -6019,7 +5889,7 @@ const addCompareFirmsLayer = () => {
 const addCompareSMILayer = () => {
   // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
   if (sub_indicator.value === "Soil Moisure Index") {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -6040,7 +5910,7 @@ const addCompareSMILayer = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+     
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -6062,7 +5932,7 @@ const addCompareSusSediments = () => {
     sub_indicator.value === "Water Quality" &&
     parameter.value === "Sus Sediments"
   ) {
-    //&& season.value === 'DRY'
+     
 
     //   
     map.createPane("pane800").style.zIndex = 200;
@@ -6090,7 +5960,7 @@ const addCompareSusSediments = () => {
 
     wmsCompareLayer.value.addTo(map);
 
-    // //console.log(wmsLayer.value, 'wms')
+    
     //remove spinner when layer loads
     wmsCompareLayer.value.on("load", function (event) {
       loading.value = false;
@@ -6108,11 +5978,7 @@ const compareLayers = () => {
   if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
   if (swipe_control.value) map.removeControl(swipe_control.value);
 
-  // lulc_style()
-  // prec_style()
-  // wetland_inventory_style()
-  // ndvi_style()
-  // status_style()
+  
 
   addCompareLulcLayer();
   addComparePrecIndexWet();
@@ -6226,30 +6092,21 @@ const getAdvancedWetland = async () => {
   });
 
   wetland_geojson.value.addTo(map);
-  //console.log('bounds', map.getBounds())
-
-  //  map.fitBounds(wetland_geojson.value.getBounds(), {
-  //                  padding: [50, 50],
-  //                });
+ 
 
   if (current_top_base_layer.value === "MapBoxSatellite") {
     map.fitBounds(wetland_geojson.value.getBounds());
   } else {
     map.setView(wetland_geojson.value.getBounds().getCenter());
   }
-  //${season.value}:${year.value}
-
-  //construct an object for post data
-  // //console.log('wetland name',advancedUserSelections.selected_wetland)
-  // //console.log('indicator', indicator.value )
-  // //console.log('subindicator', sub_indicator.value )
+ 
   generate_layer_abbreviations();
 
   advanced_post_data.value = {
     wetland: { name: advancedUserSelections.selected_wetland },
     indicator: { name: layer_abbreviations.value },
   };
-  //console.log('post data', advanced_post_data.value)
+ 
 };
 
 const addAdvancedLayer = () => {
@@ -6257,20 +6114,14 @@ const addAdvancedLayer = () => {
 
   //start post request
   const apiUrl = "http://45.32.233.93:8000/generate_sld/"; //"https://wemast-sethnyawacha.koyeb.app/generate_sld/";
-  // const headers = {'Content-Type': 'application/json'}
-  // var postData = encodeURIComponent(advanced_post_data.value)
-  // //console.log(postData);
+ 
   axios
     .post(apiUrl, advanced_post_data.value)
     .then((response) => {
-      //console.log('Wetland response:', response.data)
-
       let stringWithSld = response.data.sld_file_path;
       let stringWithoutSld = stringWithSld.replace(".sld", "");
-      //console.log(stringWithoutSld)
-
+    
       wetland_sld.value = stringWithoutSld;
-      //console.log(wetland_sld.value)
       addLulcLayer();
       addBVILayer();
       addPrecIndexWet();
@@ -6293,7 +6144,7 @@ const addAdvancedLayer = () => {
 //watch for changes
 
 const setSelectedAdvancedCountry = computed(() => {
-  //console.log(advancedUserSelections.selected_country, 'selected_country app')
+  
 
   return advancedUserSelections.getSelectedRegion;
 });
@@ -6302,7 +6153,7 @@ watch(setSelectedAdvancedCountry, () => {
 });
 
 const setSelectedAdvancedWetland = computed(() => {
-  //console.log(advancedUserSelections.selected_wetland, 'selected_wetland app')
+ 
   wetland_basin.value = advancedUserSelections.selected_wetland;
 
   return advancedUserSelections.getSelectedWetlandGeojson;
@@ -6312,7 +6163,7 @@ watch(setSelectedAdvancedWetland, () => {
 });
 
 const setSelectedAdvancedBbox = computed(() => {
-  //console.log(advancedUserSelections.bounding_box, 'bbox app')
+  
 
   return advancedUserSelections.getSelectedBoundingBox;
 });
@@ -6322,9 +6173,6 @@ const addDrawCtrl = () => {
   //remove any previous layers
   if (layer.value) map.removeLayer(layer.value);
   if (shp_geojson.value) map.removeLayer(shp_geojson.value);
-
-
-
 
   //we add the polygon draw feature to map as seen  below
   editableLayers.value = new L.FeatureGroup();
@@ -6366,57 +6214,43 @@ const addDrawCtrl = () => {
 
     const layer = e.layer;
     custom_geojson.value = layer.bringToFront();
-
     editableLayers.value.addLayer(custom_geojson.value);
-    //console.log(JSON.stringify(custom_geojson.value.toGeoJSON().geometry), 'stringified custom drawn geojson');
+
     //link custom geojson in store to this geojson
-    //console.log(storeUserSelections.custom_geojson.custom, 'accessed store custom?') //true
+
     storeUserSelections.custom_geojson.geojson =
       custom_geojson.value.toGeoJSON().geometry;
-    // //console.log(storeUserSelections.custom_geojson.geojson, 'UPDATED STORE CUSTOM GEOJSON')
-    // if (process.env.DEV)
-    //
+   
     var drawn_polygon_object = custom_geojson.value.toGeoJSON(); //.geometry
-
     //make drawn object global
-
     drawn_layer.value = custom_geojson.value.toGeoJSON();
-    // custom_geojson.value.toGeoJSON().properties.name = indicator.value;
 
-    //console.log('post object', drawn_layer.value, )
     storeUserSelections.region_placeholder = "Custom";
     storeUserSelections.selected_basin = "Custom";
 
     //start post request
     const apiUrl = "http://45.32.233.93:8000/custom_polygon/"; //"https://wemast-sethnyawacha.koyeb.app/generate_sld/";
-    // const headers = {'Content-Type': 'application/json'}
-    // var postData = encodeURIComponent(advanced_post_data.value)
-    // //console.log(postData);
+
     generate_layer_abbreviations();
 
     polygon_post_indicator.value = {
       indicator: { name: layer_abbreviations.value },
     };
-    //console.log(polygon_post_indicator.value)
 
     let targetObject = {};
     let sourceObject1 = polygon_post_indicator.value;
     let sourceObject2 = drawn_layer.value;
 
     const merged = { ...targetObject, ...sourceObject1, ...sourceObject2 };
-    //console.log(merged);
+   
 
     axios
       .post(apiUrl, merged)
       .then((response) => {
-        //console.log('custom_polygon response:', response.data)
-
         let stringWithSld = response.data.sld_file_path;
         let stringWithoutSld = stringWithSld.replace(".sld", "");
-        //console.log(stringWithoutSld)
-
         polygon_sld.value = stringWithoutSld;
-        //console.log(polygon_sld.value)
+      
 
         const addBVILayer2 = () => {
           if (indicator.value === "Basin Vulnerability Index") {
@@ -6438,7 +6272,6 @@ const addDrawCtrl = () => {
 
             wmsLayer.value.addTo(map);
 
-  
             BVIlegendContent();
 
             changeOpacity();
@@ -6497,7 +6330,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
 
             // addLulcLegend()
             lulclegendContent();
@@ -6529,7 +6362,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             );
 
             wmsLayer.value.addTo(map);
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -6562,7 +6395,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             );
 
             wmsLayer.value.addTo(map);
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -6597,7 +6430,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -6614,9 +6447,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Vegetation Cover" &&
             drawn_layer.value != null
           ) {
-            //&& season.value === 'DRY'
-
-            //   
+         
             map.createPane("pane800").style.zIndex = 200;
             map.createPane("timeseries").style.zIndex = 300;
 
@@ -6636,7 +6467,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -6653,7 +6484,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
             sub_indicator.value === "Wetland Inventory" &&
             parameter.value === "Wetland Status"
           ) {
-            //&& season.value === 'DRY'
+             
 
             //   
             map.createPane("pane800").style.zIndex = 200;
@@ -6674,7 +6505,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -6862,7 +6693,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;
@@ -6897,7 +6728,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-            // //console.log(wmsLayer.value, 'wms')
+             
             //remove spinner when layer loads
             wmsLayer.value.on("load", function (event) {
               loading.value = false;

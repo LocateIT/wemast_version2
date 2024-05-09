@@ -379,7 +379,7 @@ margin-bottom: 20px;
 .download_tiff{
   position: absolute;
   top: 5vh;
-
+border-radius: 2px;
   left: -2vw;
 }
 
@@ -387,6 +387,7 @@ margin-bottom: 20px;
   position: absolute;
   top: 9vh;
   left:  -2vw;
+  border-radius: 2px;
 }
 
 
@@ -394,41 +395,48 @@ margin-bottom: 20px;
   position: absolute;
   top: 13vh;
   left:  -2vw;
+  border-radius: 2px;
 
 }
 .wemast_base_layers{
   position: absolute;
   top: 17vh;
   left:  -2vw;
+  border-radius: 2px;
 }
 .draw_polygon{
   position: absolute;
   top: 21vh;
   left:  -2vw;
+  border-radius: 2px;
 
 }
 .zoom_in{
   position: absolute;
   top: 25vh;
   left:  -2vw;
+  border-radius: 2px;
 
 }
 .zoom_out{
   position: absolute;
   top: 29vh;
   left: -2vw;
+  border-radius: 2px;
 
 }
 .help{
   position: absolute;
   top: 33vh;
-  left:-2vw
+  left:-2vw;
+  border-radius: 2px;
 
 }
 .upload{
   position: absolute;
   top: 37vh;
-  left:-2vw
+  left:-2vw;
+  border-radius: 2px;
 
 }
 

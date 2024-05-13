@@ -3622,6 +3622,11 @@ const addPrecIndexWet = () => {
       loading.value = false;
     });
 
+    toast.info("Click on the map to get time series data", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
+    });
+
     //adding timeseries layer
     addPrecTimeSeries();
     //  addTemp()
@@ -3691,6 +3696,13 @@ const addPrecIndexDry = () => {
     //remove spinner when layer loads
     wmsLayer.value.on("load", function (event) {
       loading.value = false;
+    });
+
+
+
+    toast.info("Click on the map to get time series data", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
     });
 
     //adding timeseries layer
@@ -3950,6 +3962,13 @@ const addVegCover = () => {
 
     wmsLayer.value.addTo(map);
 
+
+
+    toast.info("Click on the map to get time series data", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
+    });
+
     wmsPrecTimeseriesLayer.value = L.tileLayer.betterWms(
       `http://45.32.233.93:8085/geoserver/NDVI_${season.value}/wms?`,
       {
@@ -4112,6 +4131,11 @@ const addSMILayer = () => {
     SMIlegendContent();
     changeOpacity();
 
+    toast.info("Click on the map to get time series data", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
+    });
+
     //Add SMI Timeseries
 
     addPrecTimeSeries();
@@ -4205,6 +4229,11 @@ const addSuspendedSediments = () => {
     NDWIlegendContent();
     changeOpacity();
 
+    toast.info("Click on the map to get time series data", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
+    });
+
     //ADDTIMESERIES
     addPrecTimeSeries();
     wmsPrecTimeseriesLayer.value = L.tileLayer.betterWms(
@@ -4272,6 +4301,11 @@ const addTurbidity = () => {
 
     NDWIlegendContent();
     changeOpacity();
+
+    toast.info("Click on the map to get time series data", {
+      timeout: 5000,
+      position: POSITION.BOTTOM_CENTER,
+    });
 
     //ADDTIMESERIES
     addPrecTimeSeries();
@@ -4637,10 +4671,10 @@ const lulclegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var renamed_labels = label_array.map((item) =>
           item.replace(/Shubland/, "Shrubland")
@@ -4649,7 +4683,7 @@ const lulclegendContent = () => {
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+     
       if (firms_legend.value) map.removeControl(firms_legend.value);
       if (smi_legend.value) map.removeControl(smi_legend.value);
       if (modis_legend.value) map.removeControl(modis_legend.value);
@@ -4708,15 +4742,15 @@ const compareLulcLegend = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+       
         return item.label;
       });
-      //console.log(label_array, 'label array')
+      
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+   
 
       removeCompareLegend()
 
@@ -4822,11 +4856,10 @@ const NDWIlegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
-
+       
       var colors_array = object_array.map((item) => {
         return item.color;
       });
@@ -4881,15 +4914,15 @@ const compareNDWIlegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+     
 
       removeCompareLegend()
 
@@ -4936,10 +4969,10 @@ const NDVIlegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
@@ -4993,15 +5026,15 @@ const compareNDVIlegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+     
 
       removeCompareLegend()
 
@@ -5047,15 +5080,15 @@ const statuslegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+     
       removeLegend()
 
       if (wmsLayer.value) {
@@ -5105,15 +5138,15 @@ const comparestatuslegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+     
 
       removeCompareLegend()
 
@@ -5160,10 +5193,10 @@ const floodlegendContent = () => {
       var object_array =
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries; //response object does not have colormap.entries
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
@@ -5234,12 +5267,12 @@ const firmslegendContent = () => {
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
 
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
 
 
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
       var cleanarray = label_array.filter((item) => item !== 'No data' && item !== 'Unused')
       console.log(cleanarray);
 
@@ -5254,7 +5287,7 @@ const firmslegendContent = () => {
       var cleancolorarray = colors_array.filter((item) => item !== '#FFFFFF')
       console.log(cleancolorarray);
 
-      //console.log(colors_array, 'colors array')
+     
       removeLegend()
 
       if (wmsLayer.value) {
@@ -5304,15 +5337,15 @@ const comparefirmslegendContent = () => {
         response.data.Legend[0].rules[0].symbolizers[0].Raster.colormap.entries;
 
       var label_array = object_array.map((item) => {
-        //console.log(item.label, 'labels items array')
+      
         return item.label;
       });
-      //console.log(label_array, 'label array')
+       
 
       var colors_array = object_array.map((item) => {
         return item.color;
       });
-      //console.log(colors_array, 'colors array')
+     
 
       removeCompareLegend()
 

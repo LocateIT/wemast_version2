@@ -698,7 +698,7 @@ top: 36.4vh;
 .legend {
  
   padding: 6px 8px;
-  font: 14px Poppins;
+  font: 1em Poppins;
   background: white;
 
   border-radius: 10px;
@@ -708,14 +708,14 @@ top: 36.4vh;
 
 .legend h4 {
   text-align: center;
-  font-size: 16px;
+ 
   margin: 2px 12px 8px;
   color: #777;
 }
 
 .legend p {
   text-align: center;
-  font-size: 14px;
+  font-size: 1em;
   font-weight: 700;
   margin: 2px 12px 8px;
   color: rgb(90, 90, 90);

@@ -592,7 +592,7 @@ export const useCounterStore = defineStore({
             //console.log(newObj, 'NEW OBJECT')
     
             var labels = Object.keys(newObj)
-            console.log(labels, 'stats labels')
+            // console.log(labels, 'stats labels')
             var renamed_labels = labels.map((item) =>
               item.replace(/Agricultur/, "Agriculture")
             );

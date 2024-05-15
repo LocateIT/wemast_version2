@@ -1,28 +1,56 @@
-# wemast_v2
+# Wetland Monitoring and Assessment Service for Transboundary Basins in Southern Africa
 
-This template should help get you started developing with Vue 3 in Vite.
+## Description
+A web application for monitoring wetlands in the four basins in the Southern Africa region: Cuvelai, Zambezi, Limpopo and Okavango.
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [File Structure](#file-structure)
+- [Contributing](#contributing)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+
+## Installation
+### Prerequisites
+- Node.js
+- npm
+
+
+### Clone the Repository
+```sh
+git clone https://github.com/LocateIT/wemast_version2.git
+```
 
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Project Setup
+
+```sh
+cd wemast_version2
+```
+
+
+## Install Dependencies
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Run application
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Build for Production
 
 ```sh
 npm run build
@@ -33,3 +61,15 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Configuration
+### Create a .env file in the root directory with the following variables:
+
+VITE_BASE_URL=/
+VITE_DEFAULT_LOCALE=en
+VITE_FALLBACK_LOCALE=fr
+VITE_SUPPORTED_LOCALES=en,fr,pt
+VITE_MAPBOX_API_KEY=your_api_key
+
+## Deployment
+Deploy with Digital Ocean and Nginx. See Nginx Documentation https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04

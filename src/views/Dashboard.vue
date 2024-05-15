@@ -787,9 +787,6 @@
 
         </div>
 
-
-
-
         <RouterView />
 
       </div>

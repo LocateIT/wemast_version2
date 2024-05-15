@@ -1,4 +1,4 @@
-# Wetland Monitoring and Assessment Service for Transboundary Basins in Southern Africa
+# Wetland Monitoring and Assessment Service for Transboundary Basins in Southern Africa (WeMAST2.0)
 
 ## Description
 A web application for monitoring wetlands in the four basins in the Southern Africa region: Cuvelai, Zambezi, Limpopo and Okavango.

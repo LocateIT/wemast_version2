@@ -7,11 +7,6 @@ A web application for monitoring wetlands in the four basins in the Southern Afr
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
-- [File Structure](#file-structure)
-- [Contributing](#contributing)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [License](#license)
 - [Acknowledgments](#acknowledgments)
 
 ## Installation
@@ -73,3 +68,13 @@ VITE_MAPBOX_API_KEY=your_api_key
 
 ## Deployment
 Deploy with Digital Ocean and Nginx. See Nginx Documentation https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
+
+## Acknowledgements
+Vue
+PrimeVue
+PrimeFlexCSS
+Leaflet
+Chart JS
+Digital Ocean
+Nginx
+

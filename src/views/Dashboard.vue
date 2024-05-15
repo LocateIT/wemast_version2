@@ -892,12 +892,11 @@ let year = ref(null);
 let season = ref(null);
 let parameter = ref(null);
 let satellite = ref(null);
-
 let compare_year = ref(null);
 let compare_satellite = ref(null);
 let compare_season = ref();
 let styles = ref(null);
-let band_1 = ref(null);
+
 let lulc_legend = ref(false);
 let prec_legend = ref(false);
 let ndwi_legend = ref(false);
@@ -916,15 +915,14 @@ let status_compare_legend = ref(null);
 let flood_compare_legend = ref(null);
 let smi_compare_legend = ref(null);
 let bvi_compare_legend = ref(null);
-let modis_compare_legend = ref(null);
-let firms_compare_legend = ref(null);
 
+let firms_compare_legend = ref(null);
 let sidenavigationbar = ref(false);
 let swipe_control = ref(null);
 let wmsCompareLayer = ref(null);
 let custom_geojson = ref(null);
 let search_marker = ref(null);
-let controls_container = ref(null);
+
 let search_control = ref(null);
 let geoposition = ref(null);
 let wmsTimeseriesLayer = ref(null);
@@ -932,7 +930,7 @@ let wmsPrecTimeseriesLayer = ref(null);
 let customWmsLayer = ref(null);
 let geometry = {};
 let chartData = ref([]);
-let stats = ref({});
+
 let indexx = ref("");
 let show_mobile_data = ref(false);
 let show_mypanel = ref(false);
@@ -943,8 +941,7 @@ let latlon = ref(null);
 let group = ref(null);
 let marker = ref(null);
 let cmd_ = ref("");
-let printPlugin = ref(null);
-let browserZoomLevel = ref();
+
 let layer_abbreviations = ref(null);
 let advanced_post_data = ref({});
 let shp_geojson = ref(null);
@@ -959,7 +956,7 @@ let burnt_date = ref('')
 let point_layergroup = ref(null);
 let point_geojson = ref(null);
 let country = ref(null);
-let visibleRight = ref(false);
+
 let fireLayer = ref('');
 const storeUserSelections = useCounterStore();
 const compareUserSelections = useCompareStore();
@@ -1133,17 +1130,10 @@ const getCustomStatistics = () => {
       console.log(storeUserSelections.lulcChartData.datasets[0].data)
 
 
-
-
       var firelabels = Object.keys(jsonObject)
       const classes = firelabels.map(value => getClassForValue(value));
-
-
       // log the result as an array of classes
-
       console.log(classes);
-
-
       const colors = firelabels.map(value => getColorForValue(value));
       console.log(colors);
 
@@ -1190,8 +1180,7 @@ const getCustomStatistics = () => {
           loading.value = false;
         });
 
-        //console.log(wmsLayer.value, 'wms')
-
+       
         firmslegendContent();
         // lulclegendContent()
         changeOpacity();
@@ -1283,10 +1272,6 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-             
-
-            // addLulcLegend()
-            // lulclegendContent()
             BVIlegendContent();
 
             changeOpacity();
@@ -1320,9 +1305,6 @@ const convertToLayer = (buffer) => {
               loading.value = false;
             });
 
-             
-
-            // addLulcLegend()
             lulclegendContent();
 
             changeOpacity();
@@ -1558,7 +1540,7 @@ const convertToLayer = (buffer) => {
 
             wmsLayer.value.addTo(map);
 
-            //console.log(wmsLayer.value, 'wms')
+           
 
             floodlegendContent();
             changeOpacity();
@@ -2600,11 +2582,7 @@ const setLeafletMap = () => {
 onMounted(() => {
 
   setLeafletMap();
-
-
-
-
-  //load zambezi
+  //load zambezi default layer
   const fetchZambezi = async () => {
     const resp = await axios.get(
       `${baseurl}:8080/geoserver/aoi/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aoi%3AZambezi&maxFeatures=50&outputFormat=application%2Fjson`
@@ -2809,11 +2787,6 @@ const getRegion = () => {
   var str = wkt.stringify(object_geojson);
   //console.log(str, 'wkt custom str')
 
-  //  map.fitBounds(current_geojson.value.getBounds(), {
-  //                  padding: [50, 50],
-  //                });
-  // //console.log('bounds',current_geojson.value.getBounds())
-  // map.flyToBounds(current_geojson.value.getBounds())
   if (current_top_base_layer.value === "MapBoxSatellite") {
     map.flyToBounds(current_geojson.value.getBounds());
   } else {
@@ -3821,10 +3794,6 @@ const addVegCover = () => {
 
       showGetFeatureInfo: function (err, latlng, content) {
         if (err) {
-          // //console.log(latlng, 'lat long')
-
-          // //console.log(latlng, 'wms latlng')
-          //console.log(content.features[0].properties, "ndvi wms content")
 
           var bands = content.features[0].properties;
 
@@ -3859,12 +3828,6 @@ const addVegCover = () => {
           // //console.log(latlng, 'lat long');
         } // do nothing if there's an error
 
-        // Otherwise show the content in a popup, or something.
-
-        // L.popup({ maxWidth: 800})
-        //   .setLatLng(latlng)
-        //   .setContent( content)
-        //   .openOn(this._map);
       },
     }); //end of L.extend
 
@@ -3961,7 +3924,6 @@ const addVegCover = () => {
 
     wmsPrecTimeseriesLayer.value.addTo(map).bringToFront();
 
-    
 
     getDefaultLatLon();
 
@@ -4146,7 +4108,7 @@ const addFloodLayer = () => {
 
     wmsLayer.value.addTo(map);
 
-    //console.log(wmsLayer.value, 'wms')
+   
 
     floodlegendContent();
     changeOpacity();
@@ -4207,7 +4169,6 @@ const addSuspendedSediments = () => {
         pane: "pane800",
         layers: `NDSSI:NDSSI_DRY`,
         crs: L.CRS.EPSG4326,
-        //  styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',value,
         format: "image/png",
         transparent: true,
         opacity: 0,
@@ -4280,7 +4241,7 @@ const addTurbidity = () => {
         pane: "pane800",
         layers: `NDTI:NDTI_DRY`,
         crs: L.CRS.EPSG4326,
-        //  styles: basin.value === 'Cuvelai' ? 'cuvelai_water' :  basin.value === 'Zambezi' ? 'zambezi_water':  basin.value === 'Limpopo' ? 'limpopo_water': 'okavango_water',value,
+      
         format: "image/png",
         transparent: true,
         opacity: 0,
@@ -4322,8 +4283,6 @@ const fetchWmsData = () => {
   addSuspendedSediments();
   addTurbidity();
   createIndices();
-
-  // toggle_nav()
 
   //remove spinner when layer loads
   wmsLayer.value.on("load", function (event) {
@@ -4471,11 +4430,7 @@ const downloadcsv = () => {
   watch(setChartdata, () => {
     getChartData();
   });
-  // //console.log(storeUserSelections.lulcChartData.labels, 'chart data app')
-
-  //console.log("downloadcsv ", chartData.value);
-  // //console.log(chartData.value, 'chart data type')
-  //console.log(chartData.value.data_figures, 'datafigures')
+  
   var figures = chartData.value.data_figures;
   chartData.value.labels.map((data, i) => {
     csv_data.push({
@@ -6606,9 +6561,6 @@ axios.post(lulcapiUrl, postData).then((response) => {
             );
 
             wmsLayer.value.addTo(map);
-
-            //console.log(wmsLayer.value, 'wms')
-
             floodlegendContent();
             changeOpacity();
           }
@@ -6711,7 +6663,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
   });
 
   map.on(L.Draw.Event.EDITSTOP, (e) => {
-    // if (process.env.DEV)
+    
     console.log("stop edit", e);
     var layers = e.layers;
     layers.eachLayer(function (layer) {
@@ -6723,9 +6675,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
   });
 
 
-
   map.on(L.Draw.Event.DELETED, (e) => {
-    // if (process.env.DEV)
     //console.log(" deleted ", e);
     //remove the control from map and remove focus on the draw icon by changing color
     draw_polygon();

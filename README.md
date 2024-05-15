@@ -8,7 +8,7 @@ A web application for monitoring wetlands in the four basins in the Southern Afr
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Deployment](#deployment)
-- [Acknowledgments](#acknowledgments)
+- [Acknowledgments](#acknowledgements)
 
 ## Installation
 ### Prerequisites

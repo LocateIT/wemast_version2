@@ -795,22 +795,7 @@
       </div>
 
       <div class="second_column col-10 ">
-        <!-- <div style=" width: 40%; height:30%; z-index:400; position: absolute; top:20vh; left: 30vw; "
-          v-tooltip.bottom="{
-                value: 'Upload custom shapefile or polygon to load layer',
-                pt: {
-                    arrow: {
-                        style: {
-                            borderBottomColor: 'var(--primary-color)'
-                        }
-                    },
-                    text: 'bg-primary font-medium'
-                }
-            }"
-              v-if="sub_indicator === 'Fire Confidence' && shp_geojson == null && drawn_layer == null" >
-             </div> -->
-
-
+        
         <div id="map" class="flex ">
           
         
@@ -896,12 +881,6 @@ let show_sidenav = ref(false);
 let analysis_swap_toggle = ref("data_analysis");
 let show_search = ref(false);
 let search = ref("");
-let summary_text = ` Land use land cover maps monitor the land use in a specific year. The
-        integration of the biophysical and human factors plays a leading role in
-        causing land-use changes, and is used to explain the dynamics of land use
-        that occur within a river basin or a wetland. The study of land cover may
-        also be used to predict future trends of an ecosystem while understanding
-        its sustainability.`;
 let show_base_layers = ref(true);
 let baseMaps = ref({});
 let base_map_ctrl_selections = ref(false); //show or hide base layers
@@ -1043,7 +1022,7 @@ const submit_shapefile = (event) => {
 };
 
 //More info: https://developer.mozilla.org/en-US/docs/Web/API/FileReader
-function handleZipFile(file) {
+const handleZipFile = (file) => {
   var reader = new FileReader();
   reader.onload = function () {
     if (reader.readyState != 2 || reader.error) {
@@ -2466,7 +2445,7 @@ const bvi_style = () => {
 
 const download_tiff = () => {
   var url = "";
-  if (sub_indicator.value === "Land Cover") {
+  if (sub_indicator.value === "Land Cover" || "Fire Confidence") {
     lulc_style();
     url = `${baseurl}:8080/geoserver/LULC/wms?service=WMS&version=1.1.0&request=GetMap&layers=LULC%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`;
   }
@@ -2497,9 +2476,9 @@ const download_tiff = () => {
     status_style();
     url = `${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=${satellite.value}_NDVI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${styles.value}&format=image%2Fgeotiff`;
   }
-  if (sub_indicator.value === "Fire Confidence") {
-    url = `${baseurl}:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`;
-  }
+  // if (sub_indicator.value === "Fire Confidence") {
+  //   url = `${baseurl}:8080/geoserver/FIRMS_DRY/wms?service=WMS&version=1.1.0&request=GetMap&layers=FIRMS_DRY%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_firms&format=image%2Fgeotiff`;
+  // }
   if (sub_indicator.value === "Soil Moisure Index") {
     url = `${baseurl}:8080/geoserver/SMI_${season.value}/wms?service=WMS&version=1.1.0&request=GetMap&layers=SMI_${season.value}%3A${year.value}&bbox=13.869987986805413%2C-26.536233492890666%2C36.48956684093497%2C-8.947220229830435&width=768&height=597&srs=EPSG%3A4326&styles=${basin.value}_smi&format=image%2Fgeotiff`;
   }
@@ -3075,10 +3054,6 @@ const addBVILayer = () => {
 
     wmsLayer.value.addTo(map);
 
-     
-
-    // addLulcLegend()
-    // lulclegendContent()
     BVIlegendContent();
 
     changeOpacity();
@@ -3113,9 +3088,6 @@ const addLulcLayer = () => {
 
     wmsLayer.value.addTo(map);
 
-     
-
-    // addLulcLegend()
     lulclegendContent();
 
     changeOpacity();
@@ -3565,7 +3537,7 @@ const addPRECIPTimeSeriesLayer = () => {
 };
 
 const addTEMPTimeSeriesLayer = () => {
-  if (wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
+  if(wmsTimeseriesLayer.value) map.removeLayer(wmsTimeseriesLayer.value);
   if (wmsPrecTimeseriesLayer.value)
     map.removeLayer(wmsPrecTimeseriesLayer.value);
   //add TEMP time series
@@ -4701,10 +4673,12 @@ const lulclegendContent = () => {
 
         lulc_legend.value.onAdd = function (map) {
           var div = L.DomUtil.create("div", "legend");
-          if (basin.value && sub_indicator.value && year.value) {
+          if (basin.value && sub_indicator.value != 'Fire Confidence' && year.value) {
             div.innerHTML += `<p> ${basin.value} ${sub_indicator.value} ${year.value}</p>`;
           } else if (wetland_basin.value && sub_indicator.value && year.value) {
             div.innerHTML += `<p> ${wetland_basin.value} ${sub_indicator.value} ${year.value}</p>`;
+          } else if (basin.value && sub_indicator.value === 'Fire Confidence' && year.value) {
+            div.innerHTML += `<p> ${basin.value} LULC ${year.value}</p>`;
           } else {
             div.innerHTML += `<p>Zambezi LULC 2017</p>`;
           }
@@ -6019,7 +5993,7 @@ const compareLayers = () => {
   addCompareWetlandExtent();
   addCompareVegCover();
   addCompareWetlandStatus();
-  addCompareFirmsLayer();
+  // addCompareFirmsLayer(); since the layer is lulc
   addCompareSMILayer();
   addCompareSusSediments();
   addCompareBVILayer();

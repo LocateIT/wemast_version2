@@ -26,7 +26,7 @@ git clone https://github.com/LocateIT/wemast_version2.git
 
 
 
-## Project Setup
+## Usage
 
 ```sh
 cd wemast_version2
@@ -57,7 +57,7 @@ npm run build
 npm run lint
 ```
 
-### Configuration
+## Configuration
 ### Create a .env file in the root directory with the following variables:
 
 - VITE_BASE_URL=/

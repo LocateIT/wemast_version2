@@ -60,21 +60,21 @@ npm run lint
 ### Configuration
 ### Create a .env file in the root directory with the following variables:
 
-VITE_BASE_URL=/
-VITE_DEFAULT_LOCALE=en
-VITE_FALLBACK_LOCALE=fr
-VITE_SUPPORTED_LOCALES=en,fr,pt
-VITE_MAPBOX_API_KEY=your_api_key
+- VITE_BASE_URL=/
+- VITE_DEFAULT_LOCALE=en
+- VITE_FALLBACK_LOCALE=fr
+- VITE_SUPPORTED_LOCALES=en,fr,pt
+- VITE_MAPBOX_API_KEY=your_api_key
 
 ## Deployment
 Deploy with Digital Ocean and Nginx. See Nginx Documentation https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
 
 ## Acknowledgements
-Vue
-PrimeVue
-PrimeFlexCSS
-Leaflet
-Chart JS
-Digital Ocean
-Nginx
+- Vue
+- PrimeVue
+- PrimeFlexCSS
+- Leaflet
+- Chart JS
+- Digital Ocean
+- Nginx
 

@@ -827,13 +827,11 @@ import "dom-to-image/src/dom-to-image.js";
 import "dom-to-image/dist/dom-to-image.min.js";
 import { saveAs } from "file-saver";
 import * as wkt from "wkt";
-
 import "../CustomMapControls/measure/measure.css";
 import "../CustomMapControls/measure/MeasureTool.js";
 import "leaflet-easyprint";
 import html2canvas from "html2canvas/dist/html2canvas.min.js";
 import "leaflet.export/leaflet_export.js";
-
 import SideBarView from "./SideBarView.vue";
 import { close_nav, open_nav } from "../Helpers/SideNavControls";
 import { leaflet_custom_controls } from "../CustomMapControls/LeafletCustomControls";
@@ -843,15 +841,11 @@ import { useCompareStore } from "../stores/compareSelections/compare";
 import { useAdvancedStore } from "../stores/compareSelections/advanced_filter";
 import AdvancedFilter from "../components/AdvancedFilter.vue";
 import Compare from "../components/Compare.vue";
-import sideNavigationbar from "../components/sidenavigationbar.vue";
 import axios from "axios";
-
 import LulcPie from "../components/Charts/LulcPie.vue";
 import LulcBar from "../components/Charts/LulcBar.vue";
 import LulcLine from "../components/Charts/LulcLine.vue";
 import { downloadCSV } from "../Downloads/CSV";
-import PrecBar from "../components/Charts/PrecBar.vue";
-import CustomDocumentation from "../components/CustomDocumentation.vue";
 import { CloudRain } from "@vicons/fa";
 import { ThermometerHalf } from "@vicons/fa";
 import List from "@vicons/fa/List"
@@ -859,7 +853,7 @@ import shp from "shpjs/dist/shp.js";
 import "../upload_shp/leaflet.shpfile.js";
 import Toast, { POSITION } from "vue-toastification";
 import { useToast } from "vue-toastification";
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import 'primeflex/primeflex.css'
 import ResponsiveSelections from '../components/Customs/ResponsiveSelections.vue'
 import ResponsiveNav from "../components/ResponsiveNav.vue";

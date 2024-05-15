@@ -1483,7 +1483,7 @@ const convertToLayer = (buffer) => {
         };
 
         const addWetlandStatus2 = () => {
-          // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+          
           if (
             sub_indicator.value === "Wetland Inventory" &&
             parameter.value === "Wetland Status"
@@ -3759,9 +3759,7 @@ const addWetlandExtent = () => {
 
 const addVegCover = () => {
   if (sub_indicator.value === "Vegetation Cover") {
-     
-
-    //   
+  
     map.createPane("pane800").style.zIndex = 200;
     map.createPane("timeseries").style.zIndex = 300;
 
@@ -3907,6 +3905,7 @@ const addVegCover = () => {
       getClickedLatLon();
     });
 
+    loading.value = true;
     wmsLayer.value = L.tileLayer.wms(
       `${baseurl}:8080/geoserver/${satellite.value}_NDVI_${season.value}/wms?`,
       {
@@ -3934,6 +3933,9 @@ const addVegCover = () => {
 
     wmsLayer.value.addTo(map);
 
+    wmsLayer.value.on("load", function (event) {
+      loading.value = false;
+    });
 
 
     toast.info("Click on the map to get time series data", {
@@ -3987,7 +3989,7 @@ const addVegCover = () => {
   }
 };
 const addWetlandStatus = () => {
-  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  
   if (
     sub_indicator.value === "Wetland Inventory" &&
     parameter.value === "Wetland Status"
@@ -5767,6 +5769,7 @@ const addCompareVegCover = () => {
 
     //   
     map.createPane("pane800").style.zIndex = 200;
+    loading.value = true
 
     wmsCompareLayer.value = L.tileLayer.wms(
       `${baseurl}:8080/geoserver/${compare_satellite.value}_NDVI_${season.value}/wms?`,
@@ -5807,7 +5810,7 @@ const addCompareVegCover = () => {
 };
 
 const addCompareWetlandStatus = () => {
-  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  
   if (
     sub_indicator.value === "Wetland Inventory" &&
     parameter.value === "Wetland Status"
@@ -5854,51 +5857,12 @@ const addCompareWetlandStatus = () => {
     changeOpacity();
   }
 };
-const addCompareFirmsLayer = () => {
-  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
-  if (sub_indicator.value === "Fire Confidence") {
-     
 
-    //   
-    map.createPane("pane800").style.zIndex = 200;
-
-    wmsCompareLayer.value = L.tileLayer.wms(
-      `${baseurl}:8080/geoserver/FIRMS_DRY/wms?`,
-      {
-        pane: "pane400",
-        layers: `FIRMS_DRY:${compare_year.value}`,
-        crs: L.CRS.EPSG4326,
-        styles: `${basin.value}_firms`,
-        format: "image/png",
-        transparent: true,
-        opacity: 1.0,
-         
-      }
-    );
-
-    wmsCompareLayer.value.addTo(map);
-
-     
-    //remove spinner when layer loads
-    wmsCompareLayer.value.on("load", function (event) {
-      loading.value = false;
-    });
-
-    swipe_control.value = L.control
-      .sideBySide(wmsLayer.value, wmsCompareLayer.value)
-      .addTo(map);
-    // firmslegendContent()
-    comparefirmslegendContent();
-    changeOpacity();
-  }
-};
 
 const addCompareSMILayer = () => {
-  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+  
   if (sub_indicator.value === "Soil Moisure Index") {
-     
-
-    //   
+    
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5933,15 +5897,12 @@ const addCompareSMILayer = () => {
 };
 
 const addCompareSusSediments = () => {
-  // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
-
+  
   if (
     sub_indicator.value === "Water Quality" &&
     parameter.value === "Sus Sediments"
   ) {
-     
-
-    //   
+   
     map.createPane("pane800").style.zIndex = 200;
 
     wmsCompareLayer.value = L.tileLayer.wms(
@@ -5984,16 +5945,12 @@ const compareLayers = () => {
   // //console.log('compare!')
   if (wmsCompareLayer.value) map.removeLayer(wmsCompareLayer.value);
   if (swipe_control.value) map.removeControl(swipe_control.value);
-
-  
-
   addCompareLulcLayer();
   addComparePrecIndexWet();
   addComparePrecIndexDry();
   addCompareWetlandExtent();
   addCompareVegCover();
   addCompareWetlandStatus();
-  // addCompareFirmsLayer(); since the layer is lulc
   addCompareSMILayer();
   addCompareSusSediments();
   addCompareBVILayer();
@@ -6063,9 +6020,6 @@ const getAdvancedCountry = async () => {
 
   current_geojson.value.addTo(map);
 
-  //  map.fitBounds(current_geojson.value.getBounds(), {
-  //                  padding: [50, 50],
-  //                });
 
   if (current_top_base_layer.value === "MapBoxSatellite") {
     map.fitBounds(current_geojson.value.getBounds());
@@ -6127,7 +6081,6 @@ const addAdvancedLayer = () => {
     .then((response) => {
       let stringWithSld = response.data.sld_file_path;
       let stringWithoutSld = stringWithSld.replace(".sld", "");
-    
       wetland_sld.value = stringWithoutSld;
       addLulcLayer();
       addBVILayer();
@@ -6136,7 +6089,6 @@ const addAdvancedLayer = () => {
       addWetlandExtent();
       addVegCover();
       addWetlandStatus();
-
       addFirmsLayer();
       addSMILayer();
       addFloodLayer();
@@ -6144,7 +6096,7 @@ const addAdvancedLayer = () => {
       addTurbidity();
     })
     .catch((error) => {
-      //console.log('Error:', error)
+      
     });
 };
 
@@ -6318,8 +6270,6 @@ axios.post(lulcapiUrl, postData).then((response) => {
 .catch((err) => {
   console.log(err)
 })
-
-            //   
             map.createPane("pane400").style.zIndex = 200;
 
             wmsLayer.value = L.tileLayer.wms(
@@ -6337,9 +6287,6 @@ axios.post(lulcapiUrl, postData).then((response) => {
 
             wmsLayer.value.addTo(map);
 
-             
-
-            // addLulcLegend()
             lulclegendContent();
 
             changeOpacity();
@@ -6486,7 +6433,7 @@ axios.post(lulcapiUrl, postData).then((response) => {
         };
 
         const addWetlandStatus2 = () => {
-          // if(wmsLayer.value)map.removeControl(ndwi_legend.value)
+          
           if (
             sub_indicator.value === "Wetland Inventory" &&
             parameter.value === "Wetland Status"

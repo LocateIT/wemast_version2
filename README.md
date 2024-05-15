@@ -67,7 +67,7 @@ npm run lint
 - VITE_MAPBOX_API_KEY=your_api_key
 
 ## Deployment
-Deploy with Digital Ocean and Nginx. See Nginx Documentation https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
+Deploy with Digital Ocean and Nginx. See Digital Ocean Documentation https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
 
 ## Acknowledgements
 - Vue

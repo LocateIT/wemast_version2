@@ -27,6 +27,7 @@ coverage
 *.sln
 *.sw?
 .env
+package-lock.json
 
 #Electron-builder output
 /dist_electron

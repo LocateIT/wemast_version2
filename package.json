@@ -23,7 +23,7 @@
     "@turf/center": "^6.5.0",
     "@turf/helpers": "^6.5.0",
     "@turf/meta": "^6.5.0",
-    "axios": "^0.27.2",
+    "axios": "^1.6.8",
     "bootstrap-vue": "^2.21.2",
     "chart.js": "^2.9.4",
     "dom-to-image": "^2.6.0",

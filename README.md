@@ -59,7 +59,7 @@ npm run lint
 ```
 
 ## Configuration
-### Create a .env file in the root directory with the following variables:
+### Create an .env file in the root directory with the following variables:
 
 - VITE_BASE_URL=/
 - VITE_DEFAULT_LOCALE=en

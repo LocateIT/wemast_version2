@@ -49,8 +49,7 @@
 
 
     <div class="doc_select" v-if="documentation">
-      <!-- <CustomDocumentation :options="['Mapographics', 'Documentation']" :default="'Manuals'" class="select"
-        @input="displayToKey($event)" /> -->
+     
 
       <Dropdown v-model="selectedDoc" :options="docs" optionLabel="name" @change="displayToKey" placeholder="Manuals"
         class="w-full md:w-12rem" />

@@ -71,11 +71,11 @@ npm run lint
 Deploy with Digital Ocean and Nginx. See Digital Ocean Documentation https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
 
 ## Acknowledgements
-- Vue
-- PrimeVue
-- PrimeFlexCSS
-- Leaflet
-- Chart JS
-- Digital Ocean
-- Nginx
+- [Vue](https://vuejs.org/)
+- [PrimeVue](https://primevue.org/)
+- [PrimeFlexCSS](https://primeflex.org/)
+- [Leaflet](https://leafletjs.com/)
+- [Chart JS](https://www.chartjs.org/docs/latest/)
+- [Digital Ocean](https://www.digitalocean.com/)
+- [Nginx](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04)
 

@@ -6012,6 +6012,8 @@ const getAdvancedWetland = async () => {
     wetland: { name: advancedUserSelections.selected_wetland },
     indicator: { name: layer_abbreviations.value },
   };
+
+  console.log(advanced_post_data.value)
  
 };
 
